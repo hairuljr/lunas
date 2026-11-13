@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Bersih Sejahtera\", \"invoice_number\": \"0378/INV/BSJ/X/2026\", \"invoice_date\": \"2026-10-25\", \"due_date\": \"2026-11-08\", \"po_number\": \"PO-2026-0013\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Cairan Pembersih Lantai 5L\", \"quantity\": 9, \"unit_price\": 93900, \"amount\": 845100}], \"subtotal\": 845100, \"tax\": 92961, \"total\": 938061, \"bank_account\": \"0389915527\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

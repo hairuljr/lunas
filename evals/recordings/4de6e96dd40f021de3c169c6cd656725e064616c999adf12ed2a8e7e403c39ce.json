@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/10/0176\", \"invoice_date\": \"2026-10-08\", \"due_date\": \"2026-11-07\", \"po_number\": \"PO-2026-0021\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Toner Printer Laser Hitam\", \"quantity\": 9, \"unit_price\": 743600, \"amount\": 6692400}, {\"description\": \"Kertas HVS A4 80gsm (rim)\", \"quantity\": 11, \"unit_price\": 52400, \"amount\": 576400}, {\"description\": \"Pulpen Gel Hitam (kotak)\", \"quantity\": 2, \"unit_price\": 44100, \"amount\": 88200}, {\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 7, \"unit_price\": 1127900, \"amount\": 7895300}], \"subtotal\": 15252300, \"tax\": 1677753, \"total\": 16930053, \"bank_account\": \"5270418896\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

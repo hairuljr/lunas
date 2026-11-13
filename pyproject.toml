@@ -1,0 +1,41 @@
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"
+
+[project]
+name = "lunas"
+version = "0.0.1"
+description = "Accounts-payable agent that reads untrusted invoices and pays only what policy allows."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "openai>=3.49.0",
+    "pdfplumber>=0.11.10",
+    "pydantic>=2.14.3",
+    "pydantic-settings>=2.16.2",
+    "reportlab>=5.1.0",
+]
+
+[project.scripts]
+lunas = "lunas.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# `data/` (generator) and `evals/` are scripts at the repo root, imported as `data.*` / `evals.*`.
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["lunas", "data", "evals"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.4",
+]

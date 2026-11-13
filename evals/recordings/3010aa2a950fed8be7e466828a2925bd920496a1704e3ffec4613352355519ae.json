@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/09/0167\", \"invoice_date\": \"2026-09-13\", \"due_date\": \"2026-10-13\", \"po_number\": \"PO-2026-0011\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 6, \"unit_price\": 1294300, \"amount\": 7765800}, {\"description\": \"Toner Printer Laser Hitam\", \"quantity\": 6, \"unit_price\": 931300, \"amount\": 5587800}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 8, \"unit_price\": 303900, \"amount\": 2431200}], \"subtotal\": 15784800, \"tax\": 1736328, \"total\": 17521128, \"bank_account\": \"5270418896\", \"notes\": null}"
+}

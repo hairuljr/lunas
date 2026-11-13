@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Sari Rasa Catering\", \"invoice_number\": \"INV.0474.09.2026\", \"invoice_date\": \"2026-09-29\", \"due_date\": \"2026-10-13\", \"po_number\": \"PO-2026-0020\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Air Mineral Galon 19L\", \"quantity\": 8, \"unit_price\": 20000, \"amount\": 160000}, {\"description\": \"Gula Pasir 1kg\", \"quantity\": 12, \"unit_price\": 16700, \"amount\": 200400}], \"subtotal\": 360400, \"tax\": 39644, \"total\": 400044, \"bank_account\": \"7153309842\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

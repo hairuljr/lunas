@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202610-348\", \"invoice_date\": \"2026-10-03\", \"due_date\": \"2026-11-02\", \"po_number\": \"PO-2026-0007\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lisensi Antivirus 1 Tahun\", \"quantity\": 10, \"unit_price\": 434400, \"amount\": 4344000}, {\"description\": \"SSD Eksternal 1TB\", \"quantity\": 3, \"unit_price\": 1708600, \"amount\": 5125800}, {\"description\": \"Router Nirkabel Dual-Band\", \"quantity\": 7, \"unit_price\": 1191700, \"amount\": 8341900}, {\"description\": \"Keyboard Mekanikal USB\", \"quantity\": 5, \"unit_price\": 641300, \"amount\": 3206500}], \"subtotal\": 21018200, \"tax\": 2312002, \"total\": 23330202, \"bank_account\": \"1030005542871\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

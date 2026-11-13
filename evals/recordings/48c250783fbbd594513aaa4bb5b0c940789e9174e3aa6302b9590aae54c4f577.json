@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000686\", \"invoice_date\": \"2026-10-16\", \"due_date\": \"2026-11-15\", \"po_number\": \"PO-2026-0012\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"External SSD 1TB\", \"quantity\": 4, \"unit_price\": 1811200.0, \"amount\": 7244800.0}, {\"description\": \"Dual-Band Wireless Router\", \"quantity\": 4, \"unit_price\": 1232300.0, \"amount\": 4929200.0}], \"subtotal\": 12174000.0, \"tax\": 1339140.0, \"total\": 13513140.0, \"bank_account\": \"1240007719356\", \"notes\": \"All amounts are in Indonesian Rupiah (IDR).\"}"
+}

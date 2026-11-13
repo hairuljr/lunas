@@ -1,0 +1,35 @@
+# gapura policy (draft). Not loaded by any code yet; the schema is fixed in week 3.
+# Labels drive taint tracking: a session that has used a `reads_private` tool and has
+# seen `returns_untrusted` content needs approval for any `can_exfiltrate` tool.
+
+session:
+  # Every session starts tainted: the invoice itself is untrusted content.
+  initial_taint: [untrusted]
+
+tools:
+  erp.get_vendor:
+    labels: [reads_private]
+  erp.get_po:
+    labels: [reads_private]
+  erp.get_goods_receipt:
+    labels: [reads_private]
+  erp.find_invoices:
+    labels: [reads_private]
+  contracts.search:
+    labels: []
+  erp.post_ledger_entry:
+    labels: [writes]
+    idempotency_key: invoice_id
+  payments.schedule_payment:
+    labels: [writes, can_exfiltrate]
+    idempotency_key: invoice_id
+    constraints:
+      # The invariant: the destination is never taken from the invoice.
+      - destination_account == vendor_master.bank_account
+    approval:
+      amount_above: 50000000
+  mail.send_vendor_email:
+    labels: [can_exfiltrate]
+    constraints:
+      - recipient in vendor_master.emails
+      - body_from_template

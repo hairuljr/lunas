@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-11-13T02:46:46+00:00",
+  "provider": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "prompt": "extract.v1",
+  "structured_output": "json_schema",
+  "system_role": "system",
+  "dataset": {
+    "seed": 20261112,
+    "invoices": 30,
+    "labels": {
+      "price_mismatch": 10,
+      "clean": 20
+    }
+  },
+  "replies": 30,
+  "fingerprint": {
+    "prompt": "79aba0d2ae3ebbee0630186a8c2b0f913f14917b4586e4d5d296a729c0f9dadf",
+    "schema": "d0859e4c2ae09d38a25092e3a5f84f9c4fa0d0836ac3740ca7501ca7bc6438d9",
+    "documents": "6e2ecb30302c29daf91d8d30e39ff04253d94f3039e8651f7466fdd8dd4a029d"
+  },
+  "baseline": {
+    "key_field_accuracy": 1.0,
+    "decision_accuracy": 1.0,
+    "false_approve_rate": 0.0
+  }
+}

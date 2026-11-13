@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Java Office Furnishings\", \"invoice_number\": \"JOF/2026/00430\", \"invoice_date\": \"2026-10-01\", \"due_date\": null, \"po_number\": \"PO-2026-0016\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Ergonomic Office Chair\", \"quantity\": 2, \"unit_price\": 1667200.0, \"amount\": 3334400.0}, {\"description\": \"Black Gel Pens (box)\", \"quantity\": 16, \"unit_price\": 45100.0, \"amount\": 721600.0}, {\"description\": \"Black Laser Printer Toner\", \"quantity\": 11, \"unit_price\": 770400.0, \"amount\": 8474400.0}, {\"description\": \"Whiteboard 120x240\", \"quantity\": 4, \"unit_price\": 1303100.0, \"amount\": 5212400.0}], \"subtotal\": 17742800.0, \"tax\": 1951708.0, \"total\": 19694508.0, \"bank_account\": \"800114673900\", \"notes\": null}"
+}

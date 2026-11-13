@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Kemas Prima Indonesia\", \"invoice_number\": \"00100/KPI/2026\", \"invoice_date\": \"2026-09-16\", \"due_date\": null, \"po_number\": \"PO-2026-0028\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lakban Bening 48mm (dus)\", \"quantity\": 3, \"unit_price\": 391100, \"amount\": 1173300}], \"subtotal\": 1173300, \"tax\": 129063, \"total\": 1302363, \"bank_account\": \"4102583697\", \"notes\": null}"
+}

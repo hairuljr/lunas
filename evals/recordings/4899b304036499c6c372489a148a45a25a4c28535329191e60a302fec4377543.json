@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000681\", \"invoice_date\": \"2026-10-18\", \"due_date\": \"2026-11-17\", \"po_number\": \"PO-2026-0002\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 4, \"unit_price\": 1437100.00, \"amount\": 5748400.00}, {\"description\": \"24-inch LED Monitor\", \"quantity\": 2, \"unit_price\": 1990600.00, \"amount\": 3981200.00}], \"subtotal\": 9729600.00, \"tax\": 1070256.00, \"total\": 10799856.00, \"bank_account\": \"1240007719356\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

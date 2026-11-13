@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Archipelago Packaging Co\", \"invoice_number\": \"SI-26-00236\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-11-16\", \"po_number\": \"PO-2026-0004\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Clear Tape 48mm (box)\", \"quantity\": 8, \"unit_price\": 431600, \"amount\": 3452800}, {\"description\": \"Wooden Pallet 110x110\", \"quantity\": 17, \"unit_price\": 190900, \"amount\": 3245300}, {\"description\": \"Double Wall Carton 40x40x40\", \"quantity\": 2, \"unit_price\": 14900, \"amount\": 29800}], \"subtotal\": 6727900, \"tax\": 740069, \"total\": 7467969, \"bank_account\": \"033201009876305\", \"notes\": \"Late payments are subject to a 2% monthly charge.\"}"
+}

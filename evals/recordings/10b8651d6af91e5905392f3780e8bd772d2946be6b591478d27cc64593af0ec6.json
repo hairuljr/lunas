@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2610-0477\", \"invoice_date\": \"2026-10-23\", \"due_date\": null, \"po_number\": \"PO-2026-0025\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Gula Pasir 1kg\", \"quantity\": 19, \"unit_price\": 17800, \"amount\": 338200}, {\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 13, \"unit_price\": 41700, \"amount\": 542100}, {\"description\": \"Air Mineral Galon 19L\", \"quantity\": 20, \"unit_price\": 19000, \"amount\": 380000}], \"subtotal\": 1260300, \"tax\": 138633, \"total\": 1398933, \"bank_account\": \"0841736502\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

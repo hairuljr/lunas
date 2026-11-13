@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Borneo Hygiene Services\", \"invoice_number\": \"BHS2600108\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-10-16\", \"po_number\": \"PO-2026-0019\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Floor Cleaner 5L\", \"quantity\": 1, \"unit_price\": 104500.00, \"amount\": 104500.00}, {\"description\": \"Hand Soap 5L\", \"quantity\": 17, \"unit_price\": 117700.00, \"amount\": 2000900.00}, {\"description\": \"Trash Bags 90x120 (pack)\", \"quantity\": 17, \"unit_price\": 61400.00, \"amount\": 1043800.00}, {\"description\": \"Automatic Air Freshener\", \"quantity\": 2, \"unit_price\": 251500.00, \"amount\": 503000.00}], \"subtotal\": 3652200.00, \"tax\": 401742.00, \"total\": 4053942.00, \"bank_account\": \"0712264490\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Bersih Sejahtera\", \"invoice_number\": \"0384/INV/BSJ/X/2026\", \"invoice_date\": \"2026-10-09\", \"due_date\": \"2026-10-23\", \"po_number\": \"PO-2026-0023\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Tisu Gulung (karton)\", \"quantity\": 20, \"unit_price\": 304100, \"amount\": 6082000}], \"subtotal\": 6082000, \"tax\": 669020, \"total\": 6751020, \"bank_account\": \"0389915527\", \"notes\": null}"
+}

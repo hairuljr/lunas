@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Borneo Hygiene Services\", \"invoice_number\": \"BHS2600104\", \"invoice_date\": \"2026-09-30\", \"due_date\": \"2026-10-14\", \"po_number\": \"PO-2026-0009\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Floor Cleaner 5L\", \"quantity\": 15, \"unit_price\": 108000.00, \"amount\": 1620000.00}], \"subtotal\": 1620000.00, \"tax\": 178200.00, \"total\": 1798200.00, \"bank_account\": \"0712264490\", \"notes\": \"Late payments are subject to a 2% monthly charge.\"}"
+}

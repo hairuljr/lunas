@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202610-350\", \"invoice_date\": \"2026-10-05\", \"due_date\": \"2026-11-04\", \"po_number\": \"PO-2026-0017\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Monitor LED 24 inci\", \"quantity\": 3, \"unit_price\": 2070300, \"amount\": 6210900}], \"subtotal\": 6210900, \"tax\": 683199, \"total\": 6894099, \"bank_account\": \"1030005542871\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
+}

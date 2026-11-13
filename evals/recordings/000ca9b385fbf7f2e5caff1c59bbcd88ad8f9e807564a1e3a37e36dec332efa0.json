@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2609-0470\", \"invoice_date\": \"2026-09-17\", \"due_date\": null, \"po_number\": \"PO-2026-0005\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Katering Rapat (paket)\", \"quantity\": 4, \"unit_price\": 1390400, \"amount\": 5561600}, {\"description\": \"Gula Pasir 1kg\", \"quantity\": 3, \"unit_price\": 20100, \"amount\": 60300}, {\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6375400, \"amount\": 6375400}, {\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 9, \"unit_price\": 45700, \"amount\": 411300}], \"subtotal\": 12408600, \"tax\": 1364946, \"total\": 13773546, \"bank_account\": \"0841736502\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

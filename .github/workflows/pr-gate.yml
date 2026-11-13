@@ -1,0 +1,25 @@
+name: pr-gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+      - run: uv sync --locked
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run pytest -q
+      # Eval gate on recorded LLM responses (SPEC.md §9): no model is called. It replays
+      # evals/recordings/ through the pipeline and fails on a regression, or when the
+      # prompt, schema or dataset changed and the recordings need `--record`.
+      - run: uv run python data/generate.py
+      - run: uv run python -m evals.node.run --gate
+      # Policy table and the bank-account invariant are added here with gapura (week 3).

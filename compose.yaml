@@ -1,0 +1,22 @@
+# Run with `podman compose up -d`. Both images publish arm64.
+# The app, MCP servers and gapura are added as they are built (see SPEC.md §10).
+services:
+  postgres:
+    image: docker.io/pgvector/pgvector:0.8.7-pg18
+    environment:
+      POSTGRES_USER: lunas
+      POSTGRES_PASSWORD: lunas
+      POSTGRES_DB: lunas
+    ports:
+      - "5432:5432"
+    volumes:
+      # Postgres 18 images keep data under /var/lib/postgresql/<major>/.
+      - pgdata:/var/lib/postgresql
+
+  phoenix:
+    image: docker.io/arizephoenix/phoenix:version-21.0.0
+    ports:
+      - "6006:6006"
+
+volumes:
+  pgdata:

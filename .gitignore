@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+dist/
+.env
+.DS_Store
+
+# Generated data and eval runs are reproducible from data/generate.py
+data/out/
+evals/runs/
+# LLM replies recorded by --cache; resumable runs, not committed fixtures
+evals/cache/
