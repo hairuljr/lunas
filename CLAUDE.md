@@ -16,7 +16,7 @@ Update this section at the end of each working session.
   layouts x 2 languages, classes `clean` and `price_mismatch`, ground truth), ingestion
   router, digital-PDF reader, LLM extraction node (`pipeline/nodes/extract.py`,
   `prompts/extract.v1.md`), validation, 3-way match, decision table, pipeline runner
-  (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, naive ReAct baseline, 112 tests.
+  (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, naive ReAct baseline, tracing, 122 tests.
 - Commands: `uv run python data/generate.py`, `uv run lunas run`,
   `uv run python -m evals.node.run` (`--skip-llm` for the deterministic part, `--cache`
   to record LLM replies and resume, `--cache --replay-only` to run with no LLM at all,
@@ -84,13 +84,11 @@ Update this section at the end of each working session.
 - **Changing `prompts/extract.v1.md`, the `Invoice` schema, the generator or the PDF reader
   makes the recordings stale and the gate fail on purpose.** Fix with `--record`, a live run
   (about Rp 89 on Sumopod for 30 invoices; run only when refreshing fixtures), and commit the result.
-- The gate has passed locally on macOS only. It has never run in GitHub Actions: nothing is
-  committed or pushed. If the PDFs render to different text on Linux, the gate will say the
-  documents hash differs; that would need recordings made on Linux or a looser key.
+- The gate also passes in GitHub Actions on Linux (run of 2026-11-16 on `main`), so the PDFs
+  render to the same text on macOS and Linux.
 - Stubs: OCR and vision readers. Empty packages: `retrieval`, `gapura`, `telemetry`, `api`.
 - `policies/default.yaml` is a design draft that no code loads yet. The approval threshold
   lives in `Settings.approval_threshold` and duplicates the value in that draft.
-- `compose.yaml` has never been run: no Podman machine existed on the Mac when it was written.
 - Naive ReAct baseline built and measured (2026-11-16): `evals/baseline/react.py`, prompt
   `prompts/baseline_react.v1.md`, one loop (max 8 turns) with raw invoice text and five
   tools (`get_po`, `get_vendor`, `get_goods_receipts`, a mock `schedule_payment` that
@@ -114,7 +112,35 @@ Update this section at the end of each working session.
   imply an accuracy or safety advantage until harder classes (week 2) and the attack set
   (week 3) are measured. Four baseline invoices took 24-28 s and set its p95; cause not
   investigated (single run).
-- Left for week 1 (SPEC §12): tracing.
+- Tracing built (2026-11-16): `lunas.telemetry`, manual OpenTelemetry spans, no
+  instrumentor. One trace per invoice: `process_invoice` > `parse`, `extract` >
+  `chat <model>` (one per model call), `validate`, `match`, `decide`. Chat spans use the
+  OTel GenAI semconv (operation, provider = endpoint host, request/response model, finish
+  reason, input/output tokens); our own attributes are under `app.*`. Off unless
+  `LUNAS_OTLP_ENDPOINT` or `LUNAS_TRACE_FILE` is set; prompts and replies go on spans only
+  with `LUNAS_TRACE_CONTENT=true`. `lunas run` and the node eval flush on exit;
+  `lunas run --limit N` processes the first N invoices.
+- Tracing verified on 2026-11-16: span-tree tests (in-memory exporter), a real two-invoice
+  run on Sumopod written to a JSONL trace file (14 spans, 2 traces, no orphans, token counts
+  present, no content), and real traces in Phoenix 21.0.0. Phoenix maps the GenAI-semconv
+  chat span to its own LLM view on ingestion (kind `llm`, model, provider, prompt and
+  completion tokens, the node tree, and with `LUNAS_TRACE_CONTENT=true` the system and user
+  messages), so no OpenInference attributes are needed. Its cost column shows $0: it has no
+  price for this model. Node spans show kind `unknown`, which is expected for plain spans.
+- Phoenix in a container turns authentication on (it listens on 0.0.0.0) and answers OTLP
+  exports with 401. `compose.yaml` sets `PHOENIX_ENABLE_AUTH=false` and publishes both
+  ports on 127.0.0.1 only. A deployment reachable from outside (the VPS demo) must keep
+  auth on and needs an API-key header on the exporter, which `lunas.telemetry` does not
+  support yet. A rejected export is only reported by the OTel exporter on stderr.
+- `podman compose up -d` works since 2026-11-16 (Podman machine `podman-machine-default`,
+  libkrun, 2 GiB; `podman-compose` from Homebrew). Both services verified: Postgres 18.7
+  with pgvector 0.8.7 (extension created in database `lunas`), and Phoenix accepting OTLP
+  exports. Postgres is published on host port **5433**, because port 5432 is commonly
+  occupied by an existing local PostgreSQL service; `LUNAS_DATABASE_URL` defaults to 5433. No code
+  uses the database yet.
+- Not traced: the naive ReAct baseline (it keeps its own counters), metrics, and scores
+  linked to traces.
+- Week 1 (SPEC §12) is complete.
 - Planned for week 2: validating vision model support (`glm-5.3-flash` is listed on
   Sumopod but untested).
 

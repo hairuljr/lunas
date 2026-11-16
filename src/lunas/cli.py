@@ -9,6 +9,7 @@ from lunas.config import Settings
 from lunas.erp import ErpData
 from lunas.llm import LLMNotConfiguredError, build_client
 from lunas.pipeline.run import process_invoices
+from lunas.telemetry import configure_tracing, shutdown_tracing
 
 INVOICE_DIR = "invoices"
 
@@ -25,22 +26,29 @@ def find_invoices(data_dir: Path) -> list[Path]:
 def run(args: argparse.Namespace) -> int:
     settings = Settings()
     data_dir = args.data or settings.data_dir
-    paths = find_invoices(data_dir)
+    paths = find_invoices(data_dir)[: args.limit]
     try:
         client = build_client(settings, args.cache)
     except LLMNotConfiguredError as error:
         print(error, file=sys.stderr)
         return 2
 
-    results = process_invoices(
-        paths, ErpData.load(data_dir), client, settings, args.workers or settings.llm_workers
-    )
+    tracing = configure_tracing(settings)
+    try:
+        results = process_invoices(
+            paths, ErpData.load(data_dir), client, settings, args.workers or settings.llm_workers
+        )
+    finally:
+        shutdown_tracing()  # flushes: a CLI that just exits loses its last spans
     for result in results:
         codes = ", ".join(sorted({issue.code for issue in result.issues}))
         print(f"{result.file:<16}{result.backend:<10}{result.decision:<10}{codes}")
     counts = Counter(result.decision.value for result in results)
     summary = ", ".join(f"{count} {decision}" for decision, count in sorted(counts.items()))
     print(f"\n{len(results)} invoices via {client.model}: {summary}")
+    if tracing:
+        # Not a delivery receipt: a rejected export is reported by the exporter on stderr.
+        print(f"Tracing to {settings.otlp_endpoint or settings.trace_file}")
 
     if args.json:
         args.json.parent.mkdir(parents=True, exist_ok=True)
@@ -63,6 +71,7 @@ def main() -> None:
     run_parser.add_argument(
         "--cache", type=Path, help="record LLM replies in this directory and replay them"
     )
+    run_parser.add_argument("--limit", type=int, help="only the first N invoices")
     run_parser.add_argument("--json", type=Path, help="also write results as JSON lines")
     run_parser.set_defaults(handler=run)
 

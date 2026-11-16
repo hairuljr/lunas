@@ -31,9 +31,11 @@ money. That is the lethal trifecta, so safety lives in the architecture rather t
 - Node evals: per-field exact match for extraction, decision accuracy and false-approve rate.
 
 - Naive ReAct baseline for comparison (`evals/baseline/react.py`).
+- OpenTelemetry tracing: one trace per invoice, a span per node and per model call (OTel GenAI
+  semantic conventions), exported over OTLP or to a JSONL file.
 
-OCR and vision readers are stubs. Contracts, the investigation loop, `gapura` and tracing are
-not built yet.
+OCR and vision readers are stubs. Contracts, the investigation loop and `gapura` are not built
+yet.
 
 ## Results
 
@@ -129,7 +131,18 @@ The deterministic part alone, without an LLM:
 uv run python -m evals.node.run --skip-llm
 ```
 
-Postgres and Phoenix for later milestones:
+Tracing is off by default. Write spans to a file, one JSON object per line:
+
+```bash
+LUNAS_TRACE_FILE=traces.jsonl uv run lunas run --limit 2
+```
+
+Or set `LUNAS_OTLP_ENDPOINT` in `.env` to any OTLP/HTTP endpoint, such as Phoenix below
+(`http://localhost:6006`). Prompts and replies are only put on spans with
+`LUNAS_TRACE_CONTENT=true`.
+
+Postgres and Phoenix (needs a compose provider such as `podman-compose`). Phoenix runs
+without authentication here and both ports are published on loopback only:
 
 ```bash
 podman compose up -d

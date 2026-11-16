@@ -8,6 +8,7 @@ import re
 
 from lunas.llm import ChatClient, Message, complete_structured, load_prompt
 from lunas.models import Invoice, ParsedDocument
+from lunas.telemetry import span
 
 PROMPT_NAME = "extract"
 PROMPT_VERSION = "v1"
@@ -31,4 +32,6 @@ def build_messages(document: ParsedDocument) -> list[Message]:
 
 def extract_invoice(document: ParsedDocument, client: ChatClient) -> Invoice:
     """Raises StructuredOutputError if the reply is still invalid after one retry."""
-    return complete_structured(client, build_messages(document), Invoice, retries=1)
+    attributes = {"app.prompt.name": PROMPT_NAME, "app.prompt.version": PROMPT_VERSION}
+    with span("extract", attributes):
+        return complete_structured(client, build_messages(document), Invoice, retries=1)

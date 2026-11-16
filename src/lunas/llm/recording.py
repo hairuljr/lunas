@@ -14,6 +14,8 @@ import threading
 from pathlib import Path
 from urllib.parse import urlparse
 
+from opentelemetry import trace
+
 from lunas.config import Settings
 from lunas.llm.client import ChatClient, JsonSchema, Message, OpenAICompatClient
 
@@ -60,6 +62,9 @@ class RecordingClient:
         if path.exists():
             with self._lock:
                 self.counts["replayed"] += 1
+            # No model was called, so there is no chat span. Say so on the node's span, or
+            # a replayed trace reads like a run that cost nothing.
+            trace.get_current_span().set_attribute("app.llm.replayed", True)
             return json.loads(path.read_text(encoding="utf-8"))["reply"]
         if self._inner is None:
             raise RecordingMissingError(

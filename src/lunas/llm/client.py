@@ -1,5 +1,6 @@
 """Chat client for any OpenAI-compatible endpoint, configured by `LUNAS_LLM_*`."""
 
+import json
 import threading
 import time
 from dataclasses import dataclass
@@ -7,8 +8,10 @@ from typing import Any, Protocol
 from urllib.parse import urlparse
 
 from openai import APIError, OpenAI
+from opentelemetry.trace import SpanKind
 
 from lunas.config import Settings, StructuredOutput, SystemRole
+from lunas.telemetry import capture_content, set_attributes, span
 
 # `StructuredOutput` is how the endpoint is asked for JSON. Proxies differ, so it is config:
 #   json_schema  strict structured output (`response_format: json_schema`)
@@ -119,17 +122,56 @@ class OpenAICompatClient:
         elif schema is not None and self._structured_output == "json_object":
             request["response_format"] = {"type": "json_object"}
 
-        self._wait_for_slot()
-        try:
-            response = self._client.chat.completions.create(**request)
-        except APIError as error:
-            raise LLMRequestError(f"{type(error).__name__}: {error}") from error
+        attributes = {
+            "gen_ai.operation.name": "chat",
+            # The endpoint that served the call. The same model ID is not the same model
+            # behind every OpenAI-compatible host.
+            "gen_ai.provider.name": self.host,
+            "server.address": self.host,
+            "gen_ai.request.model": self.model,
+            "gen_ai.request.temperature": self._temperature,
+            "gen_ai.output.type": "json" if schema is not None else "text",
+            "app.llm.structured_output": self._structured_output if schema else None,
+        }
+        with span(f"chat {self.model}", attributes, SpanKind.CLIENT) as current:
+            if capture_content():
+                current.set_attribute("gen_ai.input.messages", json.dumps(_parts(messages)))
+            self._wait_for_slot()
+            try:
+                response = self._client.chat.completions.create(**request)
+            except APIError as error:
+                raise LLMRequestError(f"{type(error).__name__}: {error}") from error
+            choice = response.choices[0]
+            reply = choice.message.content or ""
+            usage = response.usage
+            set_attributes(
+                current,
+                {
+                    "gen_ai.response.model": response.model,
+                    "gen_ai.response.id": response.id,
+                    "gen_ai.response.finish_reasons": [choice.finish_reason],
+                    "gen_ai.usage.input_tokens": usage.prompt_tokens if usage else None,
+                    "gen_ai.usage.output_tokens": usage.completion_tokens if usage else None,
+                },
+            )
+            if capture_content():
+                output = _parts([{"role": "assistant", "content": reply}])
+                output[0]["finish_reason"] = choice.finish_reason
+                current.set_attribute("gen_ai.output.messages", json.dumps(output))
         with self._throttle:
             self.usage["requests"] += 1
-            if response.usage is not None:
-                self.usage["prompt_tokens"] += response.usage.prompt_tokens
-                self.usage["completion_tokens"] += response.usage.completion_tokens
-        return response.choices[0].message.content or ""
+            if usage is not None:
+                self.usage["prompt_tokens"] += usage.prompt_tokens
+                self.usage["completion_tokens"] += usage.completion_tokens
+        return reply
+
+
+def _parts(messages: list[Message]) -> list[dict[str, Any]]:
+    """Messages in the shape the GenAI semantic conventions define for span content."""
+    return [
+        {"role": message["role"], "parts": [{"type": "text", "content": message["content"]}]}
+        for message in messages
+    ]
 
 
 def fold_system_messages(messages: list[Message]) -> list[Message]:

@@ -20,6 +20,7 @@ from lunas.pipeline.nodes.decide import decide
 from lunas.pipeline.nodes.extract import extract_invoice
 from lunas.pipeline.nodes.match import match_invoice
 from lunas.pipeline.nodes.validate import validate_invoice
+from lunas.telemetry import set_attributes, span
 
 # The model answered, but not with a valid invoice, even after the retry.
 EXTRACTION_FAILED = "extraction_failed"
@@ -42,8 +43,38 @@ def process_invoice(
     path: Path, erp: ErpData, client: ChatClient, settings: Settings
 ) -> PipelineResult:
     started = time.monotonic()
-    backend = choose_backend(path, settings.ingest_mode, settings.min_chars_per_page)
-    document = get_reader(backend).read(path)
+    with span("process_invoice", {"app.invoice.file": path.name}) as root:
+        result = _process(path, erp, client, settings)
+        result.seconds = round(time.monotonic() - started, 2)
+        set_attributes(
+            root,
+            {
+                "app.ingest.backend": result.backend,
+                "app.decision": result.decision.value,
+                "app.issue_codes": _codes(result.issues),
+                # Set when no invoice came out of extraction: which of the two reasons.
+                "app.extraction.failure": None if result.invoice else result.issues[0].code,
+            },
+        )
+        return result
+
+
+def _codes(issues: list[Issue]) -> list[str]:
+    return sorted({issue.code for issue in issues})
+
+
+def _process(path: Path, erp: ErpData, client: ChatClient, settings: Settings) -> PipelineResult:
+    with span("parse") as current:
+        backend = choose_backend(path, settings.ingest_mode, settings.min_chars_per_page)
+        document = get_reader(backend).read(path)
+        set_attributes(
+            current,
+            {
+                "app.ingest.backend": backend,
+                "app.ingest.pages": len(document.pages),
+                "app.ingest.characters": len(document.text),
+            },
+        )
 
     try:
         invoice = extract_invoice(document, client)
@@ -57,19 +88,23 @@ def process_invoice(
             invoice=None,
             issues=[Issue(code=code, message=str(error))],
             decision=Decision.HOLD,
-            seconds=round(time.monotonic() - started, 2),
         )
 
-    issues = validate_invoice(invoice, settings.amount_tolerance)
-    issues += match_invoice(invoice, erp, settings.amount_tolerance)
-    result = decide(invoice, issues, settings.approval_threshold)
+    with span("validate") as current:
+        issues = validate_invoice(invoice, settings.amount_tolerance)
+        set_attributes(current, {"app.issue_codes": _codes(issues)})
+    with span("match", {"app.po_number": invoice.po_number}) as current:
+        matched = match_invoice(invoice, erp, settings.amount_tolerance)
+        set_attributes(current, {"app.issue_codes": _codes(matched)})
+    with span("decide") as current:
+        result = decide(invoice, issues + matched, settings.approval_threshold)
+        set_attributes(current, {"app.decision": result.decision.value})
     return PipelineResult(
         file=path.name,
         backend=backend,
         invoice=invoice,
         issues=result.reasons,
         decision=result.decision,
-        seconds=round(time.monotonic() - started, 2),
     )
 
 

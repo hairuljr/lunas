@@ -1,4 +1,5 @@
 from decimal import Decimal
+from types import SimpleNamespace
 
 import pytest
 from pydantic import BaseModel
@@ -15,6 +16,13 @@ from lunas.llm import (
 )
 from lunas.llm.structured import parse_json
 from lunas.models import Invoice
+
+
+def fake_response(content: str):
+    """The parts of an OpenAI chat completion that the client reads."""
+    choice = SimpleNamespace(message=SimpleNamespace(content=content), finish_reason="stop")
+    usage = SimpleNamespace(prompt_tokens=7, completion_tokens=3)
+    return SimpleNamespace(choices=[choice], usage=usage, model="some-model-0101", id="resp-1")
 
 
 class Receipt(BaseModel):
@@ -158,10 +166,7 @@ def test_client_asks_for_json_the_way_the_endpoint_supports(mode, expected_forma
 
     def create(**request):
         sent.update(request)
-        message = type("Message", (), {"content": "{}"})
-        choice = type("Choice", (), {"message": message})
-        usage = type("Usage", (), {"prompt_tokens": 7, "completion_tokens": 3})
-        return type("Response", (), {"choices": [choice], "usage": usage})
+        return fake_response("{}")
 
     monkeypatch.setattr(client._client.chat.completions, "create", create)
 
@@ -179,10 +184,7 @@ def test_system_prompt_can_be_folded_into_the_user_message(monkeypatch):
 
     def create(**request):
         sent.update(request)
-        message = type("Message", (), {"content": "{}"})
-        choice = type("Choice", (), {"message": message})
-        usage = type("Usage", (), {"prompt_tokens": 7, "completion_tokens": 3})
-        return type("Response", (), {"choices": [choice], "usage": usage})
+        return fake_response("{}")
 
     monkeypatch.setattr(client._client.chat.completions, "create", create)
     messages = [

@@ -41,6 +41,13 @@ class Settings(BaseSettings):
     # An otherwise clean invoice above this total goes to a human.
     approval_threshold: Decimal = Decimal(50_000_000)
 
+    # Tracing is off unless one of these is set. The endpoint is an OTLP/HTTP base URL
+    # (Phoenix: http://localhost:6006); the file gets one JSON span per line.
+    otlp_endpoint: str = ""
+    trace_file: Path | None = None
+    # Put prompts and replies on spans. Synthetic data only.
+    trace_content: bool = False
+
     # Output of data/generate.py: invoice PDFs plus the mock ERP JSON files.
     data_dir: Path = Path("data/out")
-    database_url: str = "postgresql://lunas:lunas@localhost:5432/lunas"
+    database_url: str = "postgresql://lunas:lunas@localhost:5433/lunas"

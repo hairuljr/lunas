@@ -12,3 +12,4 @@ data/out/
 evals/runs/
 # LLM replies recorded by --cache; resumable runs, not committed fixtures
 evals/cache/
+traces.jsonl

@@ -57,6 +57,7 @@ from lunas.pipeline.run import (
     PipelineResult,
     process_invoices,
 )
+from lunas.telemetry import configure_tracing, shutdown_tracing
 
 RUNS_DIR = Path(__file__).resolve().parents[1] / "runs"
 CACHE_DIR = Path(__file__).resolve().parents[1] / "cache"
@@ -293,6 +294,7 @@ def main() -> int:
         print("\nExtraction and end-to-end decision: skipped (--skip-llm), not measured.")
     else:
         started = time.monotonic()
+        configure_tracing(settings)
         try:
             results = process_invoices(
                 paths, erp, client, settings, args.workers or settings.llm_workers
@@ -300,6 +302,8 @@ def main() -> int:
         except RecordingMissingError as error:
             print(f"\nGATE FAILED: {error}. Re-record with --record (calls the LLM).")
             return 1
+        finally:
+            shutdown_tracing()
         elapsed = time.monotonic() - started
         extraction, decisions, misses = eval_pipeline(records, results)
         seconds = [result.seconds for result in results if result.invoice is not None]
