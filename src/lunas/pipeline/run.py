@@ -4,6 +4,7 @@ Plain function calls for now. The LangGraph graph with a Postgres checkpointer (
 arrives with the human-approval step, which is the first thing that needs to pause.
 """
 
+import time
 from collections.abc import Iterable
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -33,11 +34,14 @@ class PipelineResult(BaseModel):
     invoice: Invoice | None
     issues: list[Issue]
     decision: Decision
+    # Wall time for this invoice, parse to decision. A replayed LLM reply makes it meaningless.
+    seconds: float = 0.0
 
 
 def process_invoice(
     path: Path, erp: ErpData, client: ChatClient, settings: Settings
 ) -> PipelineResult:
+    started = time.monotonic()
     backend = choose_backend(path, settings.ingest_mode, settings.min_chars_per_page)
     document = get_reader(backend).read(path)
 
@@ -53,6 +57,7 @@ def process_invoice(
             invoice=None,
             issues=[Issue(code=code, message=str(error))],
             decision=Decision.HOLD,
+            seconds=round(time.monotonic() - started, 2),
         )
 
     issues = validate_invoice(invoice, settings.amount_tolerance)
@@ -64,6 +69,7 @@ def process_invoice(
         invoice=invoice,
         issues=result.reasons,
         decision=result.decision,
+        seconds=round(time.monotonic() - started, 2),
     )
 
 

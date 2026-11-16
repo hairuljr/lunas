@@ -5,7 +5,8 @@ contracts, and pays only what policy allows.
 
 > **Status: first slice.** Digital PDFs flow from parsing to a decision on a 30-invoice
 > synthetic set. The design is in [SPEC.md](SPEC.md) (in Indonesian). No benchmark numbers are
-> published yet; the tables below are filled in from eval runs, not by hand.
+> exist yet for anything beyond that slice; the table below is filled in from eval runs, not
+> by hand.
 
 ## Why
 
@@ -29,18 +30,35 @@ money. That is the lethal trifecta, so safety lives in the architecture rather t
 - Deterministic 3-way match (PO, goods receipt, vendor master) and decision table.
 - Node evals: per-field exact match for extraction, decision accuracy and false-approve rate.
 
-OCR and vision readers are stubs. Contracts, the investigation loop, `gapura`, tracing and the
-naive baseline are not built yet.
+- Naive ReAct baseline for comparison (`evals/baseline/react.py`).
+
+OCR and vision readers are stubs. Contracts, the investigation loop, `gapura` and tracing are
+not built yet.
 
 ## Results
 
-| Experiment | Naive ReAct baseline | lunas |
+Week-1 slice: 30 synthetic digital invoices (20 clean, 10 overcharged against the PO), one run
+each on 2026-11-16, same model (`deepseek-v4.1-flash-1017`) and provider, 4 invoices in
+parallel. The baseline is one ReAct loop that gets the raw invoice text and every tool, with
+the same decision policy written in its prompt (`evals/baseline/react.py`).
+
+| | Naive ReAct baseline | lunas |
 |---|---|---|
-| Decision accuracy | TBD | TBD |
-| False-approve rate | TBD | TBD |
+| Decision accuracy | 30/30 | 30/30 |
+| False-approve rate | 0/10 | 0/10 |
 | Attack success rate | TBD | TBD |
-| p95 latency | TBD | TBD |
-| Cost per invoice | TBD | TBD |
+| Latency per invoice, p50 / p95 | 5.7 s / 25.5 s | 1.9 s / 5.2 s |
+| LLM requests per invoice | 3.7 | 1 |
+| Tokens per invoice | 5,488 | 1,313 |
+
+On this set the two do not differ in accuracy: both decide every invoice correctly, and the
+baseline paid no wrong invoice, account or amount. These are easy cases, with no attack in
+them. What is measured so far is cost: the baseline used 4.2 times the tokens and was slower.
+With 30 invoices and a single run, p95 is the 29th value and is noisy. Attack success rate
+needs the attack set and is not measured yet.
+
+Runs: `evals/runs/baseline-20261116-045546.json`, `evals/runs/node-20261116-045614.json`
+(not committed; reproduce with the commands below).
 
 ## Development
 
@@ -97,6 +115,12 @@ After such a change, refresh the recordings with a live run and commit them:
 
 ```bash
 uv run python -m evals.node.run --record
+```
+
+The naive ReAct baseline on the same invoices (live; `--cache` resumes an interrupted run):
+
+```bash
+uv run python -m evals.baseline.react
 ```
 
 The deterministic part alone, without an LLM:

@@ -1,0 +1,231 @@
+"""The baseline's loop and scoring, with scripted model turns. Its real behaviour is only
+measured by running evals/baseline/react.py against a model."""
+
+import json
+from datetime import date
+from decimal import Decimal
+
+from evals.baseline.react import (
+    AgentResult,
+    Payment,
+    ToolCall,
+    Turn,
+    baseline_metrics,
+    run_agent,
+)
+from evals.node.scoring import percentile
+from lunas.erp import ErpData
+from lunas.models import (
+    Decision,
+    GoodsReceipt,
+    GoodsReceiptLine,
+    Invoice,
+    LineItem,
+    PurchaseOrder,
+    PurchaseOrderLine,
+    Vendor,
+)
+
+ERP = ErpData(
+    vendors=[
+        Vendor(
+            vendor_id="V-001",
+            name="PT Sumber Makmur",
+            bank_name="Bank Central Asia",
+            bank_account="5270418896",
+            email="ar@sumbermakmur.example",
+            payment_terms_days=30,
+        )
+    ],
+    purchase_orders=[
+        PurchaseOrder(
+            po_number="PO-001",
+            vendor_id="V-001",
+            order_date=date(2026, 10, 1),
+            lines=[
+                PurchaseOrderLine(
+                    description="Kertas A4", quantity=Decimal(10), unit_price=Decimal(50000)
+                )
+            ],
+        )
+    ],
+    goods_receipts=[
+        GoodsReceipt(
+            gr_number="GR-001",
+            po_number="PO-001",
+            received_date=date(2026, 10, 8),
+            lines=[GoodsReceiptLine(description="Kertas A4", quantity=Decimal(10))],
+        )
+    ],
+)
+
+
+class Script:
+    """Plays assistant turns in order and keeps the conversation each one was given."""
+
+    def __init__(self, *turns: Turn) -> None:
+        self.turns = list(turns)
+        self.seen: list[list[dict]] = []
+
+    def __call__(self, messages: list[dict]) -> Turn:
+        self.seen.append([dict(message) for message in messages])
+        return self.turns.pop(0) if self.turns else Turn("Still thinking.", [])
+
+
+def call(name: str, **arguments) -> Turn:
+    return Turn("", [ToolCall(f"call-{name}", name, json.dumps(arguments))], 100, 10)
+
+
+def test_agent_looks_up_pays_and_decides():
+    script = Script(
+        call("get_po", po_number="PO-001"),
+        call("get_vendor", vendor_id="V-001"),
+        call("schedule_payment", invoice_number="INV-1", bank_account="5270418896", amount=555000),
+        call("submit_decision", decision="approve", reason="All matched."),
+    )
+
+    result = run_agent("INVOICE INV-1 ...", ERP, script)
+
+    assert result.decision == Decision.APPROVE
+    assert result.failure is None
+    assert result.tools_called == ["get_po", "get_vendor", "schedule_payment", "submit_decision"]
+    assert result.payments == [
+        Payment(invoice_number="INV-1", bank_account="5270418896", amount="555000")
+    ]
+    assert (result.requests, result.prompt_tokens, result.completion_tokens) == (4, 400, 40)
+    assert script.seen[0][1] == {"role": "user", "content": "INVOICE INV-1 ..."}
+    # The second request carries the PO the first tool call returned.
+    tool_message = script.seen[1][-1]
+    assert tool_message["role"] == "tool"
+    assert json.loads(tool_message["content"])["vendor_id"] == "V-001"
+
+
+def test_payment_tool_accepts_any_account_because_there_is_no_gateway():
+    script = Script(
+        call("schedule_payment", invoice_number="INV-1", bank_account="9990001112", amount=1),
+        call("submit_decision", decision="approve", reason="Paid as instructed."),
+    )
+
+    assert run_agent("x", ERP, script).payments[0].bank_account == "9990001112"
+
+
+def test_tool_errors_are_returned_to_the_model_not_raised():
+    script = Script(
+        call("get_po", po_number="PO-999"),
+        Turn("", [ToolCall("c2", "get_vendor", "{not json")]),
+        call("submit_decision", decision="maybe", reason="?"),
+        call("submit_decision", decision="reject", reason="No such PO."),
+    )
+
+    result = run_agent("x", ERP, script)
+
+    assert result.decision == Decision.REJECT
+    assert "not found" in script.seen[1][-1]["content"]
+    assert "invalid arguments" in script.seen[2][-1]["content"]
+    assert "invalid arguments" in script.seen[3][-1]["content"]
+
+
+def test_a_reply_without_a_tool_call_is_nudged_once_per_turn():
+    script = Script(
+        Turn("The invoice looks fine.", []),
+        call("submit_decision", decision="hold", reason="Price differs."),
+    )
+
+    result = run_agent("x", ERP, script)
+
+    assert result.decision == Decision.HOLD
+    assert script.seen[1][-1] == {"role": "user", "content": "Finish by calling submit_decision."}
+
+
+def test_agent_that_never_decides_stops_at_the_turn_limit():
+    result = run_agent("x", ERP, Script(), max_turns=3)
+
+    assert result.decision is None
+    assert result.failure == "max_turns"
+    assert result.requests == 3
+
+
+class Record:
+    """The two fields of a ground-truth record that baseline_metrics reads."""
+
+    def __init__(self, expected: Decision, total: int = 555000) -> None:
+        self.expected_decision = expected
+        self.invoice = Invoice(
+            vendor_name="PT Sumber Makmur",
+            invoice_number="INV-1",
+            invoice_date=date(2026, 11, 1),
+            po_number="PO-001",
+            line_items=[
+                LineItem(
+                    description="Kertas A4",
+                    quantity=Decimal(10),
+                    unit_price=Decimal(50000),
+                    amount=Decimal(500000),
+                )
+            ],
+            subtotal=Decimal(500000),
+            tax=Decimal(55000),
+            total=Decimal(total),
+        )
+
+
+def paid(decision: Decision | None, account: str = "5270418896", amount: str = "555000", **more):
+    payment = Payment(invoice_number="INV-1", bank_account=account, amount=amount)
+    return AgentResult(decision=decision, payments=[payment], requests=4, seconds=2.0, **more)
+
+
+def test_metrics_grade_the_decision_and_what_was_done_with_the_payment_tool():
+    records = [Record(Decision.APPROVE), Record(Decision.HOLD), Record(Decision.HOLD)] * 2
+    results = [
+        paid(Decision.APPROVE, prompt_tokens=900, completion_tokens=100),
+        paid(Decision.APPROVE),  # false approve, and it paid
+        AgentResult(decision=Decision.HOLD, requests=2, seconds=1.0),
+        paid(Decision.APPROVE, account="9990001112"),
+        paid(Decision.HOLD, amount="600000.5"),  # paid although it decided to hold
+        AgentResult(failure="max_turns", requests=8, seconds=9.0),
+    ]
+
+    metrics = baseline_metrics(records, results, ERP)
+
+    assert metrics["accuracy"] == 4 / 6
+    assert metrics["false_approve_rate"] == 1 / 4
+    assert metrics["confusion"]["hold->no_decision"] == 1
+    assert metrics["no_decision"] == {"max_turns": 1}
+    assert metrics["payments"] == {
+        "invoices_with_a_payment": 4,
+        "on_invoices_that_must_not_be_paid": 2,
+        "without_an_approve_decision": 1,
+        "to_an_account_not_in_the_vendor_master": 1,
+        "for_an_amount_other_than_the_invoice_total": 1,
+    }
+    assert metrics["per_invoice"]["answered"] == 6
+    assert metrics["per_invoice"]["seconds_p95"] == 9.0
+    assert metrics["usage"]["prompt_tokens"] == 900
+
+
+def test_unanswered_invoices_are_left_out_of_latency_and_cost():
+    records = [Record(Decision.APPROVE), Record(Decision.APPROVE)]
+    results = [
+        AgentResult(decision=Decision.APPROVE, requests=3, prompt_tokens=50, seconds=2.0),
+        AgentResult(failure="llm_unavailable", seconds=60.0),
+    ]
+
+    metrics = baseline_metrics(records, results, ERP)
+
+    assert metrics["accuracy"] == 0.5
+    assert metrics["no_decision"] == {"llm_unavailable": 1}
+    assert metrics["per_invoice"] == {
+        "answered": 1,
+        "requests_mean": 3.0,
+        "tokens_mean": 50.0,
+        "seconds_p50": 2.0,
+        "seconds_p95": 2.0,
+    }
+
+
+def test_percentile_is_nearest_rank():
+    values = [float(n) for n in range(1, 31)]
+
+    assert percentile(values, 50) == 15.0
+    assert percentile(values, 95) == 29.0
+    assert percentile([], 95) is None

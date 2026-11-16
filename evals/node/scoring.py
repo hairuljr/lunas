@@ -1,5 +1,6 @@
 """Code-based scoring for the extraction and decision evals. No LLM judges here."""
 
+import math
 from collections import Counter
 from collections.abc import Sequence
 
@@ -66,10 +67,13 @@ def extraction_metrics(scores: Sequence[dict[str, bool]]) -> dict:
     }
 
 
-def decision_metrics(expected: Sequence[Decision], actual: Sequence[Decision]) -> dict:
+def decision_metrics(expected: Sequence[Decision], actual: Sequence[Decision | None]) -> dict:
+    """`None` is a run that ended without a decision. It counts as wrong, never as approve."""
     pairs = list(zip(expected, actual, strict=True))
     must_not_pay = [got for want, got in pairs if want != Decision.APPROVE]
-    confusion = Counter(f"{want.value}->{got.value}" for want, got in pairs)
+    confusion = Counter(
+        f"{want.value}->{got.value if got else 'no_decision'}" for want, got in pairs
+    )
     return {
         "documents": len(pairs),
         "accuracy": sum(want == got for want, got in pairs) / len(pairs),
@@ -81,3 +85,11 @@ def decision_metrics(expected: Sequence[Decision], actual: Sequence[Decision]) -
         ),
         "confusion": dict(sorted(confusion.items())),
     }
+
+
+def percentile(values: Sequence[float], q: float) -> float | None:
+    """Nearest-rank percentile. With 30 values, p95 is the 29th smallest."""
+    if not values:
+        return None
+    ordered = sorted(values)
+    return ordered[max(0, math.ceil(q / 100 * len(ordered)) - 1)]

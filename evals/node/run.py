@@ -31,6 +31,7 @@ from evals.node.scoring import (
     KEY_FIELDS,
     decision_metrics,
     extraction_metrics,
+    percentile,
     score_fields,
 )
 from lunas.config import Settings
@@ -301,6 +302,7 @@ def main() -> int:
             return 1
         elapsed = time.monotonic() - started
         extraction, decisions, misses = eval_pipeline(records, results)
+        seconds = [result.seconds for result in results if result.invoice is not None]
         report |= {
             "model": client.model,
             # Which endpoint served the model: the same model ID can differ by provider.
@@ -308,6 +310,9 @@ def main() -> int:
             "workers": args.workers or settings.llm_workers,
             "elapsed_seconds": round(elapsed, 1),
             "usage": getattr(client, "usage", None),
+            # Per-invoice wall time, parse to decision. Not a measurement when replayed.
+            "seconds_p50": percentile(seconds, 50),
+            "seconds_p95": percentile(seconds, 95),
             # With --cache: how many replies were fresh and how many came from disk.
             "replies": getattr(client, "counts", None),
             "prompt": f"{PROMPT_NAME}.{PROMPT_VERSION}",
@@ -325,6 +330,11 @@ def main() -> int:
         )
         print(f"  provider              {report['provider']}")
         print(f"  elapsed / usage       {elapsed:.1f}s  {report['usage']}")
+        if seconds:
+            print(
+                f"  per invoice           p50 {report['seconds_p50']:.1f}s, "
+                f"p95 {report['seconds_p95']:.1f}s"
+            )
         print(f"  key-field accuracy    {_percent(extraction['key_field_accuracy'])}")
         print(f"  all key fields right  {_percent(extraction['documents_with_all_key_fields'])}")
         print(f"  whole invoice right   {_percent(extraction['documents_fully_correct'])}")

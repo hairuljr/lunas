@@ -16,11 +16,12 @@ Update this section at the end of each working session.
   layouts x 2 languages, classes `clean` and `price_mismatch`, ground truth), ingestion
   router, digital-PDF reader, LLM extraction node (`pipeline/nodes/extract.py`,
   `prompts/extract.v1.md`), validation, 3-way match, decision table, pipeline runner
-  (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, 104 tests.
+  (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, naive ReAct baseline, 112 tests.
 - Commands: `uv run python data/generate.py`, `uv run lunas run`,
   `uv run python -m evals.node.run` (`--skip-llm` for the deterministic part, `--cache`
   to record LLM replies and resume, `--cache --replay-only` to run with no LLM at all,
-  `--gate` for the PR gate, `--record` to refresh its recordings with a live run).
+  `--gate` for the PR gate, `--record` to refresh its recordings with a live run),
+  `uv run python -m evals.baseline.react` (live; `--cache` to resume).
 - Mock ERP is `lunas.erp.ErpData`, read from the generator's JSON in `data/out/`. Postgres
   comes later.
 - Measured, one run each, 30 invoices, dev data the prompt was written against. All three runs:
@@ -90,7 +91,30 @@ Update this section at the end of each working session.
 - `policies/default.yaml` is a design draft that no code loads yet. The approval threshold
   lives in `Settings.approval_threshold` and duplicates the value in that draft.
 - `compose.yaml` has never been run: no Podman machine existed on the Mac when it was written.
-- Left for week 1 (SPEC §12): tracing and the naive ReAct baseline.
+- Naive ReAct baseline built and measured (2026-11-16): `evals/baseline/react.py`, prompt
+  `prompts/baseline_react.v1.md`, one loop (max 8 turns) with raw invoice text and five
+  tools (`get_po`, `get_vendor`, `get_goods_receipts`, a mock `schedule_payment` that
+  accepts any account, `submit_decision`). The prompt states the same decision policy lunas
+  has in code, on purpose: the baseline must be fair or the comparison is worthless.
+- Baseline vs lunas, one live run each, same 30 invoices, Sumopod
+  `deepseek-v4.1-flash-1017`, 4 workers (`baseline-20261116-045546.json`,
+  `node-20261116-045614.json`):
+
+  | | Naive ReAct | lunas |
+  |---|---|---|
+  | Decision accuracy | 30/30 | 30/30 |
+  | False-approve | 0/10 | 0/10 |
+  | Requests per invoice | 3.7 (110 total) | 1 (30 total) |
+  | Tokens per invoice | 5,488 (164,646 total) | 1,313 (39,388 total) |
+  | Latency per invoice p50 / p95 | 5.7 s / 25.5 s | 1.9 s / 5.2 s |
+
+  **The baseline is as accurate as lunas on this dataset.** It called all three lookups on
+  every invoice, paid only the 20 clean ones, always to the vendor-master account and for the
+  invoice total. The measured difference is cost (4.2x tokens) and latency. Do not write or
+  imply an accuracy or safety advantage until harder classes (week 2) and the attack set
+  (week 3) are measured. Four baseline invoices took 24-28 s and set its p95; cause not
+  investigated (single run).
+- Left for week 1 (SPEC §12): tracing.
 - Planned for week 2: validating vision model support (`glm-5.3-flash` is listed on
   Sumopod but untested).
 
