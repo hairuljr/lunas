@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "Let me confirm the details of the earlier invoice GTK-26-00755 to see what it billed.",
+    "tool_calls": [
+      {
+        "id": "call_9ed149e0b12345b8878e3b5e",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

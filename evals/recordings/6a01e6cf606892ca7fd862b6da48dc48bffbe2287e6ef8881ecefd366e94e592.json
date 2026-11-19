@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Cemerlang Mandiri Boga\", \"invoice_number\": \"INV/2026/10/0350\", \"invoice_date\": \"2026-10-16\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0065\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 3, \"unit_price\": 191400, \"amount\": 574200}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 2, \"unit_price\": 1253600, \"amount\": 2507200}, {\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6641400, \"amount\": 6641400}], \"subtotal\": 9722800, \"tax\": 1069508, \"total\": 10792308, \"bank_account\": \"0088740260\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

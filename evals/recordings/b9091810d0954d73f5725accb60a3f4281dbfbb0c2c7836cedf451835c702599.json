@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/09/0616\", \"invoice_date\": \"2026-09-16\", \"due_date\": \"2026-10-16\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0081\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 6, \"unit_price\": 1343900, \"amount\": 8063400}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 5, \"unit_price\": 256400, \"amount\": 1282000}], \"subtotal\": 9345400, \"tax\": 1027994, \"total\": 10373394, \"bank_account\": \"5270418896\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
-}

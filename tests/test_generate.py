@@ -53,7 +53,7 @@ def test_dataset_has_every_class_layout_and_language(out: Path):
     }
 
 
-@pytest.mark.parametrize("invoices", [11, 16, 300, 301])
+@pytest.mark.parametrize("invoices", [12, 16, 300, 301])
 def test_class_counts_add_up_and_give_every_class_a_share(invoices: int):
     counts = _class_counts(invoices)
 

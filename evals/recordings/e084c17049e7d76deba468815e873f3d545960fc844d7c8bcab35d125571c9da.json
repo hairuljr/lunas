@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"clause_id\": \"KTR-V-018#11.1\", \"quote\": \"Addendum No. 1 dated August 6, 2026: from September 4, 2026, the unit price of Monthly Cleaning Service is changed to IDR 8,208,000.00 per unit.\", \"unit_price\": 8208000, \"effective_date\": \"2026-09-04\"}"
-}

@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Harapan Mandiri Kebersihan\", \"invoice_number\": \"INV/2026/09/0412\", \"invoice_date\": \"2026-09-10\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0213\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kantong Sampah 90x120 (pak)\", \"quantity\": 16, \"unit_price\": 69100, \"amount\": 1105600}], \"subtotal\": 1105600, \"tax\": 121616, \"total\": 1227216, \"bank_account\": \"646040715059\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
-}

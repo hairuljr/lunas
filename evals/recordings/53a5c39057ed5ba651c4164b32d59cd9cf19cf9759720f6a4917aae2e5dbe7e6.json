@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Sterling Hygiene Group\", \"invoice_number\": \"SHG-26-00453\", \"invoice_date\": \"2026-09-28\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0028\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Trash Bags 90x120 (pack)\", \"quantity\": 5, \"unit_price\": 73600.0, \"amount\": 368000.0}], \"subtotal\": 368000.0, \"tax\": 40480.0, \"total\": 408480.0, \"bank_account\": \"83078932117\", \"notes\": \"Thank you for your business.\"}"
+}

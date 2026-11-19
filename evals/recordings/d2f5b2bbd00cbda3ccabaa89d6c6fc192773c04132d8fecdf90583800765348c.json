@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Sterling Packaging Ltd\", \"invoice_number\": \"INV-SPL-00854\", \"invoice_date\": \"2026-09-27\", \"due_date\": \"2026-10-27\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0214\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Wooden Pallet 110x110\", \"quantity\": 19, \"unit_price\": 172600, \"amount\": 3279400}, {\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 16, \"unit_price\": 85100, \"amount\": 1361600}, {\"description\": \"Clear Tape 48mm (box)\", \"quantity\": 8, \"unit_price\": 407400, \"amount\": 3259200}, {\"description\": \"Double Wall Carton 40x40x40\", \"quantity\": 5, \"unit_price\": 13600, \"amount\": 68000}], \"subtotal\": 7968200, \"tax\": 876502, \"total\": 8844702, \"bank_account\": \"73128689516\", \"notes\": null}"
-}

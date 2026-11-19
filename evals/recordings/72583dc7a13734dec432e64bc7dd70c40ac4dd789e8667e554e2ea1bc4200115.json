@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Borneo Hygiene Services\", \"invoice_number\": \"BHS2600607\", \"invoice_date\": \"2026-11-01\", \"due_date\": \"2026-11-15\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0249\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Monthly Cleaning Service\", \"quantity\": 1, \"unit_price\": 7978600.00, \"amount\": 7978600.00}, {\"description\": \"Floor Cleaner 5L\", \"quantity\": 17, \"unit_price\": 92300.00, \"amount\": 1569100.00}], \"subtotal\": 9547700.00, \"tax\": 1050247.00, \"total\": 10597947.00, \"bank_account\": \"0712264490\", \"notes\": \"Thank you for your business.\"}"
-}

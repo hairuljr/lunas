@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sakti Gemilang Teknologi\", \"invoice_number\": \"SGT/2026/00653\", \"invoice_date\": \"2026-10-09\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0037\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"SSD Eksternal 1TB\", \"quantity\": 2, \"unit_price\": 1969300, \"amount\": 3938600}, {\"description\": \"Router Nirkabel Dual-Band\", \"quantity\": 7, \"unit_price\": 1326500, \"amount\": 9285500}], \"subtotal\": 13224100, \"tax\": 1454651, \"total\": 14678751, \"bank_account\": \"3517364468987\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
-}

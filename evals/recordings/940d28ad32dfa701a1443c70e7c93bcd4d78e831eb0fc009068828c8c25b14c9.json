@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"clause_id\": \"KTR-V-020#11.1\", \"quote\": \"Addendum No. 1 dated August 3, 2026: from October 7, 2026, the unit price of Meeting Catering (package) is changed to IDR 1,458,000.00 per unit.\", \"unit_price\": 1458000, \"effective_date\": \"2026-10-07\"}"
-}

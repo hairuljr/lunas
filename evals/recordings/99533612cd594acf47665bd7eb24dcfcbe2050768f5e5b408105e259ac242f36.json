@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate the records for this invoice.",
+    "tool_calls": [
+      {
+        "id": "call_23546ec6a9584253be89640f",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0209\"}"
+      },
+      {
+        "id": "call_8593ddcaea3a438f96480aad",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0209\"}"
+      },
+      {
+        "id": "call_0bb936a2ba8f456396f830d3",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

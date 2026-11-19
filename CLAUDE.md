@@ -20,7 +20,7 @@ Update this section at the end of each working session.
   (`pipeline/nodes/extract.py`, `prompts/extract.v2.md`), validation (arithmetic, dates,
   tax rate), duplicate check, 3-way match (with payment terms), decision table, pipeline
   runner (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, naive ReAct
-  baseline, tracing, contract retrieval (`lunas.retrieval`), contract-check node, router, 198 tests.
+  baseline, tracing, contract retrieval (`lunas.retrieval`), contract-check node, router, investigation loop, 212 tests.
 - Commands: `uv run python data/generate.py`, `uv run lunas run`,
   `uv run python -m evals.node.run` (dev split by default, `--split test|all`;
   `--skip-llm` for the deterministic part, `--cache`
@@ -321,8 +321,37 @@ Update this section at the end of each working session.
   - LangGraph approval (next): interrupt + Postgres checkpointer; in eval and the gate the
     run records that the invoice stopped at the right checkpoint with the right state and
     moves on, never waiting for input.
-- Remaining week 2: the investigation loop itself + its eval, LangGraph approval, OCR and
-  vision with scanned versions.
+- Investigation loop built (2026-11-19, not committed):
+  - New class `split_delivery` (23 of 300): the PO orders twice the billed quantity, two
+    goods receipts, the first half already invoiced and paid with the same total. The
+    duplicate check flags `possible_duplicate`; the expected cause is
+    `separate_delivery`, against `resubmission` for `duplicate/renumbered`. 93 clean, 23
+    per other class; dev 155 / test 145.
+  - `pipeline/nodes/investigate.py`, prompt `investigate.v1`, max 6 turns. Tools, all
+    read-only and scoped to the invoice's vendor: `get_purchase_order`,
+    `get_goods_receipts`, `get_vendor_invoices` (ledger), `get_vendor_terms` (no bank
+    details), `search_contract` (`ContractRetriever.search_clauses`), and `submit_report`.
+    The brief is typed fields, issues with their allowed causes, and the contract check's
+    verdicts; no notes, no invoice bank account, descriptions labelled vendor-written.
+  - Code finalises the report: one diagnosis per issue (issues without a line are matched
+    by code), causes outside `POSSIBLE_CAUSES` become `unclear`, evidence is valid only if
+    every ref was returned by a tool or is the vendor id / this invoice's number from the
+    brief. An unfinished loop gives `unclear` diagnoses. The decision is never touched.
+  - LLM client: `complete_tools` on `OpenAICompatClient` (same traced `_send` path as
+    `complete`) and on `RecordingClient`, so the gate replays tool turns too.
+  - Measured on dev, one live run (`node-20261119-085055.json`): 72/72 routed invoices
+    investigated and finished; cause 71/72 (98.6%; the miss: one split delivery called a
+    resubmission); evidence valid 70/72 (two short deliveries cited a record the tools
+    had not returned); 0 causes rejected by code; turns mean 2.4, max 4; investigation
+    seconds p50 7.7, p95 51.5. Decisions unchanged, 155/155; route 155/155. Whole dev run:
+    358 requests, 647k tokens, 0.077 of the balance (now 2.9618). Not measured on test.
+  - Gate re-recorded with the investigation on (`recording.json` has `investigate: true`;
+    cause accuracy is a gated metric with the 2-point rule; the fingerprint covers
+    `investigate.v1`): 358 replies + 83 retrievals, 1.7 MB. Verified offline.
+  - `--no-investigate` skips the loop in the node eval; the eval tests use it because
+    their stand-in model has no tool calls.
+- Remaining week 2: LangGraph approval (interrupt + Postgres checkpointer, non-blocking in
+  eval), investigation on the test split, OCR and vision with scanned versions.
 
 ## Design rules that must not erode
 

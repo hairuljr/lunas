@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Gemilang Tunggal Kebersihan\", \"invoice_number\": \"GTK-26-00868\", \"invoice_date\": \"2026-10-21\", \"due_date\": \"2026-12-05\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0183\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Tisu Gulung (karton)\", \"quantity\": 13, \"unit_price\": 312200, \"amount\": 4058600}, {\"description\": \"Pengharum Ruangan Otomatis\", \"quantity\": 14, \"unit_price\": 241300, \"amount\": 3378200}, {\"description\": \"Sabun Cuci Tangan 5L\", \"quantity\": 4, \"unit_price\": 111800, \"amount\": 447200}], \"subtotal\": 7884000, \"tax\": 867240, \"total\": 8751240, \"bank_account\": \"1962502750\", \"notes\": null}"
-}

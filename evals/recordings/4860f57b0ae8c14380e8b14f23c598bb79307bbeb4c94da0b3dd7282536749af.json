@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Utama Mandiri Alat Kantor\", \"invoice_number\": \"0707/UMA/X/2026\", \"invoice_date\": \"2026-10-21\", \"due_date\": \"2026-11-04\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0291\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 7, \"unit_price\": 1193500, \"amount\": 8354500}, {\"description\": \"Pulpen Gel Hitam (kotak)\", \"quantity\": 6, \"unit_price\": 51200, \"amount\": 307200}, {\"description\": \"Kertas HVS A4 80gsm (rim)\", \"quantity\": 9, \"unit_price\": 51400, \"amount\": 462600}], \"subtotal\": 9124300, \"tax\": 1003673, \"total\": 10127973, \"bank_account\": \"5761969869701\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

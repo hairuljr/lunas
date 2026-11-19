@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by examining the purchase order, goods receipts, and vendor's earlier invoices to understand the context.",
+    "tool_calls": [
+      {
+        "id": "call_3b79435830ab4df58577f39b",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0022\"}"
+      },
+      {
+        "id": "call_df664674c56f4eb69b3f5e29",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0022\"}"
+      },
+      {
+        "id": "call_cbf8cd05c4b24aa3ab96214c",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_53f90e05ba474b1890634938",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"tax rate VAT percentage applicable to invoices\"}"
+      }
+    ]
+  }
+}

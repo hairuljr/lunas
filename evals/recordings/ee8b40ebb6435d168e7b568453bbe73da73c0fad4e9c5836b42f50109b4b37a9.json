@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "Let me verify the prior invoice details to confirm it billed the same goods.",
+    "tool_calls": [
+      {
+        "id": "call_1c4c3f431fe344989024eec0",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_473d063cb84e4ab4b0ce2980",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"What does the contract say about the antivirus license and Monitor LED pricing on PO-2026-0107, and about re-billing the same delivery?\"}"
+      }
+    ]
+  }
+}

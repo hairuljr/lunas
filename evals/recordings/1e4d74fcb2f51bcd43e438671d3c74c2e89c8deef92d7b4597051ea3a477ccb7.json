@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Perkasa Cahaya Kemasan\", \"invoice_number\": \"INV/2026/09/0305\", \"invoice_date\": \"2026-09-27\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0179\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Palet Kayu 110x110\", \"quantity\": 19, \"unit_price\": 164400, \"amount\": 3123600}], \"subtotal\": 3123600, \"tax\": 343596, \"total\": 3467196, \"bank_account\": \"3976963276\", \"notes\": null}"
-}

@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Utama Bumi Kemasan\", \"invoice_number\": \"UBK/2026/00520\", \"invoice_date\": \"2026-09-29\", \"due_date\": \"2026-10-13\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0079\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Palet Kayu 110x110\", \"quantity\": 1, \"unit_price\": 189800, \"amount\": 189800}, {\"description\": \"Label Pengiriman A6 (rol)\", \"quantity\": 7, \"unit_price\": 73100, \"amount\": 511700}, {\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 2, \"unit_price\": 276600, \"amount\": 553200}, {\"description\": \"Lakban Bening 48mm (dus)\", \"quantity\": 6, \"unit_price\": 398500, \"amount\": 2391000}], \"subtotal\": 3645700, \"tax\": 401027, \"total\": 4046727, \"bank_account\": \"619217792417\", \"notes\": null}"
-}

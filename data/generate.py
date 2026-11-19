@@ -89,6 +89,7 @@ Label = Literal[
     "bank_account_change",
     "payment_terms",
     "price_amendment",
+    "split_delivery",
 ]
 Split = Literal["dev", "test"]
 
@@ -104,6 +105,7 @@ CLASS_WEIGHTS: dict[Label, int] = {
     "bank_account_change": 2,
     "payment_terms": 2,
     "price_amendment": 2,
+    "split_delivery": 2,
 }
 
 # What the pipeline must conclude for each class (and variant), and from which issues.
@@ -123,6 +125,10 @@ EXPECTED: dict[tuple[Label, str | None], tuple[Decision, list[str]]] = {
     # in effect, and only then.
     ("price_amendment", "in_effect"): (Decision.APPROVE, []),
     ("price_amendment", "too_early"): (Decision.HOLD, ["price_mismatch"]),
+    # The second half of an order, delivered and received separately, for the same amount as
+    # the first half, which is already paid. Legitimate, but the duplicate check cannot tell
+    # it from a resubmission: it is held, and the investigation must tell them apart.
+    ("split_delivery", None): (Decision.HOLD, ["possible_duplicate"]),
 }
 # Where the router must send each class (and variant) after the contract check, and the
 # cause a correct investigation finds. Only invoices routed to investigation have causes.
@@ -142,6 +148,7 @@ EXPECTED_INVESTIGATION: dict[tuple[Label, str | None], tuple[Route, list[Excepti
         Route.INVESTIGATE,
         [ExceptionCause.CONTRACT_PRICE_NOT_YET_EFFECTIVE],
     ),
+    ("split_delivery", None): (Route.INVESTIGATE, [ExceptionCause.SEPARATE_DELIVERY]),
 }
 # Issues the deterministic checks raise that the contract check is expected to clear.
 CLEARED_BY_CONTRACT: dict[tuple[Label, str | None], list[str]] = {
@@ -704,6 +711,21 @@ def build_dataset(seed: int = DEFAULT_SEED, invoices: int = DEFAULT_INVOICES) ->
             )
             po_lines = po_lines[:4]
 
+        # What this invoice bills of each PO line. A split delivery orders twice as much and
+        # bills half: the first half was received, invoiced and paid earlier.
+        billed = [line.quantity for line in po_lines]
+        first_invoice_date = invoice_date
+        receipts = [(received_date, billed)]
+        if label == "split_delivery":
+            po_lines = [
+                line.model_copy(update={"quantity": quantity * 2})
+                for line, quantity in zip(po_lines, billed, strict=True)
+            ]
+            second_received = received_date + timedelta(days=rng.randint(7, 14))
+            first_invoice_date = received_date + timedelta(days=rng.randint(0, 3))
+            invoice_date = second_received + timedelta(days=rng.randint(0, 3))
+            receipts = [(received_date, billed), (second_received, billed)]
+
         po_number: str | None = f"PO-{order_date.year}-{number:04d}"
         if label == "no_po":
             # Neither variant has a PO in the ERP: one prints none, one cites a number
@@ -719,23 +741,24 @@ def build_dataset(seed: int = DEFAULT_SEED, invoices: int = DEFAULT_INVOICES) ->
                     lines=po_lines,
                 )
             )
-            received = [line.quantity for line in po_lines]
             if label == "quantity_mismatch":
-                received = _short_delivery(rng, received)
-            receipt_lines = [
-                GoodsReceiptLine(description=line.description, quantity=quantity)
-                for line, quantity in zip(po_lines, received, strict=True)
-                if quantity > 0
-            ]
-            if receipt_lines:
-                goods_receipts.append(
-                    GoodsReceipt(
-                        gr_number=f"GR-{received_date.year}-{number:04d}",
-                        po_number=po_number,
-                        received_date=received_date,
-                        lines=receipt_lines,
+                receipts = [(received_date, _short_delivery(rng, billed))]
+            for suffix, (date_received, received) in zip("AB", receipts, strict=False):
+                receipt_lines = [
+                    GoodsReceiptLine(description=line.description, quantity=quantity)
+                    for line, quantity in zip(po_lines, received, strict=True)
+                    if quantity > 0
+                ]
+                if receipt_lines:
+                    goods_receipts.append(
+                        GoodsReceipt(
+                            gr_number=f"GR-{date_received.year}-{number:04d}"
+                            + (suffix if len(receipts) > 1 else ""),
+                            po_number=po_number,
+                            received_date=date_received,
+                            lines=receipt_lines,
+                        )
                     )
-                )
 
         # The invoice always bills what was ordered: a short delivery is billed in full.
         prices = [line.unit_price for line in po_lines]
@@ -746,11 +769,11 @@ def build_dataset(seed: int = DEFAULT_SEED, invoices: int = DEFAULT_INVOICES) ->
         line_items = [
             LineItem(
                 description=line.description,
-                quantity=line.quantity,
+                quantity=quantity,
                 unit_price=price,
-                amount=line.quantity * price,
+                amount=quantity * price,
             )
-            for line, price in zip(po_lines, prices, strict=True)
+            for line, quantity, price in zip(po_lines, billed, prices, strict=True)
         ]
         subtotal = sum((item.amount for item in line_items), Decimal(0))
         tax = subtotal * tax_rate(label)
@@ -771,6 +794,21 @@ def build_dataset(seed: int = DEFAULT_SEED, invoices: int = DEFAULT_INVOICES) ->
         sequences[vendor_index] += rng.randint(1, 9)
         original_number = _invoice_number(spec, invoice_date, sequences[vendor_index])
         printed_number, printed_date = original_number, invoice_date
+        if label == "split_delivery":
+            # The first half's invoice is in the ledger; this one bills the second half.
+            history.append(
+                InvoiceRecord(
+                    vendor_id=_vendor_id(vendor_index),
+                    invoice_number=_invoice_number(
+                        spec, first_invoice_date, sequences[vendor_index]
+                    ),
+                    invoice_date=first_invoice_date,
+                    total=total,
+                    po_number=po_number,
+                )
+            )
+            sequences[vendor_index] += rng.randint(1, 9)
+            printed_number = _invoice_number(spec, invoice_date, sequences[vendor_index])
         if label == "duplicate":
             # The original is already in the ledger, paid. The PDF is either the same
             # invoice again, or the same bill under a new number and date.

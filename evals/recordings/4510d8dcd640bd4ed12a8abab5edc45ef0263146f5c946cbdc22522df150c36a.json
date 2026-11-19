@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sakti Gemilang Teknologi\", \"invoice_number\": \"SGT/2026/00680\", \"invoice_date\": \"2026-10-11\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0277\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lisensi Antivirus 1 Tahun\", \"quantity\": 17, \"unit_price\": 402700, \"amount\": 6845900}, {\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 4, \"unit_price\": 1337700, \"amount\": 5350800}, {\"description\": \"Keyboard Mekanikal USB\", \"quantity\": 11, \"unit_price\": 702300, \"amount\": 7725300}, {\"description\": \"SSD Eksternal 1TB\", \"quantity\": 4, \"unit_price\": 1692200, \"amount\": 6768800}], \"subtotal\": 26690800, \"tax\": 2935988, \"total\": 29626788, \"bank_account\": \"3517364468987\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

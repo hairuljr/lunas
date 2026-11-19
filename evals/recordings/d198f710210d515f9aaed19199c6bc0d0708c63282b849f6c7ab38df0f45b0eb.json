@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Kemas Prima Indonesia\", \"invoice_number\": \"00450/KPI/2026\", \"invoice_date\": \"2026-10-08\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0008\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Label Pengiriman A6 (rol)\", \"quantity\": 20, \"unit_price\": 77100, \"amount\": 1542000}, {\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 5, \"unit_price\": 308700, \"amount\": 1543500}, {\"description\": \"Palet Kayu 110x110\", \"quantity\": 17, \"unit_price\": 186200, \"amount\": 3165400}], \"subtotal\": 6250900, \"tax\": 687599, \"total\": 6938499, \"bank_account\": \"4102583697\", \"notes\": null}"
-}

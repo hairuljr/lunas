@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Pacific Foods Group\", \"invoice_number\": \"INV/2026/09/0855\", \"invoice_date\": \"2026-09-30\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0280\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Granulated Sugar 1kg\", \"quantity\": 4, \"unit_price\": 18700.0, \"amount\": 74800.0}, {\"description\": \"Tea Bags (box of 100)\", \"quantity\": 15, \"unit_price\": 45100.0, \"amount\": 676500.0}], \"subtotal\": 751300.0, \"tax\": 82643.0, \"total\": 833943.0, \"bank_account\": \"3559895203034\", \"notes\": \"Late payments are subject to a 2% monthly charge.\"}"
-}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Perkasa Cahaya Kemasan\", \"invoice_number\": \"INV/2026/10/0353\", \"invoice_date\": \"2026-10-09\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0099\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Stretch Film 500mm (rol)\", \"quantity\": 13, \"unit_price\": 80100, \"amount\": 1041300}, {\"description\": \"Label Pengiriman A6 (rol)\", \"quantity\": 2, \"unit_price\": 66700, \"amount\": 133400}], \"subtotal\": 1174700, \"tax\": 129217, \"total\": 1303917, \"bank_account\": \"3976963276\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
+}

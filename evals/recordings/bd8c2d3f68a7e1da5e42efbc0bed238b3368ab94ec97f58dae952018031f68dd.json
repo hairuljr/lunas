@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Mandiri Cemerlang Boga\", \"invoice_number\": \"MCB26090102\", \"invoice_date\": \"2026-09-20\", \"due_date\": \"2026-10-20\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0195\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Air Mineral Galon 19L\", \"quantity\": 6, \"unit_price\": 21700, \"amount\": 130200}], \"subtotal\": 130200, \"tax\": 14322, \"total\": 144522, \"bank_account\": \"3339682443689\", \"notes\": null}"
-}

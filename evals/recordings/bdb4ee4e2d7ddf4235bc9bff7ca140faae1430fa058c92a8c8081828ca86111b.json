@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mandiri Cemerlang Boga\", \"invoice_number\": \"MCB26100421\", \"invoice_date\": \"2026-10-17\", \"due_date\": \"2026-11-16\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0235\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 4, \"unit_price\": 220700, \"amount\": 882800}], \"subtotal\": 882800, \"tax\": 97108, \"total\": 979908, \"bank_account\": \"3339682443689\", \"notes\": null}"
+}

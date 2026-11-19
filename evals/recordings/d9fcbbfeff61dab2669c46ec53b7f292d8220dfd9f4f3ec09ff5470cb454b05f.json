@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "\n\n",
+    "tool_calls": [
+      {
+        "id": "call_a1160c957f79455e8af14eea",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_986fe4982dfa4988977c6352",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0029\"}"
+      },
+      {
+        "id": "call_85ec163942ee4edd9808cd8f",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_68442f98290347948139dd9a",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"payment terms days\"}"
+      }
+    ]
+  }
+}

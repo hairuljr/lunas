@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Keystone Office Supply Ltd\", \"invoice_number\": \"KOS-26-00639\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-11-16\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0036\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lever Arch Files (dozen)\", \"quantity\": 6, \"unit_price\": 237600, \"amount\": 1425600}, {\"description\": \"Black Gel Pens (box)\", \"quantity\": 10, \"unit_price\": 49000, \"amount\": 490000}], \"subtotal\": 1915600, \"tax\": 229872, \"total\": 2145472, \"bank_account\": \"9118906995\", \"notes\": null}"
+}

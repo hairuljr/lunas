@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sari Rasa Catering\", \"invoice_number\": \"INV.0366.10.2026\", \"invoice_date\": \"2026-10-26\", \"due_date\": \"2026-11-09\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0210\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 7, \"unit_price\": 40500, \"amount\": 283500}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 3, \"unit_price\": 1252100, \"amount\": 3756300}, {\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6275800, \"amount\": 6275800}, {\"description\": \"Air Mineral Galon 19L\", \"quantity\": 10, \"unit_price\": 19000, \"amount\": 190000}], \"subtotal\": 10505600, \"tax\": 1155616, \"total\": 11661216, \"bank_account\": \"7153309842\", \"notes\": \"Semua nilai dalam Rupiah (IDR).\"}"
-}

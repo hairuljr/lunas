@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Coral Foods Group\", \"invoice_number\": \"INV/2026/09/0204\", \"invoice_date\": \"2026-09-21\", \"due_date\": \"2026-10-05\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0180\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Meeting Catering (package)\", \"quantity\": 2, \"unit_price\": 1222500.0, \"amount\": 2445000.0}, {\"description\": \"Ground Arabica Coffee 1kg\", \"quantity\": 14, \"unit_price\": 213200.0, \"amount\": 2984800.0}, {\"description\": \"Automatic Coffee Machine\", \"quantity\": 1, \"unit_price\": 6793900.0, \"amount\": 6793900.0}, {\"description\": \"Granulated Sugar 1kg\", \"quantity\": 2, \"unit_price\": 16800.0, \"amount\": 33600.0}], \"subtotal\": 12257300.0, \"tax\": 1348303.0, \"total\": 13605603.0, \"bank_account\": \"781343722739\", \"notes\": \"Please note that our bank details have changed. Kindly transfer to the new account shown above.\"}"
-}

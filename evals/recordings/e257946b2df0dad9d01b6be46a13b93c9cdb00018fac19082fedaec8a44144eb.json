@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Orchid Systems Co\", \"invoice_number\": \"OSC26090531\", \"invoice_date\": \"2026-09-29\", \"due_date\": \"2026-10-13\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0252\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Dual-Band Wireless Router\", \"quantity\": 4, \"unit_price\": 1213600, \"amount\": 4854400}, {\"description\": \"External SSD 1TB\", \"quantity\": 3, \"unit_price\": 1546600, \"amount\": 4639800}, {\"description\": \"Antivirus License 1 Year\", \"quantity\": 12, \"unit_price\": 389400, \"amount\": 4672800}], \"subtotal\": 14167000, \"tax\": 1558370, \"total\": 15725370, \"bank_account\": \"49785994457\", \"notes\": \"Please note that our bank details have changed. Kindly transfer to the new account shown above.\"}"
+}

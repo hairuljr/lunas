@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Coral Office Supply Co\", \"invoice_number\": \"COS/2026/00809\", \"invoice_date\": \"2026-10-19\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0296\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Ergonomic Office Chair\", \"quantity\": 1, \"unit_price\": 2007400.00, \"amount\": 2007400.00}, {\"description\": \"Black Laser Printer Toner\", \"quantity\": 4, \"unit_price\": 797100.00, \"amount\": 3188400.00}, {\"description\": \"A4 Copy Paper 80gsm (ream)\", \"quantity\": 12, \"unit_price\": 48600.00, \"amount\": 583200.00}], \"subtotal\": 5779000.00, \"tax\": 635690.00, \"total\": 6414690.00, \"bank_account\": \"1532228980\", \"notes\": null}"
-}

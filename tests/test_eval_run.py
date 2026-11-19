@@ -73,7 +73,7 @@ def run_eval(
     monkeypatch.setattr(eval_run, "build_retriever", no_contract_index)
     # Every invoice, so counts below are over the whole small dataset. The gate replays the
     # split it was recorded on.
-    split = [] if "--gate" in flags else ["--split", "all"]
+    split = [] if "--gate" in flags else ["--split", "all", "--no-investigate"]
     monkeypatch.setattr("sys.argv", ["run", "--data", str(out), *split, *flags])
     for old in (out.parent / "runs").glob("node-*.json"):
         old.unlink()

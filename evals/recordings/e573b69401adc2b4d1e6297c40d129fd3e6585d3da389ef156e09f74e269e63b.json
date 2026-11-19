@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Kemas Prima Indonesia\", \"invoice_number\": \"00456/KPI/2026\", \"invoice_date\": \"2026-08-24\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0044\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lakban Bening 48mm (dus)\", \"quantity\": 18, \"unit_price\": 466500, \"amount\": 8397000}, {\"description\": \"Palet Kayu 110x110\", \"quantity\": 9, \"unit_price\": 183700, \"amount\": 1653300}, {\"description\": \"Kardus Double Wall 40x40x40\", \"quantity\": 19, \"unit_price\": 13100, \"amount\": 248900}, {\"description\": \"Label Pengiriman A6 (rol)\", \"quantity\": 1, \"unit_price\": 65900, \"amount\": 65900}], \"subtotal\": 10365100, \"tax\": 1140161, \"total\": 11505261, \"bank_account\": \"4102583697\", \"notes\": null}"
-}

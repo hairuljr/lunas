@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Coral Office Supply Co\", \"invoice_number\": \"COS/2026/00765\", \"invoice_date\": \"2026-09-11\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0056\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Black Gel Pens (box)\", \"quantity\": 11, \"unit_price\": 48000, \"amount\": 528000}, {\"description\": \"Whiteboard 120x240\", \"quantity\": 4, \"unit_price\": 1155800, \"amount\": 4623200}, {\"description\": \"A4 Copy Paper 80gsm (ream)\", \"quantity\": 6, \"unit_price\": 55600, \"amount\": 333600}], \"subtotal\": 5484800, \"tax\": 603328, \"total\": 6088128, \"bank_account\": \"1532228980\", \"notes\": \"Thank you for your business.\"}"
-}

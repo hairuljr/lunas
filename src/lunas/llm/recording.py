@@ -11,13 +11,22 @@ replies were replayed; see `counts`.
 import hashlib
 import json
 import threading
+from dataclasses import asdict
 from pathlib import Path
+from typing import Any
 from urllib.parse import urlparse
 
 from opentelemetry import trace
 
 from lunas.config import Settings
-from lunas.llm.client import ChatClient, JsonSchema, Message, OpenAICompatClient
+from lunas.llm.client import (
+    ChatClient,
+    JsonSchema,
+    Message,
+    OpenAICompatClient,
+    ToolCall,
+    ToolTurn,
+)
 
 
 class RecordingMissingError(RuntimeError):
@@ -45,18 +54,33 @@ class RecordingClient:
         """Tokens of the live calls only. Replays cost nothing."""
         return getattr(self._inner, "usage", None)
 
-    def _path(self, messages: list[Message], schema: JsonSchema | None) -> Path:
+    def _path(self, messages: list[Message], key: object) -> Path:
         # The provider is part of the key: the same model ID is not the same model
         # everywhere, and comparing providers must never replay one as the other.
-        key = json.dumps(
-            [self.host, self.model, messages, schema.name if schema else None],
-            ensure_ascii=False,
-            sort_keys=True,
+        text = json.dumps(
+            [self.host, self.model, messages, key], ensure_ascii=False, sort_keys=True
         )
-        return self._directory / f"{hashlib.sha256(key.encode()).hexdigest()}.json"
+        return self._directory / f"{hashlib.sha256(text.encode()).hexdigest()}.json"
 
     def complete(self, messages: list[Message], schema: JsonSchema | None = None) -> str:
-        path = self._path(messages, schema)
+        path = self._path(messages, schema.name if schema else None)
+        record = self._replay(path)
+        if record is None:
+            reply = self._inner.complete(messages, schema)  # a failed request records nothing
+            record = self._record(path, {"reply": reply})
+        return record["reply"]
+
+    def complete_tools(self, messages: list[Message], tools: list[dict[str, Any]]) -> ToolTurn:
+        path = self._path(messages, {"tools": tools})
+        record = self._replay(path)
+        if record is None:
+            turn = self._inner.complete_tools(messages, tools)
+            record = self._record(path, {"turn": asdict(turn)})
+        turn = record["turn"]
+        return ToolTurn(turn["content"], [ToolCall(**call) for call in turn["tool_calls"]])
+
+    def _replay(self, path: Path) -> dict | None:
+        """The recorded reply, or None if a live call is needed and allowed."""
         with self._lock:
             self.used.add(path)
         if path.exists():
@@ -65,21 +89,22 @@ class RecordingClient:
             # No model was called, so there is no chat span. Say so on the node's span, or
             # a replayed trace reads like a run that cost nothing.
             trace.get_current_span().set_attribute("app.llm.replayed", True)
-            return json.loads(path.read_text(encoding="utf-8"))["reply"]
+            return json.loads(path.read_text(encoding="utf-8"))
         if self._inner is None:
             raise RecordingMissingError(
                 f"No recording for this request to {self.model} in {self._directory}"
             )
+        return None
 
-        reply = self._inner.complete(messages, schema)  # a failed request records nothing
-        record = {"host": self.host, "model": self.model, "reply": reply}
+    def _record(self, path: Path, payload: dict) -> dict:
+        record = {"host": self.host, "model": self.model} | payload
         self._directory.mkdir(parents=True, exist_ok=True)
         temporary = path.with_suffix(f".{threading.get_ident()}.tmp")
         temporary.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
         temporary.replace(path)  # atomic: a killed run never leaves half a recording
         with self._lock:
             self.counts["live"] += 1
-        return reply
+        return record
 
 
 def build_client(

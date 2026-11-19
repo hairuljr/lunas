@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Keystone Office Supply Ltd\", \"invoice_number\": \"KOS-26-00682\", \"invoice_date\": \"2026-09-21\", \"due_date\": \"2026-11-05\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0258\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Black Laser Printer Toner\", \"quantity\": 6, \"unit_price\": 842400, \"amount\": 5054400}, {\"description\": \"Whiteboard 120x240\", \"quantity\": 6, \"unit_price\": 1314600, \"amount\": 7887600}, {\"description\": \"Black Gel Pens (box)\", \"quantity\": 19, \"unit_price\": 52100, \"amount\": 989900}, {\"description\": \"Lever Arch Files (dozen)\", \"quantity\": 9, \"unit_price\": 282400, \"amount\": 2541600}], \"subtotal\": 16473500, \"tax\": 1812085, \"total\": 18285585, \"bank_account\": \"9118906995\", \"notes\": null}"
+}

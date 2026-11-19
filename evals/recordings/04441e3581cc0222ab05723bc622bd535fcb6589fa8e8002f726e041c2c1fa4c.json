@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"clause_id\": \"KTR-V-029#11.1\", \"quote\": \"Addendum No. 1 tanggal 7 Agustus 2026: terhitung sejak 6 Oktober 2026, harga satuan Stretch Film 500mm (rol) diubah menjadi Rp 96.100 per unit.\", \"unit_price\": 96100, \"effective_date\": \"2026-10-06\"}"
+}

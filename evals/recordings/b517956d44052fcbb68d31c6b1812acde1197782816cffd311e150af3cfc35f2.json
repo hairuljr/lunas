@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Sinar Utama Kemasan\", \"invoice_number\": \"SUK-26-00076\", \"invoice_date\": \"2026-09-29\", \"due_date\": \"2026-10-06\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0029\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Stretch Film 500mm (rol)\", \"quantity\": 16, \"unit_price\": 95300, \"amount\": 1524800}, {\"description\": \"Palet Kayu 110x110\", \"quantity\": 4, \"unit_price\": 191300, \"amount\": 765200}, {\"description\": \"Kardus Double Wall 40x40x40\", \"quantity\": 16, \"unit_price\": 15200, \"amount\": 243200}, {\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 13, \"unit_price\": 293900, \"amount\": 3820700}], \"subtotal\": 6353900, \"tax\": 698929, \"total\": 7052829, \"bank_account\": \"553958517971\", \"notes\": null}"
+}

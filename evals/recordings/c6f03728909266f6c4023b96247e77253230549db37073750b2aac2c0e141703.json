@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The ledger confirms the full picture. There is only one goods receipt (GR-2026-0134, 10 labels + 5 bubble wrap), which fully matches the PO. The earlier invoice INV-SPL-00190 already billed the entire PO amount of 2,555,220 on 2026-09-28. This invoice bills the identical lines and the identical total. Total invoiced across both invoices = 20 labels + 10 bubble wrap, far exceeding the 10 + 5 received. No second receipt exists to support a \"separate delivery.\"",
+    "tool_calls": [
+      {
+        "id": "call_423c2d88fcde400dbd58b4ef",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"resubmission\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0134\", \"detail\": \"Orders 10 x Shipping Labels A6 @75,000 and 5 x Bubble Wrap @310,400, total 2,302,000 pre-tax (2,555,220 with tax).\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0134\", \"detail\": \"Single receipt dated 2026-09-28 for exactly the ordered quantities: 10 labels and 5 bubble wrap.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"INV-SPL-00190\", \"detail\": \"Dated 2026-09-28 on PO-2026-0134, total 2,555,220 — already billed the full ordered/received quantity at identical prices.\"}, {\"kind\": \"invoice\", \"ref\": \"INV-SPL-00192\", \"detail\": \"Bills the same 10 labels @75,000 and 5 bubble wrap @310,400, total 2,555,220, identical to INV-SPL-00190.\"}], \"explanation\": \"The single goods receipt GR-2026-0134 was fully billed by the already-paid INV-SPL-00190, so this invoice resubmits the same goods and brings total invoiced quantity to twice what was received.\"}]}"
+      }
+    ]
+  }
+}

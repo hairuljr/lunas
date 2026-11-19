@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Utama Mandiri Alat Kantor\", \"invoice_number\": \"0299/UMA/IX/2026\", \"invoice_date\": \"2026-09-15\", \"due_date\": \"2026-09-29\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0051\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 2, \"unit_price\": 281700, \"amount\": 563400}, {\"description\": \"Pulpen Gel Hitam (kotak)\", \"quantity\": 16, \"unit_price\": 44700, \"amount\": 715200}, {\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 1, \"unit_price\": 1684500, \"amount\": 1684500}, {\"description\": \"Toner Printer Laser Hitam\", \"quantity\": 3, \"unit_price\": 804700, \"amount\": 2414100}], \"subtotal\": 5377200, \"tax\": 591492, \"total\": 5968692, \"bank_account\": \"5761969869701\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

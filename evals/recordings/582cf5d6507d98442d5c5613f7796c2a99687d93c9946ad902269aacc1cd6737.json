@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Orchid Systems Co\", \"invoice_number\": \"OSC26100255\", \"invoice_date\": \"2026-10-09\", \"due_date\": \"2026-10-23\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0085\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"External SSD 1TB\", \"quantity\": 3, \"unit_price\": 1814400, \"amount\": 5443200}, {\"description\": \"Antivirus License 1 Year\", \"quantity\": 19, \"unit_price\": 357700, \"amount\": 6796300}, {\"description\": \"Dual-Band Wireless Router\", \"quantity\": 1, \"unit_price\": 1105000, \"amount\": 1105000}, {\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 6, \"unit_price\": 1296900, \"amount\": 7781400}], \"subtotal\": 21125900, \"tax\": 2323849, \"total\": 23449749, \"bank_account\": \"40559225686\", \"notes\": null}"
-}

@@ -45,7 +45,13 @@ money. That is the lethal trifecta, so safety lives in the architecture rather t
   that sets the price; code verifies the citation word for word and the price and date
   against the invoice before clearing the mismatch.
 
-OCR and vision readers are stubs. The investigation loop and `gapura` are not built yet.
+- A four-lane router in code (clean, hard reject, human, investigate) and an investigation
+  agent: at most six turns of read-only tools scoped to the invoice's vendor, a cause from a
+  fixed taxonomy per issue, evidence that code checks against the records the tools
+  returned, and a follow-up action chosen by code. It never changes the decision.
+
+OCR and vision readers are stubs. Human approval with checkpoints and `gapura` are not built
+yet.
 
 ## Results
 

@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by reading the purchase order, goods receipts, and the vendor's ledger invoices.",
+    "tool_calls": [
+      {
+        "id": "call_ff46f858747f4d6b85625537",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0085\"}"
+      },
+      {
+        "id": "call_f839b0e8e65c4039a7f5f776",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0085\"}"
+      },
+      {
+        "id": "call_12ab8fd6c75841e4a209f652",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

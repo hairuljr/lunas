@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Java Office Furnishings\", \"invoice_number\": \"JOF/2026/00445\", \"invoice_date\": \"2026-09-18\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0046\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Whiteboard 120x240\", \"quantity\": 2, \"unit_price\": 1267700.00, \"amount\": 2535400.00}, {\"description\": \"Lever Arch Files (dozen)\", \"quantity\": 12, \"unit_price\": 257700.00, \"amount\": 3092400.00}], \"subtotal\": 5627800.00, \"tax\": 619058.00, \"total\": 6246858.00, \"bank_account\": \"800114673900\", \"notes\": \"Late payments are subject to a 2% monthly charge.\"}"
-}

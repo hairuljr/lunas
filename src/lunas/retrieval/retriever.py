@@ -31,6 +31,10 @@ class ContractRetriever(Protocol):
         the item's unit price, every clause of each article included."""
         ...
 
+    def search_clauses(self, vendor_id: str, query: str) -> list[ContractClause]:
+        """Any question about the vendor's own contract, answered with whole articles."""
+        ...
+
 
 class StoreRetriever:
     def __init__(self, store: ClauseStore, embedder: Embedder) -> None:
@@ -77,15 +81,26 @@ class RecordingRetriever:
         return self._directory / f"{hashlib.sha256(json.dumps(key).encode()).hexdigest()}.json"
 
     def price_clauses(self, vendor_id: str, vendor_name: str, item: str) -> list[ContractClause]:
-        path = self._path("price", vendor_id, vendor_name, item)
+        return self._recorded(
+            ("price", vendor_id, vendor_name, item),
+            lambda inner: inner.price_clauses(vendor_id, vendor_name, item),
+        )
+
+    def search_clauses(self, vendor_id: str, query: str) -> list[ContractClause]:
+        return self._recorded(
+            ("search", vendor_id, query), lambda inner: inner.search_clauses(vendor_id, query)
+        )
+
+    def _recorded(self, key: tuple[str, ...], fetch) -> list[ContractClause]:
+        path = self._path(*key)
         with self._lock:
             self.used.add(path)
         if path.exists():
             raw = json.loads(path.read_text(encoding="utf-8"))
             return [ContractClause.model_validate(item) for item in raw]
         if self._inner is None:
-            raise RecordingMissingError(f"No recorded retrieval for {vendor_id} / {item!r}")
-        clauses = self._inner.price_clauses(vendor_id, vendor_name, item)
+            raise RecordingMissingError(f"No recorded retrieval for {key}")
+        clauses = fetch(self._inner)
         self._directory.mkdir(parents=True, exist_ok=True)
         path.write_text(
             json.dumps([c.model_dump() for c in clauses], ensure_ascii=False, indent=1),

@@ -5,6 +5,9 @@ from lunas.llm.client import (
     LLMRequestError,
     Message,
     OpenAICompatClient,
+    ToolCall,
+    ToolChatClient,
+    ToolTurn,
 )
 from lunas.llm.prompts import load_prompt
 from lunas.llm.recording import RecordingClient, RecordingMissingError, build_client
@@ -20,6 +23,9 @@ __all__ = [
     "RecordingClient",
     "RecordingMissingError",
     "StructuredOutputError",
+    "ToolCall",
+    "ToolChatClient",
+    "ToolTurn",
     "build_client",
     "complete_structured",
     "load_prompt",

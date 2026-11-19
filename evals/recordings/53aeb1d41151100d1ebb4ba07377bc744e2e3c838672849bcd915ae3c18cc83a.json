@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202610-416\", \"invoice_date\": \"2026-10-05\", \"due_date\": \"2026-11-04\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0287\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Keyboard Mekanikal USB\", \"quantity\": 10, \"unit_price\": 587400, \"amount\": 5874000}, {\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 1, \"unit_price\": 1426400, \"amount\": 1426400}], \"subtotal\": 7300400, \"tax\": 803044, \"total\": 8103444, \"bank_account\": \"1030005542871\", \"notes\": null}"
+}

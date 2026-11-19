@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate the payment terms issue and also check the PO details for context.",
+    "tool_calls": [
+      {
+        "id": "call_669c65f9df314d48b2259b49",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_5ef815adf4814e33b8598b31",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0082\"}"
+      }
+    ]
+  }
+}

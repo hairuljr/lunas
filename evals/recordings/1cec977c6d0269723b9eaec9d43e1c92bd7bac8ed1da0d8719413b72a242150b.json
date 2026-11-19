@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Sakti Gemilang Teknologi\", \"invoice_number\": \"SGT/2026/00240\", \"invoice_date\": \"2026-10-07\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0277\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lisensi Antivirus 1 Tahun\", \"quantity\": 10, \"unit_price\": 417300, \"amount\": 4173000}, {\"description\": \"Keyboard Mekanikal USB\", \"quantity\": 7, \"unit_price\": 657900, \"amount\": 4605300}, {\"description\": \"Router Nirkabel Dual-Band\", \"quantity\": 6, \"unit_price\": 1193700, \"amount\": 7162200}], \"subtotal\": 15940500, \"tax\": 1753455, \"total\": 17693955, \"bank_account\": \"3517364468987\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Cemerlang Mandiri Boga\", \"invoice_number\": \"INV/2026/10/0567\", \"invoice_date\": \"2026-10-13\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0065\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 5789300, \"amount\": 5789300}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 3, \"unit_price\": 1483200, \"amount\": 4449600}, {\"description\": \"Gula Pasir 1kg\", \"quantity\": 17, \"unit_price\": 17300, \"amount\": 294100}], \"subtotal\": 10533000, \"tax\": 1158630, \"total\": 11691630, \"bank_account\": \"0088740260\", \"notes\": null}"
+}

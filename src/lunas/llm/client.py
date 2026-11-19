@@ -19,7 +19,23 @@ from lunas.telemetry import capture_content, set_attributes, span
 #   none         plain completion; the JSON is cut out of the reply text
 # Whatever the mode, the reply is validated with Pydantic by the caller.
 
-Message = dict[str, str]
+# A chat message. Tool-calling turns carry lists (`tool_calls`), so values are not all text.
+Message = dict[str, Any]
+
+
+@dataclass(frozen=True)
+class ToolCall:
+    id: str
+    name: str
+    arguments: str
+
+
+@dataclass(frozen=True)
+class ToolTurn:
+    """An assistant turn: text, tool calls, or both."""
+
+    content: str
+    tool_calls: list[ToolCall]
 
 
 @dataclass(frozen=True)
@@ -32,6 +48,12 @@ class ChatClient(Protocol):
     model: str
 
     def complete(self, messages: list[Message], schema: JsonSchema | None = None) -> str: ...
+
+
+class ToolChatClient(Protocol):
+    model: str
+
+    def complete_tools(self, messages: list[Message], tools: list[dict[str, Any]]) -> ToolTurn: ...
 
 
 class LLMNotConfiguredError(RuntimeError):
@@ -109,11 +131,7 @@ class OpenAICompatClient:
         )
 
     def complete(self, messages: list[Message], schema: JsonSchema | None = None) -> str:
-        if self._system_role == "user":
-            messages = fold_system_messages(messages)
-        request: dict[str, Any] = {"model": self.model, "messages": messages}
-        if self._temperature is not None:
-            request["temperature"] = self._temperature
+        request: dict[str, Any] = {}
         if schema is not None and self._structured_output == "json_schema":
             request["response_format"] = {
                 "type": "json_schema",
@@ -121,7 +139,33 @@ class OpenAICompatClient:
             }
         elif schema is not None and self._structured_output == "json_object":
             request["response_format"] = {"type": "json_object"}
+        attributes = {
+            "gen_ai.output.type": "json" if schema is not None else "text",
+            "app.llm.structured_output": self._structured_output if schema else None,
+        }
+        return self._send(messages, request, attributes).message.content or ""
 
+    def complete_tools(self, messages: list[Message], tools: list[dict[str, Any]]) -> ToolTurn:
+        """One model call that may answer with tool calls instead of text."""
+        message = self._send(messages, {"tools": tools}, {"gen_ai.output.type": "text"}).message
+        return ToolTurn(
+            content=message.content or "",
+            tool_calls=[
+                ToolCall(call.id, call.function.name, call.function.arguments)
+                for call in message.tool_calls or []
+            ],
+        )
+
+    def _send(
+        self, messages: list[Message], request: dict[str, Any], attributes: dict[str, Any]
+    ) -> Any:
+        """One chat completion inside one `chat` span, with usage counted. Returns the
+        first choice."""
+        if self._system_role == "user":
+            messages = fold_system_messages(messages)
+        request = {"model": self.model, "messages": messages} | request
+        if self._temperature is not None:
+            request["temperature"] = self._temperature
         attributes = {
             "gen_ai.operation.name": "chat",
             # The endpoint that served the call. The same model ID is not the same model
@@ -130,9 +174,7 @@ class OpenAICompatClient:
             "server.address": self.host,
             "gen_ai.request.model": self.model,
             "gen_ai.request.temperature": self._temperature,
-            "gen_ai.output.type": "json" if schema is not None else "text",
-            "app.llm.structured_output": self._structured_output if schema else None,
-        }
+        } | attributes
         with span(f"chat {self.model}", attributes, SpanKind.CLIENT) as current:
             if capture_content():
                 current.set_attribute("gen_ai.input.messages", json.dumps(_parts(messages)))
@@ -142,7 +184,6 @@ class OpenAICompatClient:
             except APIError as error:
                 raise LLMRequestError(f"{type(error).__name__}: {error}") from error
             choice = response.choices[0]
-            reply = choice.message.content or ""
             usage = response.usage
             set_attributes(
                 current,
@@ -155,7 +196,7 @@ class OpenAICompatClient:
                 },
             )
             if capture_content():
-                output = _parts([{"role": "assistant", "content": reply}])
+                output = _parts([_as_message(choice.message)])
                 output[0]["finish_reason"] = choice.finish_reason
                 current.set_attribute("gen_ai.output.messages", json.dumps(output))
         with self._throttle:
@@ -163,15 +204,34 @@ class OpenAICompatClient:
             if usage is not None:
                 self.usage["prompt_tokens"] += usage.prompt_tokens
                 self.usage["completion_tokens"] += usage.completion_tokens
-        return reply
+        return choice
+
+
+def _as_message(message: Any) -> Message:
+    calls = [
+        {"id": c.id, "name": c.function.name, "arguments": c.function.arguments}
+        for c in getattr(message, "tool_calls", None) or []
+    ]
+    return {"role": "assistant", "content": message.content or "", "tool_calls": calls}
 
 
 def _parts(messages: list[Message]) -> list[dict[str, Any]]:
     """Messages in the shape the GenAI semantic conventions define for span content."""
-    return [
-        {"role": message["role"], "parts": [{"type": "text", "content": message["content"]}]}
-        for message in messages
-    ]
+    parts = []
+    for message in messages:
+        content = [{"type": "text", "content": message.get("content") or ""}]
+        for call in message.get("tool_calls") or []:
+            function = call.get("function", call)
+            content.append(
+                {
+                    "type": "tool_call",
+                    "id": call.get("id"),
+                    "name": function.get("name"),
+                    "arguments": function.get("arguments"),
+                }
+            )
+        parts.append({"role": message["role"], "parts": content})
+    return parts
 
 
 def fold_system_messages(messages: list[Message]) -> list[Message]:

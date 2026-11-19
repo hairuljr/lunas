@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sari Rasa Catering\", \"invoice_number\": \"INV.0367.10.2026\", \"invoice_date\": \"2026-10-17\", \"due_date\": \"2026-10-31\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0250\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 12, \"unit_price\": 190700, \"amount\": 2288400}], \"subtotal\": 2288400, \"tax\": 251724, \"total\": 2540124, \"bank_account\": \"7153309842\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
-}

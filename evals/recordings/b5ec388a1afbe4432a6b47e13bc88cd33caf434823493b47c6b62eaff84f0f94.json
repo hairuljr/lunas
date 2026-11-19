@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by gathering the key records for this vendor and PO.",
+    "tool_calls": [
+      {
+        "id": "call_aa5d8c0aa3254e8b98946648",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_a06cfb10b97d43cba8fe0375",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0213\"}"
+      },
+      {
+        "id": "call_624ff0fe27834afa9b2fd3d2",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"payment terms days invoicing\"}"
+      }
+    ]
+  }
+}

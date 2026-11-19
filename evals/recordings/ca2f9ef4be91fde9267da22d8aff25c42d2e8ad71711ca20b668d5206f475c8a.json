@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate this duplicate-total issue by examining the purchase order, receipts, and earlier invoices.",
+    "tool_calls": [
+      {
+        "id": "call_d98e67f4b7a541f3a52f276a",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0269\"}"
+      },
+      {
+        "id": "call_6ea799f344dc4bda8385e2ea",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0269\"}"
+      },
+      {
+        "id": "call_4716fb7736024630985767f1",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

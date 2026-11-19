@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Coral Foods Group\", \"invoice_number\": \"INV/2026/10/0299\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-10-16\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0220\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Mineral Water 19L Gallon\", \"quantity\": 2, \"unit_price\": 22600.0, \"amount\": 45200.0}, {\"description\": \"Ground Arabica Coffee 1kg\", \"quantity\": 19, \"unit_price\": 216000.0, \"amount\": 4104000.0}, {\"description\": \"Automatic Coffee Machine\", \"quantity\": 1, \"unit_price\": 6339600.0, \"amount\": 6339600.0}], \"subtotal\": 10488800.0, \"tax\": 1153768.0, \"total\": 11642568.0, \"bank_account\": \"296906444999\", \"notes\": \"Thank you for your business.\"}"
+}

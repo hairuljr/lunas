@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "\n\n",
+    "tool_calls": [
+      {
+        "id": "call_99294461625742eab89c431d",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0157\"}"
+      },
+      {
+        "id": "call_6fdfe285b98545dda4c3cd0e",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_b8729ed1c4a94d0c97bdd2b2",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"VAT / tax rate on invoices\"}"
+      },
+      {
+        "id": "call_7aa94c593f1641b8a3bf0890",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

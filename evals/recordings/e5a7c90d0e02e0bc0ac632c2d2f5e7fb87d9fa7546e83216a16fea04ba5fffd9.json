@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by pulling the purchase order, goods receipts, prior invoices, and contract.",
+    "tool_calls": [
+      {
+        "id": "call_ce96e4029d674f52bcea4262",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0217\"}"
+      },
+      {
+        "id": "call_0e5807bf223c4c93a7111981",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0217\"}"
+      },
+      {
+        "id": "call_3c1884d5b98c4465a838da55",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

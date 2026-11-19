@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate the price mismatch on line 1.",
+    "tool_calls": [
+      {
+        "id": "call_88df2cfabb834e7099c5b902",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0014\"}"
+      },
+      {
+        "id": "call_19ed9433d1a14cbda3117f7e",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"contract price for Double Wall Carton 40x40x40, effective date of prices\"}"
+      }
+    ]
+  }
+}

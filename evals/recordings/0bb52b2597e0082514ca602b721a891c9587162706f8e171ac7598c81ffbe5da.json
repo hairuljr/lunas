@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Harapan Mandiri Kebersihan\", \"invoice_number\": \"INV/2026/10/0414\", \"invoice_date\": \"2026-10-24\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0253\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Tisu Gulung (karton)\", \"quantity\": 13, \"unit_price\": 315500, \"amount\": 4101500}, {\"description\": \"Jasa Kebersihan Bulanan\", \"quantity\": 1, \"unit_price\": 8223600, \"amount\": 8223600}, {\"description\": \"Sabun Cuci Tangan 5L\", \"quantity\": 3, \"unit_price\": 127400, \"amount\": 382200}], \"subtotal\": 12707300, \"tax\": 1524876, \"total\": 14232176, \"bank_account\": \"631113852007\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

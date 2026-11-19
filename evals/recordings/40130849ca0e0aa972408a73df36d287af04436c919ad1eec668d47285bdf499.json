@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "\n\n",
+    "tool_calls": [
+      {
+        "id": "call_3c6823b6d31a40d587dba9cc",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"payment_terms_mismatch\", \"line\": null, \"cause\": \"payment_terms_shorter\", \"evidence\": [{\"kind\": \"vendor\", \"ref\": \"V-010\", \"detail\": \"Vendor's agreed payment terms on file are 14 days.\"}, {\"kind\": \"invoice\", \"ref\": \"INV.0777.10.2026\", \"detail\": \"Invoice date 2026-10-08 with due date 2026-10-15 asks for payment in 7 days.\"}], \"explanation\": \"The invoice's 7-day due date (2026-10-08 to 2026-10-15) is shorter than the 14-day terms agreed with vendor V-010.\"}]}"
+      }
+    ]
+  }
+}

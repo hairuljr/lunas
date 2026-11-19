@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The invoice is dated 2026-09-21, but the contract price of 842400 only takes effect 2026-09-28, and clause #2.2 says changes are never retroactive. So the PO price 739700 applies on the invoice date.",
+    "tool_calls": [
+      {
+        "id": "call_acb9370b58d24130b12a081c",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"price_mismatch\", \"line\": 1, \"cause\": \"contract_price_not_yet_effective\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0258\", \"detail\": \"Line 1 'Black Laser Printer Toner' ordered at unit price 739700.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-036#11.1\", \"detail\": \"Addendum No. 1: from 2026-09-28 the toner unit price changes to 842400.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-036#2.2\", \"detail\": \"A price change takes effect only through a written addendum and never retroactively.\"}, {\"kind\": \"invoice\", \"ref\": \"KOS-26-00682\", \"detail\": \"Invoice date 2026-09-21, i.e. before the addendum's effective date; line 1 billed at 842400.\"}], \"explanation\": \"The invoice bills the addendum price of 842400 for toner on an invoice dated 2026-09-21, but that price only takes effect on 2026-09-28 and cannot apply retroactively, so the PO price of 739700 governs this invoice.\"}]}"
+      }
+    ]
+  }
+}

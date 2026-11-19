@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Utama Mandiri Alat Kantor\", \"invoice_number\": \"0291/UMA/X/2026\", \"invoice_date\": \"2026-10-03\", \"due_date\": \"2026-10-17\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0011\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kertas HVS A4 80gsm (rim)\", \"quantity\": 11, \"unit_price\": 57900, \"amount\": 636900}, {\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 1, \"unit_price\": 2090900, \"amount\": 2090900}], \"subtotal\": 2727800, \"tax\": 300058, \"total\": 3027858, \"bank_account\": \"5761969869701\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

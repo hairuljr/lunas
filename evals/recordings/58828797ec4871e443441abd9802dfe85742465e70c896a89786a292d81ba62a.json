@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"clause_id\": \"KTR-V-001#11.1\", \"quote\": \"Addendum No. 1 tanggal 14 Agustus 2026: terhitung sejak 11 Oktober 2026, harga satuan Kertas HVS A4 80gsm (rim) diubah menjadi Rp 56.100 per unit.\", \"unit_price\": 56100, \"effective_date\": \"2026-10-11\"}"
-}

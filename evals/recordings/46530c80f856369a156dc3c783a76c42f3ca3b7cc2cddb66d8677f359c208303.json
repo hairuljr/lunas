@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sakti Cemerlang Kebersihan\", \"invoice_number\": \"SCK/2026/00386\", \"invoice_date\": \"2026-10-16\", \"due_date\": \"2026-11-30\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0224\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Tisu Gulung (karton)\", \"quantity\": 12, \"unit_price\": 336900, \"amount\": 4042800}, {\"description\": \"Cairan Pembersih Lantai 5L\", \"quantity\": 10, \"unit_price\": 102900, \"amount\": 1029000}, {\"description\": \"Sabun Cuci Tangan 5L\", \"quantity\": 10, \"unit_price\": 121800, \"amount\": 1218000}, {\"description\": \"Jasa Kebersihan Bulanan\", \"quantity\": 1, \"unit_price\": 8336400, \"amount\": 8336400}], \"subtotal\": 14626200, \"tax\": 1608882, \"total\": 16235082, \"bank_account\": \"09759384176\", \"notes\": null}"
-}

@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2610-0260\", \"invoice_date\": \"2026-10-11\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0205\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 17, \"unit_price\": 42000, \"amount\": 714000}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 3, \"unit_price\": 1382200, \"amount\": 4146600}], \"subtotal\": 4860600, \"tax\": 534666, \"total\": 5395266, \"bank_account\": \"0841736502\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
-}

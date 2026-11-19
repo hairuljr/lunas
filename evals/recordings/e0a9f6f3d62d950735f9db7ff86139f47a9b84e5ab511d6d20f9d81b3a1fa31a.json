@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sakti Gemilang Teknologi\", \"invoice_number\": \"SGT/2026/00658\", \"invoice_date\": \"2026-09-09\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": null, \"currency\": \"IDR\", \"line_items\": [{\"description\": \"SSD Eksternal 1TB\", \"quantity\": 5, \"unit_price\": 1796200, \"amount\": 8981000}], \"subtotal\": 8981000, \"tax\": 987910, \"total\": 9968910, \"bank_account\": \"3517364468987\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
-}

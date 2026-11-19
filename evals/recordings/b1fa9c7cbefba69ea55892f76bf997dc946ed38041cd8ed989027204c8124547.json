@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Perkasa Cahaya Kemasan\", \"invoice_number\": \"INV/2026/09/0321\", \"invoice_date\": \"2026-09-08\", \"due_date\": null, \"payment_terms_days\": 10, \"po_number\": \"PO-2026-0299\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kardus Double Wall 40x40x40\", \"quantity\": 7, \"unit_price\": 13300, \"amount\": 93800}, {\"description\": \"Palet Kayu 110x110\", \"quantity\": 6, \"unit_price\": 164300, \"amount\": 985800}, {\"description\": \"Lakban Bening 48mm (dus)\", \"quantity\": 7, \"unit_price\": 448600, \"amount\": 3140200}, {\"description\": \"Stretch Film 500mm (rol)\", \"quantity\": 7, \"unit_price\": 85900, \"amount\": 601300}], \"subtotal\": 4821100, \"tax\": 530321, \"total\": 5351421, \"bank_account\": \"3976963276\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

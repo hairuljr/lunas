@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Utama Bumi Kemasan\", \"invoice_number\": \"UBK/2026/00671\", \"invoice_date\": \"2026-10-01\", \"due_date\": \"2026-10-15\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0199\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Label Pengiriman A6 (rol)\", \"quantity\": 19, \"unit_price\": 75000, \"amount\": 1425000}, {\"description\": \"Stretch Film 500mm (rol)\", \"quantity\": 10, \"unit_price\": 96400, \"amount\": 964000}, {\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 14, \"unit_price\": 271100, \"amount\": 3795400}], \"subtotal\": 6184400, \"tax\": 680284, \"total\": 6864684, \"bank_account\": \"560835758589\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
+}

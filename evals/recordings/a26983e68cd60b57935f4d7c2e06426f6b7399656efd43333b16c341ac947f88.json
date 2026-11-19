@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Orchid Systems Co\", \"invoice_number\": \"OSC26100261\", \"invoice_date\": \"2026-10-27\", \"due_date\": \"2026-11-10\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0092\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"USB Mechanical Keyboard\", \"quantity\": 3, \"unit_price\": 648100, \"amount\": 1944300}, {\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 3, \"unit_price\": 1424400, \"amount\": 4273200}, {\"description\": \"Dual-Band Wireless Router\", \"quantity\": 8, \"unit_price\": 1073700, \"amount\": 8589600}, {\"description\": \"24-inch LED Monitor\", \"quantity\": 2, \"unit_price\": 2052300, \"amount\": 4104600}], \"subtotal\": 18911700, \"tax\": 2269404, \"total\": 21181104, \"bank_account\": \"40559225686\", \"notes\": null}"
-}

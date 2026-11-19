@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"clause_id\": \"KTR-V-011#11.1\", \"quote\": \"Addendum No. 1 tanggal 12 Agustus 2026: terhitung sejak 19 September 2026, harga satuan Kursi Kantor Ergonomis diubah menjadi Rp 1.998.000 per unit.\", \"unit_price\": 1998000, \"effective_date\": \"2026-09-19\"}"
-}

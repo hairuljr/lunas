@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Coral Foods Group\", \"invoice_number\": \"INV/2026/10/0289\", \"invoice_date\": \"2026-10-21\", \"due_date\": \"2026-11-04\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0180\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Ground Arabica Coffee 1kg\", \"quantity\": 14, \"unit_price\": 213200.00, \"amount\": 2984800.00}], \"subtotal\": 2984800.00, \"tax\": 328328.00, \"total\": 3313128.00, \"bank_account\": \"600678134372\", \"notes\": \"Please note that our bank details have changed. Kindly transfer to the new account shown above.\"}"
+}

@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Coral Foods Group\", \"invoice_number\": \"INV/2026/10/0191\", \"invoice_date\": \"2026-10-26\", \"due_date\": \"2026-11-09\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0140\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Meeting Catering (package)\", \"quantity\": 4, \"unit_price\": 1471400.0, \"amount\": 5885600.0}], \"subtotal\": 5885600.0, \"tax\": 647416.0, \"total\": 6533016.0, \"bank_account\": \"760078132337\", \"notes\": \"Please note that our bank details have changed. Kindly transfer to the new account shown above.\"}"
-}

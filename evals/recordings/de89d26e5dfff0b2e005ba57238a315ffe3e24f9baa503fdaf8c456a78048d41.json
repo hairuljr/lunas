@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "Terms on file are 30 days; invoice asks 7. That's settled.",
+    "tool_calls": [
+      {
+        "id": "call_03de64811a3e40508d40f98d",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"payment_terms_mismatch\", \"line\": null, \"cause\": \"payment_terms_shorter\", \"evidence\": [{\"kind\": \"vendor\", \"ref\": \"V-006\", \"detail\": \"Vendor terms on file: 30 days\"}, {\"kind\": \"invoice\", \"ref\": \"JOF/2026/00261\", \"detail\": \"Invoice states payment terms of 7 days\"}], \"explanation\": \"The invoice demands payment within 7 days while the vendor's recorded terms are 30 days, so the stated terms are shorter than agreed.\"}]}"
+      }
+    ]
+  }
+}

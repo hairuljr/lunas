@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Harapan Mandiri Kebersihan\", \"invoice_number\": \"INV/2026/10/0403\", \"invoice_date\": \"2026-10-22\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0133\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Jasa Kebersihan Bulanan\", \"quantity\": 1, \"unit_price\": 8249600, \"amount\": 8249600}, {\"description\": \"Cairan Pembersih Lantai 5L\", \"quantity\": 15, \"unit_price\": 95400, \"amount\": 1431000}, {\"description\": \"Pengharum Ruangan Otomatis\", \"quantity\": 2, \"unit_price\": 234300, \"amount\": 468600}], \"subtotal\": 10149200, \"tax\": 1217904, \"total\": 11367104, \"bank_account\": \"631113852007\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
-}

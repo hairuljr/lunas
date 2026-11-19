@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by gathering the key records.",
+    "tool_calls": [
+      {
+        "id": "call_b054dc2f1a5048d0877cb550",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0152\"}"
+      },
+      {
+        "id": "call_930359700edb4bce82f1af58",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0152\"}"
+      },
+      {
+        "id": "call_aaf62a9d4b2242fbb91d1ea1",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

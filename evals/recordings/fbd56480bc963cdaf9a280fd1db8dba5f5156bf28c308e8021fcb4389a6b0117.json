@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2610-0293\", \"invoice_date\": \"2026-10-02\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0045\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Air Mineral Galon 19L\", \"quantity\": 13, \"unit_price\": 19700, \"amount\": 256100}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 2, \"unit_price\": 1455700, \"amount\": 2911400}, {\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 3, \"unit_price\": 43900, \"amount\": 131700}], \"subtotal\": 3299200, \"tax\": 362912, \"total\": 3662112, \"bank_account\": \"0841736502\", \"notes\": null}"
+}

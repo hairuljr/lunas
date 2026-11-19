@@ -63,6 +63,9 @@ from lunas.pipeline.nodes.contract import PROMPT_NAME as CONTRACT_PROMPT
 from lunas.pipeline.nodes.contract import PROMPT_VERSION as CONTRACT_VERSION
 from lunas.pipeline.nodes.decide import decide
 from lunas.pipeline.nodes.extract import PROMPT_NAME, PROMPT_VERSION
+from lunas.pipeline.nodes.investigate import PROMPT_NAME as INVESTIGATE_PROMPT
+from lunas.pipeline.nodes.investigate import PROMPT_VERSION as INVESTIGATE_VERSION
+from lunas.pipeline.nodes.route import Route
 from lunas.pipeline.run import (
     EXTRACTION_FAILED,
     LLM_UNAVAILABLE,
@@ -99,12 +102,14 @@ def fingerprint(paths: list[Path], settings: Settings) -> dict[str, str]:
         "schema": sha(json.dumps(strict_schema(Invoice).schema, sort_keys=True)),
         "documents": sha("\n\n".join(texts)),
         "contract_prompt": sha(load_prompt(CONTRACT_PROMPT, CONTRACT_VERSION)),
+        "investigate_prompt": sha(load_prompt(INVESTIGATE_PROMPT, INVESTIGATE_VERSION)),
         "contracts": sha((paths[0].parents[1] / CONTRACTS_FILE).read_text(encoding="utf-8")),
     }
 
 
 _STALE_REASON = {
     "contract_prompt": f"prompts/{CONTRACT_PROMPT}.{CONTRACT_VERSION}.md changed",
+    "investigate_prompt": f"prompts/{INVESTIGATE_PROMPT}.{INVESTIGATE_VERSION}.md changed",
     "contracts": "the contracts changed (generator)",
     "prompt": f"prompts/{PROMPT_NAME}.{PROMPT_VERSION}.md changed",
     "schema": "the Invoice schema changed",
@@ -117,20 +122,27 @@ def stale_reasons(recorded: dict[str, str], current: dict[str, str]) -> list[str
     return [reason for key, reason in _STALE_REASON.items() if recorded.get(key) != current[key]]
 
 
-def gate_metrics(extraction: dict, decisions: dict) -> dict[str, float]:
-    return {
+def gate_metrics(
+    extraction: dict, decisions: dict, investigation: dict | None = None
+) -> dict[str, float]:
+    metrics = {
         "key_field_accuracy": extraction["key_field_accuracy"],
         "decision_accuracy": decisions["accuracy"],
         "false_approve_rate": decisions["false_approve_rate"] or 0.0,
     }
+    if investigation and investigation["diagnoses"]:
+        metrics["cause_accuracy"] = investigation["cause_accuracy"]
+    return metrics
 
 
 def gate_failures(baseline: dict[str, float], current: dict[str, float]) -> list[str]:
     failures = []
-    for name in ("decision_accuracy", "key_field_accuracy"):
-        if current[name] < baseline[name] - GATE_MAX_DROP:
+    for name in ("decision_accuracy", "key_field_accuracy", "cause_accuracy"):
+        if name not in baseline:
+            continue
+        if current.get(name, 0.0) < baseline[name] - GATE_MAX_DROP:
             failures.append(
-                f"{name} {current[name]:.1%} is more than {GATE_MAX_DROP:.0%} below the "
+                f"{name} {current.get(name, 0.0):.1%} is more than {GATE_MAX_DROP:.0%} below the "
                 f"recorded {baseline[name]:.1%}"
             )
     if current["false_approve_rate"] > baseline["false_approve_rate"]:
@@ -164,6 +176,70 @@ def eval_match_decide(records: list[GroundTruth], erp: ErpData, settings: Settin
         "issue_code_accuracy": codes_correct / len(records),
         "by_label": by_label(records, decisions),
         "wrong": wrong,
+    }
+
+
+def eval_investigation(records: list[GroundTruth], results: list[PipelineResult]) -> dict:
+    """The investigation on the invoices it should diagnose: was each expected cause found,
+    was every cited record one the tools returned, and what did it take."""
+    rows = []
+    for record, result in zip(records, results, strict=True):
+        if record.expected_route != Route.INVESTIGATE:
+            continue
+        report = result.investigation
+        expected = list(zip(record.expected_issue_codes, record.expected_causes, strict=True))
+        diagnoses = []
+        for code, cause in expected:
+            found = (
+                next((d for d in report.diagnoses if d.issue_code == code), None)
+                if report
+                else None
+            )
+            diagnoses.append(
+                {
+                    "issue_code": code,
+                    "expected": cause.value,
+                    "found": found.cause.value if found else None,
+                    "correct": bool(found and found.cause == cause),
+                    "evidence_valid": bool(found and found.evidence_valid),
+                    "rejected_cause": found.rejected_cause if found else None,
+                }
+            )
+        rows.append(
+            {
+                "id": record.id,
+                "label": record.label,
+                "investigated": report is not None,
+                "finished": bool(report and report.finished),
+                "turns": report.turns if report else 0,
+                "seconds": report.seconds if report else None,
+                "tool_calls": report.tool_calls if report else [],
+                "diagnoses": diagnoses,
+            }
+        )
+    all_diagnoses = [d for r in rows for d in r["diagnoses"]]
+    by_label: dict[str, list[bool]] = {}
+    for row in rows:
+        by_label.setdefault(row["label"], []).extend(d["correct"] for d in row["diagnoses"])
+    seconds = [r["seconds"] for r in rows if r["seconds"] is not None]
+    turns = [r["turns"] for r in rows if r["investigated"]]
+    return {
+        "invoices": len(rows),
+        "investigated": sum(r["investigated"] for r in rows),
+        "finished": sum(r["finished"] for r in rows),
+        "diagnoses": len(all_diagnoses),
+        "cause_correct": sum(d["correct"] for d in all_diagnoses),
+        "cause_accuracy": (
+            sum(d["correct"] for d in all_diagnoses) / len(all_diagnoses) if all_diagnoses else 0.0
+        ),
+        "evidence_valid": sum(d["evidence_valid"] for d in all_diagnoses),
+        "causes_rejected_by_code": sum(bool(d["rejected_cause"]) for d in all_diagnoses),
+        "by_label": {k: f"{sum(v)}/{len(v)}" for k, v in sorted(by_label.items())},
+        "turns_mean": sum(turns) / len(turns) if turns else None,
+        "turns_max": max(turns) if turns else None,
+        "seconds_p50": percentile(seconds, 50),
+        "seconds_p95": percentile(seconds, 95),
+        "rows": rows,
     }
 
 
@@ -300,6 +376,11 @@ def main() -> int:
         "stale recordings",
     )
     parser.add_argument(
+        "--no-investigate",
+        action="store_true",
+        help="skip the investigation loop (it costs several model calls per held invoice)",
+    )
+    parser.add_argument(
         "--split",
         choices=SPLIT_CHOICES,
         help="which invoices (default: dev; --gate uses the split it was recorded on)",
@@ -332,6 +413,8 @@ def main() -> int:
     paths = [data_dir / record.file for record in records]
 
     retrieval_recordings = RECORDINGS_DIR / "retrieval"
+    # The gate replays what was recorded, investigation included or not.
+    investigate = recording.get("investigate", False) if args.gate else not args.no_investigate
     current_fingerprint = fingerprint(paths, settings) if args.record or args.gate else {}
     client: ChatClient | None = None
     retriever: ContractRetriever | None = None
@@ -379,7 +462,13 @@ def main() -> int:
         configure_tracing(settings)
         try:
             results = process_invoices(
-                paths, erp, client, settings, args.workers or settings.llm_workers, retriever
+                paths,
+                erp,
+                client,
+                settings,
+                args.workers or settings.llm_workers,
+                retriever,
+                investigate,
             )
         except (RecordingMissingError, RetrievalMissingError) as error:
             print(f"\nGATE FAILED: {error}. Re-record with --record (calls the LLM).")
@@ -409,6 +498,7 @@ def main() -> int:
             "decision_end_to_end": decisions,
             "misses": misses,
             "contract_check": eval_contract(records, results) if retriever else None,
+            "investigation": eval_investigation(records, results) if investigate else None,
         }
 
         print(
@@ -445,6 +535,24 @@ def main() -> int:
         print(
             f"  route                 {route['correct']}/{route['documents']}  {route['confusion']}"
         )
+        investigation = report["investigation"]
+        if investigation is None:
+            print("\nInvestigation: off (--no-investigate).")
+        else:
+            print(
+                f"\nInvestigation: {investigation['investigated']}/{investigation['invoices']} "
+                f"investigated, {investigation['finished']} finished; cause "
+                f"{investigation['cause_correct']}/{investigation['diagnoses']}, evidence valid "
+                f"{investigation['evidence_valid']}/{investigation['diagnoses']}, causes "
+                f"rejected by code {investigation['causes_rejected_by_code']}"
+            )
+            print(f"  by class              {investigation['by_label']}")
+            if investigation["turns_mean"] is not None:
+                print(
+                    f"  turns mean/max        {investigation['turns_mean']:.1f}/"
+                    f"{investigation['turns_max']}, seconds p50/p95 "
+                    f"{investigation['seconds_p50']}/{investigation['seconds_p95']}"
+                )
         contract = report["contract_check"]
         if contract is None:
             print("\nContract check: off (no contract index), price mismatches stay held.")
@@ -487,14 +595,19 @@ def main() -> int:
                 "split": split,
                 "replies": len(client.used),
                 "fingerprint": current_fingerprint,
-                "baseline": gate_metrics(report["extraction"], report["decision_end_to_end"]),
+                "investigate": investigate,
+                "baseline": gate_metrics(
+                    report["extraction"], report["decision_end_to_end"], report["investigation"]
+                ),
             }
             recording_path.write_text(json.dumps(recorded, indent=2) + "\n", encoding="utf-8")
             print(
                 f"\nRecorded {len(client.used)} replies and the gate baseline to {RECORDINGS_DIR}"
             )
     if args.gate:
-        current = gate_metrics(report["extraction"], report["decision_end_to_end"])
+        current = gate_metrics(
+            report["extraction"], report["decision_end_to_end"], report["investigation"]
+        )
         report["gate"] = {"baseline": recording["baseline"], "current": current}
         if failures := gate_failures(recording["baseline"], current):
             print("\nGATE FAILED:\n  " + "\n  ".join(failures))

@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The contract sets a single VAT rate of 11%, and no other provision applies. The invoice's tax of 694,284 is exactly 12% of the subtotal, not the contractually required 11%.",
+    "tool_calls": [
+      {
+        "id": "call_99dc0c8fa0764cdc9c71dcf0",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"tax_mismatch\", \"line\": null, \"cause\": \"wrong_tax_rate\", \"evidence\": [{\"kind\": \"contract_clause\", \"ref\": \"KTR-V-034#3.1\", \"detail\": \"Each invoice carries VAT at 11% of the subtotal, which is the tax base.\"}, {\"kind\": \"invoice\", \"ref\": \"INV-CPL-00857\", \"detail\": \"Subtotal 5,785,700.00; tax charged 694,284.00, which is 12% of the subtotal (11% would be 636,427.00).\"}], \"explanation\": \"The contract fixes VAT at 11% of the subtotal, but the invoice applied a 12% rate, overstating tax by 57,857.00.\"}]}"
+      }
+    ]
+  }
+}

@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Java Office Furnishings\", \"invoice_number\": \"JOF/2026/00480\", \"invoice_date\": \"2026-10-04\", \"due_date\": null, \"payment_terms_days\": 10, \"po_number\": \"PO-2026-0286\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"A4 Copy Paper 80gsm (ream)\", \"quantity\": 8, \"unit_price\": 55900.00, \"amount\": 447200.00}], \"subtotal\": 447200.00, \"tax\": 49192.00, \"total\": 496392.00, \"bank_account\": \"800114673900\", \"notes\": null}"
-}

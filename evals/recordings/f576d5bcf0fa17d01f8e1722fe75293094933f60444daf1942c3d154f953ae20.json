@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Orchid Systems Co\", \"invoice_number\": \"OSC26100239\", \"invoice_date\": \"2026-10-24\", \"due_date\": \"2026-10-31\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0012\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Antivirus License 1 Year\", \"quantity\": 16, \"unit_price\": 413000, \"amount\": 6608000}], \"subtotal\": 6608000, \"tax\": 726880, \"total\": 7334880, \"bank_account\": \"40559225686\", \"notes\": null}"
-}

@@ -21,6 +21,8 @@ from lunas.pipeline.nodes.contract import ContractFinding, check_contract
 from lunas.pipeline.nodes.decide import decide
 from lunas.pipeline.nodes.duplicates import find_duplicates
 from lunas.pipeline.nodes.extract import extract_invoice
+from lunas.pipeline.nodes.investigate import InvestigationReport
+from lunas.pipeline.nodes.investigate import investigate as run_investigation
 from lunas.pipeline.nodes.match import match_invoice
 from lunas.pipeline.nodes.route import Route, route_invoice
 from lunas.pipeline.nodes.validate import validate_invoice
@@ -44,6 +46,8 @@ class PipelineResult(BaseModel):
     contract_findings: list[ContractFinding] = []
     # Who looks next (step 7).
     route: Route | None = None
+    # The diagnosis of an invoice routed to investigation (step 8). Never changes the decision.
+    investigation: InvestigationReport | None = None
     # Wall time for this invoice, parse to decision. A replayed LLM reply makes it meaningless.
     seconds: float = 0.0
 
@@ -54,11 +58,14 @@ def process_invoice(
     client: ChatClient,
     settings: Settings,
     retriever: ContractRetriever | None = None,
+    investigate: bool = False,
 ) -> PipelineResult:
-    """Without a retriever there is no contract check: a price mismatch then stays held."""
+    """Without a retriever there is no contract check: a price mismatch then stays held.
+    With `investigate`, an invoice routed to investigation is diagnosed by the agent loop;
+    the client must then support tool calls."""
     started = time.monotonic()
     with span("process_invoice", {"app.invoice.file": path.name}) as root:
-        result = _process(path, erp, client, settings, retriever)
+        result = _process(path, erp, client, settings, retriever, investigate)
         result.seconds = round(time.monotonic() - started, 2)
         set_attributes(
             root,
@@ -84,6 +91,7 @@ def _process(
     client: ChatClient,
     settings: Settings,
     retriever: ContractRetriever | None,
+    investigate: bool,
 ) -> PipelineResult:
     with span("parse") as current:
         backend = choose_backend(path, settings.ingest_mode, settings.min_chars_per_page)
@@ -124,6 +132,16 @@ def _process(
         set_attributes(
             current, {"app.route": routed.route.value, "app.route.because": routed.because}
         )
+    report = None
+    if investigate and routed.route == Route.INVESTIGATE:
+        report = run_investigation(
+            invoice,
+            issues,
+            erp,
+            client,
+            retriever.search_clauses if retriever else None,
+            findings,
+        )
     with span("decide") as current:
         result = decide(invoice, issues, settings.approval_threshold)
         set_attributes(current, {"app.decision": result.decision.value})
@@ -135,6 +153,7 @@ def _process(
         decision=result.decision,
         contract_findings=findings,
         route=routed.route,
+        investigation=report,
     )
 
 
@@ -159,9 +178,13 @@ def process_invoices(
     settings: Settings,
     workers: int = 4,
     retriever: ContractRetriever | None = None,
+    investigate: bool = False,
 ) -> list[PipelineResult]:
     """Results come back in the order of `paths`. The work is I/O-bound LLM calls."""
     with ThreadPoolExecutor(max_workers=workers) as pool:
         return list(
-            pool.map(lambda path: process_invoice(path, erp, client, settings, retriever), paths)
+            pool.map(
+                lambda path: process_invoice(path, erp, client, settings, retriever, investigate),
+                paths,
+            )
         )

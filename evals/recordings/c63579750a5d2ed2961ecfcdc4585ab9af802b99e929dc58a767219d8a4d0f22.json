@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Golden Systems Ltd\", \"invoice_number\": \"GSL-26-00536\", \"invoice_date\": \"2026-10-11\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0142\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"External SSD 1TB\", \"quantity\": 1, \"unit_price\": 1736200.0, \"amount\": 1736200.0}, {\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 5, \"unit_price\": 1438400.0, \"amount\": 7192000.0}, {\"description\": \"USB Mechanical Keyboard\", \"quantity\": 6, \"unit_price\": 660900.0, \"amount\": 3965400.0}], \"subtotal\": 12893600.0, \"tax\": 1418296.0, \"total\": 14311896.0, \"bank_account\": \"4959368273\", \"notes\": null}"
+}

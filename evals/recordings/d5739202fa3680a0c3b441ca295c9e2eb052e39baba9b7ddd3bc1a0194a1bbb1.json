@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/10/0621\", \"invoice_date\": \"2026-10-03\", \"due_date\": \"2026-11-02\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0161\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Toner Printer Laser Hitam\", \"quantity\": 4, \"unit_price\": 760000, \"amount\": 3040000}, {\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 1, \"unit_price\": 1883600, \"amount\": 1883600}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 16, \"unit_price\": 265500, \"amount\": 4248000}], \"subtotal\": 9171600, \"tax\": 1008876, \"total\": 10180476, \"bank_account\": \"8594369709\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
-}

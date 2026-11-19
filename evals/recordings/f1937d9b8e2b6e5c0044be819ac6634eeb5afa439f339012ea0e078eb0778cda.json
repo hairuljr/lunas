@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Golden Systems Ltd\", \"invoice_number\": \"GSL-26-00514\", \"invoice_date\": \"2026-09-21\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0022\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"24-inch LED Monitor\", \"quantity\": 3, \"unit_price\": 2343000, \"amount\": 7029000}, {\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 4, \"unit_price\": 1297800, \"amount\": 5191200}, {\"description\": \"External SSD 1TB\", \"quantity\": 3, \"unit_price\": 1827300, \"amount\": 5481900}], \"subtotal\": 17702100, \"tax\": 2124252, \"total\": 19826352, \"bank_account\": \"4959368273\", \"notes\": null}"
+}

@@ -1,0 +1,65 @@
+[
+ {
+  "clause_id": "KTR-V-032#2.1",
+  "contract_id": "KTR-V-032",
+  "vendor_id": "V-032",
+  "number": "2.1",
+  "article": "2",
+  "article_title": "Prices",
+  "text": "Unit prices are set out in Schedule A and remain fixed for the term of this Agreement."
+ },
+ {
+  "clause_id": "KTR-V-032#2.2",
+  "contract_id": "KTR-V-032",
+  "vendor_id": "V-032",
+  "number": "2.2",
+  "article": "2",
+  "article_title": "Prices",
+  "text": "A change to a unit price takes effect only through a written addendum signed by both parties, and never retroactively."
+ },
+ {
+  "clause_id": "KTR-V-032#2.3",
+  "contract_id": "KTR-V-032",
+  "vendor_id": "V-032",
+  "number": "2.3",
+  "article": "2",
+  "article_title": "Prices",
+  "text": "Prices exclude value added tax."
+ },
+ {
+  "clause_id": "KTR-V-032#5.1",
+  "contract_id": "KTR-V-032",
+  "vendor_id": "V-032",
+  "number": "5.1",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "The Buyer pays a complete and correct invoice within 30 calendar days of the invoice date."
+ },
+ {
+  "clause_id": "KTR-V-032#5.2",
+  "contract_id": "KTR-V-032",
+  "vendor_id": "V-032",
+  "number": "5.2",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Payment is made by transfer to the Supplier's account at Bank Negara Indonesia, number 33750598165, in the name of Pioneer Systems Group."
+ },
+ {
+  "clause_id": "KTR-V-032#5.3",
+  "contract_id": "KTR-V-032",
+  "vendor_id": "V-032",
+  "number": "5.3",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Late payment accrues interest of 1% per month on the overdue amount."
+ },
+ {
+  "clause_id": "KTR-V-032#3.1",
+  "contract_id": "KTR-V-032",
+  "vendor_id": "V-032",
+  "number": "3.1",
+  "article": "3",
+  "article_title": "Tax",
+  "text": "Each invoice carries VAT at 11% of the subtotal, which is the tax base."
+ }
+]

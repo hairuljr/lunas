@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Mandiri Cemerlang Boga\", \"invoice_number\": \"MCB26090081\", \"invoice_date\": \"2026-09-14\", \"due_date\": \"2026-10-14\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0075\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Katering Rapat (paket)\", \"quantity\": 5, \"unit_price\": 1249100, \"amount\": 6245500}], \"subtotal\": 6245500, \"tax\": 749460, \"total\": 6994960, \"bank_account\": \"3339682443689\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

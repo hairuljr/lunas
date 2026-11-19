@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sinar Utama Kemasan\", \"invoice_number\": \"SUK-26-00719\", \"invoice_date\": \"2026-10-03\", \"due_date\": \"2026-11-02\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0069\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 7, \"unit_price\": 293100, \"amount\": 2051700}, {\"description\": \"Kardus Double Wall 40x40x40\", \"quantity\": 17, \"unit_price\": 13100, \"amount\": 222700}, {\"description\": \"Palet Kayu 110x110\", \"quantity\": 11, \"unit_price\": 174000, \"amount\": 1914000}], \"subtotal\": 4188400, \"tax\": 460724, \"total\": 4649124, \"bank_account\": \"149685785483\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
-}

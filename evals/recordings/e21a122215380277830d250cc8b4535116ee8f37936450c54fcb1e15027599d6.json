@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Orchid Systems Co\", \"invoice_number\": \"OSC26100248\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-10-16\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0052\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 1, \"unit_price\": 1476600, \"amount\": 1476600}, {\"description\": \"External SSD 1TB\", \"quantity\": 2, \"unit_price\": 1597900, \"amount\": 3195800}, {\"description\": \"Dual-Band Wireless Router\", \"quantity\": 4, \"unit_price\": 1188000, \"amount\": 4752000}], \"subtotal\": 9424400, \"tax\": 1036684, \"total\": 10461084, \"bank_account\": \"40559225686\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
-}

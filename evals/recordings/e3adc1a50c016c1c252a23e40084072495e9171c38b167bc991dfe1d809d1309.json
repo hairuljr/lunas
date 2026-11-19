@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mulia Utama Alat Kantor\", \"invoice_number\": \"MUA26100147\", \"invoice_date\": \"2026-10-23\", \"due_date\": \"2026-12-07\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0141\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 3, \"unit_price\": 1295700, \"amount\": 3887100}, {\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 4, \"unit_price\": 1843600, \"amount\": 7374400}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 5, \"unit_price\": 274800, \"amount\": 1374000}], \"subtotal\": 12635500, \"tax\": 1389905, \"total\": 14025405, \"bank_account\": \"6669985731612\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"clause_id\": null, \"quote\": null, \"unit_price\": null, \"effective_date\": null}"
-}

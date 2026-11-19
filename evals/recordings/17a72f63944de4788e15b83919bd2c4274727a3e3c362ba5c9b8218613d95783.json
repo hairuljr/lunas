@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "\n\n",
+    "tool_calls": [
+      {
+        "id": "call_4808d01841d64f34b5fd652d",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"price_mismatch\", \"line\": 1, \"cause\": \"contract_price_not_yet_effective\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0245\", \"detail\": \"Line 1 unit price is 293000 IDR for Tisu Gulung (karton)\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-033#11.1\", \"detail\": \"Addendum No. 1 sets the Tisu Gulung (karton) price at 336900 IDR per unit, effective from 29 September 2026\"}, {\"kind\": \"invoice\", \"ref\": \"SCK/2026/00559\", \"detail\": \"Invoice dated 2026-09-20 bills line 1 at 336900, before the clause's effective date\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-033#2.2\", \"detail\": \"Price changes apply only via signed written addendum and are not retroactive\"}], \"explanation\": \"The contract does set the invoiced price of 336900, but clause KTR-V-033#11.1 makes it effective only from 29 September 2026, after this invoice's 20 September 2026 date, so the PO price of 293000 still governed.\"}]}"
+      }
+    ]
+  }
+}

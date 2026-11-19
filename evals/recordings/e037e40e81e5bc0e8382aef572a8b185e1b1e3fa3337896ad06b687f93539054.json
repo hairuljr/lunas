@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Kemas Prima Indonesia\", \"invoice_number\": \"00858/KPI/2026\", \"invoice_date\": \"2026-10-10\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0128\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Label Pengiriman A6 (rol)\", \"quantity\": 5, \"unit_price\": 74100, \"amount\": 370500}, {\"description\": \"Stretch Film 500mm (rol)\", \"quantity\": 8, \"unit_price\": 81000, \"amount\": 648000}, {\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 13, \"unit_price\": 302700, \"amount\": 3935100}, {\"description\": \"Kardus Double Wall 40x40x40\", \"quantity\": 6, \"unit_price\": 13400, \"amount\": 80400}], \"subtotal\": 5034000, \"tax\": 553740, \"total\": 5587740, \"bank_account\": \"0517049096\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
+}

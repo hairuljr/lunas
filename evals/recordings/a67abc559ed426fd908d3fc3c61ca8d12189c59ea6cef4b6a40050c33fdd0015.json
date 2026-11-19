@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Pioneer Systems Group\", \"invoice_number\": \"0542/PSG/IX/2026\", \"invoice_date\": \"2026-09-13\", \"due_date\": \"2026-10-13\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0032\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"24-inch LED Monitor\", \"quantity\": 1, \"unit_price\": 2281000.0, \"amount\": 2281000.0}, {\"description\": \"Antivirus License 1 Year\", \"quantity\": 2, \"unit_price\": 410600.0, \"amount\": 821200.0}], \"subtotal\": 3102200.0, \"tax\": 372264.0, \"total\": 3474464.0, \"bank_account\": \"33750598165\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
-}

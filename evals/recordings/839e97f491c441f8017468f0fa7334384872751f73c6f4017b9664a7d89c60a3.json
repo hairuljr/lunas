@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Horizon Foods Ltd\", \"invoice_number\": \"HFL-26-00430\", \"invoice_date\": \"2026-09-10\", \"due_date\": \"2026-10-10\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0190\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Automatic Coffee Machine\", \"quantity\": 1, \"unit_price\": 5923500, \"amount\": 5923500}, {\"description\": \"Mineral Water 19L Gallon\", \"quantity\": 14, \"unit_price\": 21800, \"amount\": 305200}], \"subtotal\": 6228700, \"tax\": 685157, \"total\": 6913857, \"bank_account\": \"5022007859474\", \"notes\": null}"
-}

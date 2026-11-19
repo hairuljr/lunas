@@ -1,0 +1,34 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by gathering the purchase order, receipts, ledger, terms, and contract.",
+    "tool_calls": [
+      {
+        "id": "call_fee40dec19f44209bb1223f4",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0192\"}"
+      },
+      {
+        "id": "call_6d3ee6ca5c0046ed95f118b6",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0192\"}"
+      },
+      {
+        "id": "call_98ce839b4c064152a8f21a55",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_73dfae78f5b940e3bce03b5f",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_1871a0b6849d4043987b65cb",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"tax rate VAT percentage on invoices\"}"
+      }
+    ]
+  }
+}

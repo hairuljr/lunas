@@ -1,0 +1,92 @@
+[
+ {
+  "clause_id": "KTR-V-012#3.1",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "3.1",
+  "article": "3",
+  "article_title": "Tax",
+  "text": "Each invoice carries VAT at 11% of the subtotal, which is the tax base."
+ },
+ {
+  "clause_id": "KTR-V-012#4.1",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "4.1",
+  "article": "4",
+  "article_title": "Invoicing",
+  "text": "Every invoice must state the number of the purchase order it bills."
+ },
+ {
+  "clause_id": "KTR-V-012#4.2",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "4.2",
+  "article": "4",
+  "article_title": "Invoicing",
+  "text": "The Supplier may invoice only goods that the Buyer has received and recorded in a goods receipt."
+ },
+ {
+  "clause_id": "KTR-V-012#4.3",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "4.3",
+  "article": "4",
+  "article_title": "Invoicing",
+  "text": "Each delivery may be invoiced once only; an invoice resubmitted under the same or a different number will be rejected."
+ },
+ {
+  "clause_id": "KTR-V-012#2.1",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "2.1",
+  "article": "2",
+  "article_title": "Prices",
+  "text": "Unit prices are set out in Schedule A and remain fixed for the term of this Agreement."
+ },
+ {
+  "clause_id": "KTR-V-012#2.2",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "2.2",
+  "article": "2",
+  "article_title": "Prices",
+  "text": "A change to a unit price takes effect only through a written addendum signed by both parties, and never retroactively."
+ },
+ {
+  "clause_id": "KTR-V-012#2.3",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "2.3",
+  "article": "2",
+  "article_title": "Prices",
+  "text": "Prices exclude value added tax."
+ },
+ {
+  "clause_id": "KTR-V-012#5.1",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "5.1",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "The Buyer pays a complete and correct invoice within 14 calendar days of the invoice date."
+ },
+ {
+  "clause_id": "KTR-V-012#5.2",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "5.2",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Payment is made by transfer to the Supplier's account at Bank Negara Indonesia, number 40559225686, in the name of Orchid Systems Co."
+ },
+ {
+  "clause_id": "KTR-V-012#5.3",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "5.3",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Late payment accrues interest of 1% per month on the overdue amount."
+ }
+]

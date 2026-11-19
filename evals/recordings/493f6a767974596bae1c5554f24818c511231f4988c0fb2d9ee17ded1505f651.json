@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Coral Foods Group\", \"invoice_number\": \"INV/2026/10/0182\", \"invoice_date\": \"2026-10-08\", \"due_date\": \"2026-10-22\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-9060\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Tea Bags (box of 100)\", \"quantity\": 19, \"unit_price\": 38500.00, \"amount\": 731500.00}, {\"description\": \"Granulated Sugar 1kg\", \"quantity\": 6, \"unit_price\": 18600.00, \"amount\": 111600.00}, {\"description\": \"Mineral Water 19L Gallon\", \"quantity\": 2, \"unit_price\": 19500.00, \"amount\": 39000.00}, {\"description\": \"Ground Arabica Coffee 1kg\", \"quantity\": 13, \"unit_price\": 199000.00, \"amount\": 2587000.00}], \"subtotal\": 3469100.00, \"tax\": 381601.00, \"total\": 3850701.00, \"bank_account\": \"296906444999\", \"notes\": null}"
-}

@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Evergreen Office Supply Ltd\", \"invoice_number\": \"INV-EOS-00274\", \"invoice_date\": \"2026-10-12\", \"due_date\": \"2026-10-26\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0146\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Black Laser Printer Toner\", \"quantity\": 8, \"unit_price\": 957600.00, \"amount\": 7660800.00}, {\"description\": \"Lever Arch Files (dozen)\", \"quantity\": 2, \"unit_price\": 270500.00, \"amount\": 541000.00}], \"subtotal\": 8201800.00, \"tax\": 902198.00, \"total\": 9103998.00, \"bank_account\": \"8132710382\", \"notes\": \"Thank you for your business.\"}"
-}

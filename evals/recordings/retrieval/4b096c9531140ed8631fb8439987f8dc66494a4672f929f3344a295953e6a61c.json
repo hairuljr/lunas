@@ -1,0 +1,56 @@
+[
+ {
+  "clause_id": "KTR-V-002#5.1",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "5.1",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "The Buyer pays a complete and correct invoice within 30 calendar days of the invoice date."
+ },
+ {
+  "clause_id": "KTR-V-002#5.2",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "5.2",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Payment is made by transfer to the Supplier's account at Bank Mandiri, number 1240007719356, in the name of Nusantara Tech Supplies Ltd."
+ },
+ {
+  "clause_id": "KTR-V-002#5.3",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "5.3",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Late payment accrues interest of 1.5% per month on the overdue amount."
+ },
+ {
+  "clause_id": "KTR-V-002#4.1",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "4.1",
+  "article": "4",
+  "article_title": "Invoicing",
+  "text": "Every invoice must state the number of the purchase order it bills."
+ },
+ {
+  "clause_id": "KTR-V-002#4.2",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "4.2",
+  "article": "4",
+  "article_title": "Invoicing",
+  "text": "The Supplier may invoice only goods that the Buyer has received and recorded in a goods receipt."
+ },
+ {
+  "clause_id": "KTR-V-002#4.3",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "4.3",
+  "article": "4",
+  "article_title": "Invoicing",
+  "text": "Each delivery may be invoiced once only; an invoice resubmitted under the same or a different number will be rejected."
+ }
+]

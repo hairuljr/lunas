@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Evergreen Office Supply Ltd\", \"invoice_number\": \"INV-EOS-00262\", \"invoice_date\": \"2026-09-24\", \"due_date\": \"2026-10-08\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0066\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Black Gel Pens (box)\", \"quantity\": 12, \"unit_price\": 51000.0, \"amount\": 612000.0}, {\"description\": \"Black Laser Printer Toner\", \"quantity\": 3, \"unit_price\": 740900.0, \"amount\": 2222700.0}], \"subtotal\": 2834700.0, \"tax\": 311817.0, \"total\": 3146517.0, \"bank_account\": \"8132710382\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
-}

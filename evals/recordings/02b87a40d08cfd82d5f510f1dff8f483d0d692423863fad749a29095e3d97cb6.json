@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Coral Office Supply Co\", \"invoice_number\": \"COS/2026/00833\", \"invoice_date\": \"2026-09-15\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0256\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Black Laser Printer Toner\", \"quantity\": 6, \"unit_price\": 797600.0, \"amount\": 4785600.0}, {\"description\": \"A4 Copy Paper 80gsm (ream)\", \"quantity\": 9, \"unit_price\": 51400.0, \"amount\": 462600.0}], \"subtotal\": 5248200.0, \"tax\": 577302.0, \"total\": 5825502.0, \"bank_account\": \"1532228980\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

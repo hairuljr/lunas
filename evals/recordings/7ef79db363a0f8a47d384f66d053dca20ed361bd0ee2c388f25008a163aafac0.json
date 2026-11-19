@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000458\", \"invoice_date\": \"2026-10-19\", \"due_date\": \"2026-10-29\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0082\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Dual-Band Wireless Router\", \"quantity\": 4, \"unit_price\": 1197400.0, \"amount\": 4789600.0}], \"subtotal\": 4789600.0, \"tax\": 526856.0, \"total\": 5316456.0, \"bank_account\": \"1240007719356\", \"notes\": null}"
+}

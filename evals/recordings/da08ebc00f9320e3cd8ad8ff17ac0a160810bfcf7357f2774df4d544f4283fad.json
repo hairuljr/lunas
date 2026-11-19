@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Coral Foods Group\", \"invoice_number\": \"INV/2026/10/0286\", \"invoice_date\": \"2026-10-11\", \"due_date\": \"2026-10-25\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0140\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Tea Bags (box of 100)\", \"quantity\": 12, \"unit_price\": 41100.00, \"amount\": 493200.00}, {\"description\": \"Granulated Sugar 1kg\", \"quantity\": 17, \"unit_price\": 17300.00, \"amount\": 294100.00}, {\"description\": \"Mineral Water 19L Gallon\", \"quantity\": 8, \"unit_price\": 20600.00, \"amount\": 164800.00}], \"subtotal\": 952100.00, \"tax\": 104731.00, \"total\": 1056831.00, \"bank_account\": \"018351353830\", \"notes\": \"Please note that our bank details have changed. Kindly transfer to the new account shown above.\"}"
+}

@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by gathering the core records: the purchase order, its goods receipts, the vendor's earlier invoices, and the contract.",
+    "tool_calls": [
+      {
+        "id": "call_23f41987ece147809d029c0a",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0263\"}"
+      },
+      {
+        "id": "call_33523563cd0641ef88ff3812",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0263\"}"
+      },
+      {
+        "id": "call_89d78f9a68d1492580db36b9",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

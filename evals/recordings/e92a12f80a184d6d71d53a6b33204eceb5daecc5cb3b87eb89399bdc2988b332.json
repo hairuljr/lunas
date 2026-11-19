@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate the tax mismatch and gather the relevant records.",
+    "tool_calls": [
+      {
+        "id": "call_d691132f8e1a4fb18d3ae53c",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0259\"}"
+      },
+      {
+        "id": "call_35e006c1fe3b4ecc866d2164",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"tax rate VAT PPN percentage\"}"
+      }
+    ]
+  }
+}

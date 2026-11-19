@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Mandiri Utama Teknologi\", \"invoice_number\": \"MUT26100691\", \"invoice_date\": \"2026-10-15\", \"due_date\": \"2026-11-29\", \"payment_terms_days\": null, \"po_number\": null, \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Router Nirkabel Dual-Band\", \"quantity\": 4, \"unit_price\": 1241400, \"amount\": 4965600}, {\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 2, \"unit_price\": 1321300, \"amount\": 2642600}], \"subtotal\": 7608200, \"tax\": 836902, \"total\": 8445102, \"bank_account\": \"973639495941\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
-}

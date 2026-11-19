@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Cemerlang Mandiri Boga\", \"invoice_number\": \"INV/2026/10/0371\", \"invoice_date\": \"2026-10-12\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0265\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Air Mineral Galon 19L\", \"quantity\": 13, \"unit_price\": 19800, \"amount\": 257400}, {\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6418100, \"amount\": 6418100}, {\"description\": \"Gula Pasir 1kg\", \"quantity\": 18, \"unit_price\": 18300, \"amount\": 329400}], \"subtotal\": 7004900, \"tax\": 770539, \"total\": 7775439, \"bank_account\": \"0088740260\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
-}

@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate this invoice against the purchase order, receipts, and prior invoices.",
+    "tool_calls": [
+      {
+        "id": "call_82853c36006847e9abd04211",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0020\"}"
+      },
+      {
+        "id": "call_4614d375a3944cbeb23693a3",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0020\"}"
+      },
+      {
+        "id": "call_4d23a2d5208641639a96bd59",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

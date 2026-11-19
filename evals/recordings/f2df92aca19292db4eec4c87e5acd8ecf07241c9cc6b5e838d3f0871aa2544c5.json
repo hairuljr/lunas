@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Summit Packaging Ltd\", \"invoice_number\": \"INV/2026/10/0692\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-10-16\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0144\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Double Wall Carton 40x40x40\", \"quantity\": 13, \"unit_price\": 15000, \"amount\": 195000}, {\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 19, \"unit_price\": 86500, \"amount\": 1643500}], \"subtotal\": 1838500, \"tax\": 202235, \"total\": 2040735, \"bank_account\": \"486653347834\", \"notes\": \"Thank you for your business.\"}"
-}

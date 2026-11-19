@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Sentosa Karya Boga\", \"invoice_number\": \"SKB/2026/00678\", \"invoice_date\": \"2026-09-13\", \"due_date\": \"2026-10-28\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0175\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6219000, \"amount\": 6219000}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 5, \"unit_price\": 1227200, \"amount\": 6136000}], \"subtotal\": 12355000, \"tax\": 1359050, \"total\": 13714050, \"bank_account\": \"5669310234\", \"notes\": null}"
-}

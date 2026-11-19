@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The records settle it. Invoice 00833/KPI/2026 (2026-10-05) already billed the full received quantity of PO-2026-0048 (all 17/3/7/15 received in GR-2026-0048), and this invoice bills the identical quantities at identical prices — a total of twice what was received. There is only one goods receipt, so this is not a later delivery.",
+    "tool_calls": [
+      {
+        "id": "call_22bc0177ecf04ab28938c6c5",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"resubmission\", \"evidence\": [{\"kind\": \"invoice\", \"ref\": \"00840/KPI/2026\", \"detail\": \"Current invoice, dated 2026-10-12, bills PO-2026-0048: 17 pallets @185300, 3 bubble wrap @305100, 7 stretch film @94600, 15 labels @79200, total 6566316.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"00833/KPI/2026\", \"detail\": \"Earlier invoice dated 2026-10-05 against the same PO-2026-0048 with the identical total 6566316 — it already billed these quantities.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0048\", \"detail\": \"The only goods receipt for PO-2026-0048 (received 2026-10-01) records exactly 17/3/7/15 — the full ordered quantity; there is no second, later receipt.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0048\", \"detail\": \"Ordered quantities are 17/3/7/15, all already invoiced by 00833/KPI/2026, so the total invoiced for this PO (2x) exceeds what was received.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-008#4.3\", \"detail\": \"One delivery may be invoiced only once; re-submitted invoices, under the same or a different number, are rejected.\"}], \"explanation\": \"This invoice re-bills, under a new number, the same quantities of PO-2026-0048 that invoice 00833/KPI/2026 already billed and that GR-2026-0048 — the only receipt for that PO — fully delivered, so the cumulatively invoiced quantity exceeds what was received.\"}]}"
+      }
+    ]
+  }
+}

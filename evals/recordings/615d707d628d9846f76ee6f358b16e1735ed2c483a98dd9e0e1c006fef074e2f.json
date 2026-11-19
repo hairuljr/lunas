@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Sterling Hygiene Group\", \"invoice_number\": \"SHG-26-00551\", \"invoice_date\": \"2026-09-28\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0268\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Toilet Tissue Rolls (carton)\", \"quantity\": 8, \"unit_price\": 300700.00, \"amount\": 2405600.00}, {\"description\": \"Monthly Cleaning Service\", \"quantity\": 1, \"unit_price\": 7966900.00, \"amount\": 7966900.00}], \"subtotal\": 10372500.00, \"tax\": 1140975.00, \"total\": 11513475.00, \"bank_account\": \"83078932117\", \"notes\": null}"
-}

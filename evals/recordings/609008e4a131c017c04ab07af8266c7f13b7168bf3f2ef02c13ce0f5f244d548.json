@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sinar Utama Kemasan\", \"invoice_number\": \"SUK-26-00722\", \"invoice_date\": \"2026-10-09\", \"due_date\": \"2026-11-08\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-9109\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 15, \"unit_price\": 272500, \"amount\": 4087500}], \"subtotal\": 4087500, \"tax\": 449625, \"total\": 4537125, \"bank_account\": \"553958517971\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

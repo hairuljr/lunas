@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sakti Gemilang Teknologi\", \"invoice_number\": \"SGT/2026/00675\", \"invoice_date\": \"2026-10-07\", \"due_date\": null, \"payment_terms_days\": 7, \"po_number\": \"PO-2026-0237\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"SSD Eksternal 1TB\", \"quantity\": 3, \"unit_price\": 1786300, \"amount\": 5358900}, {\"description\": \"Router Nirkabel Dual-Band\", \"quantity\": 7, \"unit_price\": 1258700, \"amount\": 8810900}, {\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 1, \"unit_price\": 1443300, \"amount\": 1443300}], \"subtotal\": 15613100, \"tax\": 1717441, \"total\": 17330541, \"bank_account\": \"3517364468987\", \"notes\": null}"
-}

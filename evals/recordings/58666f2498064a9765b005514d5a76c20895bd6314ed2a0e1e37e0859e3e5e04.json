@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Summit Packaging Ltd\", \"invoice_number\": \"INV/2026/10/0701\", \"invoice_date\": \"2026-10-23\", \"due_date\": \"2026-11-06\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0184\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Clear Tape 48mm (box)\", \"quantity\": 11, \"unit_price\": 430500, \"amount\": 4735500}, {\"description\": \"Wooden Pallet 110x110\", \"quantity\": 3, \"unit_price\": 183800, \"amount\": 551400}, {\"description\": \"Double Wall Carton 40x40x40\", \"quantity\": 2, \"unit_price\": 15600, \"amount\": 31200}], \"subtotal\": 5318100, \"tax\": 584991, \"total\": 5903091, \"bank_account\": \"486653347834\", \"notes\": null}"
-}
