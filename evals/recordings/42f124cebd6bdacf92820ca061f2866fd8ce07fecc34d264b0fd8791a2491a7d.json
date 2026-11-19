@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Java Office Furnishings\", \"invoice_number\": \"JOF/2026/00443\", \"invoice_date\": \"2026-09-14\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0166\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Ergonomic Office Chair\", \"quantity\": 3, \"unit_price\": 1727000.0, \"amount\": 5181000.0}, {\"description\": \"A4 Copy Paper 80gsm (ream)\", \"quantity\": 9, \"unit_price\": 54100.0, \"amount\": 486900.0}, {\"description\": \"Whiteboard 120x240\", \"quantity\": 6, \"unit_price\": 1296800.0, \"amount\": 7780800.0}, {\"description\": \"Lever Arch Files (dozen)\", \"quantity\": 7, \"unit_price\": 280600.0, \"amount\": 1964200.0}], \"subtotal\": 15412900.0, \"tax\": 1695419.0, \"total\": 17108319.0, \"bank_account\": \"800114673900\", \"notes\": \"Late payments are subject to a 2% monthly charge.\"}"
-}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Horizon Foods Ltd\", \"invoice_number\": \"HFL-26-00422\", \"invoice_date\": \"2026-10-25\", \"due_date\": \"2026-11-24\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0150\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Granulated Sugar 1kg\", \"quantity\": 18, \"unit_price\": 18700, \"amount\": 336600}], \"subtotal\": 336600, \"tax\": 37026, \"total\": 373626, \"bank_account\": \"5022007859474\", \"notes\": null}"
+}

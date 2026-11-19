@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Sinar Utama Kemasan\", \"invoice_number\": \"SUK-26-00718\", \"invoice_date\": \"2026-10-19\", \"due_date\": \"2026-11-18\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0029\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 2, \"unit_price\": 259900, \"amount\": 519800}, {\"description\": \"Label Pengiriman A6 (rol)\", \"quantity\": 5, \"unit_price\": 77200, \"amount\": 386000}, {\"description\": \"Lakban Bening 48mm (dus)\", \"quantity\": 12, \"unit_price\": 413000, \"amount\": 4956000}], \"subtotal\": 5861800, \"tax\": 644798, \"total\": 6506598, \"bank_account\": \"678790977167\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
+}

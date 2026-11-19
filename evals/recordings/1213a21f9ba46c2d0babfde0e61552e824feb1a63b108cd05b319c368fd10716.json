@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Utama Mandiri Alat Kantor\", \"invoice_number\": \"0331/UMA/X/2026\", \"invoice_date\": \"2026-10-08\", \"due_date\": \"2026-10-22\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0291\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kertas HVS A4 80gsm (rim)\", \"quantity\": 10, \"unit_price\": 54100, \"amount\": 541000}], \"subtotal\": 541000, \"tax\": 59510, \"total\": 600510, \"bank_account\": \"5761969869701\", \"notes\": null}"
+}

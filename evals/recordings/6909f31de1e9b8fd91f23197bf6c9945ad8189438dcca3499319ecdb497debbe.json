@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Sterling Hygiene Group\", \"invoice_number\": \"SHG-26-00538\", \"invoice_date\": \"2026-10-22\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0188\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Hand Soap 5L\", \"quantity\": 5, \"unit_price\": 109800.00, \"amount\": 549000.00}, {\"description\": \"Trash Bags 90x120 (pack)\", \"quantity\": 4, \"unit_price\": 67200.00, \"amount\": 268800.00}], \"subtotal\": 817800.00, \"tax\": 89958.00, \"total\": 907758.00, \"bank_account\": \"83078932117\", \"notes\": null}"
+}

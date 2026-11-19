@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Bumi Cahaya Alat Kantor\", \"invoice_number\": \"INV-BCA-00547\", \"invoice_date\": \"2026-09-20\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0031\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 5, \"unit_price\": 1264900, \"amount\": 6324500}, {\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 1, \"unit_price\": 1962600, \"amount\": 1962600}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 2, \"unit_price\": 273400, \"amount\": 546800}], \"subtotal\": 8833900, \"tax\": 971729, \"total\": 9805629, \"bank_account\": \"5069057507\", \"notes\": null}"
+}

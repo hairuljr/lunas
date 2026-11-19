@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Archipelago Packaging Co\", \"invoice_number\": \"SI-26-00831\", \"invoice_date\": \"2026-10-19\", \"due_date\": \"2026-12-03\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0024\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Wooden Pallet 110x110\", \"quantity\": 20, \"unit_price\": 176500, \"amount\": 3530000}, {\"description\": \"Bubble Wrap 1.25m x 50m\", \"quantity\": 17, \"unit_price\": 269800, \"amount\": 4586600}], \"subtotal\": 8116600, \"tax\": 892826, \"total\": 9009426, \"bank_account\": \"033201009876305\", \"notes\": \"Thank you for your business.\"}"
-}

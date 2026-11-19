@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Lestari Sakti Teknologi\", \"invoice_number\": \"LST-26-00123\", \"invoice_date\": \"2026-10-03\", \"due_date\": \"2026-11-17\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0027\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Monitor LED 24 inci\", \"quantity\": 4, \"unit_price\": 2497900, \"amount\": 9991600}], \"subtotal\": 9991600, \"tax\": 1099076, \"total\": 11090676, \"bank_account\": \"71607497721\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

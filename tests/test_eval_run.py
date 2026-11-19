@@ -10,6 +10,7 @@ from evals.node import run as eval_run
 from lunas.llm import JsonSchema, LLMRequestError, Message, RecordingClient
 from lunas.models import Decision
 from lunas.pipeline.nodes.extract import PROMPT_NAME, PROMPT_VERSION
+from lunas.retrieval.retriever import RecordingRetriever
 
 SEED = 5
 INVOICES = 6
@@ -23,6 +24,19 @@ MATCH_ONLY_CLASSES = {
     "bank_account_change",
     "payment_terms",
 }
+
+
+class NoClauses:
+    """A contract index that finds nothing, so no contract question reaches the model."""
+
+    def price_clauses(self, vendor_id: str, vendor_name: str, item: str) -> list:
+        return []
+
+
+def no_contract_index(settings, recordings=None, replay_only=False):
+    if recordings is None:
+        return NoClauses()
+    return RecordingRetriever(recordings, None if replay_only else NoClauses())
 
 
 class OracleClient:
@@ -56,6 +70,7 @@ def run_eval(
     monkeypatch: pytest.MonkeyPatch, out: Path, client, *flags: str, expect: int = 0
 ) -> dict:
     monkeypatch.setattr(eval_run, "build_client", lambda *args: client)
+    monkeypatch.setattr(eval_run, "build_retriever", no_contract_index)
     # Every invoice, so counts below are over the whole small dataset. The gate replays the
     # split it was recorded on.
     split = [] if "--gate" in flags else ["--split", "all"]

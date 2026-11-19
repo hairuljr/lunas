@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Sterling Packaging Ltd\", \"invoice_number\": \"INV-SPL-00831\", \"invoice_date\": \"2026-09-18\", \"due_date\": \"2026-10-18\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0054\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Shipping Labels A6 (roll)\", \"quantity\": 16, \"unit_price\": 77100.00, \"amount\": 1233600.00}, {\"description\": \"Double Wall Carton 40x40x40\", \"quantity\": 3, \"unit_price\": 15100.00, \"amount\": 45300.00}, {\"description\": \"Clear Tape 48mm (box)\", \"quantity\": 10, \"unit_price\": 421600.00, \"amount\": 4216000.00}], \"subtotal\": 5494900.00, \"tax\": 604439.00, \"total\": 6099339.00, \"bank_account\": \"73128689516\", \"notes\": null}"
+}

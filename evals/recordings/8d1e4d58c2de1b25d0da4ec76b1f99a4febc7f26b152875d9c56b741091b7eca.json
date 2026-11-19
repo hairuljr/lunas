@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Archipelago Packaging Co\", \"invoice_number\": \"SI-26-00906\", \"invoice_date\": \"2026-10-10\", \"due_date\": \"2026-11-24\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0204\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 14, \"unit_price\": 87600, \"amount\": 1226400}, {\"description\": \"Wooden Pallet 110x110\", \"quantity\": 4, \"unit_price\": 165900, \"amount\": 663600}], \"subtotal\": 1890000, \"tax\": 207900, \"total\": 2097900, \"bank_account\": \"033201009876305\", \"notes\": null}"
-}

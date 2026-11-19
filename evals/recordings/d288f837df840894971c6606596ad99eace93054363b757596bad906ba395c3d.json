@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2609-0939\", \"invoice_date\": \"2026-09-13\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0125\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 10, \"unit_price\": 199100, \"amount\": 1991000}, {\"description\": \"Air Mineral Galon 19L\", \"quantity\": 18, \"unit_price\": 23000, \"amount\": 414000}], \"subtotal\": 2405000, \"tax\": 288600, \"total\": 2693600, \"bank_account\": \"0841736502\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

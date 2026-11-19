@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sari Rasa Catering\", \"invoice_number\": \"INV.0099.10.2026\", \"invoice_date\": \"2026-10-07\", \"due_date\": \"2026-10-21\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-9050\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 14, \"unit_price\": 189400, \"amount\": 2651600}, {\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 2, \"unit_price\": 44700, \"amount\": 89400}], \"subtotal\": 2741000, \"tax\": 301510, \"total\": 3042510, \"bank_account\": \"7153309842\", \"notes\": null}"
-}

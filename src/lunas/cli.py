@@ -9,6 +9,7 @@ from lunas.config import Settings
 from lunas.erp import ErpData
 from lunas.llm import LLMNotConfiguredError, build_client
 from lunas.pipeline.run import process_invoices
+from lunas.retrieval.retriever import build_retriever
 from lunas.telemetry import configure_tracing, shutdown_tracing
 
 INVOICE_DIR = "invoices"
@@ -35,8 +36,14 @@ def run(args: argparse.Namespace) -> int:
 
     tracing = configure_tracing(settings)
     try:
+        retriever = build_retriever(settings, args.cache / "retrieval" if args.cache else None)
         results = process_invoices(
-            paths, ErpData.load(data_dir), client, settings, args.workers or settings.llm_workers
+            paths,
+            ErpData.load(data_dir),
+            client,
+            settings,
+            args.workers or settings.llm_workers,
+            retriever,
         )
     finally:
         shutdown_tracing()  # flushes: a CLI that just exits loses its last spans

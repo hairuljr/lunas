@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sari Rasa Catering\", \"invoice_number\": \"INV.0181.10.2026\", \"invoice_date\": \"2026-10-28\", \"due_date\": \"2026-11-11\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0260\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 19, \"unit_price\": 195200, \"amount\": 3708800}, {\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6267700, \"amount\": 6267700}, {\"description\": \"Gula Pasir 1kg\", \"quantity\": 1, \"unit_price\": 17100, \"amount\": 17100}], \"subtotal\": 9993600, \"tax\": 1099296, \"total\": 11092896, \"bank_account\": \"7153309842\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
-}

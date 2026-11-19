@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sentosa Karya Boga\", \"invoice_number\": \"SKB/2026/00660\", \"invoice_date\": \"2026-10-25\", \"due_date\": \"2026-12-09\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0095\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 5856800, \"amount\": 5856800}, {\"description\": \"Gula Pasir 1kg\", \"quantity\": 6, \"unit_price\": 19300, \"amount\": 115800}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 6, \"unit_price\": 1286400, \"amount\": 7718400}], \"subtotal\": 13691000, \"tax\": 1506010, \"total\": 15197010, \"bank_account\": \"5669310234\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

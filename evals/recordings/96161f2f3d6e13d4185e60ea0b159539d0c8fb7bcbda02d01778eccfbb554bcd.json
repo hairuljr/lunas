@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2610-0913\", \"invoice_date\": \"2026-10-11\", \"due_date\": null, \"payment_terms_days\": 10, \"po_number\": \"PO-2026-0085\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 5, \"unit_price\": 192800, \"amount\": 964000}, {\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 10, \"unit_price\": 41600, \"amount\": 416000}, {\"description\": \"Gula Pasir 1kg\", \"quantity\": 12, \"unit_price\": 19200, \"amount\": 230400}, {\"description\": \"Air Mineral Galon 19L\", \"quantity\": 6, \"unit_price\": 19900, \"amount\": 119400}], \"subtotal\": 1729800, \"tax\": 190278, \"total\": 1920078, \"bank_account\": \"0841736502\", \"notes\": null}"
-}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Meridian Hygiene Ltd\", \"invoice_number\": \"MHL26100198\", \"invoice_date\": \"2026-10-15\", \"due_date\": \"2026-10-22\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0038\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Toilet Tissue Rolls (carton)\", \"quantity\": 16, \"unit_price\": 304000.00, \"amount\": 4864000.00}, {\"description\": \"Trash Bags 90x120 (pack)\", \"quantity\": 6, \"unit_price\": 70900.00, \"amount\": 425400.00}, {\"description\": \"Monthly Cleaning Service\", \"quantity\": 1, \"unit_price\": 8072800.00, \"amount\": 8072800.00}, {\"description\": \"Hand Soap 5L\", \"quantity\": 6, \"unit_price\": 118100.00, \"amount\": 708600.00}], \"subtotal\": 14070800.00, \"tax\": 1547788.00, \"total\": 15618588.00, \"bank_account\": \"978696917236\", \"notes\": null}"
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"clause_id\": \"KTR-V-022#11.1\", \"quote\": \"Addendum No. 1 dated August 17, 2026: from September 30, 2026, the unit price of Antivirus License 1 Year is changed to IDR 415,800.00 per unit.\", \"unit_price\": 415800, \"effective_date\": \"2026-09-30\"}"
+}

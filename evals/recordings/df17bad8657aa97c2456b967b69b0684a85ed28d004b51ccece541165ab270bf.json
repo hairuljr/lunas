@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Pioneer Systems Group\", \"invoice_number\": \"0558/PSG/X/2026\", \"invoice_date\": \"2026-10-08\", \"due_date\": \"2026-11-07\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0192\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"24-inch LED Monitor\", \"quantity\": 2, \"unit_price\": 1946700.00, \"amount\": 3893400.00}, {\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 5, \"unit_price\": 1446500.00, \"amount\": 7232500.00}], \"subtotal\": 11125900.00, \"tax\": 1223849.00, \"total\": 12349749.00, \"bank_account\": \"33750598165\", \"notes\": null}"
+}

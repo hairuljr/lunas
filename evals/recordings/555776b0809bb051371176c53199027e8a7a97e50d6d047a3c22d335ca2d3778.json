@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Bumi Cahaya Alat Kantor\", \"invoice_number\": \"INV-BCA-00583\", \"invoice_date\": \"2026-10-18\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-9271\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 15, \"unit_price\": 264700, \"amount\": 3970500}, {\"description\": \"Pulpen Gel Hitam (kotak)\", \"quantity\": 1, \"unit_price\": 44300, \"amount\": 44300}, {\"description\": \"Kertas HVS A4 80gsm (rim)\", \"quantity\": 18, \"unit_price\": 51800, \"amount\": 932400}, {\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 6, \"unit_price\": 1320900, \"amount\": 7925400}], \"subtotal\": 12872600, \"tax\": 1415986, \"total\": 14288586, \"bank_account\": \"5069057507\", \"notes\": null}"
+}

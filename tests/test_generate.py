@@ -8,6 +8,7 @@ from data.generate import (
     DEFAULT_INVOICES,
     EXPECTED,
     LABELS,
+    VENDOR_COUNT,
     _class_counts,
     build_dataset,
     load_ground_truth,
@@ -17,6 +18,8 @@ from data.generate import (
 from lunas.config import Settings
 from lunas.erp import ErpData
 from lunas.ingest import choose_backend, get_reader
+from lunas.models import Decision
+from lunas.pipeline.nodes.contract import amounts_in
 from lunas.pipeline.nodes.decide import decide
 from lunas.pipeline.nodes.validate import validate_invoice
 from lunas.pipeline.run import check_invoice
@@ -141,6 +144,53 @@ def test_labels_agree_with_the_checks_and_the_decision(invoices: int):
 
     for record in dataset.records:
         issues = check_invoice(record.invoice, erp, settings)
+        codes = sorted({issue.code for issue in issues})
+        assert codes == record.expected_check_codes, record.id
 
-        assert sorted({issue.code for issue in issues}) == record.expected_issue_codes, record.id
-        assert decide(record.invoice, issues).decision == record.expected_decision, record.id
+        decision = decide(record.invoice, issues).decision
+        if record.expected_check_codes == record.expected_issue_codes:
+            assert decision == record.expected_decision, record.id
+        else:
+            # Only the contract check can clear these; without it the invoice is held.
+            assert (record.label, decision) == ("price_amendment", Decision.HOLD), record.id
+
+
+def test_every_vendor_has_a_contract_that_matches_the_vendor_master():
+    dataset = build_dataset(SEED, 3)
+    vendors = {vendor.vendor_id: vendor for vendor in dataset.vendors}
+
+    assert len(dataset.contracts) == len(dataset.vendors) == VENDOR_COUNT
+    for contract in dataset.contracts:
+        vendor = vendors[contract.vendor_id]
+        text = " ".join(clause.text for clause in contract.clauses)
+        assert vendor.bank_account in text, contract.contract_id
+        assert f"{vendor.payment_terms_days} " in text, contract.contract_id
+        assert len({clause.clause_id for clause in contract.clauses}) == len(contract.clauses)
+
+
+def test_retrieval_cases_point_at_real_clauses_and_split_by_vendor():
+    dataset = build_dataset(SEED, 3)
+    clause_ids = {clause.clause_id for c in dataset.contracts for clause in c.clauses}
+    split_of: dict[str, set[str]] = {}
+
+    for case in dataset.retrieval_cases:
+        assert case.relevant, case.id
+        assert set(case.relevant) <= clause_ids, case.id
+        assert all(key.startswith(f"KTR-{case.vendor_id}#") for key in case.relevant), case.id
+        split_of.setdefault(case.vendor_id, set()).add(case.split)
+
+    assert all(len(splits) == 1 for splits in split_of.values())
+    assert {next(iter(s)) for s in split_of.values()} == {"dev", "test"}
+
+
+def test_price_amendment_bills_the_addendum_price_around_its_effective_date():
+    dataset = build_dataset(SEED, DEFAULT_INVOICES)
+    clauses = {c.clause_id: c for contract in dataset.contracts for c in contract.clauses}
+    cases = [r for r in dataset.records if r.label == "price_amendment"]
+    assert {r.variant for r in cases} == {"in_effect", "too_early"}
+
+    for record in cases:
+        clause = clauses[record.expected_citation]
+        line = record.invoice.line_items[0]
+        assert line.description in clause.text, record.id
+        assert line.unit_price in amounts_in(clause.text), record.id

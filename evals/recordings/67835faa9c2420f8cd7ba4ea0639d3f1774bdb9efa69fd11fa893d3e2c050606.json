@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Archipelago Packaging Co\", \"invoice_number\": \"SI-26-00855\", \"invoice_date\": \"2026-10-12\", \"due_date\": \"2026-11-26\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0084\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Double Wall Carton 40x40x40\", \"quantity\": 20, \"unit_price\": 13900, \"amount\": 278000}, {\"description\": \"Shipping Labels A6 (roll)\", \"quantity\": 17, \"unit_price\": 66400, \"amount\": 1128800}, {\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 14, \"unit_price\": 82400, \"amount\": 1153600}], \"subtotal\": 2560400, \"tax\": 281644, \"total\": 2842044, \"bank_account\": \"033201009876305\", \"notes\": \"Thank you for your business.\"}"
+}

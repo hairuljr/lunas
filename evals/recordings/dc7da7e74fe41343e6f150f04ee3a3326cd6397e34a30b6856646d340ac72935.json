@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Archipelago Packaging Co\", \"invoice_number\": \"SI-26-00862\", \"invoice_date\": \"2026-09-15\", \"due_date\": \"2026-10-30\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0104\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Clear Tape 48mm (box)\", \"quantity\": 9, \"unit_price\": 457800, \"amount\": 4120200}, {\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 11, \"unit_price\": 85900, \"amount\": 944900}, {\"description\": \"Double Wall Carton 40x40x40\", \"quantity\": 4, \"unit_price\": 13000, \"amount\": 52000}], \"subtotal\": 5117100, \"tax\": 562881, \"total\": 5679981, \"bank_account\": \"479082965977568\", \"notes\": \"Please note that our bank details have changed. Kindly transfer to the new account shown above.\"}"
-}

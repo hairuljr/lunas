@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Evergreen Office Supply Ltd\", \"invoice_number\": \"INV-EOS-00281\", \"invoice_date\": \"2026-10-06\", \"due_date\": \"2026-10-20\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0186\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lever Arch Files (dozen)\", \"quantity\": 7, \"unit_price\": 275600.0, \"amount\": 1929200.0}], \"subtotal\": 1929200.0, \"tax\": 231504.0, \"total\": 2160704.0, \"bank_account\": \"8132710382\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

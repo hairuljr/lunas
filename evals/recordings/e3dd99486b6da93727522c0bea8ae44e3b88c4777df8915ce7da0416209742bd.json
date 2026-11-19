@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Kemas Prima Indonesia\", \"invoice_number\": \"00406/KPI/2026\", \"invoice_date\": \"2026-09-18\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0058\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Palet Kayu 110x110\", \"quantity\": 16, \"unit_price\": 187800, \"amount\": 3004800}, {\"description\": \"Lakban Bening 48mm (dus)\", \"quantity\": 18, \"unit_price\": 451900, \"amount\": 8134200}], \"subtotal\": 11139000, \"tax\": 1225290, \"total\": 12364290, \"bank_account\": \"9198699626\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
-}

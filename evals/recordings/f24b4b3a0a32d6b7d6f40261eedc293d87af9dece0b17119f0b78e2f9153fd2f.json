@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000976\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-11-01\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0232\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Antivirus License 1 Year\", \"quantity\": 9, \"unit_price\": 383000.00, \"amount\": 3447000.00}, {\"description\": \"External SSD 1TB\", \"quantity\": 3, \"unit_price\": 1517600.00, \"amount\": 4552800.00}, {\"description\": \"24-inch LED Monitor\", \"quantity\": 1, \"unit_price\": 2194500.00, \"amount\": 2194500.00}], \"subtotal\": 10194300.00, \"tax\": 1121373.00, \"total\": 11315673.00, \"bank_account\": \"1240007719356\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
-}

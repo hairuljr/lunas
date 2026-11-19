@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202610-901\", \"invoice_date\": \"2026-10-09\", \"due_date\": \"2026-11-08\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0037\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Router Nirkabel Dual-Band\", \"quantity\": 6, \"unit_price\": 1291900, \"amount\": 7751400}], \"subtotal\": 7751400, \"tax\": 852654, \"total\": 8604054, \"bank_account\": \"1030005542871\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
-}

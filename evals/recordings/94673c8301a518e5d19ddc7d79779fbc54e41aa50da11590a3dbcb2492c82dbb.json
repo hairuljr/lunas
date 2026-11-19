@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202610-984\", \"invoice_date\": \"2026-10-22\", \"due_date\": \"2026-11-21\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0257\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"SSD Eksternal 1TB\", \"quantity\": 2, \"unit_price\": 1722800, \"amount\": 3445600}], \"subtotal\": 3445600, \"tax\": 379016, \"total\": 3824616, \"bank_account\": \"1030005542871\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
-}

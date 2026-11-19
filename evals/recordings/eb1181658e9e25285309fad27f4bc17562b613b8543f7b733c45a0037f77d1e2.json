@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000857\", \"invoice_date\": \"2026-10-12\", \"due_date\": \"2026-11-11\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0022\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Dual-Band Wireless Router\", \"quantity\": 1, \"unit_price\": 1225600.0, \"amount\": 1225600.0}, {\"description\": \"Antivirus License 1 Year\", \"quantity\": 8, \"unit_price\": 391600.0, \"amount\": 3132800.0}], \"subtotal\": 4358400.0, \"tax\": 479424.0, \"total\": 4837824.0, \"bank_account\": \"1240007719356\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
-}

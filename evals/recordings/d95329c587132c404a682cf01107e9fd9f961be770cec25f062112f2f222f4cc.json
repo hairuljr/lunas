@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Archipelago Packaging Co\", \"invoice_number\": \"SI-26-00836\", \"invoice_date\": \"2026-09-28\", \"due_date\": \"2026-10-08\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0044\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Wooden Pallet 110x110\", \"quantity\": 5, \"unit_price\": 192400, \"amount\": 962000}], \"subtotal\": 962000, \"tax\": 105820, \"total\": 1067820, \"bank_account\": \"033201009876305\", \"notes\": \"Thank you for your business.\"}"
-}

@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Archipelago Packaging Co\", \"invoice_number\": \"SI-26-00889\", \"invoice_date\": \"2026-10-26\", \"due_date\": \"2026-12-10\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0174\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Wooden Pallet 110x110\", \"quantity\": 9, \"unit_price\": 189900, \"amount\": 1709100}, {\"description\": \"Shipping Labels A6 (roll)\", \"quantity\": 13, \"unit_price\": 87800, \"amount\": 1141400}], \"subtotal\": 2850500, \"tax\": 313555, \"total\": 3164055, \"bank_account\": \"033201009876305\", \"notes\": null}"
-}

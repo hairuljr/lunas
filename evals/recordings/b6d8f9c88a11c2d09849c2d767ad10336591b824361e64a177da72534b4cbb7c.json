@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Borneo Hygiene Services\", \"invoice_number\": \"BHS2600507\", \"invoice_date\": \"2026-10-30\", \"due_date\": \"2026-11-13\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0259\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Toilet Tissue Rolls (carton)\", \"quantity\": 15, \"unit_price\": 332500.00, \"amount\": 4987500.00}, {\"description\": \"Monthly Cleaning Service\", \"quantity\": 1, \"unit_price\": 7814200.00, \"amount\": 7814200.00}], \"subtotal\": 12801700.00, \"tax\": 1408187.00, \"total\": 14209887.00, \"bank_account\": \"0712264490\", \"notes\": \"Thank you for your business.\"}"
-}

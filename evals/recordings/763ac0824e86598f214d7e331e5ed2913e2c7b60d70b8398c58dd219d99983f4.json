@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/10/0396\", \"invoice_date\": \"2026-10-13\", \"due_date\": \"2026-11-12\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0071\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kertas HVS A4 80gsm (rim)\", \"quantity\": 14, \"unit_price\": 51900, \"amount\": 726600}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 17, \"unit_price\": 263800, \"amount\": 4484600}, {\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 2, \"unit_price\": 1918100, \"amount\": 3836200}, {\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 1, \"unit_price\": 1364700, \"amount\": 1364700}], \"subtotal\": 10412100, \"tax\": 1145331, \"total\": 11557431, \"bank_account\": \"5270418896\", \"notes\": null}"
-}

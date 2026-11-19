@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Summit Packaging Ltd\", \"invoice_number\": \"INV/2026/10/0689\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-10-09\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0104\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 20, \"unit_price\": 89900, \"amount\": 1798000}, {\"description\": \"Clear Tape 48mm (box)\", \"quantity\": 9, \"unit_price\": 439700, \"amount\": 3957300}, {\"description\": \"Bubble Wrap 1.25m x 50m\", \"quantity\": 7, \"unit_price\": 261100, \"amount\": 1827700}], \"subtotal\": 7583000, \"tax\": 834130, \"total\": 8417130, \"bank_account\": \"486653347834\", \"notes\": null}"
+}

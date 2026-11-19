@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Kemas Prima Indonesia\", \"invoice_number\": \"00467/KPI/2026\", \"invoice_date\": \"2026-09-14\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0088\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Label Pengiriman A6 (rol)\", \"quantity\": 17, \"unit_price\": 71000, \"amount\": 1207000}, {\"description\": \"Palet Kayu 110x110\", \"quantity\": 1, \"unit_price\": 164100, \"amount\": 164100}], \"subtotal\": 1371100, \"tax\": 164532, \"total\": 1535632, \"bank_account\": \"4102583697\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Sterling Hygiene Ltd\", \"invoice_number\": \"INV/2026/09/0514\", \"invoice_date\": \"2026-09-28\", \"due_date\": \"2026-11-12\", \"payment_terms_days\": null, \"po_number\": null, \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Monthly Cleaning Service\", \"quantity\": 1, \"unit_price\": 8297500, \"amount\": 8297500}], \"subtotal\": 8297500, \"tax\": 912725, \"total\": 9210225, \"bank_account\": \"1249771656757\", \"notes\": null}"
+}

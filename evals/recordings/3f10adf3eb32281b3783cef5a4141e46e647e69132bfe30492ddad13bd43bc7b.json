@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sari Rasa Catering\", \"invoice_number\": \"INV.0186.10.2026\", \"invoice_date\": \"2026-10-18\", \"due_date\": \"2026-11-01\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0270\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6718800, \"amount\": 6718800}, {\"description\": \"Air Mineral Galon 19L\", \"quantity\": 17, \"unit_price\": 20100, \"amount\": 341700}], \"subtotal\": 7060500, \"tax\": 847260, \"total\": 7907760, \"bank_account\": \"7153309842\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
-}

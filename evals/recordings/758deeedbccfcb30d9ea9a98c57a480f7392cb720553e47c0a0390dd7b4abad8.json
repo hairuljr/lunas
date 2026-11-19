@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2610-0240\", \"invoice_date\": \"2026-10-01\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0045\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Katering Rapat (paket)\", \"quantity\": 4, \"unit_price\": 1321900, \"amount\": 5287600}], \"subtotal\": 5287600, \"tax\": 581636, \"total\": 5869236, \"bank_account\": \"0841736502\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

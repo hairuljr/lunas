@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/10/0480\", \"invoice_date\": \"2026-10-10\", \"due_date\": \"2026-11-09\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0241\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 5, \"unit_price\": 1419100, \"amount\": 7095500}, {\"description\": \"Pulpen Gel Hitam (kotak)\", \"quantity\": 10, \"unit_price\": 44700, \"amount\": 447000}], \"subtotal\": 7542500, \"tax\": 829675, \"total\": 8372175, \"bank_account\": \"5270418896\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
-}

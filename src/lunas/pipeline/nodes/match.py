@@ -100,6 +100,7 @@ def match_invoice(
                     code="price_mismatch",
                     message=f"Line {index}: unit price {item.unit_price} != PO price "
                     f"{po_price} for {item.description!r}",
+                    line=index,
                 )
             )
 

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Perkasa Cahaya Kemasan\", \"invoice_number\": \"INV/2026/10/0281\", \"invoice_date\": \"2026-10-03\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0059\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 7, \"unit_price\": 286800, \"amount\": 2007600}], \"subtotal\": 2007600, \"tax\": 240912, \"total\": 2248512, \"bank_account\": \"3976963276\", \"notes\": null}"
+}

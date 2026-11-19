@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Java Office Furnishings\", \"invoice_number\": \"JOF/2026/00454\", \"invoice_date\": \"2026-09-29\", \"due_date\": \"2026-10-29\", \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0086\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"A4 Copy Paper 80gsm (ream)\", \"quantity\": 19, \"unit_price\": 51500.0, \"amount\": 978500.0}, {\"description\": \"Lever Arch Files (dozen)\", \"quantity\": 12, \"unit_price\": 286200.0, \"amount\": 3434400.0}, {\"description\": \"Black Gel Pens (box)\", \"quantity\": 3, \"unit_price\": 45200.0, \"amount\": 135600.0}, {\"description\": \"Black Laser Printer Toner\", \"quantity\": 10, \"unit_price\": 777400.0, \"amount\": 7774000.0}], \"subtotal\": 12322500.0, \"tax\": 1355475.0, \"total\": 13677975.0, \"bank_account\": \"800114673900\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

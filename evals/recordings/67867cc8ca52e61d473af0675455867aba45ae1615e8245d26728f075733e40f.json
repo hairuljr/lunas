@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Sakti Gemilang Teknologi\", \"invoice_number\": \"SGT/2026/00664\", \"invoice_date\": \"2026-09-24\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0157\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 3, \"unit_price\": 1447800, \"amount\": 4343400}, {\"description\": \"Monitor LED 24 inci\", \"quantity\": 4, \"unit_price\": 2200800, \"amount\": 8803200}], \"subtotal\": 13146600, \"tax\": 1446126, \"total\": 14592726, \"bank_account\": \"3517364468987\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Evergreen Office Supply Ltd\", \"invoice_number\": \"INV-EOS-00269\", \"invoice_date\": \"2026-10-01\", \"due_date\": \"2026-10-15\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0106\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lever Arch Files (dozen)\", \"quantity\": 1, \"unit_price\": 245700.00, \"amount\": 245700.00}, {\"description\": \"Black Laser Printer Toner\", \"quantity\": 6, \"unit_price\": 779500.00, \"amount\": 4677000.00}, {\"description\": \"A4 Copy Paper 80gsm (ream)\", \"quantity\": 11, \"unit_price\": 47100.00, \"amount\": 518100.00}], \"subtotal\": 5440800.00, \"tax\": 598488.00, \"total\": 6039288.00, \"bank_account\": \"8132710382\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

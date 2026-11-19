@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Keystone Office Supply Ltd\", \"invoice_number\": \"KOS-26-00613\", \"invoice_date\": \"2026-11-01\", \"due_date\": \"2026-12-16\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0276\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Whiteboard 120x240\", \"quantity\": 3, \"unit_price\": 1307400, \"amount\": 3922200}, {\"description\": \"A4 Copy Paper 80gsm (ream)\", \"quantity\": 15, \"unit_price\": 51100, \"amount\": 766500}, {\"description\": \"Lever Arch Files (dozen)\", \"quantity\": 5, \"unit_price\": 259800, \"amount\": 1299000}], \"subtotal\": 5987700, \"tax\": 658647, \"total\": 6646347, \"bank_account\": \"9118906995\", \"notes\": null}"
+}

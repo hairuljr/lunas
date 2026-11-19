@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Kemas Prima Indonesia\", \"invoice_number\": \"00430/KPI/2026\", \"invoice_date\": \"2026-09-27\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0098\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 19, \"unit_price\": 297100, \"amount\": 5644900}], \"subtotal\": 5644900, \"tax\": 620939, \"total\": 6265839, \"bank_account\": \"4102583697\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
-}

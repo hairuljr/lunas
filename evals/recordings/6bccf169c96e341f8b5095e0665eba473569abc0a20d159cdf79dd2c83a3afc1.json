@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sari Rasa Catering\", \"invoice_number\": \"INV.0173.10.2026\", \"invoice_date\": \"2026-10-04\", \"due_date\": \"2026-10-18\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0230\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6310600, \"amount\": 6310600}, {\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 15, \"unit_price\": 38600, \"amount\": 579000}], \"subtotal\": 6889600, \"tax\": 826752, \"total\": 7716352, \"bank_account\": \"7153309842\", \"notes\": null}"
-}

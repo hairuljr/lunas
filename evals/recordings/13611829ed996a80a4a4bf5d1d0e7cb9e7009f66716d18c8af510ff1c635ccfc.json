@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Java Office Furnishings\", \"invoice_number\": \"JOF/2026/00503\", \"invoice_date\": \"2026-09-17\", \"due_date\": null, \"payment_terms_days\": 10, \"po_number\": \"PO-2026-0266\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"A4 Copy Paper 80gsm (ream)\", \"quantity\": 4, \"unit_price\": 49600.00, \"amount\": 198400.00}, {\"description\": \"Black Gel Pens (box)\", \"quantity\": 19, \"unit_price\": 48200.00, \"amount\": 915800.00}, {\"description\": \"Black Laser Printer Toner\", \"quantity\": 10, \"unit_price\": 703100.00, \"amount\": 7031000.00}], \"subtotal\": 8145200.00, \"tax\": 895972.00, \"total\": 9041172.00, \"bank_account\": \"800114673900\", \"notes\": null}"
-}

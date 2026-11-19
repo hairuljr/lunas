@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Kemas Prima Indonesia\", \"invoice_number\": \"00548/KPI/2026\", \"invoice_date\": \"2026-10-04\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0288\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 14, \"unit_price\": 295100, \"amount\": 4131400}, {\"description\": \"Palet Kayu 110x110\", \"quantity\": 12, \"unit_price\": 189300, \"amount\": 2271600}, {\"description\": \"Stretch Film 500mm (rol)\", \"quantity\": 12, \"unit_price\": 97200, \"amount\": 1166400}, {\"description\": \"Lakban Bening 48mm (dus)\", \"quantity\": 18, \"unit_price\": 392100, \"amount\": 7057800}], \"subtotal\": 14627200, \"tax\": 1608992, \"total\": 16236192, \"bank_account\": \"4102583697\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
-}

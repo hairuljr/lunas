@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Archipelago Packaging Co\", \"invoice_number\": \"SI-26-00883\", \"invoice_date\": \"2026-09-09\", \"due_date\": \"2026-10-24\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-9284\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Shipping Labels A6 (roll)\", \"quantity\": 2, \"unit_price\": 66400, \"amount\": 132800}, {\"description\": \"Bubble Wrap 1.25m x 50m\", \"quantity\": 6, \"unit_price\": 299700, \"amount\": 1798200}, {\"description\": \"Wooden Pallet 110x110\", \"quantity\": 17, \"unit_price\": 164500, \"amount\": 2796500}, {\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 6, \"unit_price\": 86400, \"amount\": 518400}], \"subtotal\": 5245900, \"tax\": 577049, \"total\": 5822949, \"bank_account\": \"033201009876305\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

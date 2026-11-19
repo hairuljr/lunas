@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Kemas Prima Indonesia\", \"invoice_number\": \"00524/KPI/2026\", \"invoice_date\": \"2026-10-11\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0258\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Label Pengiriman A6 (rol)\", \"quantity\": 6, \"unit_price\": 67400, \"amount\": 404400}, {\"description\": \"Stretch Film 500mm (rol)\", \"quantity\": 16, \"unit_price\": 92200, \"amount\": 1475200}], \"subtotal\": 1879600, \"tax\": 206756, \"total\": 2086356, \"bank_account\": \"1547756565\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
-}

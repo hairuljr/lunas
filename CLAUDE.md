@@ -11,20 +11,23 @@ decision log. Update its decision log when a design decision changes.
 
 Update this section at the end of each working session.
 
-- Week 1 done and pushed (2026-11-16). Week 2 in progress (2026-11-19, not committed):
-  synthetic data generator (`data/generate.py`, default 300 digital invoice PDFs from 10
-  vendors in 3 layouts x 2 languages, eight classes, invoice ledger, dev/test split, ground
-  truth), ingestion router, digital-PDF reader, LLM extraction node
+- Week 1 done and pushed (2026-11-16). Week 2 steps 1-3 committed on branch
+  `week2-data-classes` (pushed, no PR yet); step 4 (contracts, retrieval, contract check)
+  done, not committed. Synthetic data generator (`data/generate.py`, default 300 digital invoice
+  PDFs from 40 vendors in 3 layouts x 2 languages, eight classes, invoice ledger, dev/test
+  split, ground truth, 40 contracts, 720 labelled retrieval questions), ingestion router, digital-PDF reader, LLM extraction node
   (`pipeline/nodes/extract.py`, `prompts/extract.v2.md`), validation (arithmetic, dates,
   tax rate), duplicate check, 3-way match (with payment terms), decision table, pipeline
   runner (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, naive ReAct
-  baseline, tracing, 149 tests.
+  baseline, tracing, contract retrieval (`lunas.retrieval`), contract-check node, 179 tests.
 - Commands: `uv run python data/generate.py`, `uv run lunas run`,
   `uv run python -m evals.node.run` (dev split by default, `--split test|all`;
   `--skip-llm` for the deterministic part, `--cache`
   to record LLM replies and resume, `--cache --replay-only` to run with no LLM at all,
   `--gate` for the PR gate, `--record` to refresh its recordings with a live run),
-  `uv run python -m evals.baseline.react` (live; `--cache` to resume).
+  `uv run python -m evals.baseline.react` (live; `--cache` to resume),
+  `uv run python -m lunas.retrieval.index` (rebuild the contract index in Postgres),
+  `uv run python -m evals.node.retrieval` (Recall@5; dev by default).
 - Mock ERP is `lunas.erp.ErpData`, read from the generator's JSON in `data/out/`. Postgres
   comes later.
 - Week-1 measurements below are on the old 30-invoice, two-class dataset, which no longer
@@ -212,8 +215,71 @@ Update this section at the end of each working session.
   match ignoring case and separators, and writes 11% and Rp 50M as literals instead of the
   config values. None of these cases occurs in the current test split, so the measured
   numbers stand; fix them in a `v3` with the next re-measurement, not by editing v2.
-- Remaining week 2: contracts + hybrid retrieval (raise vendors to ~40 with it),
-  investigation loop + router + LangGraph approval, OCR and vision with scanned versions.
+- Step 4, contracts + retrieval (2026-11-19, not committed):
+  - Vendors: 10 hand-written + 30 generated from word pools with a fixed seed
+    (`VENDOR_COUNT = 40`). Invoices are still round-robin over vendors.
+  - One contract per vendor in its language (`contracts.json`, readable copies in
+    `data/out/contracts/*.md`): 10 articles, 21 numbered paragraphs, plus an `Addendum`
+    changing one item's unit price from a date for 18 of 40 vendors (`AMENDMENT_SHARE`).
+    Paragraph text carries the vendor-master terms and bank account. No invoice uses the
+    addendum yet.
+  - `retrieval_cases.json`: per vendor, 9 question kinds x 2 languages (price change,
+    payment terms, payment account, bank change, tax, partial delivery, duplicate, PO
+    required, clause by number), labelled with the paragraphs that answer them; split by
+    vendor, 360 dev / 360 test.
+  - `lunas.retrieval`: Postgres table `contract_clauses` (one row per paragraph; the
+    article is the parent), a `tsvector` with the contract's language config
+    (`indonesian`/`english`), exact pgvector cosine (no ANN index), weighted RRF with
+    keyword weight 0.5. Chunk text = vendor name + clause number + article title + text.
+    Embeddings are cached on disk under `evals/cache/embeddings/` (host + model + text).
+  - Recall@5, vendor-scoped hybrid (how the pipeline will search): dev 0.949, **test
+    0.934** (`retrieval-20261119-042740.json`; target 0.90). On test, vector alone 0.938,
+    keyword alone 0.685: fusion matches vector overall and wins on clause-number
+    questions (keyword 0.875 vs vector 0.425 on dev). Unscoped (all 40 contracts) hybrid
+    0.860 on test. Weakest kinds on test: clause reference 0.725, duplicate 0.875.
+    Cross-language questions 0.912 vs same-language 0.956.
+  - The keyword weight was swept on dev (1.0/0.7/0.5/0.3/0.0 -> 0.910/0.939/0.949/0.928/
+    0.929) before the single test run.
+  - Index cost: 822 clause embeddings for 0.0004 of the balance. The gate was re-recorded
+    (dataset changed with the vendors): 153/153 on dev again, 0.031; balance now 3.2091.
+  - The Postgres store tests skip without a database; CI has no Postgres service, so
+    retrieval is only tested locally until one is added to `pr-gate.yml`.
+- Contract check (step 6 of SPEC §4), built 2026-11-19: `pipeline/nodes/contract.py`,
+  prompt `contract.v1`. Runs only for `price_mismatch` lines (`Issue.line` names the line).
+  The retriever asks the vendor's own contract the same price question the retrieval eval
+  asks (`lunas.retrieval.questions`) and returns up to 5 whole parent articles. The model
+  gets the PO's item name and typed prices and dates, never invoice text, and returns
+  clause id, verbatim quote, price and effective date. Code clears the mismatch only if the
+  clause was retrieved, the quote is in it word for word, the price and the date's day and
+  year are written in the quote, the price equals the invoiced price, and the date is on or
+  before the invoice date. Verdicts: explained / not_found / no_answer / citation_invalid /
+  price_differs / not_yet_effective. Without a database the pipeline runs with no contract
+  check and the mismatch stays held.
+- New class `price_amendment` (25 of 300; vendors with an addendum only): the invoice bills
+  the addendum's price for an item ordered at the old price. `in_effect` (invoice after the
+  addendum's date) -> approve once the contract check clears it; `too_early` -> hold.
+  Ground truth now has `expected_check_codes` (before the contract check) and
+  `expected_citation`. 100 clean, 25 per other class; dev 154 / test 146.
+- Measured on dev, one live run (`node-20261119-071450.json`): decision 154/154, every
+  class 13/13 or 50/50, false-approve 0/98. Contract check cleared 6/6 that should be
+  cleared, 0/7 that should not (too_early ones), cited the addendum 13/13; on two
+  price_mismatch invoices of amended vendors the model cited the addendum and code
+  rejected it (`price_differs`). 189 requests, 247k tokens, 0.035 of the balance (now
+  3.1704). Not yet measured on test.
+- First extraction errors on this prompt (dev, same run): inv-086 (compact/en) got a due
+  date the document does not print, computed from the terms; inv-299 (compact/id) read a
+  unit price 13,400 as 13,300. Neither changed a decision: 299 was held anyway, and the
+  misread price breaks `quantity x unit_price = amount`, which validation flags. The
+  earlier dev run on the same prompt had no misses, so this is run-to-run variation.
+- Gate re-recorded on that run: 189 replies plus 32 recorded retrievals under
+  `evals/recordings/retrieval/`; the fingerprint now also covers `contracts.json` and the
+  contract prompt. Verified offline with no API key and an unreachable database.
+- **README results table is from the previous dataset** (eight classes, 10 vendors, commit
+  66a17d4), not the current one. Before re-measuring baseline vs lunas: baseline prompt v3
+  (precedence, number matching, config values, see above) and a read-only contract
+  search tool, or the new class is unfair to it.
+- Remaining week 2: investigation loop + router + LangGraph approval, OCR and vision with
+  scanned versions; Postgres in CI.
 
 ## Design rules that must not erode
 

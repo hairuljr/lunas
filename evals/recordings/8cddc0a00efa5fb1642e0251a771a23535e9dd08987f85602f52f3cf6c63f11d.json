@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Cemerlang Mandiri Boga\", \"invoice_number\": \"INV/2026/10/0341\", \"invoice_date\": \"2026-10-20\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0025\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 8, \"unit_price\": 42200, \"amount\": 337600}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 4, \"unit_price\": 1452600, \"amount\": 5810400}], \"subtotal\": 6148000, \"tax\": 676280, \"total\": 6824280, \"bank_account\": \"0088740260\", \"notes\": null}"
+}

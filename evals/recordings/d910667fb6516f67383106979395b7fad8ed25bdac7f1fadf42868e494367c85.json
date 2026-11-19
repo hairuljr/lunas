@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sari Rasa Catering\", \"invoice_number\": \"INV.0197.10.2026\", \"invoice_date\": \"2026-10-03\", \"due_date\": \"2026-10-17\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-9290\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 18, \"unit_price\": 39200, \"amount\": 705600}], \"subtotal\": 705600, \"tax\": 77616, \"total\": 783216, \"bank_account\": \"7153309842\", \"notes\": \"Semua nilai dalam Rupiah (IDR).\"}"
-}

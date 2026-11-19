@@ -34,15 +34,24 @@ money. That is the lethal trifecta, so safety lives in the architecture rather t
 - Node evals: per-field exact match for extraction, decision accuracy and false-approve rate.
 
 - Naive ReAct baseline for comparison (`evals/baseline/react.py`).
+- Contract retrieval: 40 bilingual contracts with numbered clauses, indexed in Postgres with
+  full-text search and pgvector and fused with weighted reciprocal rank fusion. Recall@5 on
+  the held-out questions: 0.934 (target 0.90), scoped to the vendor's contract as the
+  pipeline searches.
 - OpenTelemetry tracing: one trace per invoice, a span per node and per model call (OTel GenAI
   semantic conventions), exported over OTLP or to a JSONL file.
 
-OCR and vision readers are stubs. Contracts, the investigation loop and `gapura` are not built
-yet.
+- Contract check for price mismatches: a model reads the retrieved clauses and cites the one
+  that sets the price; code verifies the citation word for word and the price and date
+  against the invoice before clearing the mismatch.
+
+OCR and vision readers are stubs. The investigation loop and `gapura` are not built yet.
 
 ## Results
 
-Held-out test split: 147 synthetic digital invoices in eight classes (54 clean, 93 that must
+Measured on the previous version of the dataset (eight classes, ten vendors, before contracts;
+commit `66a17d4`); to be re-measured on the current one. Held-out test split: 147 synthetic
+digital invoices in eight classes (54 clean, 93 that must
 not be paid as they are). One live run each on 2026-11-19, same model
 (`deepseek-v4.1-flash-1017`), same provider, 4 invoices in parallel. The baseline is one
 ReAct loop that gets the raw invoice text and every tool, including a payment tool, with the
@@ -137,6 +146,16 @@ The deterministic part alone, without an LLM:
 
 ```bash
 uv run python -m evals.node.run --skip-llm
+```
+
+Contract retrieval needs Postgres (below). Build the index, then measure Recall@5:
+
+```bash
+uv run python -m lunas.retrieval.index
+```
+
+```bash
+uv run python -m evals.node.retrieval
 ```
 
 Tracing is off by default. Write spans to a file, one JSON object per line:

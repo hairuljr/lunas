@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000997\", \"invoice_date\": \"2026-10-08\", \"due_date\": \"2026-11-07\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0262\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"24-inch LED Monitor\", \"quantity\": 3, \"unit_price\": 2269500.0, \"amount\": 6808500.0}, {\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 6, \"unit_price\": 1467000.0, \"amount\": 8802000.0}], \"subtotal\": 15610500.0, \"tax\": 1717155.0, \"total\": 17327655.0, \"bank_account\": \"1240007719356\", \"notes\": \"Thank you for your business.\"}"
-}

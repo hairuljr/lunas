@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Utama Mandiri Alat Kantor\", \"invoice_number\": \"0317/UMA/IX/2026\", \"invoice_date\": \"2026-09-15\", \"due_date\": \"2026-09-22\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0211\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Toner Printer Laser Hitam\", \"quantity\": 4, \"unit_price\": 802800, \"amount\": 3211200}, {\"description\": \"Pulpen Gel Hitam (kotak)\", \"quantity\": 7, \"unit_price\": 51100, \"amount\": 357700}], \"subtotal\": 3568900, \"tax\": 392579, \"total\": 3961479, \"bank_account\": \"5761969869701\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

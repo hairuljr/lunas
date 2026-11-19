@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Utama Mandiri Alat Kantor\", \"invoice_number\": \"0328/UMA/X/2026\", \"invoice_date\": \"2026-10-18\", \"due_date\": \"2026-11-01\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0251\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 3, \"unit_price\": 1921500, \"amount\": 5764500}, {\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 4, \"unit_price\": 1342500, \"amount\": 5370000}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 10, \"unit_price\": 283100, \"amount\": 2831000}], \"subtotal\": 13965500, \"tax\": 1536205, \"total\": 15501705, \"bank_account\": \"5761969869701\", \"notes\": null}"
+}

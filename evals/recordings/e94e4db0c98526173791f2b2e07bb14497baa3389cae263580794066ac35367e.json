@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Coral Foods Group\", \"invoice_number\": \"INV/2026/09/0199\", \"invoice_date\": \"2026-09-26\", \"due_date\": \"2026-10-10\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0160\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Meeting Catering (package)\", \"quantity\": 5, \"unit_price\": 1458000.0, \"amount\": 7290000.0}, {\"description\": \"Tea Bags (box of 100)\", \"quantity\": 11, \"unit_price\": 45700.0, \"amount\": 502700.0}, {\"description\": \"Automatic Coffee Machine\", \"quantity\": 1, \"unit_price\": 6930400.0, \"amount\": 6930400.0}], \"subtotal\": 14723100.0, \"tax\": 1619541.0, \"total\": 16342641.0, \"bank_account\": \"296906444999\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

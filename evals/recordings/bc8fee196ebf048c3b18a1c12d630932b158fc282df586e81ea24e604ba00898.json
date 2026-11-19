@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Golden Systems Ltd\", \"invoice_number\": \"GSL-26-00828\", \"invoice_date\": \"2026-09-25\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0169\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Antivirus License 1 Year\", \"quantity\": 16, \"unit_price\": 415800.00, \"amount\": 6652800.00}, {\"description\": \"External SSD 1TB\", \"quantity\": 2, \"unit_price\": 1758100.00, \"amount\": 3516200.00}, {\"description\": \"24-inch LED Monitor\", \"quantity\": 1, \"unit_price\": 2089800.00, \"amount\": 2089800.00}], \"subtotal\": 12258800.00, \"tax\": 1348468.00, \"total\": 13607268.00, \"bank_account\": \"4959368273\", \"notes\": null}"
+}

@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Bersih Sejahtera\", \"invoice_number\": \"0784/INV/BSJ/IX/2026\", \"invoice_date\": \"2026-09-16\", \"due_date\": \"2026-09-30\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0093\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kantong Sampah 90x120 (pak)\", \"quantity\": 14, \"unit_price\": 65900, \"amount\": 922600}, {\"description\": \"Pengharum Ruangan Otomatis\", \"quantity\": 6, \"unit_price\": 241000, \"amount\": 1446000}], \"subtotal\": 2368600, \"tax\": 260546, \"total\": 2629146, \"bank_account\": \"0389915527\", \"notes\": null}"
-}

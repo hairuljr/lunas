@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000869\", \"invoice_date\": \"2026-10-20\", \"due_date\": \"2026-11-19\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0052\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"24-inch LED Monitor\", \"quantity\": 1, \"unit_price\": 2120000, \"amount\": 2120000}, {\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 4, \"unit_price\": 1553700, \"amount\": 6214800}, {\"description\": \"USB Mechanical Keyboard\", \"quantity\": 2, \"unit_price\": 660900, \"amount\": 1321800}, {\"description\": \"Dual-Band Wireless Router\", \"quantity\": 4, \"unit_price\": 1227800, \"amount\": 4911200}], \"subtotal\": 14567800, \"tax\": 1602458, \"total\": 16170258, \"bank_account\": \"1240007719356\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
-}

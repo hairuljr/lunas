@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202609-897\", \"invoice_date\": \"2026-09-15\", \"due_date\": \"2026-10-15\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0027\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Keyboard Mekanikal USB\", \"quantity\": 10, \"unit_price\": 580200, \"amount\": 5802000}], \"subtotal\": 5802000, \"tax\": 638220, \"total\": 6440220, \"bank_account\": \"1030005542871\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

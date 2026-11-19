@@ -64,6 +64,8 @@ class Decision(StrEnum):
 class Issue(BaseModel):
     code: str
     message: str
+    # The invoice line it is about (1-based), where it is about one line.
+    line: int | None = None
 
 
 class DecisionResult(BaseModel):
@@ -117,3 +119,29 @@ class InvoiceRecord(BaseModel):
     invoice_date: date
     total: Decimal
     po_number: str | None = None
+
+
+class ContractClause(BaseModel):
+    """One numbered paragraph of a contract: the unit that retrieval indexes and that a
+    finding cites. Its article (the parent) is what gets passed to a model as context."""
+
+    clause_id: str  # "KTR-V-001#5.1"
+    contract_id: str
+    vendor_id: str
+    number: str  # "5.1"
+    article: str  # "5"
+    article_title: str
+    text: str
+
+
+class Contract(BaseModel):
+    """Our signed agreement with a vendor. Internal and trusted, unlike an invoice."""
+
+    contract_id: str
+    vendor_id: str
+    vendor_name: str
+    language: str
+    title: str
+    effective_date: date
+    end_date: date
+    clauses: list[ContractClause]

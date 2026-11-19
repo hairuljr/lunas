@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202610-967\", \"invoice_date\": \"2026-10-06\", \"due_date\": \"2026-11-05\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0217\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Keyboard Mekanikal USB\", \"quantity\": 12, \"unit_price\": 580800, \"amount\": 6969600}, {\"description\": \"Router Nirkabel Dual-Band\", \"quantity\": 2, \"unit_price\": 1292300, \"amount\": 2584600}], \"subtotal\": 9554200, \"tax\": 1050962, \"total\": 10605162, \"bank_account\": \"1030005542871\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

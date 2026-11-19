@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Sakti Cemerlang Kebersihan\", \"invoice_number\": \"SCK/2026/00375\", \"invoice_date\": \"2026-10-03\", \"due_date\": \"2026-11-17\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0153\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kantong Sampah 90x120 (pak)\", \"quantity\": 3, \"unit_price\": 72500, \"amount\": 217500}, {\"description\": \"Sabun Cuci Tangan 5L\", \"quantity\": 1, \"unit_price\": 121100, \"amount\": 121100}], \"subtotal\": 338600, \"tax\": 37246, \"total\": 375846, \"bank_account\": \"09759384176\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
+}

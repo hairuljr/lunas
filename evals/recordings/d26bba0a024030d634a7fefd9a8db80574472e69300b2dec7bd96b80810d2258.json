@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Horizon Foods Ltd\", \"invoice_number\": \"HFL-26-00417\", \"invoice_date\": \"2026-10-11\", \"due_date\": \"2026-11-10\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0110\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Automatic Coffee Machine\", \"quantity\": 1, \"unit_price\": 6443200, \"amount\": 6443200}, {\"description\": \"Ground Arabica Coffee 1kg\", \"quantity\": 15, \"unit_price\": 208600, \"amount\": 3129000}, {\"description\": \"Mineral Water 19L Gallon\", \"quantity\": 20, \"unit_price\": 20300, \"amount\": 406000}, {\"description\": \"Meeting Catering (package)\", \"quantity\": 6, \"unit_price\": 1268900, \"amount\": 7613400}], \"subtotal\": 17591600, \"tax\": 2110992, \"total\": 19702592, \"bank_account\": \"5022007859474\", \"notes\": null}"
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202609-840\", \"invoice_date\": \"2026-09-13\", \"due_date\": \"2026-10-13\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0167\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"SSD Eksternal 1TB\", \"quantity\": 1, \"unit_price\": 1755900, \"amount\": 1755900}, {\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 5, \"unit_price\": 1348800, \"amount\": 6744000}, {\"description\": \"Keyboard Mekanikal USB\", \"quantity\": 3, \"unit_price\": 626200, \"amount\": 1878600}], \"subtotal\": 10378500, \"tax\": 1245420, \"total\": 11623920, \"bank_account\": \"1030005542871\", \"notes\": null}"
+}

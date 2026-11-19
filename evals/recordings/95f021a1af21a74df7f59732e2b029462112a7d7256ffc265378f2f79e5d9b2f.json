@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202610-910\", \"invoice_date\": \"2026-10-08\", \"due_date\": \"2026-11-07\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0067\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 5, \"unit_price\": 1559600, \"amount\": 7798000}], \"subtotal\": 7798000, \"tax\": 857780, \"total\": 8655780, \"bank_account\": \"1030005542871\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

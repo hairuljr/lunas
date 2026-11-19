@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Sakti Cemerlang Kebersihan\", \"invoice_number\": \"SCK/2026/00360\", \"invoice_date\": \"2026-09-14\", \"due_date\": \"2026-10-29\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0033\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Sabun Cuci Tangan 5L\", \"quantity\": 3, \"unit_price\": 127600, \"amount\": 382800}, {\"description\": \"Jasa Kebersihan Bulanan\", \"quantity\": 1, \"unit_price\": 8202500, \"amount\": 8202500}, {\"description\": \"Pengharum Ruangan Otomatis\", \"quantity\": 14, \"unit_price\": 248400, \"amount\": 3477600}], \"subtotal\": 12062900, \"tax\": 1326919, \"total\": 13389819, \"bank_account\": \"09759384176\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

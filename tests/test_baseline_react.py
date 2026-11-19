@@ -203,6 +203,7 @@ def record(expected: Decision, total: int = 555000) -> GroundTruth:
         invoice=invoice,
         expected_decision=expected,
         expected_issue_codes=EXPECTED[(label, None)][1],
+        expected_check_codes=EXPECTED[(label, None)][1],
     )
 
 

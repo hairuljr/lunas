@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000864\", \"invoice_date\": \"2026-10-21\", \"due_date\": \"2026-11-20\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0032\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"24-inch LED Monitor\", \"quantity\": 2, \"unit_price\": 2287500.0, \"amount\": 4575000.0}, {\"description\": \"External SSD 1TB\", \"quantity\": 4, \"unit_price\": 1803100.0, \"amount\": 7212400.0}, {\"description\": \"USB Mechanical Keyboard\", \"quantity\": 9, \"unit_price\": 590800.0, \"amount\": 5317200.0}], \"subtotal\": 17104600.0, \"tax\": 2052552.0, \"total\": 19157152.0, \"bank_account\": \"1240007719356\", \"notes\": null}"
-}

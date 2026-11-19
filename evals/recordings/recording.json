@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-11-19T02:31:29+00:00",
+  "recorded_at": "2026-11-19T07:13:00+00:00",
   "provider": "ai.sumopod.com",
   "model": "deepseek-v4.1-flash-1017",
   "prompt": "extract.v2",
@@ -9,26 +9,29 @@
     "seed": 20261112,
     "invoices": 300,
     "labels": {
-      "clean": 109,
-      "price_mismatch": 28,
-      "quantity_mismatch": 28,
-      "duplicate": 27,
-      "wrong_tax": 27,
-      "no_po": 27,
-      "bank_account_change": 27,
-      "payment_terms": 27
+      "clean": 100,
+      "price_mismatch": 25,
+      "quantity_mismatch": 25,
+      "duplicate": 25,
+      "wrong_tax": 25,
+      "no_po": 25,
+      "bank_account_change": 25,
+      "payment_terms": 25,
+      "price_amendment": 25
     },
     "splits": {
-      "dev": 153,
-      "test": 147
+      "dev": 154,
+      "test": 146
     }
   },
   "split": "dev",
-  "replies": 153,
+  "replies": 189,
   "fingerprint": {
     "prompt": "82d803aa419a84dca052f8a757c54ea280825913cfdd3714dac9180c26c2b50a",
     "schema": "b46c8e4620368ae2eb3dad61b0a67e377d1f1f310c82efe481f6ee729963c40b",
-    "documents": "c317905c29d4c46f87eedf65f0a7647608df00b01942f047cc23a5cedaf7996c"
+    "documents": "67e7451736fa6daac7c5c7ca1699a10dd71429d0831fa96abba57ea831fa6f07",
+    "contract_prompt": "6cf90d27355c92946b6b0a2ceaaf384cd61d81501d4687014a28b51e0f2cbf28",
+    "contracts": "e96a3322c186ba0d96232193ff12302e518500ad72fb4dfee5e0da84f06f56ee"
   },
   "baseline": {
     "key_field_accuracy": 1.0,

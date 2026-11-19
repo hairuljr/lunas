@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202609-966\", \"invoice_date\": \"2026-09-16\", \"due_date\": \"2026-10-16\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0207\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lisensi Antivirus 1 Tahun\", \"quantity\": 20, \"unit_price\": 350800, \"amount\": 7016000}], \"subtotal\": 7016000, \"tax\": 771760, \"total\": 7787760, \"bank_account\": \"1030005542871\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

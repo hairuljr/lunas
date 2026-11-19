@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Kemas Prima Indonesia\", \"invoice_number\": \"00515/KPI/2026\", \"invoice_date\": \"2026-10-05\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": null, \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Stretch Film 500mm (rol)\", \"quantity\": 7, \"unit_price\": 91600, \"amount\": 641200}, {\"description\": \"Palet Kayu 110x110\", \"quantity\": 4, \"unit_price\": 167800, \"amount\": 671200}], \"subtotal\": 1312400, \"tax\": 144364, \"total\": 1456764, \"bank_account\": \"4102583697\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
-}

@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Archipelago Packaging Co\", \"invoice_number\": \"SI-26-00912\", \"invoice_date\": \"2026-10-22\", \"due_date\": \"2026-12-06\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0214\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 2, \"unit_price\": 103600, \"amount\": 207200}], \"subtotal\": 207200, \"tax\": 22792, \"total\": 229992, \"bank_account\": \"033201009876305\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
-}

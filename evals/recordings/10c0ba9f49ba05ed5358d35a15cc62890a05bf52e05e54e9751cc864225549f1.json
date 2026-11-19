@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Meridian Hygiene Ltd\", \"invoice_number\": \"MHL26090217\", \"invoice_date\": \"2026-09-13\", \"due_date\": \"2026-09-20\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0158\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Hand Soap 5L\", \"quantity\": 14, \"unit_price\": 109900.00, \"amount\": 1538600.00}], \"subtotal\": 1538600.00, \"tax\": 169246.00, \"total\": 1707846.00, \"bank_account\": \"978696917236\", \"notes\": null}"
+}

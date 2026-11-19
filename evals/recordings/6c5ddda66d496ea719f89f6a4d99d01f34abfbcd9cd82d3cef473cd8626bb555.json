@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"CV Sari Rasa Catering\", \"invoice_number\": \"INV.0084.09.2026\", \"invoice_date\": \"2026-09-13\", \"due_date\": \"2026-09-23\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0020\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Air Mineral Galon 19L\", \"quantity\": 13, \"unit_price\": 19500, \"amount\": 253500}], \"subtotal\": 253500, \"tax\": 27885, \"total\": 281385, \"bank_account\": \"7153309842\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
-}

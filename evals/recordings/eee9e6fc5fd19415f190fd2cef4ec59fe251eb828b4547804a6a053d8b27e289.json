@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/09/0466\", \"invoice_date\": \"2026-09-11\", \"due_date\": \"2026-10-11\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0211\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 3, \"unit_price\": 1942800, \"amount\": 5828400}], \"subtotal\": 5828400, \"tax\": 641124, \"total\": 6469524, \"bank_account\": \"4453301147\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
-}

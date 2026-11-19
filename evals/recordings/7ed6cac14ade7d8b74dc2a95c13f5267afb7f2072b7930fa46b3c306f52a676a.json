@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000989\", \"invoice_date\": \"2026-10-05\", \"due_date\": \"2026-11-04\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-9252\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"USB Mechanical Keyboard\", \"quantity\": 13, \"unit_price\": 631300.00, \"amount\": 8206900.00}], \"subtotal\": 8206900.00, \"tax\": 902759.00, \"total\": 9109659.00, \"bank_account\": \"1240007719356\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
-}

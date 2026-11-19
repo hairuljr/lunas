@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Bumi Cahaya Alat Kantor\", \"invoice_number\": \"INV-BCA-00557\", \"invoice_date\": \"2026-10-19\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-9111\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Toner Printer Laser Hitam\", \"quantity\": 7, \"unit_price\": 843700, \"amount\": 5905900}, {\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 3, \"unit_price\": 1179400, \"amount\": 3538200}], \"subtotal\": 9444100, \"tax\": 1038851, \"total\": 10482951, \"bank_account\": \"5069057507\", \"notes\": null}"
+}

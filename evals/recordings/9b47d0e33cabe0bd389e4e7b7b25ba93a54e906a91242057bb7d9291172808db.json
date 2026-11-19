@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Orchid Systems Co\", \"invoice_number\": \"OSC26100281\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-10-16\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0212\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"24-inch LED Monitor\", \"quantity\": 2, \"unit_price\": 2134400, \"amount\": 4268800}, {\"description\": \"Dual-Band Wireless Router\", \"quantity\": 3, \"unit_price\": 1262100, \"amount\": 3786300}, {\"description\": \"External SSD 1TB\", \"quantity\": 4, \"unit_price\": 1730100, \"amount\": 6920400}, {\"description\": \"USB Mechanical Keyboard\", \"quantity\": 8, \"unit_price\": 649700, \"amount\": 5197600}], \"subtotal\": 20173100, \"tax\": 2420772, \"total\": 22593872, \"bank_account\": \"40559225686\", \"notes\": null}"
+}

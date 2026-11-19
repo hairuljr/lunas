@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202609-983\", \"invoice_date\": \"2026-09-11\", \"due_date\": \"2026-10-11\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0247\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Router Nirkabel Dual-Band\", \"quantity\": 1, \"unit_price\": 1297000, \"amount\": 1297000}, {\"description\": \"Lisensi Antivirus 1 Tahun\", \"quantity\": 13, \"unit_price\": 351400, \"amount\": 4568200}], \"subtotal\": 5865200, \"tax\": 645172, \"total\": 6510372, \"bank_account\": \"1030005542871\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
-}

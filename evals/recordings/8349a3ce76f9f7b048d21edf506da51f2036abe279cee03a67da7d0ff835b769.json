@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Sterling Hygiene Ltd\", \"invoice_number\": \"INV/2026/08/0512\", \"invoice_date\": \"2026-08-27\", \"due_date\": \"2026-10-11\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0145\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Monthly Cleaning Service\", \"quantity\": 1, \"unit_price\": 8208000, \"amount\": 8208000}, {\"description\": \"Toilet Tissue Rolls (carton)\", \"quantity\": 18, \"unit_price\": 314200, \"amount\": 5655600}, {\"description\": \"Hand Soap 5L\", \"quantity\": 9, \"unit_price\": 129600, \"amount\": 1166400}, {\"description\": \"Floor Cleaner 5L\", \"quantity\": 10, \"unit_price\": 90100, \"amount\": 901000}], \"subtotal\": 15931000, \"tax\": 1752410, \"total\": 17683410, \"bank_account\": \"1249771656757\", \"notes\": \"Thank you for your business.\"}"
+}

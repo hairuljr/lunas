@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/10/0506\", \"invoice_date\": \"2026-10-21\", \"due_date\": \"2026-11-20\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0291\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 6, \"unit_price\": 282600, \"amount\": 1695600}], \"subtotal\": 1695600, \"tax\": 186516, \"total\": 1882116, \"bank_account\": \"5270418896\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
-}

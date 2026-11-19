@@ -1,5 +1,0 @@
-{
-  "host": "ai.sumopod.com",
-  "model": "deepseek-v4.1-flash-1017",
-  "reply": "{\"vendor_name\": \"Java Office Furnishings\", \"invoice_number\": \"JOF/2026/00403\", \"invoice_date\": \"2026-09-27\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0096\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Ergonomic Office Chair\", \"quantity\": 3, \"unit_price\": 1924500.0, \"amount\": 5773500.0}, {\"description\": \"Black Gel Pens (box)\", \"quantity\": 16, \"unit_price\": 50200.0, \"amount\": 803200.0}], \"subtotal\": 6576700.0, \"tax\": 723437.0, \"total\": 7300137.0, \"bank_account\": \"176979647285\", \"notes\": \"Please note that our bank details have changed. Kindly transfer to the new account shown above.\"}"
-}

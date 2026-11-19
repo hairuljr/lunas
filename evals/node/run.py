@@ -27,7 +27,13 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 
-from data.generate import MANIFEST_FILE, SPLIT_CHOICES, GroundTruth, load_ground_truth
+from data.generate import (
+    CONTRACTS_FILE,
+    MANIFEST_FILE,
+    SPLIT_CHOICES,
+    GroundTruth,
+    load_ground_truth,
+)
 from evals.node.scoring import (
     FIELDS,
     KEY_FIELDS,
@@ -51,7 +57,9 @@ from lunas.llm import (
     load_prompt,
     strict_schema,
 )
-from lunas.models import Invoice
+from lunas.models import Invoice, Issue
+from lunas.pipeline.nodes.contract import PROMPT_NAME as CONTRACT_PROMPT
+from lunas.pipeline.nodes.contract import PROMPT_VERSION as CONTRACT_VERSION
 from lunas.pipeline.nodes.decide import decide
 from lunas.pipeline.nodes.extract import PROMPT_NAME, PROMPT_VERSION
 from lunas.pipeline.run import (
@@ -61,6 +69,8 @@ from lunas.pipeline.run import (
     check_invoice,
     process_invoices,
 )
+from lunas.retrieval.retriever import ContractRetriever, build_retriever
+from lunas.retrieval.retriever import RecordingMissingError as RetrievalMissingError
 from lunas.telemetry import configure_tracing, shutdown_tracing
 
 RUNS_DIR = Path(__file__).resolve().parents[1] / "runs"
@@ -87,10 +97,14 @@ def fingerprint(paths: list[Path], settings: Settings) -> dict[str, str]:
         "prompt": sha(load_prompt(PROMPT_NAME, PROMPT_VERSION)),
         "schema": sha(json.dumps(strict_schema(Invoice).schema, sort_keys=True)),
         "documents": sha("\n\n".join(texts)),
+        "contract_prompt": sha(load_prompt(CONTRACT_PROMPT, CONTRACT_VERSION)),
+        "contracts": sha((paths[0].parents[1] / CONTRACTS_FILE).read_text(encoding="utf-8")),
     }
 
 
 _STALE_REASON = {
+    "contract_prompt": f"prompts/{CONTRACT_PROMPT}.{CONTRACT_VERSION}.md changed",
+    "contracts": "the contracts changed (generator)",
     "prompt": f"prompts/{PROMPT_NAME}.{PROMPT_VERSION}.md changed",
     "schema": "the Invoice schema changed",
     "documents": "the text read from the invoice PDFs changed (generator, PDF reader, or "
@@ -127,21 +141,63 @@ def gate_failures(baseline: dict[str, float], current: dict[str, float]) -> list
 
 
 def eval_match_decide(records: list[GroundTruth], erp: ErpData, settings: Settings) -> dict:
-    """Steps 4, 5 and 9 given perfect extraction: isolates the deterministic nodes."""
-    decisions, codes_correct, wrong = [], 0, []
+    """Steps 4, 5 and 9 given perfect extraction and no contract check: isolates the
+    deterministic nodes. Expected outcomes are those before the contract check."""
+    expected, decisions, codes_correct, wrong = [], [], 0, []
     for record in records:
         issues = check_invoice(record.invoice, erp, settings)
         decision = decide(record.invoice, issues, settings.approval_threshold).decision
         codes = sorted({issue.code for issue in issues})
+        wanted = decide(
+            record.invoice,
+            [Issue(code=code, message=code) for code in record.expected_check_codes],
+            settings.approval_threshold,
+        ).decision
+        expected.append(wanted)
         decisions.append(decision)
-        codes_correct += codes == record.expected_issue_codes
-        if decision != record.expected_decision or codes != record.expected_issue_codes:
+        codes_correct += codes == record.expected_check_codes
+        if decision != wanted or codes != record.expected_check_codes:
             wrong.append({"id": record.id, "decision": decision.value, "issue_codes": codes})
     return {
-        **decision_metrics([record.expected_decision for record in records], decisions),
+        **decision_metrics(expected, decisions),
         "issue_code_accuracy": codes_correct / len(records),
         "by_label": by_label(records, decisions),
         "wrong": wrong,
+    }
+
+
+def eval_contract(records: list[GroundTruth], results: list[PipelineResult]) -> dict:
+    """The contract check on the invoices where the contract decides: was the price
+    mismatch cleared exactly when it should be, and was the right clause cited?"""
+    rows = []
+    for record, result in zip(records, results, strict=True):
+        looked = result.contract_findings
+        cleared = any(f.verdict == "explained" for f in looked)
+        if record.expected_citation is None and not cleared:
+            continue
+        rows.append(
+            {
+                "id": record.id,
+                "label": record.label,
+                "variant": record.variant,
+                "should_clear": record.expected_check_codes != record.expected_issue_codes,
+                "cleared": cleared,
+                "cited_expected": record.expected_citation in {f.clause_id for f in looked},
+                "verdicts": [f.verdict for f in looked],
+            }
+        )
+    should = [r for r in rows if r["should_clear"]]
+    should_not = [r for r in rows if not r["should_clear"]]
+    cited = [r for r in rows if r["label"] == "price_amendment"]
+    return {
+        "cases": len(rows),
+        "cleared_when_it_should": sum(r["cleared"] for r in should),
+        "should_clear": len(should),
+        "cleared_when_it_should_not": sum(r["cleared"] for r in should_not),
+        "should_not_clear": len(should_not),
+        "cited_the_addendum": sum(r["cited_expected"] for r in cited),
+        "addendum_cases": len(cited),
+        "rows": rows,
     }
 
 
@@ -263,8 +319,10 @@ def main() -> int:
     print(f"Dataset: {data_dir}  {manifest}  split: {split} ({len(records)} invoices)")
     paths = [data_dir / record.file for record in records]
 
+    retrieval_recordings = RECORDINGS_DIR / "retrieval"
     current_fingerprint = fingerprint(paths, settings) if args.record or args.gate else {}
     client: ChatClient | None = None
+    retriever: ContractRetriever | None = None
     try:
         if args.gate:
             if stale := stale_reasons(recording["fingerprint"], current_fingerprint):
@@ -274,10 +332,18 @@ def main() -> int:
             client = RecordingClient(
                 RECORDINGS_DIR, None, model=recording["model"], host=recording["provider"]
             )
+            retriever = build_retriever(settings, retrieval_recordings, replay_only=True)
         elif args.record:
             client = build_client(settings, RECORDINGS_DIR)
+            retriever = build_retriever(settings, retrieval_recordings)
+            if retriever is None:
+                print("Recording needs the contract index (podman compose up -d).")
+                return 2
         elif not args.skip_llm:
             client = build_client(settings, args.cache, args.replay_only)
+            retriever = build_retriever(
+                settings, args.cache / "retrieval" if args.cache else None, args.replay_only
+            )
     except LLMNotConfiguredError as error:
         print(f"{error}\nOr pass --skip-llm for the deterministic evals.", file=sys.stderr)
         return 2
@@ -301,9 +367,9 @@ def main() -> int:
         configure_tracing(settings)
         try:
             results = process_invoices(
-                paths, erp, client, settings, args.workers or settings.llm_workers
+                paths, erp, client, settings, args.workers or settings.llm_workers, retriever
             )
-        except RecordingMissingError as error:
+        except (RecordingMissingError, RetrievalMissingError) as error:
             print(f"\nGATE FAILED: {error}. Re-record with --record (calls the LLM).")
             return 1
         finally:
@@ -330,6 +396,7 @@ def main() -> int:
             "extraction": extraction,
             "decision_end_to_end": decisions,
             "misses": misses,
+            "contract_check": eval_contract(records, results) if retriever else None,
         }
 
         print(
@@ -362,6 +429,17 @@ def main() -> int:
         for group, value in extraction["key_field_accuracy_by_layout"].items():
             print(f"    {group:<18}{percent(value)}")
         print_decisions("Decision end to end (PDF -> extraction -> decision)", decisions)
+        contract = report["contract_check"]
+        if contract is None:
+            print("\nContract check: off (no contract index), price mismatches stay held.")
+        else:
+            print(
+                f"\nContract check: cleared {contract['cleared_when_it_should']}/"
+                f"{contract['should_clear']} it should, "
+                f"{contract['cleared_when_it_should_not']}/{contract['should_not_clear']} it "
+                f"should not; cited the addendum in {contract['cited_the_addendum']}/"
+                f"{contract['addendum_cases']}"
+            )
         for miss in misses[:MAX_MISSES_SHOWN]:
             print(
                 f"  miss {miss['id']} {miss['label']} ({miss['layout']}): {miss['decision']}",
@@ -379,6 +457,8 @@ def main() -> int:
             exit_code = 1
         else:
             for stale_file in set(RECORDINGS_DIR.glob("*.json")) - client.used - {recording_path}:
+                stale_file.unlink()
+            for stale_file in set(retrieval_recordings.glob("*.json")) - retriever.used:
                 stale_file.unlink()
             recorded = {
                 "recorded_at": report["started_at"],
