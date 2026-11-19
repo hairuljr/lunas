@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Sterling Packaging Ltd\", \"invoice_number\": \"INV-SPL-00178\", \"invoice_date\": \"2026-09-15\", \"due_date\": \"2026-10-15\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0054\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Shipping Labels A6 (roll)\", \"quantity\": 11, \"unit_price\": 67400.00, \"amount\": 741400.00}, {\"description\": \"Bubble Wrap 1.25m x 50m\", \"quantity\": 9, \"unit_price\": 275100.00, \"amount\": 2475900.00}, {\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 6, \"unit_price\": 91700.00, \"amount\": 550200.00}, {\"description\": \"Clear Tape 48mm (box)\", \"quantity\": 16, \"unit_price\": 456500.00, \"amount\": 7304000.00}], \"subtotal\": 11071500.00, \"tax\": 1217865.00, \"total\": 12289365.00, \"bank_account\": \"73128689516\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

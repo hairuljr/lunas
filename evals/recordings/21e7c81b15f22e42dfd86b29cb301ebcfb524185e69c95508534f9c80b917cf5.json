@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "Let me check whether Lampiran A exists with these items, plus the earlier invoices and whether other items were received.",
+    "tool_calls": [
+      {
+        "id": "call_22626718b71441dea7c43cf2",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Lampiran A daftar harga satuan barang: Kantong Sampah, Pengharum Ruangan, Tisu Gulung\"}"
+      },
+      {
+        "id": "call_4c5233822adf479294baffd7",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

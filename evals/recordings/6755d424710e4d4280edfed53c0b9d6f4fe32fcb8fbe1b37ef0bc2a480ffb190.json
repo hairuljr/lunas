@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Java Office Furnishings\", \"invoice_number\": \"JOF/2026/00242\", \"invoice_date\": \"2026-10-13\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0086\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Whiteboard 120x240\", \"quantity\": 7, \"unit_price\": 1245100.00, \"amount\": 8715700.00}, {\"description\": \"Black Laser Printer Toner\", \"quantity\": 5, \"unit_price\": 738400.00, \"amount\": 3692000.00}], \"subtotal\": 12407700.00, \"tax\": 1364847.00, \"total\": 13772547.00, \"bank_account\": \"800114673900\", \"notes\": \"Thank you for your business.\"}"
+}

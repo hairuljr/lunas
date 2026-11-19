@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Lestari Sakti Teknologi\", \"invoice_number\": \"LST-26-00391\", \"invoice_date\": \"2026-09-22\", \"due_date\": \"2026-11-06\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0231\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lisensi Antivirus 1 Tahun\", \"quantity\": 14, \"unit_price\": 415800, \"amount\": 5821200}, {\"description\": \"Router Nirkabel Dual-Band\", \"quantity\": 7, \"unit_price\": 1158300, \"amount\": 8108100}, {\"description\": \"Keyboard Mekanikal USB\", \"quantity\": 10, \"unit_price\": 644800, \"amount\": 6448000}, {\"description\": \"Monitor LED 24 inci\", \"quantity\": 2, \"unit_price\": 2024600, \"amount\": 4049200}], \"subtotal\": 24426500, \"tax\": 2686915, \"total\": 27113415, \"bank_account\": \"71607497721\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

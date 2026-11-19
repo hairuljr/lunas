@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mulia Utama Alat Kantor\", \"invoice_number\": \"MUA26090127\", \"invoice_date\": \"2026-09-18\", \"due_date\": \"2026-11-02\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0021\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 13, \"unit_price\": 252600, \"amount\": 3283800}, {\"description\": \"Kertas HVS A4 80gsm (rim)\", \"quantity\": 7, \"unit_price\": 53600, \"amount\": 375200}, {\"description\": \"Toner Printer Laser Hitam\", \"quantity\": 8, \"unit_price\": 801200, \"amount\": 6409600}], \"subtotal\": 10068600, \"tax\": 1107546, \"total\": 11176146, \"bank_account\": \"6669985731612\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

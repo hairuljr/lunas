@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by reading the purchase order and searching the contract for pricing terms.",
+    "tool_calls": [
+      {
+        "id": "call_7a938b7446f944389996f178",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0011\"}"
+      },
+      {
+        "id": "call_178d98512dbe44daaa43165a",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"unit price for Papan Tulis Putih 120x240 and Map Arsip Ordner, price list or price adjustment effective date\"}"
+      }
+    ]
+  }
+}

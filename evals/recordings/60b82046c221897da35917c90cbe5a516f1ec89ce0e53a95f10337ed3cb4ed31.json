@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Sakti Cemerlang Kebersihan\", \"invoice_number\": \"SCK/2026/00532\", \"invoice_date\": \"2026-10-01\", \"due_date\": \"2026-11-15\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0073\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Tisu Gulung (karton)\", \"quantity\": 20, \"unit_price\": 308200, \"amount\": 6164000}, {\"description\": \"Sabun Cuci Tangan 5L\", \"quantity\": 14, \"unit_price\": 116100, \"amount\": 1625400}], \"subtotal\": 7789400, \"tax\": 856834, \"total\": 8646234, \"bank_account\": \"12279394005\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
+}

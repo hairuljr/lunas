@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The only issue flagged is the payment terms. The terms on file are 30 days, and the invoice requests 7 days (due 2026-09-25, 7 days after invoice date 2026-09-18). Let me confirm whether the contract modifies terms.",
+    "tool_calls": [
+      {
+        "id": "call_a4a7912c097d429289b697f6",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"payment terms, payment period in days, due date\"}"
+      }
+    ]
+  }
+}

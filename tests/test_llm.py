@@ -11,6 +11,8 @@ from lunas.llm import (
     Message,
     OpenAICompatClient,
     StructuredOutputError,
+    ToolCall,
+    ToolTurn,
     complete_structured,
     strict_schema,
 )
@@ -234,3 +236,25 @@ def test_endpoint_errors_become_llm_request_errors(monkeypatch):
     with pytest.raises(LLMRequestError, match="APIConnectionError"):
         client.complete(PROMPT)
     assert client.usage["requests"] == 0
+
+
+def test_tool_calls_are_sent_and_parsed(monkeypatch):
+    client = OpenAICompatClient("http://localhost:1/v1", "k", "some-model")
+    sent = {}
+    tools = [{"type": "function", "function": {"name": "get_vendor_terms"}}]
+
+    def create(**request):
+        sent.update(request)
+        response = fake_response("")
+        function = SimpleNamespace(name="get_vendor_terms", arguments="{}")
+        response.choices[0].message.tool_calls = [SimpleNamespace(id="c1", function=function)]
+        return response
+
+    monkeypatch.setattr(client._client.chat.completions, "create", create)
+
+    turn = client.complete_tools(PROMPT, tools)
+
+    assert sent["tools"] == tools
+    assert "response_format" not in sent
+    assert turn == ToolTurn("", [ToolCall("c1", "get_vendor_terms", "{}")])
+    assert client.usage["requests"] == 1

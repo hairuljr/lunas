@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Horizon Foods Ltd\", \"invoice_number\": \"HFL-26-00590\", \"invoice_date\": \"2026-10-09\", \"due_date\": \"2026-11-08\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0150\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Automatic Coffee Machine\", \"quantity\": 1, \"unit_price\": 6578400, \"amount\": 6578400}], \"subtotal\": 6578400, \"tax\": 723624, \"total\": 7302024, \"bank_account\": \"5022007859474\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

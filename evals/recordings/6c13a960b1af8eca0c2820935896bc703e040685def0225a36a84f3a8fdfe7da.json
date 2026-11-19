@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "\n\n",
+    "tool_calls": [
+      {
+        "id": "call_417e3952b9774988a0d074c5",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

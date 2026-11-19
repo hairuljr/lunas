@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Bumi Cahaya Alat Kantor\", \"invoice_number\": \"INV-BCA-00681\", \"invoice_date\": \"2026-09-16\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0271\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 1, \"unit_price\": 1760900, \"amount\": 1760900}, {\"description\": \"Pulpen Gel Hitam (kotak)\", \"quantity\": 15, \"unit_price\": 43600, \"amount\": 654000}, {\"description\": \"Kertas HVS A4 80gsm (rim)\", \"quantity\": 14, \"unit_price\": 49900, \"amount\": 698600}], \"subtotal\": 3113500, \"tax\": 342485, \"total\": 3455985, \"bank_account\": \"8571072885\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
+}

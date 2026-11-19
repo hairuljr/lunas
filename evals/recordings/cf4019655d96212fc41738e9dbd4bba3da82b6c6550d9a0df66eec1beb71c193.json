@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate this duplicate invoice issue by examining the PO, goods receipts, and prior invoices.",
+    "tool_calls": [
+      {
+        "id": "call_f95c10b0618448a5b1585aed",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0107\"}"
+      },
+      {
+        "id": "call_8c0bb04b8e1e4cae8e2a7746",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0107\"}"
+      },
+      {
+        "id": "call_750bea58a2f14b12a1bdfa07",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

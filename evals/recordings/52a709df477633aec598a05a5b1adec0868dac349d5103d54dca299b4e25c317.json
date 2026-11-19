@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Sterling Packaging Ltd\", \"invoice_number\": \"INV-SPL-00192\", \"invoice_date\": \"2026-10-05\", \"due_date\": \"2026-11-04\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0134\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Shipping Labels A6 (roll)\", \"quantity\": 10, \"unit_price\": 75000, \"amount\": 750000}, {\"description\": \"Bubble Wrap 1.25m x 50m\", \"quantity\": 5, \"unit_price\": 310400, \"amount\": 1552000}], \"subtotal\": 2302000, \"tax\": 253220, \"total\": 2555220, \"bank_account\": \"73128689516\", \"notes\": null}"
+}

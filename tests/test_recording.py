@@ -9,6 +9,8 @@ from lunas.llm import (
     Message,
     RecordingClient,
     RecordingMissingError,
+    ToolCall,
+    ToolTurn,
     build_client,
 )
 
@@ -95,3 +97,22 @@ def test_build_client_replay_only_needs_no_api_key(tmp_path: Path):
     client = build_client(settings, tmp_path, replay_only=True)
 
     assert client.complete(PROMPT) == "reply 1 to extract"
+
+
+class ToolModel(CountingClient):
+    def complete_tools(self, messages: list[Message], tools: list[dict]) -> ToolTurn:
+        self.calls += 1
+        return ToolTurn("", [ToolCall("c1", "get_vendor_terms", "{}")])
+
+
+def test_tool_turns_are_recorded_and_replayed(tmp_path: Path):
+    tools = [{"type": "function", "function": {"name": "get_vendor_terms"}}]
+    inner = ToolModel()
+    live = RecordingClient(tmp_path, inner).complete_tools(PROMPT, tools)
+
+    replay = RecordingClient(tmp_path, None, model="some-model", host="provider-a.example")
+
+    assert replay.complete_tools(PROMPT, tools) == live
+    assert inner.calls == 1
+    with pytest.raises(RecordingMissingError):
+        replay.complete_tools(PROMPT, [])

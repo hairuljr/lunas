@@ -1,6 +1,6 @@
 """Node evals for the week-1 slice, on the dataset written by data/generate.py.
 
-    uv run python -m evals.node.run [--data data/out] [--skip-llm] [--workers 4]
+    uv run python -m evals.node.run [--split dev|test|all] [--skip-llm] [--workers 4]
     uv run python -m evals.node.run --record   # live; refresh evals/recordings/
     uv run python -m evals.node.run --gate     # no LLM; replay recordings, exit 1 on regression
 
@@ -8,8 +8,10 @@
 2. Extraction (step 3): per-field exact match of the LLM output against ground truth.
 3. Decision accuracy end to end, from PDF through extraction to the decision.
 
-Parts 2 and 3 call the configured LLM; --skip-llm runs part 1 only. Every run is saved to
-evals/runs/ with the model ID and prompt version, so a number can be traced to its run.
+Runs on the dev split unless told otherwise: iterate on dev, and run test only for the
+numbers that get reported. Parts 2 and 3 call the configured LLM; --skip-llm runs part 1
+only. Every run is saved to evals/runs/ with the model ID and prompt version, so a number
+can be traced to its run.
 
 The PR gate (SPEC §9) replays the committed recordings in evals/recordings/. It checks the
 code around the model (parsing, validation, matching, decision) against replies a real
@@ -22,16 +24,26 @@ import hashlib
 import json
 import sys
 import time
+from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 
-from data.generate import MANIFEST_FILE, GroundTruth, load_ground_truth
+from data.generate import (
+    CONTRACTS_FILE,
+    MANIFEST_FILE,
+    SPLIT_CHOICES,
+    GroundTruth,
+    load_ground_truth,
+)
 from evals.node.scoring import (
     FIELDS,
     KEY_FIELDS,
+    by_label,
     decision_metrics,
     extraction_metrics,
+    percent,
     percentile,
+    print_decisions,
     score_fields,
 )
 from lunas.config import Settings
@@ -46,23 +58,30 @@ from lunas.llm import (
     load_prompt,
     strict_schema,
 )
-from lunas.models import Invoice
+from lunas.models import Decision, Invoice, Issue
+from lunas.pipeline.nodes.contract import PROMPT_NAME as CONTRACT_PROMPT
+from lunas.pipeline.nodes.contract import PROMPT_VERSION as CONTRACT_VERSION
 from lunas.pipeline.nodes.decide import decide
 from lunas.pipeline.nodes.extract import PROMPT_NAME, PROMPT_VERSION
-from lunas.pipeline.nodes.match import match_invoice
-from lunas.pipeline.nodes.validate import validate_invoice
+from lunas.pipeline.nodes.investigate import PROMPT_NAME as INVESTIGATE_PROMPT
+from lunas.pipeline.nodes.investigate import PROMPT_VERSION as INVESTIGATE_VERSION
+from lunas.pipeline.nodes.route import Route
 from lunas.pipeline.run import (
     EXTRACTION_FAILED,
     LLM_UNAVAILABLE,
     PipelineResult,
+    check_invoice,
     process_invoices,
 )
+from lunas.retrieval.retriever import ContractRetriever, build_retriever
+from lunas.retrieval.retriever import RecordingMissingError as RetrievalMissingError
 from lunas.telemetry import configure_tracing, shutdown_tracing
 
 RUNS_DIR = Path(__file__).resolve().parents[1] / "runs"
 CACHE_DIR = Path(__file__).resolve().parents[1] / "cache"
 RECORDINGS_DIR = Path(__file__).resolve().parents[1] / "recordings"
 RECORDING_FILE = "recording.json"
+MAX_MISSES_SHOWN = 20
 # SPEC §9: the PR gate fails when decision accuracy drops by more than 2 points. The same
 # margin is applied to key-field extraction, and false approvals may not rise at all.
 GATE_MAX_DROP = 0.02
@@ -82,10 +101,16 @@ def fingerprint(paths: list[Path], settings: Settings) -> dict[str, str]:
         "prompt": sha(load_prompt(PROMPT_NAME, PROMPT_VERSION)),
         "schema": sha(json.dumps(strict_schema(Invoice).schema, sort_keys=True)),
         "documents": sha("\n\n".join(texts)),
+        "contract_prompt": sha(load_prompt(CONTRACT_PROMPT, CONTRACT_VERSION)),
+        "investigate_prompt": sha(load_prompt(INVESTIGATE_PROMPT, INVESTIGATE_VERSION)),
+        "contracts": sha((paths[0].parents[1] / CONTRACTS_FILE).read_text(encoding="utf-8")),
     }
 
 
 _STALE_REASON = {
+    "contract_prompt": f"prompts/{CONTRACT_PROMPT}.{CONTRACT_VERSION}.md changed",
+    "investigate_prompt": f"prompts/{INVESTIGATE_PROMPT}.{INVESTIGATE_VERSION}.md changed",
+    "contracts": "the contracts changed (generator)",
     "prompt": f"prompts/{PROMPT_NAME}.{PROMPT_VERSION}.md changed",
     "schema": "the Invoice schema changed",
     "documents": "the text read from the invoice PDFs changed (generator, PDF reader, or "
@@ -97,20 +122,37 @@ def stale_reasons(recorded: dict[str, str], current: dict[str, str]) -> list[str
     return [reason for key, reason in _STALE_REASON.items() if recorded.get(key) != current[key]]
 
 
-def gate_metrics(extraction: dict, decisions: dict) -> dict[str, float]:
-    return {
+def gate_metrics(
+    extraction: dict,
+    decisions: dict,
+    investigation: dict | None = None,
+    checkpoint: dict | None = None,
+) -> dict[str, float]:
+    metrics = {
         "key_field_accuracy": extraction["key_field_accuracy"],
         "decision_accuracy": decisions["accuracy"],
         "false_approve_rate": decisions["false_approve_rate"] or 0.0,
     }
+    if checkpoint:
+        metrics["checkpoint_accuracy"] = checkpoint["accuracy"]
+    if investigation and investigation["diagnoses"]:
+        metrics["cause_accuracy"] = investigation["cause_accuracy"]
+    return metrics
 
 
 def gate_failures(baseline: dict[str, float], current: dict[str, float]) -> list[str]:
     failures = []
-    for name in ("decision_accuracy", "key_field_accuracy"):
-        if current[name] < baseline[name] - GATE_MAX_DROP:
+    for name in (
+        "decision_accuracy",
+        "key_field_accuracy",
+        "cause_accuracy",
+        "checkpoint_accuracy",
+    ):
+        if name not in baseline:
+            continue
+        if current.get(name, 0.0) < baseline[name] - GATE_MAX_DROP:
             failures.append(
-                f"{name} {current[name]:.1%} is more than {GATE_MAX_DROP:.0%} below the "
+                f"{name} {current.get(name, 0.0):.1%} is more than {GATE_MAX_DROP:.0%} below the "
                 f"recorded {baseline[name]:.1%}"
             )
     if current["false_approve_rate"] > baseline["false_approve_rate"]:
@@ -122,21 +164,165 @@ def gate_failures(baseline: dict[str, float], current: dict[str, float]) -> list
 
 
 def eval_match_decide(records: list[GroundTruth], erp: ErpData, settings: Settings) -> dict:
-    """Steps 4, 5 and 9 given perfect extraction: isolates the deterministic nodes."""
-    decisions, codes_correct, wrong = [], 0, []
+    """Steps 4, 5 and 9 given perfect extraction and no contract check: isolates the
+    deterministic nodes. Expected outcomes are those before the contract check."""
+    expected, decisions, codes_correct, wrong = [], [], 0, []
     for record in records:
-        issues = validate_invoice(record.invoice, settings.amount_tolerance)
-        issues += match_invoice(record.invoice, erp, settings.amount_tolerance)
+        issues = check_invoice(record.invoice, erp, settings)
         decision = decide(record.invoice, issues, settings.approval_threshold).decision
         codes = sorted({issue.code for issue in issues})
+        wanted = decide(
+            record.invoice,
+            [Issue(code=code, message=code) for code in record.expected_check_codes],
+            settings.approval_threshold,
+        ).decision
+        expected.append(wanted)
         decisions.append(decision)
-        codes_correct += codes == record.expected_issue_codes
-        if decision != record.expected_decision or codes != record.expected_issue_codes:
+        codes_correct += codes == record.expected_check_codes
+        if decision != wanted or codes != record.expected_check_codes:
             wrong.append({"id": record.id, "decision": decision.value, "issue_codes": codes})
     return {
-        **decision_metrics([record.expected_decision for record in records], decisions),
+        **decision_metrics(expected, decisions),
         "issue_code_accuracy": codes_correct / len(records),
+        "by_label": by_label(records, decisions),
         "wrong": wrong,
+    }
+
+
+def eval_investigation(records: list[GroundTruth], results: list[PipelineResult]) -> dict:
+    """The investigation on the invoices it should diagnose: was each expected cause found,
+    was every cited record one the tools returned, and what did it take."""
+    rows = []
+    for record, result in zip(records, results, strict=True):
+        if record.expected_route != Route.INVESTIGATE:
+            continue
+        report = result.investigation
+        expected = list(zip(record.expected_issue_codes, record.expected_causes, strict=True))
+        diagnoses = []
+        for code, cause in expected:
+            found = (
+                next((d for d in report.diagnoses if d.issue_code == code), None)
+                if report
+                else None
+            )
+            diagnoses.append(
+                {
+                    "issue_code": code,
+                    "expected": cause.value,
+                    "found": found.cause.value if found else None,
+                    "correct": bool(found and found.cause == cause),
+                    "evidence_valid": bool(found and found.evidence_valid),
+                    "rejected_cause": found.rejected_cause if found else None,
+                }
+            )
+        rows.append(
+            {
+                "id": record.id,
+                "label": record.label,
+                "investigated": report is not None,
+                "finished": bool(report and report.finished),
+                "turns": report.turns if report else 0,
+                "seconds": report.seconds if report else None,
+                "tool_calls": report.tool_calls if report else [],
+                "diagnoses": diagnoses,
+            }
+        )
+    all_diagnoses = [d for r in rows for d in r["diagnoses"]]
+    by_label: dict[str, list[bool]] = {}
+    for row in rows:
+        by_label.setdefault(row["label"], []).extend(d["correct"] for d in row["diagnoses"])
+    seconds = [r["seconds"] for r in rows if r["seconds"] is not None]
+    turns = [r["turns"] for r in rows if r["investigated"]]
+    return {
+        "invoices": len(rows),
+        "investigated": sum(r["investigated"] for r in rows),
+        "finished": sum(r["finished"] for r in rows),
+        "diagnoses": len(all_diagnoses),
+        "cause_correct": sum(d["correct"] for d in all_diagnoses),
+        "cause_accuracy": (
+            sum(d["correct"] for d in all_diagnoses) / len(all_diagnoses) if all_diagnoses else 0.0
+        ),
+        "evidence_valid": sum(d["evidence_valid"] for d in all_diagnoses),
+        "causes_rejected_by_code": sum(bool(d["rejected_cause"]) for d in all_diagnoses),
+        "by_label": {k: f"{sum(v)}/{len(v)}" for k, v in sorted(by_label.items())},
+        "turns_mean": sum(turns) / len(turns) if turns else None,
+        "turns_max": max(turns) if turns else None,
+        "seconds_p50": percentile(seconds, 50),
+        "seconds_p95": percentile(seconds, 95),
+        "rows": rows,
+    }
+
+
+def eval_checkpoint(records: list[GroundTruth], results: list[PipelineResult]) -> dict:
+    """Did each invoice stop at the approval checkpoint exactly when it should, and with the
+    state a person needs? The run never waits: a stop is recorded and the batch goes on."""
+    should, stopped_right, stopped_wrong, state_right = 0, 0, 0, 0
+    wrong = []
+    for record, result in zip(records, results, strict=True):
+        expected = (
+            record.expected_route == Route.HUMAN or record.expected_decision == Decision.ESCALATE
+        )
+        stopped = result.status == "awaiting_approval"
+        should += expected
+        stopped_right += expected and stopped
+        stopped_wrong += stopped and not expected
+        request = result.approval_request
+        state_right += bool(
+            expected
+            and stopped
+            and request
+            and request.route == record.expected_route
+            and request.decision == record.expected_decision
+        )
+        if expected != stopped:
+            wrong.append({"id": record.id, "label": record.label, "status": result.status})
+    correct = sum(
+        (r.expected_route == Route.HUMAN or r.expected_decision == Decision.ESCALATE)
+        == (res.status == "awaiting_approval")
+        for r, res in zip(records, results, strict=True)
+    )
+    return {
+        "should_stop": should,
+        "stopped_when_it_should": stopped_right,
+        "stopped_when_it_should_not": stopped_wrong,
+        "state_correct_at_stop": state_right,
+        "accuracy": correct / len(records),
+        "wrong": wrong,
+    }
+
+
+def eval_contract(records: list[GroundTruth], results: list[PipelineResult]) -> dict:
+    """The contract check on the invoices where the contract decides: was the price
+    mismatch cleared exactly when it should be, and was the right clause cited?"""
+    rows = []
+    for record, result in zip(records, results, strict=True):
+        looked = result.contract_findings
+        cleared = any(f.verdict == "explained" for f in looked)
+        if record.expected_citation is None and not cleared:
+            continue
+        rows.append(
+            {
+                "id": record.id,
+                "label": record.label,
+                "variant": record.variant,
+                "should_clear": record.expected_check_codes != record.expected_issue_codes,
+                "cleared": cleared,
+                "cited_expected": record.expected_citation in {f.clause_id for f in looked},
+                "verdicts": [f.verdict for f in looked],
+            }
+        )
+    should = [r for r in rows if r["should_clear"]]
+    should_not = [r for r in rows if not r["should_clear"]]
+    cited = [r for r in rows if r["label"] == "price_amendment"]
+    return {
+        "cases": len(rows),
+        "cleared_when_it_should": sum(r["cleared"] for r in should),
+        "should_clear": len(should),
+        "cleared_when_it_should_not": sum(r["cleared"] for r in should_not),
+        "should_not_clear": len(should_not),
+        "cited_the_addendum": sum(r["cited_expected"] for r in cited),
+        "addendum_cases": len(cited),
+        "rows": rows,
     }
 
 
@@ -161,10 +347,20 @@ def eval_pipeline(
         for group, group_scores in sorted(groups.items())
     }
 
-    decisions = decision_metrics(
-        [record.expected_decision for record in records],
-        [result.decision for result in results],
+    actual = [result.decision for result in results]
+    decisions = decision_metrics([record.expected_decision for record in records], actual)
+    decisions["by_label"] = by_label(records, actual)
+    routes = Counter(
+        f"{record.expected_route.value}->{result.route.value if result.route else 'none'}"
+        for record, result in zip(records, results, strict=True)
     )
+    decisions["route"] = {
+        "correct": sum(
+            r.expected_route == res.route for r, res in zip(records, results, strict=True)
+        ),
+        "documents": len(records),
+        "confusion": dict(sorted(routes.items())),
+    }
 
     misses = []
     for record, result, score in zip(records, results, scores, strict=True):
@@ -180,6 +376,7 @@ def eval_pipeline(
             misses.append(
                 {
                     "id": record.id,
+                    "label": record.label,
                     "layout": f"{record.layout}/{record.language}",
                     "expected_decision": record.expected_decision.value,
                     "decision": result.decision.value,
@@ -194,17 +391,6 @@ def _show(value: object) -> object:
     if isinstance(value, list):
         return [item.model_dump(mode="json") for item in value]
     return None if value is None else str(value)
-
-
-def _percent(value: float | None) -> str:
-    return "n/a" if value is None else f"{value:6.1%}"
-
-
-def _print_decisions(title: str, metrics: dict) -> None:
-    print(f"\n{title}")
-    print(f"  decision accuracy     {_percent(metrics['accuracy'])}  (n={metrics['documents']})")
-    print(f"  false-approve rate    {_percent(metrics['false_approve_rate'])}")
-    print(f"  expected->actual      {metrics['confusion']}")
 
 
 def main() -> int:
@@ -237,7 +423,19 @@ def main() -> int:
         help="PR gate: replay evals/recordings/ with no LLM; exit 1 on a regression or on "
         "stale recordings",
     )
+    parser.add_argument(
+        "--no-investigate",
+        action="store_true",
+        help="skip the investigation loop (it costs several model calls per held invoice)",
+    )
+    parser.add_argument(
+        "--split",
+        choices=SPLIT_CHOICES,
+        help="which invoices (default: dev; --gate uses the split it was recorded on)",
+    )
     args = parser.parse_args()
+    if args.gate and args.split:
+        parser.error("--gate replays the split the recordings were made on")
     if args.replay_only and args.cache is None:
         parser.error("--replay-only needs --cache")
     if (args.record or args.gate) and (args.cache or args.skip_llm or args.record == args.gate):
@@ -249,32 +447,46 @@ def main() -> int:
         print(f"No dataset in {data_dir}. Run: uv run python data/generate.py", file=sys.stderr)
         return 2
     manifest = json.loads((data_dir / MANIFEST_FILE).read_text(encoding="utf-8"))
-    records = load_ground_truth(data_dir)
     erp = ErpData.load(data_dir)
-    print(f"Dataset: {data_dir}  {manifest}")
-    paths = [data_dir / record.file for record in records]
-
     recording_path = RECORDINGS_DIR / RECORDING_FILE
     recording: dict = {}
+    if args.gate:
+        if not recording_path.exists():
+            print(f"No recordings in {RECORDINGS_DIR}. Create them with --record.")
+            return 1
+        recording = json.loads(recording_path.read_text(encoding="utf-8"))
+    split = recording.get("split", "dev") if args.gate else args.split or "dev"
+    records = load_ground_truth(data_dir, split)
+    print(f"Dataset: {data_dir}  {manifest}  split: {split} ({len(records)} invoices)")
+    paths = [data_dir / record.file for record in records]
+
+    retrieval_recordings = RECORDINGS_DIR / "retrieval"
+    # The gate replays what was recorded, investigation included or not.
+    investigate = recording.get("investigate", False) if args.gate else not args.no_investigate
     current_fingerprint = fingerprint(paths, settings) if args.record or args.gate else {}
     client: ChatClient | None = None
+    retriever: ContractRetriever | None = None
     try:
         if args.gate:
-            if not recording_path.exists():
-                print(f"No recordings in {RECORDINGS_DIR}. Create them with --record.")
-                return 1
-            recording = json.loads(recording_path.read_text(encoding="utf-8"))
             if stale := stale_reasons(recording["fingerprint"], current_fingerprint):
                 print("\nGATE FAILED: the recordings are stale because " + "; ".join(stale))
-                print("Re-record with: uv run python -m evals.node.run --record (calls the LLM)")
+                print("Re-record with --record --split dev (calls the LLM).")
                 return 1
             client = RecordingClient(
                 RECORDINGS_DIR, None, model=recording["model"], host=recording["provider"]
             )
+            retriever = build_retriever(settings, retrieval_recordings, replay_only=True)
         elif args.record:
             client = build_client(settings, RECORDINGS_DIR)
+            retriever = build_retriever(settings, retrieval_recordings)
+            if retriever is None:
+                print("Recording needs the contract index (podman compose up -d).")
+                return 2
         elif not args.skip_llm:
             client = build_client(settings, args.cache, args.replay_only)
+            retriever = build_retriever(
+                settings, args.cache / "retrieval" if args.cache else None, args.replay_only
+            )
     except LLMNotConfiguredError as error:
         print(f"{error}\nOr pass --skip-llm for the deterministic evals.", file=sys.stderr)
         return 2
@@ -282,13 +494,14 @@ def main() -> int:
     report: dict = {
         "started_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "dataset": manifest,
+        "split": split,
         "match_decide_on_ground_truth": eval_match_decide(records, erp, settings),
     }
-    _print_decisions(
+    print_decisions(
         "Match + decide on ground-truth fields (no LLM)", report["match_decide_on_ground_truth"]
     )
     accuracy = report["match_decide_on_ground_truth"]["issue_code_accuracy"]
-    print(f"  issue-code accuracy   {_percent(accuracy)}")
+    print(f"  issue-code accuracy   {percent(accuracy)}")
 
     if client is None:
         print("\nExtraction and end-to-end decision: skipped (--skip-llm), not measured.")
@@ -297,9 +510,15 @@ def main() -> int:
         configure_tracing(settings)
         try:
             results = process_invoices(
-                paths, erp, client, settings, args.workers or settings.llm_workers
+                paths,
+                erp,
+                client,
+                settings,
+                args.workers or settings.llm_workers,
+                retriever,
+                investigate,
             )
-        except RecordingMissingError as error:
+        except (RecordingMissingError, RetrievalMissingError) as error:
             print(f"\nGATE FAILED: {error}. Re-record with --record (calls the LLM).")
             return 1
         finally:
@@ -326,6 +545,9 @@ def main() -> int:
             "extraction": extraction,
             "decision_end_to_end": decisions,
             "misses": misses,
+            "contract_check": eval_contract(records, results) if retriever else None,
+            "investigation": eval_investigation(records, results) if investigate else None,
+            "checkpoint": eval_checkpoint(records, results),
         }
 
         print(
@@ -339,9 +561,9 @@ def main() -> int:
                 f"  per invoice           p50 {report['seconds_p50']:.1f}s, "
                 f"p95 {report['seconds_p95']:.1f}s"
             )
-        print(f"  key-field accuracy    {_percent(extraction['key_field_accuracy'])}")
-        print(f"  all key fields right  {_percent(extraction['documents_with_all_key_fields'])}")
-        print(f"  whole invoice right   {_percent(extraction['documents_fully_correct'])}")
+        print(f"  key-field accuracy    {percent(extraction['key_field_accuracy'])}")
+        print(f"  all key fields right  {percent(extraction['documents_with_all_key_fields'])}")
+        print(f"  whole invoice right   {percent(extraction['documents_fully_correct'])}")
         print(f"  extraction failures   {extraction['extraction_failures']}")
         if report["replies"] and report["replies"]["replayed"]:
             print(f"  replies               {report['replies']} (replayed = not re-measured)")
@@ -353,14 +575,59 @@ def main() -> int:
             )
         for name in FIELDS:
             marker = "key" if name in KEY_FIELDS else ""
-            print(f"    {name:<18}{_percent(extraction['field_accuracy'][name])}  {marker}")
+            print(f"    {name:<20}{percent(extraction['field_accuracy'][name])}  {marker}")
         print("  key-field accuracy by layout/language")
         for group, value in extraction["key_field_accuracy_by_layout"].items():
-            print(f"    {group:<18}{_percent(value)}")
-        _print_decisions("Decision end to end (PDF -> extraction -> decision)", decisions)
-        for miss in misses:
-            print(f"  miss {miss['id']} ({miss['layout']}): {miss['decision']}", end="")
+            print(f"    {group:<18}{percent(value)}")
+        print_decisions("Decision end to end (PDF -> extraction -> decision)", decisions)
+        route = decisions["route"]
+        print(
+            f"  route                 {route['correct']}/{route['documents']}  {route['confusion']}"
+        )
+        checkpoint = report["checkpoint"]
+        print(
+            f"\nApproval checkpoint: stopped {checkpoint['stopped_when_it_should']}/"
+            f"{checkpoint['should_stop']} that should, {checkpoint['stopped_when_it_should_not']}"
+            f" that should not; state right at the stop {checkpoint['state_correct_at_stop']}/"
+            f"{checkpoint['should_stop']} (not waited on)"
+        )
+        investigation = report["investigation"]
+        if investigation is None:
+            print("\nInvestigation: off (--no-investigate).")
+        else:
+            print(
+                f"\nInvestigation: {investigation['investigated']}/{investigation['invoices']} "
+                f"investigated, {investigation['finished']} finished; cause "
+                f"{investigation['cause_correct']}/{investigation['diagnoses']}, evidence valid "
+                f"{investigation['evidence_valid']}/{investigation['diagnoses']}, causes "
+                f"rejected by code {investigation['causes_rejected_by_code']}"
+            )
+            print(f"  by class              {investigation['by_label']}")
+            if investigation["turns_mean"] is not None:
+                print(
+                    f"  turns mean/max        {investigation['turns_mean']:.1f}/"
+                    f"{investigation['turns_max']}, seconds p50/p95 "
+                    f"{investigation['seconds_p50']}/{investigation['seconds_p95']}"
+                )
+        contract = report["contract_check"]
+        if contract is None:
+            print("\nContract check: off (no contract index), price mismatches stay held.")
+        else:
+            print(
+                f"\nContract check: cleared {contract['cleared_when_it_should']}/"
+                f"{contract['should_clear']} it should, "
+                f"{contract['cleared_when_it_should_not']}/{contract['should_not_clear']} it "
+                f"should not; cited the addendum in {contract['cited_the_addendum']}/"
+                f"{contract['addendum_cases']}"
+            )
+        for miss in misses[:MAX_MISSES_SHOWN]:
+            print(
+                f"  miss {miss['id']} {miss['label']} ({miss['layout']}): {miss['decision']}",
+                end="",
+            )
             print(f", expected {miss['expected_decision']}; wrong: {list(miss['wrong_fields'])}")
+        if len(misses) > MAX_MISSES_SHOWN:
+            print(f"  ... {len(misses) - MAX_MISSES_SHOWN} more misses in the saved run")
 
     exit_code = 0
     if args.record:
@@ -371,6 +638,8 @@ def main() -> int:
         else:
             for stale_file in set(RECORDINGS_DIR.glob("*.json")) - client.used - {recording_path}:
                 stale_file.unlink()
+            for stale_file in set(retrieval_recordings.glob("*.json")) - retriever.used:
+                stale_file.unlink()
             recorded = {
                 "recorded_at": report["started_at"],
                 "provider": client.host,
@@ -379,16 +648,28 @@ def main() -> int:
                 "structured_output": settings.llm_structured_output,
                 "system_role": settings.llm_system_role,
                 "dataset": manifest,
+                "split": split,
                 "replies": len(client.used),
                 "fingerprint": current_fingerprint,
-                "baseline": gate_metrics(report["extraction"], report["decision_end_to_end"]),
+                "investigate": investigate,
+                "baseline": gate_metrics(
+                    report["extraction"],
+                    report["decision_end_to_end"],
+                    report["investigation"],
+                    report["checkpoint"],
+                ),
             }
             recording_path.write_text(json.dumps(recorded, indent=2) + "\n", encoding="utf-8")
             print(
                 f"\nRecorded {len(client.used)} replies and the gate baseline to {RECORDINGS_DIR}"
             )
     if args.gate:
-        current = gate_metrics(report["extraction"], report["decision_end_to_end"])
+        current = gate_metrics(
+            report["extraction"],
+            report["decision_end_to_end"],
+            report["investigation"],
+            report["checkpoint"],
+        )
         report["gate"] = {"baseline": recording["baseline"], "current": current}
         if failures := gate_failures(recording["baseline"], current):
             print("\nGATE FAILED:\n  " + "\n  ".join(failures))

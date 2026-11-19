@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mandiri Utama Teknologi\", \"invoice_number\": \"MUT26100897\", \"invoice_date\": \"2026-10-11\", \"due_date\": \"2026-11-25\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0217\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lisensi Antivirus 1 Tahun\", \"quantity\": 19, \"unit_price\": 350800, \"amount\": 6665200}, {\"description\": \"Monitor LED 24 inci\", \"quantity\": 3, \"unit_price\": 2289400, \"amount\": 6868200}, {\"description\": \"SSD Eksternal 1TB\", \"quantity\": 1, \"unit_price\": 1669700, \"amount\": 1669700}, {\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 3, \"unit_price\": 1515800, \"amount\": 4547400}], \"subtotal\": 19750500, \"tax\": 2172555, \"total\": 21923055, \"bank_account\": \"973639495941\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

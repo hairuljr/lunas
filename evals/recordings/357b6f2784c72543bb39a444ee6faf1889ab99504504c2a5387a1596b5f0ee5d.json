@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Orchid Systems Co\", \"invoice_number\": \"OSC26100512\", \"invoice_date\": \"2026-10-22\", \"due_date\": \"2026-11-05\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0132\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Antivirus License 1 Year\", \"quantity\": 3, \"unit_price\": 417900, \"amount\": 1253700}, {\"description\": \"24-inch LED Monitor\", \"quantity\": 4, \"unit_price\": 2136600, \"amount\": 8546400}, {\"description\": \"Dual-Band Wireless Router\", \"quantity\": 1, \"unit_price\": 1138300, \"amount\": 1138300}], \"subtotal\": 10938400, \"tax\": 1203224, \"total\": 12141624, \"bank_account\": \"40559225686\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

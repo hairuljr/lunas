@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202609-392\", \"invoice_date\": \"2026-09-27\", \"due_date\": \"2026-10-27\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0087\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"SSD Eksternal 1TB\", \"quantity\": 4, \"unit_price\": 1543600, \"amount\": 6174400}, {\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 4, \"unit_price\": 1554900, \"amount\": 6219600}, {\"description\": \"Lisensi Antivirus 1 Tahun\", \"quantity\": 6, \"unit_price\": 384500, \"amount\": 2307000}], \"subtotal\": 14701000, \"tax\": 1617110, \"total\": 16318110, \"bank_account\": \"1030005542871\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

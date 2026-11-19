@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The only issue is payment terms: invoice says 7 days, vendor records show 30 days.\n\n",
+    "tool_calls": [
+      {
+        "id": "call_b9aeff38d50b4d9382397872",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"payment_terms_mismatch\", \"line\": null, \"cause\": \"payment_terms_shorter\", \"evidence\": [{\"kind\": \"vendor\", \"ref\": \"V-040\", \"detail\": \"Vendor terms on file are 30 days\"}, {\"kind\": \"invoice\", \"ref\": \"INV/2026/10/0433\", \"detail\": \"Invoice states payment_terms_days = 7\"}], \"explanation\": \"The invoice asks for payment within 7 days, which is shorter than the 30-day terms agreed with Pacific Foods Group (V-040).\"}]}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sentosa Karya Boga\", \"invoice_number\": \"SKB/2026/00806\", \"invoice_date\": \"2026-09-25\", \"due_date\": \"2026-11-09\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0015\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Katering Rapat (paket)\", \"quantity\": 3, \"unit_price\": 1301200, \"amount\": 3903600}, {\"description\": \"Air Mineral Galon 19L\", \"quantity\": 18, \"unit_price\": 20400, \"amount\": 367200}, {\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 13, \"unit_price\": 44000, \"amount\": 572000}, {\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 6, \"unit_price\": 198500, \"amount\": 1191000}], \"subtotal\": 6033800, \"tax\": 663718, \"total\": 6697518, \"bank_account\": \"5669310234\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
+}

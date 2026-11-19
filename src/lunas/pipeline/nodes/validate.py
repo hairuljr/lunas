@@ -2,10 +2,16 @@
 
 from decimal import Decimal
 
+from lunas.config import DEFAULT_TAX_RATE
 from lunas.models import Invoice, Issue
 
+# Tax may be rounded to the whole currency unit, in either direction.
+TAX_ROUNDING = Decimal(1)
 
-def validate_invoice(invoice: Invoice, tolerance: Decimal = Decimal("0.01")) -> list[Issue]:
+
+def validate_invoice(
+    invoice: Invoice, tolerance: Decimal = Decimal("0.01"), tax_rate: Decimal = DEFAULT_TAX_RATE
+) -> list[Issue]:
     issues: list[Issue] = []
 
     def differs(actual: Decimal, expected: Decimal) -> bool:
@@ -28,6 +34,16 @@ def validate_invoice(invoice: Invoice, tolerance: Decimal = Decimal("0.01")) -> 
             Issue(
                 code="subtotal_mismatch",
                 message=f"Subtotal {invoice.subtotal} != sum of lines {line_total}",
+            )
+        )
+
+    expected_tax = invoice.subtotal * tax_rate
+    if abs(invoice.tax - expected_tax) > TAX_ROUNDING:
+        issues.append(
+            Issue(
+                code="tax_mismatch",
+                message=f"Tax {invoice.tax} is not {tax_rate:.0%} of subtotal {invoice.subtotal} "
+                f"({expected_tax})",
             )
         )
 

@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll gather the records needed to diagnose the price mismatch.",
+    "tool_calls": [
+      {
+        "id": "call_d6c378c0e0c140668bfa79f0",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0235\"}"
+      },
+      {
+        "id": "call_e6753381761744428cf39058",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"unit price for Kopi Bubuk Arabika 1kg, price changes, effective dates\"}"
+      }
+    ]
+  }
+}

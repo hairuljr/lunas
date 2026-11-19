@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate the tax mismatch issue.",
+    "tool_calls": [
+      {
+        "id": "call_a1b4e549aa014983ba08bda6",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0234\"}"
+      },
+      {
+        "id": "call_32c891d37af84a4fb1456f80",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"tax rate VAT applied to invoices\"}"
+      }
+    ]
+  }
+}

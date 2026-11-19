@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "\n\n",
+    "tool_calls": [
+      {
+        "id": "call_e1199400d10a49e6a324d54d",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0039\"}"
+      },
+      {
+        "id": "call_21a4fb0296ce4b8aa7923087",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"toner price effective date\"}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate this duplicate-total issue by comparing the two invoices and checking what was received against what was billed.",
+    "tool_calls": [
+      {
+        "id": "call_eff58515ef8f499681f92e5a",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0131\"}"
+      },
+      {
+        "id": "call_f585c40783d34b929330fd8a",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0131\"}"
+      },
+      {
+        "id": "call_ccf5ddf05f0b4eb2ab8c0385",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Sakti Gemilang Teknologi\", \"invoice_number\": \"SGT/2026/00231\", \"invoice_date\": \"2026-09-16\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0157\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Monitor LED 24 inci\", \"quantity\": 1, \"unit_price\": 2087500, \"amount\": 2087500}], \"subtotal\": 2087500, \"tax\": 250500, \"total\": 2338000, \"bank_account\": \"3517364468987\", \"notes\": null}"
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Gemilang Tunggal Kebersihan\", \"invoice_number\": \"GTK-26-00762\", \"invoice_date\": \"2026-10-16\", \"due_date\": \"2026-11-30\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0263\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Sabun Cuci Tangan 5L\", \"quantity\": 20, \"unit_price\": 108200, \"amount\": 2164000}, {\"description\": \"Pengharum Ruangan Otomatis\", \"quantity\": 13, \"unit_price\": 236000, \"amount\": 3068000}, {\"description\": \"Kantong Sampah 90x120 (pak)\", \"quantity\": 1, \"unit_price\": 62600, \"amount\": 62600}], \"subtotal\": 5294600, \"tax\": 582406, \"total\": 5877006, \"bank_account\": \"1962502750\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

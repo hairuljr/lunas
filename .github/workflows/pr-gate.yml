@@ -8,6 +8,22 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    # The contract index lives in Postgres with pgvector: the store tests need it. Same image
+    # as compose.yaml, on the same host port, so the default LUNAS_DATABASE_URL works.
+    services:
+      postgres:
+        image: docker.io/pgvector/pgvector:0.8.7-pg18
+        env:
+          POSTGRES_USER: lunas
+          POSTGRES_PASSWORD: lunas
+          POSTGRES_DB: lunas
+        ports:
+          - "5433:5432"
+        options: >-
+          --health-cmd "pg_isready -U lunas"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
     steps:
       - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v10.3.3

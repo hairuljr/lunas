@@ -1,0 +1,74 @@
+[
+ {
+  "clause_id": "KTR-V-028#5.1",
+  "contract_id": "KTR-V-028",
+  "vendor_id": "V-028",
+  "number": "5.1",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "The Buyer pays a complete and correct invoice within 30 calendar days of the invoice date."
+ },
+ {
+  "clause_id": "KTR-V-028#5.2",
+  "contract_id": "KTR-V-028",
+  "vendor_id": "V-028",
+  "number": "5.2",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Payment is made by transfer to the Supplier's account at Bank CIMB Niaga, number 83078932117, in the name of Sterling Hygiene Group."
+ },
+ {
+  "clause_id": "KTR-V-028#5.3",
+  "contract_id": "KTR-V-028",
+  "vendor_id": "V-028",
+  "number": "5.3",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Late payment accrues interest of 2% per month on the overdue amount."
+ },
+ {
+  "clause_id": "KTR-V-028#4.1",
+  "contract_id": "KTR-V-028",
+  "vendor_id": "V-028",
+  "number": "4.1",
+  "article": "4",
+  "article_title": "Invoicing",
+  "text": "Every invoice must state the number of the purchase order it bills."
+ },
+ {
+  "clause_id": "KTR-V-028#4.2",
+  "contract_id": "KTR-V-028",
+  "vendor_id": "V-028",
+  "number": "4.2",
+  "article": "4",
+  "article_title": "Invoicing",
+  "text": "The Supplier may invoice only goods that the Buyer has received and recorded in a goods receipt."
+ },
+ {
+  "clause_id": "KTR-V-028#4.3",
+  "contract_id": "KTR-V-028",
+  "vendor_id": "V-028",
+  "number": "4.3",
+  "article": "4",
+  "article_title": "Invoicing",
+  "text": "Each delivery may be invoiced once only; an invoice resubmitted under the same or a different number will be rejected."
+ },
+ {
+  "clause_id": "KTR-V-028#7.1",
+  "contract_id": "KTR-V-028",
+  "vendor_id": "V-028",
+  "number": "7.1",
+  "article": "7",
+  "article_title": "Delivery",
+  "text": "The Supplier delivers within 14 calendar days of receiving a purchase order."
+ },
+ {
+  "clause_id": "KTR-V-028#7.2",
+  "contract_id": "KTR-V-028",
+  "vendor_id": "V-028",
+  "number": "7.2",
+  "article": "7",
+  "article_title": "Delivery",
+  "text": "Partial deliveries are allowed; the remainder is delivered and invoiced once received."
+ }
+]

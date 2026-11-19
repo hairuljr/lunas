@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate this price discrepancy.\n\n",
+    "tool_calls": [
+      {
+        "id": "call_7d942faadacc45dc840dc960",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0272\"}"
+      },
+      {
+        "id": "call_dd194a054a3642159c89cafb",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Cat6 network cable price, unit price for PO items, effective date of prices\"}"
+      }
+    ]
+  }
+}

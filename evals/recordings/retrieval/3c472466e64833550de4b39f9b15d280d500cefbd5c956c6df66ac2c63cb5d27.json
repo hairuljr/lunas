@@ -1,0 +1,56 @@
+[
+ {
+  "clause_id": "KTR-V-012#2.1",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "2.1",
+  "article": "2",
+  "article_title": "Prices",
+  "text": "Unit prices are set out in Schedule A and remain fixed for the term of this Agreement."
+ },
+ {
+  "clause_id": "KTR-V-012#2.2",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "2.2",
+  "article": "2",
+  "article_title": "Prices",
+  "text": "A change to a unit price takes effect only through a written addendum signed by both parties, and never retroactively."
+ },
+ {
+  "clause_id": "KTR-V-012#2.3",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "2.3",
+  "article": "2",
+  "article_title": "Prices",
+  "text": "Prices exclude value added tax."
+ },
+ {
+  "clause_id": "KTR-V-012#11.1",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "11.1",
+  "article": "11",
+  "article_title": "Addendum",
+  "text": "Addendum No. 1 dated August 10, 2026: from September 20, 2026, the unit price of External SSD 1TB is changed to IDR 1,814,400.00 per unit."
+ },
+ {
+  "clause_id": "KTR-V-012#8.1",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "8.1",
+  "article": "8",
+  "article_title": "Term",
+  "text": "This Agreement runs from January 1, 2026 to December 31, 2027."
+ },
+ {
+  "clause_id": "KTR-V-012#8.2",
+  "contract_id": "KTR-V-012",
+  "vendor_id": "V-012",
+  "number": "8.2",
+  "article": "8",
+  "article_title": "Term",
+  "text": "The Agreement may be extended by written agreement of both parties."
+ }
+]

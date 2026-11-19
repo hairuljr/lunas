@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Lestari Sakti Teknologi\", \"invoice_number\": \"LST-26-00374\", \"invoice_date\": \"2026-10-15\", \"due_date\": \"2026-11-29\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0147\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 6, \"unit_price\": 1339300, \"amount\": 8035800}, {\"description\": \"Monitor LED 24 inci\", \"quantity\": 1, \"unit_price\": 1966500, \"amount\": 1966500}], \"subtotal\": 10002300, \"tax\": 1100253, \"total\": 11102553, \"bank_account\": \"38171239856\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
+}

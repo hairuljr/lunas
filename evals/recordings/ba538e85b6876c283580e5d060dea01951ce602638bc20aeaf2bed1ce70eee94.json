@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate the price mismatch on line 1.\n\n",
+    "tool_calls": [
+      {
+        "id": "call_3d7830c54b36402e805fab5a",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0258\"}"
+      },
+      {
+        "id": "call_e9397316857a4dbfac3a8e9e",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"unit price for Black Laser Printer Toner and effective date of prices\"}"
+      }
+    ]
+  }
+}

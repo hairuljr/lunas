@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "\n\n",
+    "tool_calls": [
+      {
+        "id": "call_3ed6a1eb25fd4b38a710961e",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0201\"}"
+      },
+      {
+        "id": "call_686f8b91669a46b399eaaa98",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Pulpen Gel Hitam price / unit price agreement for stationery items\"}"
+      }
+    ]
+  }
+}

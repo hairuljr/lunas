@@ -1,0 +1,34 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by reading the purchase order, goods receipts, vendor invoices, terms, and contract.",
+    "tool_calls": [
+      {
+        "id": "call_e9499e380f774076b0131994",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0036\"}"
+      },
+      {
+        "id": "call_92931d705abb49d4aab952fa",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0036\"}"
+      },
+      {
+        "id": "call_f493aa7218af42638a4fb807",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_5f8736d1a2c94f45875dc458",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_cf2841fefddf47809a69dc56",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"tax rate percentage applicable to invoices\"}"
+      }
+    ]
+  }
+}

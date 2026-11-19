@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "\n\n",
+    "tool_calls": [
+      {
+        "id": "call_93c4e867ff9d43a9beec8df2",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"price_mismatch\", \"line\": 1, \"cause\": \"contract_price_not_yet_effective\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0240\", \"detail\": \"Line 1 Stretch Film 500mm (rol) unit price Rp 81,400\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-029#11.1\", \"detail\": \"Addendum No. 1 sets Stretch Film 500mm price at Rp 96,100 only from 6 October 2026\"}, {\"kind\": \"invoice\", \"ref\": \"SUK-26-00113\", \"detail\": \"Invoice dated 26 September 2026 bills Rp 96,100 per unit\"}], \"explanation\": \"The contract price of Rp 96,100 in clause KTR-V-029#11.1 only applies from 6 October 2026, so at the invoice date of 26 September 2026 the PO price of Rp 81,400 governs the unit price.\"}]}"
+      }
+    ]
+  }
+}

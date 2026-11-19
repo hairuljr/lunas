@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Bumi Cahaya Alat Kantor\", \"invoice_number\": \"INV-BCA-00659\", \"invoice_date\": \"2026-09-23\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0071\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Toner Printer Laser Hitam\", \"quantity\": 5, \"unit_price\": 840100, \"amount\": 4200500}, {\"description\": \"Kertas HVS A4 80gsm (rim)\", \"quantity\": 6, \"unit_price\": 47900, \"amount\": 287400}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 17, \"unit_price\": 269300, \"amount\": 4578100}, {\"description\": \"Pulpen Gel Hitam (kotak)\", \"quantity\": 16, \"unit_price\": 49700, \"amount\": 795200}], \"subtotal\": 9861200, \"tax\": 1084732, \"total\": 10945932, \"bank_account\": \"5069057507\", \"notes\": null}"
+}

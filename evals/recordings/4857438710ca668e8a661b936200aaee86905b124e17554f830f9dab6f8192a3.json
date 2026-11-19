@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "\n\n",
+    "tool_calls": [
+      {
+        "id": "call_98733bd1b1ef4404b1199e0c",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0157\"}"
+      }
+    ]
+  }
+}

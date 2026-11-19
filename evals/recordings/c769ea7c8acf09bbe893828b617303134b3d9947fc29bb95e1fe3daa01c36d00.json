@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The vendor's terms on file are 45 days, but the invoice's due date (2026-09-29) is 7 days after the invoice date (2026-09-22). This confirms the invoice demands shorter payment terms than agreed.",
+    "tool_calls": [
+      {
+        "id": "call_7f96721f0b9a41789e5455fa",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"payment_terms_mismatch\", \"line\": null, \"cause\": \"payment_terms_shorter\", \"evidence\": [{\"kind\": \"vendor\", \"ref\": \"V-023\", \"detail\": \"Payment terms on file are 45 days\"}, {\"kind\": \"invoice\", \"ref\": \"GTK-26-00749\", \"detail\": \"Invoice date 2026-09-22, due date 2026-09-29 = 7 days, shorter than the 45-day terms\"}], \"explanation\": \"The invoice's due date is only 7 days after the invoice date, while the vendor's agreed payment terms on file are 45 days.\"}]}"
+      }
+    ]
+  }
+}

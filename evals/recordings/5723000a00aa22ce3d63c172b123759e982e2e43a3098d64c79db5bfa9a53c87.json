@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Summit Packaging Ltd\", \"invoice_number\": \"INV/2026/09/0436\", \"invoice_date\": \"2026-09-17\", \"due_date\": \"2026-10-01\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0264\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Wooden Pallet 110x110\", \"quantity\": 7, \"unit_price\": 189600, \"amount\": 1327200}, {\"description\": \"Double Wall Carton 40x40x40\", \"quantity\": 18, \"unit_price\": 14100, \"amount\": 253800}], \"subtotal\": 1581000, \"tax\": 173910, \"total\": 1754910, \"bank_account\": \"486653347834\", \"notes\": \"Thank you for your business.\"}"
+}
