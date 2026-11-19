@@ -159,7 +159,7 @@ Update this section at the end of each working session.
   every word of the text layer present (only the compact layout's dashed rules differed),
   in 10-16 s and about 2,300 tokens per page. Not tested: noisy or skewed scans, and the
   `VisionReader` itself is still a stub.
-- Week 2 order agreed with the owner: remaining data classes + dev/test split, duplicate
+- Week 2 milestone order: remaining data classes + dev/test split, duplicate
   and payment-terms checks + router, re-measure baseline vs lunas, contracts + hybrid
   retrieval, investigation loop + LangGraph approval, OCR and vision.
 - Step 1-2 done (2026-11-19): eight classes with fixed expected outcomes (`EXPECTED` in
@@ -186,11 +186,34 @@ Update this section at the end of each working session.
 - The PR gate was re-recorded on that run: `evals/recordings/` holds the 153 dev replies
   (616 KB) and `recording.json` stores the split; `--gate` replays it and passes offline.
 - Router (SPEC step 7) deferred to the investigation-loop step: nothing consumes a route yet.
-- **The naive baseline is not updated for the new classes.** Its prompt `baseline_react.v1`
-  knows nothing of duplicates, the tax rate or payment terms, and it has no ledger tool, so
-  running it now would be unfair. Before re-measuring (week-2 step 3): prompt v2 with the
-  same policy as the code, a read-only `find_invoices` tool, and `--split`. Then run both on
-  the test split; README numbers come from that run.
+- Step 3 done (2026-11-19): baseline prompt `baseline_react.v2` states the same rules as
+  the code (11% tax, vendor-master terms, duplicates, bank account), with a read-only
+  `find_invoices` ledger tool and `--split`. Measured on the **test** split, one live run
+  each, Sumopod `deepseek-v4.1-flash-1017`, 4 workers (`node-20261119-024349.json`,
+  `baseline-20261119-024725.json`):
+
+  | | Naive ReAct | lunas |
+  |---|---|---|
+  | Decision accuracy | 142/147 | 147/147 |
+  | False-approve | 5/93 (Wilson 95% CI 2.3-12.0%) | 0/93 (0-4.0%) |
+  | Requests / tokens per invoice | 3.4 / 6,366 | 1 / 1,429 |
+  | Latency p50 / p95 | 4.8 s / 12.2 s | 1.4 s / 4.8 s |
+  | Provider spend for 147 invoices | 0.0880 | 0.0272 |
+
+  The baseline's five errors: 3 duplicates (1 exact, 2 renumbered) and 2 short deliveries,
+  all approved **and paid**, each time after calling the tool that held the evidence
+  (ledger 13/13 duplicates, goods receipts). Failure in comparison, not retrieval. Paired
+  difference 5 vs 0 on the same invoices, exact McNemar two-sided p = 0.06: suggestive, not
+  settled. Run pass^3 or more test runs before calling it significant. The README table
+  now shows these numbers; balance after both runs 3.2436.
+- Known fairness gaps in `baseline_react.v2`, left as measured (found in review after the
+  run): it lists the four outcomes without lunas' precedence (escalate > reject > hold; the
+  Rp 50M threshold only for an otherwise clean invoice), does not say that invoice numbers
+  match ignoring case and separators, and writes 11% and Rp 50M as literals instead of the
+  config values. None of these cases occurs in the current test split, so the measured
+  numbers stand; fix them in a `v3` with the next re-measurement, not by editing v2.
+- Remaining week 2: contracts + hybrid retrieval (raise vendors to ~40 with it),
+  investigation loop + router + LangGraph approval, OCR and vision with scanned versions.
 
 ## Design rules that must not erode
 

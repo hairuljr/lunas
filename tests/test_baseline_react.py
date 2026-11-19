@@ -5,6 +5,7 @@ import json
 from datetime import date
 from decimal import Decimal
 
+from data.generate import EXPECTED, GroundTruth
 from evals.baseline.react import (
     AgentResult,
     Payment,
@@ -20,23 +21,23 @@ from lunas.models import (
     GoodsReceipt,
     GoodsReceiptLine,
     Invoice,
+    InvoiceRecord,
     LineItem,
     PurchaseOrder,
     PurchaseOrderLine,
     Vendor,
 )
 
+VENDOR = Vendor(
+    vendor_id="V-001",
+    name="PT Sumber Makmur",
+    bank_name="Bank Central Asia",
+    bank_account="5270418896",
+    email="ar@sumbermakmur.example",
+    payment_terms_days=30,
+)
 ERP = ErpData(
-    vendors=[
-        Vendor(
-            vendor_id="V-001",
-            name="PT Sumber Makmur",
-            bank_name="Bank Central Asia",
-            bank_account="5270418896",
-            email="ar@sumbermakmur.example",
-            payment_terms_days=30,
-        )
-    ],
+    vendors=[VENDOR],
     purchase_orders=[
         PurchaseOrder(
             po_number="PO-001",
@@ -100,6 +101,33 @@ def test_agent_looks_up_pays_and_decides():
     assert json.loads(tool_message["content"])["vendor_id"] == "V-001"
 
 
+def test_ledger_tool_returns_the_vendors_earlier_invoices():
+    erp = ErpData(
+        [VENDOR],
+        [],
+        [],
+        [
+            InvoiceRecord(
+                vendor_id="V-001",
+                invoice_number="INV/2026/10/0159",
+                invoice_date=date(2026, 10, 19),
+                total=Decimal(555000),
+                po_number="PO-001",
+            )
+        ],
+    )
+    script = Script(
+        call("find_invoices", vendor_id="V-001"),
+        call("submit_decision", decision="reject", reason="Already invoiced."),
+    )
+
+    result = run_agent("x", erp, script)
+
+    (history,) = json.loads(script.seen[1][-1]["content"])
+    assert history["invoice_number"] == "INV/2026/10/0159"
+    assert result.decision == Decision.REJECT
+
+
 def test_payment_tool_accepts_any_account_because_there_is_no_gateway():
     script = Script(
         call("schedule_payment", invoice_number="INV-1", bank_account="9990001112", amount=1),
@@ -145,28 +173,37 @@ def test_agent_that_never_decides_stops_at_the_turn_limit():
     assert result.requests == 3
 
 
-class Record:
-    """The two fields of a ground-truth record that baseline_metrics reads."""
-
-    def __init__(self, expected: Decision, total: int = 555000) -> None:
-        self.expected_decision = expected
-        self.invoice = Invoice(
-            vendor_name="PT Sumber Makmur",
-            invoice_number="INV-1",
-            invoice_date=date(2026, 11, 1),
-            po_number="PO-001",
-            line_items=[
-                LineItem(
-                    description="Kertas A4",
-                    quantity=Decimal(10),
-                    unit_price=Decimal(50000),
-                    amount=Decimal(500000),
-                )
-            ],
-            subtotal=Decimal(500000),
-            tax=Decimal(55000),
-            total=Decimal(total),
-        )
+def record(expected: Decision, total: int = 555000) -> GroundTruth:
+    """A ground-truth record of the class whose expected decision is `expected`."""
+    label = "clean" if expected == Decision.APPROVE else "price_mismatch"
+    invoice = Invoice(
+        vendor_name="PT Sumber Makmur",
+        invoice_number="INV-1",
+        invoice_date=date(2026, 11, 1),
+        po_number="PO-001",
+        line_items=[
+            LineItem(
+                description="Kertas A4",
+                quantity=Decimal(10),
+                unit_price=Decimal(50000),
+                amount=Decimal(500000),
+            )
+        ],
+        subtotal=Decimal(500000),
+        tax=Decimal(55000),
+        total=Decimal(total),
+    )
+    return GroundTruth(
+        id="inv-001",
+        file="invoices/inv-001.pdf",
+        label=label,
+        split="dev",
+        language="id",
+        layout="classic",
+        invoice=invoice,
+        expected_decision=expected,
+        expected_issue_codes=EXPECTED[(label, None)][1],
+    )
 
 
 def paid(decision: Decision | None, account: str = "5270418896", amount: str = "555000", **more):
@@ -175,7 +212,7 @@ def paid(decision: Decision | None, account: str = "5270418896", amount: str = "
 
 
 def test_metrics_grade_the_decision_and_what_was_done_with_the_payment_tool():
-    records = [Record(Decision.APPROVE), Record(Decision.HOLD), Record(Decision.HOLD)] * 2
+    records = [record(Decision.APPROVE), record(Decision.HOLD), record(Decision.HOLD)] * 2
     results = [
         paid(Decision.APPROVE, prompt_tokens=900, completion_tokens=100),
         paid(Decision.APPROVE),  # false approve, and it paid
@@ -204,7 +241,7 @@ def test_metrics_grade_the_decision_and_what_was_done_with_the_payment_tool():
 
 
 def test_unanswered_invoices_are_left_out_of_latency_and_cost():
-    records = [Record(Decision.APPROVE), Record(Decision.APPROVE)]
+    records = [record(Decision.APPROVE), record(Decision.APPROVE)]
     results = [
         AgentResult(decision=Decision.APPROVE, requests=3, prompt_tokens=50, seconds=2.0),
         AgentResult(failure="llm_unavailable", seconds=60.0),

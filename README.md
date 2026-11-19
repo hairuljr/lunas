@@ -42,29 +42,31 @@ yet.
 
 ## Results
 
-Week-1 slice, measured before the dataset grew to eight classes; to be re-measured on the
-held-out test split. 30 synthetic digital invoices (20 clean, 10 overcharged against the PO), one run
-each on 2026-11-16, same model (`deepseek-v4.1-flash-1017`) and provider, 4 invoices in
-parallel. The baseline is one ReAct loop that gets the raw invoice text and every tool, with
-the same decision policy written in its prompt (`evals/baseline/react.py`).
+Held-out test split: 147 synthetic digital invoices in eight classes (54 clean, 93 that must
+not be paid as they are). One live run each on 2026-11-19, same model
+(`deepseek-v4.1-flash-1017`), same provider, 4 invoices in parallel. The baseline is one
+ReAct loop that gets the raw invoice text and every tool, including a payment tool, with the
+same rules written in its prompt (`evals/baseline/react.py`, prompt `baseline_react.v2`).
 
 | | Naive ReAct baseline | lunas |
 |---|---|---|
-| Decision accuracy | 30/30 | 30/30 |
-| False-approve rate | 0/10 | 0/10 |
+| Decision accuracy | 142/147 (96.6%) | 147/147 |
+| False-approve rate | 5/93 (5.4%, 95% CI 2.3-12.0%) | 0/93 (95% CI 0-4.0%) |
 | Attack success rate | TBD | TBD |
-| Latency per invoice, p50 / p95 | 5.7 s / 25.5 s | 1.9 s / 5.2 s |
-| LLM requests per invoice | 3.7 | 1 |
-| Tokens per invoice | 5,488 | 1,313 |
+| Latency per invoice, p50 / p95 | 4.8 s / 12.2 s | 1.4 s / 4.8 s |
+| LLM requests per invoice | 3.4 | 1 |
+| Tokens per invoice | 6,366 | 1,429 |
 
-On this set the two do not differ in accuracy: both decide every invoice correctly, and the
-baseline paid no wrong invoice, account or amount. These are easy cases, with no attack in
-them. What is measured so far is cost: the baseline used 4.2 times the tokens and was slower.
-With 30 invoices and a single run, p95 is the 29th value and is noisy. Attack success rate
-needs the attack set and is not measured yet.
+The baseline approved, and scheduled payment for, three duplicates and two short deliveries.
+In every one of those five it had fetched the evidence (the vendor's invoice history or the
+goods receipt) and still concluded that everything matched: the failure was in comparing,
+not in retrieving. lunas makes those comparisons in code. On the same 93 invoices that is 5
+false approvals against 0; with one run each that difference is suggestive rather than
+settled (exact McNemar, two-sided p = 0.06). The baseline also used 4.5 times the tokens.
 
-Runs: `evals/runs/baseline-20261116-045546.json`, `evals/runs/node-20261116-045614.json`
-(not committed; reproduce with the commands below).
+These are still easy documents: clean digital PDFs with no attacks in them. Attack success
+rate needs the attack set (week 3). Runs: `evals/runs/baseline-20261119-024725.json` and
+`evals/runs/node-20261119-024349.json` (not committed; reproduce with the commands below).
 
 ## Development
 
@@ -124,7 +126,8 @@ After such a change, refresh the recordings with a live run and commit them:
 uv run python -m evals.node.run --record
 ```
 
-The naive ReAct baseline on the same invoices (live; `--cache` resumes an interrupted run):
+The naive ReAct baseline on the same invoices (live; `--cache` resumes an interrupted run,
+`--split test` for reported numbers):
 
 ```bash
 uv run python -m evals.baseline.react

@@ -27,13 +27,16 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 
-from data.generate import MANIFEST_FILE, GroundTruth, load_ground_truth
+from data.generate import MANIFEST_FILE, SPLIT_CHOICES, GroundTruth, load_ground_truth
 from evals.node.scoring import (
     FIELDS,
     KEY_FIELDS,
+    by_label,
     decision_metrics,
     extraction_metrics,
+    percent,
     percentile,
+    print_decisions,
     score_fields,
 )
 from lunas.config import Settings
@@ -48,7 +51,7 @@ from lunas.llm import (
     load_prompt,
     strict_schema,
 )
-from lunas.models import Decision, Invoice
+from lunas.models import Invoice
 from lunas.pipeline.nodes.decide import decide
 from lunas.pipeline.nodes.extract import PROMPT_NAME, PROMPT_VERSION
 from lunas.pipeline.run import (
@@ -121,16 +124,6 @@ def gate_failures(baseline: dict[str, float], current: dict[str, float]) -> list
             f"{current['false_approve_rate']:.1%}"
         )
     return failures
-
-
-def by_label(records: list[GroundTruth], decisions: list[Decision]) -> dict[str, dict]:
-    """Decision metrics per class: an overall number hides a class the pipeline gets wrong."""
-    groups: dict[str, tuple[list[Decision], list[Decision]]] = {}
-    for record, decision in zip(records, decisions, strict=True):
-        expected, actual = groups.setdefault(record.label, ([], []))
-        expected.append(record.expected_decision)
-        actual.append(decision)
-    return {label: decision_metrics(*groups[label]) for label in sorted(groups)}
 
 
 def eval_match_decide(records: list[GroundTruth], erp: ErpData, settings: Settings) -> dict:
@@ -208,20 +201,6 @@ def _show(value: object) -> object:
     return None if value is None else str(value)
 
 
-def _percent(value: float | None) -> str:
-    return "n/a" if value is None else f"{value:6.1%}"
-
-
-def _print_decisions(title: str, metrics: dict) -> None:
-    print(f"\n{title}")
-    print(f"  decision accuracy     {_percent(metrics['accuracy'])}  (n={metrics['documents']})")
-    print(f"  false-approve rate    {_percent(metrics['false_approve_rate'])}")
-    print(f"  expected->actual      {metrics['confusion']}")
-    for label, row in metrics.get("by_label", {}).items():
-        correct = round(row["accuracy"] * row["documents"])
-        print(f"    {label:<20}{correct:>4}/{row['documents']:<4}")
-
-
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--data", type=Path, help="dataset directory (default: data/out)")
@@ -254,7 +233,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--split",
-        choices=("dev", "test", "all"),
+        choices=SPLIT_CHOICES,
         help="which invoices (default: dev; --gate uses the split it was recorded on)",
     )
     args = parser.parse_args()
@@ -280,7 +259,7 @@ def main() -> int:
             return 1
         recording = json.loads(recording_path.read_text(encoding="utf-8"))
     split = recording.get("split", "dev") if args.gate else args.split or "dev"
-    records = [r for r in load_ground_truth(data_dir) if split in ("all", r.split)]
+    records = load_ground_truth(data_dir, split)
     print(f"Dataset: {data_dir}  {manifest}  split: {split} ({len(records)} invoices)")
     paths = [data_dir / record.file for record in records]
 
@@ -309,11 +288,11 @@ def main() -> int:
         "split": split,
         "match_decide_on_ground_truth": eval_match_decide(records, erp, settings),
     }
-    _print_decisions(
+    print_decisions(
         "Match + decide on ground-truth fields (no LLM)", report["match_decide_on_ground_truth"]
     )
     accuracy = report["match_decide_on_ground_truth"]["issue_code_accuracy"]
-    print(f"  issue-code accuracy   {_percent(accuracy)}")
+    print(f"  issue-code accuracy   {percent(accuracy)}")
 
     if client is None:
         print("\nExtraction and end-to-end decision: skipped (--skip-llm), not measured.")
@@ -364,9 +343,9 @@ def main() -> int:
                 f"  per invoice           p50 {report['seconds_p50']:.1f}s, "
                 f"p95 {report['seconds_p95']:.1f}s"
             )
-        print(f"  key-field accuracy    {_percent(extraction['key_field_accuracy'])}")
-        print(f"  all key fields right  {_percent(extraction['documents_with_all_key_fields'])}")
-        print(f"  whole invoice right   {_percent(extraction['documents_fully_correct'])}")
+        print(f"  key-field accuracy    {percent(extraction['key_field_accuracy'])}")
+        print(f"  all key fields right  {percent(extraction['documents_with_all_key_fields'])}")
+        print(f"  whole invoice right   {percent(extraction['documents_fully_correct'])}")
         print(f"  extraction failures   {extraction['extraction_failures']}")
         if report["replies"] and report["replies"]["replayed"]:
             print(f"  replies               {report['replies']} (replayed = not re-measured)")
@@ -378,11 +357,11 @@ def main() -> int:
             )
         for name in FIELDS:
             marker = "key" if name in KEY_FIELDS else ""
-            print(f"    {name:<20}{_percent(extraction['field_accuracy'][name])}  {marker}")
+            print(f"    {name:<20}{percent(extraction['field_accuracy'][name])}  {marker}")
         print("  key-field accuracy by layout/language")
         for group, value in extraction["key_field_accuracy_by_layout"].items():
-            print(f"    {group:<18}{_percent(value)}")
-        _print_decisions("Decision end to end (PDF -> extraction -> decision)", decisions)
+            print(f"    {group:<18}{percent(value)}")
+        print_decisions("Decision end to end (PDF -> extraction -> decision)", decisions)
         for miss in misses[:MAX_MISSES_SHOWN]:
             print(
                 f"  miss {miss['id']} {miss['label']} ({miss['layout']}): {miss['decision']}",

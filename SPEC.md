@@ -33,7 +33,7 @@ Invoice adalah **konten tak tepercaya** yang ditulis pihak luar, sementara agent
 | Latensi | p95 jalur bersih / jalur exception | ≤ 20 s / ≤ 60 s | Trace |
 | Biaya | Biaya per invoice | ditetapkan setelah baseline | Token dari trace × harga proxy |
 
-**Baseline pembanding** untuk README: satu ReAct loop naif yang menerima teks invoice mentah dan semua tool, tanpa gateway. Sudah diukur pada slice minggu 1 (2026-11-16): akurasi keputusan sama dengan lunas (30/30) pada dua kelas mudah; selisih yang terukur baru token (4,2×) dan latensi. Kontras akurasi dan keamanan baru bisa dinilai setelah kelas data minggu 2 dan attack set minggu 3.
+**Baseline pembanding** untuk README: satu ReAct loop naif yang menerima teks invoice mentah dan semua tool, tanpa gateway. Diukur ulang 2026-11-19 pada split test (147 invoice, delapan kelas, satu run): baseline 142/147 dengan 5/93 false-approve (dibayar), lunas 147/147 dengan 0/93. Kelima kesalahan baseline terjadi setelah ia mengambil buktinya (riwayat invoice atau GR), jadi gagal di perbandingan, bukan di retrieval. Selisihnya belum signifikan secara statistik dengan satu run (McNemar p = 0,06); keamanan diukur dengan attack set minggu 3.
 
 ## 3. Scope
 

@@ -972,9 +972,14 @@ def write_dataset(dataset: Dataset, out: Path, seed: int) -> None:
     )
 
 
-def load_ground_truth(out: Path) -> list[GroundTruth]:
+# What an eval may be asked to run on. Test is for reported numbers only.
+SPLIT_CHOICES = ("dev", "test", "all")
+
+
+def load_ground_truth(out: Path, split: str = "all") -> list[GroundTruth]:
     raw = json.loads((out / GROUND_TRUTH_FILE).read_text(encoding="utf-8"))
-    return [GroundTruth.model_validate(item) for item in raw]
+    records = [GroundTruth.model_validate(item) for item in raw]
+    return [record for record in records if split in ("all", record.split)]
 
 
 def main() -> None:

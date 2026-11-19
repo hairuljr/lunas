@@ -31,8 +31,8 @@ from urllib.parse import urlparse
 from openai import APIError, OpenAI
 from pydantic import BaseModel
 
-from data.generate import MANIFEST_FILE, GroundTruth, load_ground_truth
-from evals.node.scoring import decision_metrics, percentile
+from data.generate import MANIFEST_FILE, SPLIT_CHOICES, GroundTruth, load_ground_truth
+from evals.node.scoring import by_label, decision_metrics, percentile, print_decisions
 from lunas.config import Settings
 from lunas.erp import ErpData
 from lunas.ingest import choose_backend, get_reader
@@ -40,7 +40,7 @@ from lunas.llm import load_prompt
 from lunas.models import Decision
 
 PROMPT_NAME = "baseline_react"
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v2"
 MAX_TURNS = 8
 RUNS_DIR = Path(__file__).resolve().parents[1] / "runs"
 CACHE_DIR = Path(__file__).resolve().parents[1] / "cache" / "baseline"
@@ -72,6 +72,13 @@ TOOLS = [
         "List the goods receipts recorded against a purchase order.",
         {"po_number": {"type": "string"}},
         ["po_number"],
+    ),
+    _tool(
+        "find_invoices",
+        "List the invoices this vendor sent before that are already in our ledger: number, "
+        "date, total and purchase order.",
+        {"vendor_id": {"type": "string"}},
+        ["vendor_id"],
     ),
     _tool(
         "schedule_payment",
@@ -151,6 +158,9 @@ class _Session:
             if name == "get_goods_receipts":
                 receipts = self.erp.get_goods_receipts(args["po_number"])
                 return json.dumps([receipt.model_dump(mode="json") for receipt in receipts])
+            if name == "find_invoices":
+                history = self.erp.find_invoices(args["vendor_id"])
+                return json.dumps([record.model_dump(mode="json") for record in history])
             if name == "schedule_payment":
                 # No gateway: whatever account and amount the model passes is accepted.
                 payment = Payment(
@@ -296,11 +306,10 @@ def baseline_metrics(records: list[GroundTruth], results: list[AgentResult], erp
         )
     tokens = [result.prompt_tokens + result.completion_tokens for result in answered]
     seconds = [result.seconds for result in answered]
+    decisions = [result.decision for result in results]
     return {
-        **decision_metrics(
-            [record.expected_decision for record in records],
-            [result.decision for result in results],
-        ),
+        **decision_metrics([record.expected_decision for record in records], decisions),
+        "by_label": by_label(records, decisions),
         "no_decision": dict(Counter(r.failure for r in results if r.failure)),
         "payments": {
             "invoices_with_a_payment": sum(bool(result.payments) for result in results),
@@ -337,6 +346,12 @@ def main() -> int:
         action="store_true",
         help="keep finished invoices in evals/cache/baseline/ and skip them on the next run",
     )
+    parser.add_argument(
+        "--split",
+        choices=SPLIT_CHOICES,
+        default="dev",
+        help="which invoices (default: dev; test only for reported numbers)",
+    )
     args = parser.parse_args()
 
     settings = Settings()
@@ -350,7 +365,7 @@ def main() -> int:
         print("LUNAS_LLM_* not set. Copy .env.example to .env and fill it in.", file=sys.stderr)
         return 2
     manifest = json.loads((data_dir / MANIFEST_FILE).read_text(encoding="utf-8"))
-    records = load_ground_truth(data_dir)
+    records = load_ground_truth(data_dir, args.split)
     erp = ErpData.load(data_dir)
     host = urlparse(settings.llm_base_url).netloc
     prompt = load_prompt(PROMPT_NAME, PROMPT_VERSION)
@@ -384,6 +399,7 @@ def main() -> int:
     report = {
         "started_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "dataset": manifest,
+        "split": args.split,
         "baseline": "naive_react",
         "model": settings.llm_model,
         "provider": host,
@@ -406,13 +422,10 @@ def main() -> int:
 
     per = metrics["per_invoice"]
     print(f"Dataset: {data_dir}  {manifest}")
-    print(
-        f"\nNaive ReAct baseline: model {settings.llm_model} via {host}, prompt {report['prompt']}"
+    print_decisions(
+        f"Naive ReAct baseline: model {settings.llm_model} via {host}, prompt {report['prompt']}",
+        metrics,
     )
-    print(f"  decision accuracy     {metrics['accuracy']:6.1%}  (n={metrics['documents']})")
-    rate = metrics["false_approve_rate"]
-    print(f"  false-approve rate    {'n/a' if rate is None else f'{rate:6.1%}'}")
-    print(f"  expected->actual      {metrics['confusion']}")
     print(f"  no decision           {metrics['no_decision'] or 0}")
     print(f"  payments              {metrics['payments']}")
     if per["answered"]:
