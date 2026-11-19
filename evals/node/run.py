@@ -58,7 +58,7 @@ from lunas.llm import (
     load_prompt,
     strict_schema,
 )
-from lunas.models import Invoice, Issue
+from lunas.models import Decision, Invoice, Issue
 from lunas.pipeline.nodes.contract import PROMPT_NAME as CONTRACT_PROMPT
 from lunas.pipeline.nodes.contract import PROMPT_VERSION as CONTRACT_VERSION
 from lunas.pipeline.nodes.decide import decide
@@ -123,13 +123,18 @@ def stale_reasons(recorded: dict[str, str], current: dict[str, str]) -> list[str
 
 
 def gate_metrics(
-    extraction: dict, decisions: dict, investigation: dict | None = None
+    extraction: dict,
+    decisions: dict,
+    investigation: dict | None = None,
+    checkpoint: dict | None = None,
 ) -> dict[str, float]:
     metrics = {
         "key_field_accuracy": extraction["key_field_accuracy"],
         "decision_accuracy": decisions["accuracy"],
         "false_approve_rate": decisions["false_approve_rate"] or 0.0,
     }
+    if checkpoint:
+        metrics["checkpoint_accuracy"] = checkpoint["accuracy"]
     if investigation and investigation["diagnoses"]:
         metrics["cause_accuracy"] = investigation["cause_accuracy"]
     return metrics
@@ -137,7 +142,12 @@ def gate_metrics(
 
 def gate_failures(baseline: dict[str, float], current: dict[str, float]) -> list[str]:
     failures = []
-    for name in ("decision_accuracy", "key_field_accuracy", "cause_accuracy"):
+    for name in (
+        "decision_accuracy",
+        "key_field_accuracy",
+        "cause_accuracy",
+        "checkpoint_accuracy",
+    ):
         if name not in baseline:
             continue
         if current.get(name, 0.0) < baseline[name] - GATE_MAX_DROP:
@@ -240,6 +250,44 @@ def eval_investigation(records: list[GroundTruth], results: list[PipelineResult]
         "seconds_p50": percentile(seconds, 50),
         "seconds_p95": percentile(seconds, 95),
         "rows": rows,
+    }
+
+
+def eval_checkpoint(records: list[GroundTruth], results: list[PipelineResult]) -> dict:
+    """Did each invoice stop at the approval checkpoint exactly when it should, and with the
+    state a person needs? The run never waits: a stop is recorded and the batch goes on."""
+    should, stopped_right, stopped_wrong, state_right = 0, 0, 0, 0
+    wrong = []
+    for record, result in zip(records, results, strict=True):
+        expected = (
+            record.expected_route == Route.HUMAN or record.expected_decision == Decision.ESCALATE
+        )
+        stopped = result.status == "awaiting_approval"
+        should += expected
+        stopped_right += expected and stopped
+        stopped_wrong += stopped and not expected
+        request = result.approval_request
+        state_right += bool(
+            expected
+            and stopped
+            and request
+            and request.route == record.expected_route
+            and request.decision == record.expected_decision
+        )
+        if expected != stopped:
+            wrong.append({"id": record.id, "label": record.label, "status": result.status})
+    correct = sum(
+        (r.expected_route == Route.HUMAN or r.expected_decision == Decision.ESCALATE)
+        == (res.status == "awaiting_approval")
+        for r, res in zip(records, results, strict=True)
+    )
+    return {
+        "should_stop": should,
+        "stopped_when_it_should": stopped_right,
+        "stopped_when_it_should_not": stopped_wrong,
+        "state_correct_at_stop": state_right,
+        "accuracy": correct / len(records),
+        "wrong": wrong,
     }
 
 
@@ -499,6 +547,7 @@ def main() -> int:
             "misses": misses,
             "contract_check": eval_contract(records, results) if retriever else None,
             "investigation": eval_investigation(records, results) if investigate else None,
+            "checkpoint": eval_checkpoint(records, results),
         }
 
         print(
@@ -534,6 +583,13 @@ def main() -> int:
         route = decisions["route"]
         print(
             f"  route                 {route['correct']}/{route['documents']}  {route['confusion']}"
+        )
+        checkpoint = report["checkpoint"]
+        print(
+            f"\nApproval checkpoint: stopped {checkpoint['stopped_when_it_should']}/"
+            f"{checkpoint['should_stop']} that should, {checkpoint['stopped_when_it_should_not']}"
+            f" that should not; state right at the stop {checkpoint['state_correct_at_stop']}/"
+            f"{checkpoint['should_stop']} (not waited on)"
         )
         investigation = report["investigation"]
         if investigation is None:
@@ -597,7 +653,10 @@ def main() -> int:
                 "fingerprint": current_fingerprint,
                 "investigate": investigate,
                 "baseline": gate_metrics(
-                    report["extraction"], report["decision_end_to_end"], report["investigation"]
+                    report["extraction"],
+                    report["decision_end_to_end"],
+                    report["investigation"],
+                    report["checkpoint"],
                 ),
             }
             recording_path.write_text(json.dumps(recorded, indent=2) + "\n", encoding="utf-8")
@@ -606,7 +665,10 @@ def main() -> int:
             )
     if args.gate:
         current = gate_metrics(
-            report["extraction"], report["decision_end_to_end"], report["investigation"]
+            report["extraction"],
+            report["decision_end_to_end"],
+            report["investigation"],
+            report["checkpoint"],
         )
         report["gate"] = {"baseline": recording["baseline"], "current": current}
         if failures := gate_failures(recording["baseline"], current):

@@ -9,6 +9,8 @@ description = "Accounts-payable agent that reads untrusted invoices and pays onl
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "langgraph>=1.2.23",
+    "langgraph-checkpoint-postgres>=3.2.1",
     "openai>=3.49.0",
     "opentelemetry-exporter-otlp-proto-http>=1.45.2",
     "opentelemetry-sdk>=1.45.2",
@@ -26,6 +28,8 @@ lunas = "lunas.cli:main"
 testpaths = ["tests"]
 # `data/` (generator) and `evals/` are scripts at the repo root, imported as `data.*` / `evals.*`.
 pythonpath = ["."]
+# langsmith (pulled in by langgraph) uses an asyncio API that Python 3.14 deprecates.
+filterwarnings = ["ignore::DeprecationWarning:langsmith.*"]
 
 [tool.ruff]
 line-length = 100

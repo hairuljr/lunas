@@ -20,7 +20,7 @@ Update this section at the end of each working session.
   (`pipeline/nodes/extract.py`, `prompts/extract.v2.md`), validation (arithmetic, dates,
   tax rate), duplicate check, 3-way match (with payment terms), decision table, pipeline
   runner (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, naive ReAct
-  baseline, tracing, contract retrieval (`lunas.retrieval`), contract-check node, router, investigation loop, 212 tests.
+  baseline, tracing, contract retrieval (`lunas.retrieval`), contract-check node, router, investigation loop, LangGraph workflow with approval, 219 tests.
 - Commands: `uv run python data/generate.py`, `uv run lunas run`,
   `uv run python -m evals.node.run` (dev split by default, `--split test|all`;
   `--skip-llm` for the deterministic part, `--cache`
@@ -350,8 +350,39 @@ Update this section at the end of each working session.
     `investigate.v1`): 358 replies + 83 retrievals, 1.7 MB. Verified offline.
   - `--no-investigate` skips the loop in the node eval; the eval tests use it because
     their stand-in model has no tool calls.
-- Remaining week 2: LangGraph approval (interrupt + Postgres checkpointer, non-blocking in
-  eval), investigation on the test split, OCR and vision with scanned versions.
+- LangGraph workflow + human approval (2026-11-19, not committed):
+  - `pipeline/graph.py` replaces the sequential runner: `read` (parse + extract) ->
+    `check` -> `contract` -> `route` -> [`investigate`] -> `decide` -> [`approval`] -> end;
+    an unreadable invoice goes from `read` straight to `route` (human). State is a
+    Pydantic `InvoiceState` (LangGraph revalidates it, so enums and Decimals survive a
+    Postgres checkpoint, which stores a `StrEnum` as a plain string). Types in checkpoints
+    are listed in `SERDE` (`allowed_msgpack_modules`); LangGraph 1.2.23 warns about
+    unlisted types and will refuse them later.
+  - `approval` interrupts when route is `human` or the decision is `escalate` (above the
+    threshold). It shows an `ApprovalRequest` (code decision, route, issue messages,
+    investigation actions; no invoice text, no note). A person answers approve / reject /
+    hold (`Approval`, never escalate); the code's decision stays in `decision`, the
+    answer goes to `approval`. `resume_approval` refuses a thread that is not waiting.
+  - `pipeline/run.py` runs each invoice as thread `<run_id>/<file>` and never waits:
+    `PipelineResult.status` is decided / awaiting_approval / resolved, with
+    `approval_request` and `thread_id`. `pipeline/checks.py` now holds `check_invoice`.
+  - Checkpointers: `postgres_checkpointer` (psycopg pool, `setup()` creates the tables)
+    for `lunas run`, `lunas pending`, `lunas approve <thread> --decision ... --approver
+    ...`; `memory_checkpointer` for evals, tests and the gate. Verified by hand on
+    2026-11-19: a 40-invoice run stopped 1 invoice (bank account change), `pending` listed
+    it from Postgres in a new process, `approve` resumed it, a second answer was refused.
+  - Eval and gate: `eval_checkpoint` reports stops (should / should not / state right at
+    the stop); `checkpoint_accuracy` is a gated metric. Dev, replayed: stopped 12/12 that
+    should, 0 that should not, state right 12/12. The gate baseline was refreshed with
+    `--record`, which replayed every reply (0 live requests, no cost).
+  - Tracing still nests: LangGraph carries the context into its nodes, so one invoice is
+    one trace, now with an `approval` span. Tests: `tests/test_graph.py`, including a
+    resume from Postgres in a fresh pool with no model.
+  - LangGraph pulls in langsmith; its Python 3.14 deprecation warning is filtered in
+    pytest.
+- Remaining week 2: investigation on the test split, OCR and vision with scanned
+  versions. Not built: who may approve what (any `--approver` string is accepted), and the
+  approval UI.
 
 ## Design rules that must not erode
 

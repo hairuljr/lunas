@@ -50,8 +50,12 @@ money. That is the lethal trifecta, so safety lives in the architecture rather t
   fixed taxonomy per issue, evidence that code checks against the records the tools
   returned, and a follow-up action chosen by code. It never changes the decision.
 
-OCR and vision readers are stubs. Human approval with checkpoints and `gapura` are not built
-yet.
+- A LangGraph workflow whose approval step interrupts for a person (a changed bank account,
+  an unknown vendor, a total above the threshold), with checkpoints in Postgres so a
+  waiting invoice survives a restart. Evals and the PR gate record where invoices stop
+  instead of waiting.
+
+OCR and vision readers are stubs. `gapura` and the approval UI are not built yet.
 
 ## Results
 
@@ -141,6 +145,17 @@ After such a change, refresh the recordings with a live run and commit them:
 
 ```bash
 uv run python -m evals.node.run --record
+```
+
+Invoices that stop for a person wait in Postgres. List them, then answer one; it resumes
+from its checkpoint:
+
+```bash
+uv run lunas pending
+```
+
+```bash
+uv run lunas approve <thread-id> --decision hold --approver "AP lead" --note "Call the vendor"
 ```
 
 The naive ReAct baseline on the same invoices (live; `--cache` resumes an interrupted run,

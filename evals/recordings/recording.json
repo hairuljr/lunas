@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-11-19T08:44:33+00:00",
+  "recorded_at": "2026-11-19T09:07:33+00:00",
   "provider": "ai.sumopod.com",
   "model": "deepseek-v4.1-flash-1017",
   "prompt": "extract.v2",
@@ -40,6 +40,7 @@
     "key_field_accuracy": 1.0,
     "decision_accuracy": 1.0,
     "false_approve_rate": 0.0,
+    "checkpoint_accuracy": 1.0,
     "cause_accuracy": 0.9861111111111112
   }
 }

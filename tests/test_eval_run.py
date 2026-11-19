@@ -197,7 +197,7 @@ def test_gate_fails_when_recorded_replies_now_lead_to_worse_decisions(
 ):
     """A code regression: the same model replies, but the pipeline now mishandles them."""
     record(monkeypatch, out)
-    monkeypatch.setattr("lunas.pipeline.run.match_invoice", lambda invoice, erp, tolerance: [])
+    monkeypatch.setattr("lunas.pipeline.checks.match_invoice", lambda invoice, erp, tolerance: [])
 
     report = run_eval(monkeypatch, out, None, "--gate", expect=1)
 

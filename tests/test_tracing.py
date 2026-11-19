@@ -173,7 +173,9 @@ def test_failed_extraction_is_an_error_on_the_extract_span_and_named_on_the_root
     assert root.attributes["app.decision"] == "hold"
     # The pipeline handled it, so the invoice itself did not fail.
     assert root.status.status_code == StatusCode.UNSET
-    assert tree(finished)["process_invoice"] == ["parse", "extract"]
+    # An unreadable invoice goes to a person: route, then the approval checkpoint.
+    assert tree(finished)["process_invoice"] == ["parse", "extract", "route", "decide", "approval"]
+    assert root.attributes["app.status"] == "awaiting_approval"
 
 
 def test_unanswered_request_is_an_error_on_the_chat_span(out: Path, spans: InMemorySpanExporter):
