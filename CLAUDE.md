@@ -13,13 +13,14 @@ Update this section at the end of each working session.
 
 - Week 1 done and pushed (2026-11-16). Week 2 steps 1-3 committed on branch
   `week2-data-classes` (pushed, no PR yet); step 4 (contracts, retrieval, contract check)
-  done, not committed. Synthetic data generator (`data/generate.py`, default 300 digital invoice
+  done and committed; PR hairuljr/lunas#1 open, CI green before the Postgres service was
+  added. Baseline v3 + re-measurement not committed. Synthetic data generator (`data/generate.py`, default 300 digital invoice
   PDFs from 40 vendors in 3 layouts x 2 languages, eight classes, invoice ledger, dev/test
   split, ground truth, 40 contracts, 720 labelled retrieval questions), ingestion router, digital-PDF reader, LLM extraction node
   (`pipeline/nodes/extract.py`, `prompts/extract.v2.md`), validation (arithmetic, dates,
   tax rate), duplicate check, 3-way match (with payment terms), decision table, pipeline
   runner (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, naive ReAct
-  baseline, tracing, contract retrieval (`lunas.retrieval`), contract-check node, 179 tests.
+  baseline, tracing, contract retrieval (`lunas.retrieval`), contract-check node, 181 tests.
 - Commands: `uv run python data/generate.py`, `uv run lunas run`,
   `uv run python -m evals.node.run` (dev split by default, `--split test|all`;
   `--skip-llm` for the deterministic part, `--cache`
@@ -274,10 +275,28 @@ Update this section at the end of each working session.
 - Gate re-recorded on that run: 189 replies plus 32 recorded retrievals under
   `evals/recordings/retrieval/`; the fingerprint now also covers `contracts.json` and the
   contract prompt. Verified offline with no API key and an unreachable database.
-- **README results table is from the previous dataset** (eight classes, 10 vendors, commit
-  66a17d4), not the current one. Before re-measuring baseline vs lunas: baseline prompt v3
-  (precedence, number matching, config values, see above) and a read-only contract
-  search tool, or the new class is unfair to it.
+- Baseline v3 (2026-11-19): prompt `baseline_react.v3` with ordered rules (escalate >
+  reject > hold > threshold > approve), invoice-number matching, tax rate and threshold
+  filled from `Settings`, and a read-only `search_contract` tool over the same index
+  (`StoreRetriever.search_clauses`); it needs Postgres. CI now starts a pgvector service
+  and the store tests fail instead of skipping there (`CI` set).
+- Re-measured on the current **test** split (146 invoices, nine classes), one live run each
+  (`node-20261119-073816.json`, `baseline-20261119-074801.json`):
+
+  | | Naive ReAct v3 | lunas |
+  |---|---|---|
+  | Decision accuracy | 141/146 | 146/146 |
+  | False-approve | 4/92 (CI 1.7-10.7%) | 0/92 (0-4.0%) |
+  | Requests / tokens per invoice | 3.7 / 7,655 | 1.2 / 1,576 |
+  | Latency p50 / p95 | 10.7 s / 50.6 s | 2.4 s / 13.9 s |
+  | Provider spend | 0.0914 | 0.0321 |
+
+  Baseline errors: 4 exact duplicates approved and paid after `find_invoices` (12/12
+  duplicates looked up), 1 no-PO invoice escalated instead of rejected. Both 12/12 on
+  `price_amendment` (baseline called `search_contract` on all 12). lunas contract check on
+  test: cleared 4/4 that should be, 0/8 that should not, cited the addendum 12/12. McNemar
+  p = 0.125 for 4 vs 0: not significant alone; same failure mode as the earlier dataset
+  (5 vs 0). README now shows these numbers. Balance after: 3.0463.
 - Remaining week 2: investigation loop + router + LangGraph approval, OCR and vision with
   scanned versions; Postgres in CI.
 

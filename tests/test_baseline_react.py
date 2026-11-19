@@ -13,10 +13,13 @@ from evals.baseline.react import (
     Turn,
     baseline_metrics,
     run_agent,
+    system_prompt,
 )
 from evals.node.scoring import percentile
+from lunas.config import Settings
 from lunas.erp import ErpData
 from lunas.models import (
+    ContractClause,
     Decision,
     GoodsReceipt,
     GoodsReceiptLine,
@@ -267,3 +270,44 @@ def test_percentile_is_nearest_rank():
     assert percentile(values, 50) == 15.0
     assert percentile(values, 95) == 29.0
     assert percentile([], 95) is None
+
+
+def test_contract_tool_answers_from_the_shared_index_or_says_it_is_missing():
+    clause = ContractClause(
+        clause_id="KTR-V-001#11.1",
+        contract_id="KTR-V-001",
+        vendor_id="V-001",
+        number="11.1",
+        article="11",
+        article_title="Addendum",
+        text="Harga satuan Kertas A4 diubah menjadi Rp 55.000 per unit.",
+    )
+    asked = []
+
+    def contracts(vendor_id: str, question: str) -> list[ContractClause]:
+        asked.append((vendor_id, question))
+        return [clause]
+
+    script = Script(
+        call("search_contract", vendor_id="V-001", question="harga Kertas A4"),
+        call("submit_decision", decision="approve", reason="Addendum."),
+    )
+    run_agent("x", ERP, script, contracts=contracts)
+
+    assert asked == [("V-001", "harga Kertas A4")]
+    (answer,) = json.loads(script.seen[1][-1]["content"])
+    assert answer == {"clause": "11.1", "title": "Addendum", "text": clause.text}
+
+    without = Script(
+        call("search_contract", vendor_id="V-001", question="harga"),
+        call("submit_decision", decision="hold", reason="No contract."),
+    )
+    run_agent("x", ERP, without)
+    assert "not available" in without.seen[1][-1]["content"]
+
+
+def test_the_rules_carry_the_configured_rate_and_threshold():
+    prompt = system_prompt(Settings(_env_file=None, tax_rate="0.12", approval_threshold=75000000))
+
+    assert "12% of the subtotal" in prompt
+    assert "Rp 75,000,000" in prompt

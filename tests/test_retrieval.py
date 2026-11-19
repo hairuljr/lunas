@@ -1,5 +1,6 @@
 import hashlib
 import math
+import os
 import re
 import uuid
 from pathlib import Path
@@ -79,6 +80,9 @@ def database_url() -> str:
     try:
         psycopg.connect(url, connect_timeout=2).close()
     except psycopg.OperationalError:
+        # CI starts Postgres as a service: there, a missing database is a failure, not a skip.
+        if os.environ.get("CI"):
+            raise
         pytest.skip("Postgres with pgvector is not running (podman compose up -d)")
     return url
 

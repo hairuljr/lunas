@@ -38,11 +38,15 @@ class StoreRetriever:
         self._embedder = embedder
 
     def price_clauses(self, vendor_id: str, vendor_name: str, item: str) -> list[ContractClause]:
+        language = self._store.contract_language(vendor_id)
+        if language is None:
+            return []
+        query = PRICE_QUESTION[language].format(vendor=vendor_name, item=item)
+        return self.search_clauses(vendor_id, query)
+
+    def search_clauses(self, vendor_id: str, query: str) -> list[ContractClause]:
+        """Any question about the vendor's own contract, answered with whole articles."""
         with span("retrieve", {"app.vendor_id": vendor_id}) as current:
-            language = self._store.contract_language(vendor_id)
-            if language is None:
-                return []
-            query = PRICE_QUESTION[language].format(vendor=vendor_name, item=item)
             hits = search(self._store, self._embedder, query, vendor_id=vendor_id)
             articles = list(dict.fromkeys((h.clause.contract_id, h.clause.article) for h in hits))
             clauses = self._store.article_clauses(articles[:MAX_ARTICLES])

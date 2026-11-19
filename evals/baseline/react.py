@@ -28,6 +28,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+import psycopg
 from openai import APIError, OpenAI
 from pydantic import BaseModel
 
@@ -37,10 +38,13 @@ from lunas.config import Settings
 from lunas.erp import ErpData
 from lunas.ingest import choose_backend, get_reader
 from lunas.llm import load_prompt
-from lunas.models import Decision
+from lunas.models import ContractClause, Decision
+from lunas.retrieval.index import cached_embedder
+from lunas.retrieval.retriever import StoreRetriever
+from lunas.retrieval.store import ClauseStore
 
 PROMPT_NAME = "baseline_react"
-PROMPT_VERSION = "v2"
+PROMPT_VERSION = "v3"
 MAX_TURNS = 8
 RUNS_DIR = Path(__file__).resolve().parents[1] / "runs"
 CACHE_DIR = Path(__file__).resolve().parents[1] / "cache" / "baseline"
@@ -79,6 +83,13 @@ TOOLS = [
         "date, total and purchase order.",
         {"vendor_id": {"type": "string"}},
         ["vendor_id"],
+    ),
+    _tool(
+        "search_contract",
+        "Search the vendor's signed contract. Returns the best-matching articles with their "
+        "clause numbers.",
+        {"vendor_id": {"type": "string"}, "question": {"type": "string"}},
+        ["vendor_id", "question"],
     ),
     _tool(
         "schedule_payment",
@@ -140,9 +151,14 @@ class AgentResult(BaseModel):
     payments: list[Payment] = []
 
 
+# Answers a question about one vendor's contract: (vendor_id, question) -> clauses.
+ContractSearch = Callable[[str, str], list[ContractClause]]
+
+
 @dataclass
 class _Session:
     erp: ErpData
+    contracts: ContractSearch | None = None
     result: AgentResult = field(default_factory=AgentResult)
 
     def call(self, name: str, arguments: str) -> str:
@@ -158,6 +174,17 @@ class _Session:
             if name == "get_goods_receipts":
                 receipts = self.erp.get_goods_receipts(args["po_number"])
                 return json.dumps([receipt.model_dump(mode="json") for receipt in receipts])
+            if name == "search_contract":
+                if self.contracts is None:
+                    return _error("contract search is not available")
+                clauses = self.contracts(args["vendor_id"], args["question"])
+                return json.dumps(
+                    [
+                        {"clause": c.number, "title": c.article_title, "text": c.text}
+                        for c in clauses
+                    ],
+                    ensure_ascii=False,
+                )
             if name == "find_invoices":
                 history = self.erp.find_invoices(args["vendor_id"])
                 return json.dumps([record.model_dump(mode="json") for record in history])
@@ -183,13 +210,26 @@ def _error(message: str) -> str:
     return json.dumps({"error": message})
 
 
+def system_prompt(settings: Settings) -> str:
+    """The rules, with the same tax rate and threshold the pipeline's code uses."""
+    return load_prompt(PROMPT_NAME, PROMPT_VERSION).format(
+        tax_percent=f"{settings.tax_rate * 100:.0f}",
+        approval_threshold=f"{int(settings.approval_threshold):,}",
+    )
+
+
 def run_agent(
-    invoice_text: str, erp: ErpData, chat: Chat, max_turns: int = MAX_TURNS
+    invoice_text: str,
+    erp: ErpData,
+    chat: Chat,
+    max_turns: int = MAX_TURNS,
+    contracts: ContractSearch | None = None,
+    prompt: str | None = None,
 ) -> AgentResult:
-    session = _Session(erp)
+    session = _Session(erp, contracts)
     result = session.result
     messages: list[dict[str, Any]] = [
-        {"role": "system", "content": load_prompt(PROMPT_NAME, PROMPT_VERSION)},
+        {"role": "system", "content": prompt or system_prompt(Settings(_env_file=None))},
         {"role": "user", "content": invoice_text},
     ]
     started = time.monotonic()
@@ -263,10 +303,18 @@ def read_invoice_text(path: Path, settings: Settings) -> str:
     return get_reader(backend).read(path).text
 
 
-def run_one(path: Path, erp: ErpData, chat: Chat, settings: Settings) -> AgentResult:
+def run_one(
+    path: Path, erp: ErpData, chat: Chat, settings: Settings, contracts: ContractSearch | None
+) -> AgentResult:
     started = time.monotonic()
     try:
-        return run_agent(read_invoice_text(path, settings), erp, chat)
+        return run_agent(
+            read_invoice_text(path, settings),
+            erp,
+            chat,
+            contracts=contracts,
+            prompt=system_prompt(settings),
+        )
     except APIError as error:
         return AgentResult(
             failure="llm_unavailable",
@@ -368,8 +416,14 @@ def main() -> int:
     records = load_ground_truth(data_dir, args.split)
     erp = ErpData.load(data_dir)
     host = urlparse(settings.llm_base_url).netloc
-    prompt = load_prompt(PROMPT_NAME, PROMPT_VERSION)
+    prompt = system_prompt(settings)
     chat = openai_chat(settings)
+    # The same contract index, embeddings and fusion the pipeline uses: a fair baseline.
+    try:
+        retriever = StoreRetriever(ClauseStore(settings.database_url), cached_embedder(settings))
+    except psycopg.OperationalError:
+        print("The baseline needs the contract index (podman compose up -d).", file=sys.stderr)
+        return 2
     workers = args.workers or settings.llm_workers
 
     # A cached result is only valid for the same provider, model, prompt and tools.
@@ -382,7 +436,7 @@ def main() -> int:
         cached = cache_dir / f"{record.id}.json"
         if args.cache and cached.exists():
             return AgentResult.model_validate_json(cached.read_text(encoding="utf-8")), True
-        result = run_one(data_dir / record.file, erp, chat, settings)
+        result = run_one(data_dir / record.file, erp, chat, settings, retriever.search_clauses)
         if args.cache and result.failure != "llm_unavailable":
             cache_dir.mkdir(parents=True, exist_ok=True)
             cached.write_text(result.model_dump_json(indent=2), encoding="utf-8")

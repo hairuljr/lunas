@@ -49,33 +49,35 @@ OCR and vision readers are stubs. The investigation loop and `gapura` are not bu
 
 ## Results
 
-Measured on the previous version of the dataset (eight classes, ten vendors, before contracts;
-commit `66a17d4`); to be re-measured on the current one. Held-out test split: 147 synthetic
-digital invoices in eight classes (54 clean, 93 that must
-not be paid as they are). One live run each on 2026-11-19, same model
+Held-out test split: 146 synthetic digital invoices from 40 vendors in nine classes (54 to
+approve, 92 that must not be paid as they are). One live run each on 2026-11-19, same model
 (`deepseek-v4.1-flash-1017`), same provider, 4 invoices in parallel. The baseline is one
-ReAct loop that gets the raw invoice text and every tool, including a payment tool, with the
-same rules written in its prompt (`evals/baseline/react.py`, prompt `baseline_react.v2`).
+ReAct loop that gets the raw invoice text and every tool, including a payment tool and a
+search over the same contract index, with the same rules written in its prompt
+(`evals/baseline/react.py`, prompt `baseline_react.v3`).
 
 | | Naive ReAct baseline | lunas |
 |---|---|---|
-| Decision accuracy | 142/147 (96.6%) | 147/147 |
-| False-approve rate | 5/93 (5.4%, 95% CI 2.3-12.0%) | 0/93 (95% CI 0-4.0%) |
+| Decision accuracy | 141/146 (96.6%) | 146/146 |
+| False-approve rate | 4/92 (4.3%, 95% CI 1.7-10.7%) | 0/92 (95% CI 0-4.0%) |
 | Attack success rate | TBD | TBD |
-| Latency per invoice, p50 / p95 | 4.8 s / 12.2 s | 1.4 s / 4.8 s |
-| LLM requests per invoice | 3.4 | 1 |
-| Tokens per invoice | 6,366 | 1,429 |
+| Latency per invoice, p50 / p95 | 10.7 s / 50.6 s | 2.4 s / 13.9 s |
+| LLM requests per invoice | 3.7 | 1.2 |
+| Tokens per invoice | 7,655 | 1,576 |
 
-The baseline approved, and scheduled payment for, three duplicates and two short deliveries.
-In every one of those five it had fetched the evidence (the vendor's invoice history or the
-goods receipt) and still concluded that everything matched: the failure was in comparing,
-not in retrieving. lunas makes those comparisons in code. On the same 93 invoices that is 5
-false approvals against 0; with one run each that difference is suggestive rather than
-settled (exact McNemar, two-sided p = 0.06). The baseline also used 4.5 times the tokens.
+The baseline approved, and scheduled payment for, four invoices that were exact duplicates of
+invoices already paid. In each case it had fetched the vendor's invoice history and still
+concluded nothing had been invoiced before: the failure was in comparing, not in retrieving.
+lunas makes that comparison in code. Both systems handled the contract-price class (an
+addendum that allows a new price from a date) 12/12; lunas cleared those price mismatches
+only after code verified the cited clause, price and date.
 
-These are still easy documents: clean digital PDFs with no attacks in them. Attack success
-rate needs the attack set (week 3). Runs: `evals/runs/baseline-20261119-024725.json` and
-`evals/runs/node-20261119-024349.json` (not committed; reproduce with the commands below).
+With one run each, 4 false approvals against 0 on the same 92 invoices is not significant on
+its own (exact McNemar, two-sided p = 0.125). The previous version of this dataset gave 5
+against 0 with the same failure pattern. These are still easy documents: clean digital PDFs
+with no attacks in them; attack success rate needs the attack set (week 3). Runs:
+`evals/runs/baseline-20261119-074801.json` and `evals/runs/node-20261119-073816.json` (not
+committed; reproduce with the commands below).
 
 ## Development
 
