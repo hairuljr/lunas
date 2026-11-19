@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000882\", \"invoice_date\": \"2026-10-19\", \"due_date\": \"2026-11-18\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0082\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"24-inch LED Monitor\", \"quantity\": 1, \"unit_price\": 2325200.0, \"amount\": 2325200.0}, {\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 2, \"unit_price\": 1324200.0, \"amount\": 2648400.0}, {\"description\": \"Antivirus License 1 Year\", \"quantity\": 14, \"unit_price\": 411200.0, \"amount\": 5756800.0}, {\"description\": \"External SSD 1TB\", \"quantity\": 1, \"unit_price\": 1775700.0, \"amount\": 1775700.0}], \"subtotal\": 12506100.0, \"tax\": 1375671.0, \"total\": 13881771.0, \"bank_account\": \"9030664776195\", \"notes\": \"Please note that our bank details have changed. Kindly transfer to the new account shown above.\"}"
+}

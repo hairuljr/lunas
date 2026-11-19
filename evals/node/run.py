@@ -1,6 +1,6 @@
 """Node evals for the week-1 slice, on the dataset written by data/generate.py.
 
-    uv run python -m evals.node.run [--data data/out] [--skip-llm] [--workers 4]
+    uv run python -m evals.node.run [--split dev|test|all] [--skip-llm] [--workers 4]
     uv run python -m evals.node.run --record   # live; refresh evals/recordings/
     uv run python -m evals.node.run --gate     # no LLM; replay recordings, exit 1 on regression
 
@@ -8,8 +8,10 @@
 2. Extraction (step 3): per-field exact match of the LLM output against ground truth.
 3. Decision accuracy end to end, from PDF through extraction to the decision.
 
-Parts 2 and 3 call the configured LLM; --skip-llm runs part 1 only. Every run is saved to
-evals/runs/ with the model ID and prompt version, so a number can be traced to its run.
+Runs on the dev split unless told otherwise: iterate on dev, and run test only for the
+numbers that get reported. Parts 2 and 3 call the configured LLM; --skip-llm runs part 1
+only. Every run is saved to evals/runs/ with the model ID and prompt version, so a number
+can be traced to its run.
 
 The PR gate (SPEC §9) replays the committed recordings in evals/recordings/. It checks the
 code around the model (parsing, validation, matching, decision) against replies a real
@@ -46,15 +48,14 @@ from lunas.llm import (
     load_prompt,
     strict_schema,
 )
-from lunas.models import Invoice
+from lunas.models import Decision, Invoice
 from lunas.pipeline.nodes.decide import decide
 from lunas.pipeline.nodes.extract import PROMPT_NAME, PROMPT_VERSION
-from lunas.pipeline.nodes.match import match_invoice
-from lunas.pipeline.nodes.validate import validate_invoice
 from lunas.pipeline.run import (
     EXTRACTION_FAILED,
     LLM_UNAVAILABLE,
     PipelineResult,
+    check_invoice,
     process_invoices,
 )
 from lunas.telemetry import configure_tracing, shutdown_tracing
@@ -63,6 +64,7 @@ RUNS_DIR = Path(__file__).resolve().parents[1] / "runs"
 CACHE_DIR = Path(__file__).resolve().parents[1] / "cache"
 RECORDINGS_DIR = Path(__file__).resolve().parents[1] / "recordings"
 RECORDING_FILE = "recording.json"
+MAX_MISSES_SHOWN = 20
 # SPEC §9: the PR gate fails when decision accuracy drops by more than 2 points. The same
 # margin is applied to key-field extraction, and false approvals may not rise at all.
 GATE_MAX_DROP = 0.02
@@ -121,12 +123,21 @@ def gate_failures(baseline: dict[str, float], current: dict[str, float]) -> list
     return failures
 
 
+def by_label(records: list[GroundTruth], decisions: list[Decision]) -> dict[str, dict]:
+    """Decision metrics per class: an overall number hides a class the pipeline gets wrong."""
+    groups: dict[str, tuple[list[Decision], list[Decision]]] = {}
+    for record, decision in zip(records, decisions, strict=True):
+        expected, actual = groups.setdefault(record.label, ([], []))
+        expected.append(record.expected_decision)
+        actual.append(decision)
+    return {label: decision_metrics(*groups[label]) for label in sorted(groups)}
+
+
 def eval_match_decide(records: list[GroundTruth], erp: ErpData, settings: Settings) -> dict:
     """Steps 4, 5 and 9 given perfect extraction: isolates the deterministic nodes."""
     decisions, codes_correct, wrong = [], 0, []
     for record in records:
-        issues = validate_invoice(record.invoice, settings.amount_tolerance)
-        issues += match_invoice(record.invoice, erp, settings.amount_tolerance)
+        issues = check_invoice(record.invoice, erp, settings)
         decision = decide(record.invoice, issues, settings.approval_threshold).decision
         codes = sorted({issue.code for issue in issues})
         decisions.append(decision)
@@ -136,6 +147,7 @@ def eval_match_decide(records: list[GroundTruth], erp: ErpData, settings: Settin
     return {
         **decision_metrics([record.expected_decision for record in records], decisions),
         "issue_code_accuracy": codes_correct / len(records),
+        "by_label": by_label(records, decisions),
         "wrong": wrong,
     }
 
@@ -161,10 +173,9 @@ def eval_pipeline(
         for group, group_scores in sorted(groups.items())
     }
 
-    decisions = decision_metrics(
-        [record.expected_decision for record in records],
-        [result.decision for result in results],
-    )
+    actual = [result.decision for result in results]
+    decisions = decision_metrics([record.expected_decision for record in records], actual)
+    decisions["by_label"] = by_label(records, actual)
 
     misses = []
     for record, result, score in zip(records, results, scores, strict=True):
@@ -180,6 +191,7 @@ def eval_pipeline(
             misses.append(
                 {
                     "id": record.id,
+                    "label": record.label,
                     "layout": f"{record.layout}/{record.language}",
                     "expected_decision": record.expected_decision.value,
                     "decision": result.decision.value,
@@ -205,6 +217,9 @@ def _print_decisions(title: str, metrics: dict) -> None:
     print(f"  decision accuracy     {_percent(metrics['accuracy'])}  (n={metrics['documents']})")
     print(f"  false-approve rate    {_percent(metrics['false_approve_rate'])}")
     print(f"  expected->actual      {metrics['confusion']}")
+    for label, row in metrics.get("by_label", {}).items():
+        correct = round(row["accuracy"] * row["documents"])
+        print(f"    {label:<20}{correct:>4}/{row['documents']:<4}")
 
 
 def main() -> int:
@@ -237,7 +252,14 @@ def main() -> int:
         help="PR gate: replay evals/recordings/ with no LLM; exit 1 on a regression or on "
         "stale recordings",
     )
+    parser.add_argument(
+        "--split",
+        choices=("dev", "test", "all"),
+        help="which invoices (default: dev; --gate uses the split it was recorded on)",
+    )
     args = parser.parse_args()
+    if args.gate and args.split:
+        parser.error("--gate replays the split the recordings were made on")
     if args.replay_only and args.cache is None:
         parser.error("--replay-only needs --cache")
     if (args.record or args.gate) and (args.cache or args.skip_llm or args.record == args.gate):
@@ -249,24 +271,26 @@ def main() -> int:
         print(f"No dataset in {data_dir}. Run: uv run python data/generate.py", file=sys.stderr)
         return 2
     manifest = json.loads((data_dir / MANIFEST_FILE).read_text(encoding="utf-8"))
-    records = load_ground_truth(data_dir)
     erp = ErpData.load(data_dir)
-    print(f"Dataset: {data_dir}  {manifest}")
-    paths = [data_dir / record.file for record in records]
-
     recording_path = RECORDINGS_DIR / RECORDING_FILE
     recording: dict = {}
+    if args.gate:
+        if not recording_path.exists():
+            print(f"No recordings in {RECORDINGS_DIR}. Create them with --record.")
+            return 1
+        recording = json.loads(recording_path.read_text(encoding="utf-8"))
+    split = recording.get("split", "dev") if args.gate else args.split or "dev"
+    records = [r for r in load_ground_truth(data_dir) if split in ("all", r.split)]
+    print(f"Dataset: {data_dir}  {manifest}  split: {split} ({len(records)} invoices)")
+    paths = [data_dir / record.file for record in records]
+
     current_fingerprint = fingerprint(paths, settings) if args.record or args.gate else {}
     client: ChatClient | None = None
     try:
         if args.gate:
-            if not recording_path.exists():
-                print(f"No recordings in {RECORDINGS_DIR}. Create them with --record.")
-                return 1
-            recording = json.loads(recording_path.read_text(encoding="utf-8"))
             if stale := stale_reasons(recording["fingerprint"], current_fingerprint):
                 print("\nGATE FAILED: the recordings are stale because " + "; ".join(stale))
-                print("Re-record with: uv run python -m evals.node.run --record (calls the LLM)")
+                print("Re-record with --record --split dev (calls the LLM).")
                 return 1
             client = RecordingClient(
                 RECORDINGS_DIR, None, model=recording["model"], host=recording["provider"]
@@ -282,6 +306,7 @@ def main() -> int:
     report: dict = {
         "started_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "dataset": manifest,
+        "split": split,
         "match_decide_on_ground_truth": eval_match_decide(records, erp, settings),
     }
     _print_decisions(
@@ -353,14 +378,19 @@ def main() -> int:
             )
         for name in FIELDS:
             marker = "key" if name in KEY_FIELDS else ""
-            print(f"    {name:<18}{_percent(extraction['field_accuracy'][name])}  {marker}")
+            print(f"    {name:<20}{_percent(extraction['field_accuracy'][name])}  {marker}")
         print("  key-field accuracy by layout/language")
         for group, value in extraction["key_field_accuracy_by_layout"].items():
             print(f"    {group:<18}{_percent(value)}")
         _print_decisions("Decision end to end (PDF -> extraction -> decision)", decisions)
-        for miss in misses:
-            print(f"  miss {miss['id']} ({miss['layout']}): {miss['decision']}", end="")
+        for miss in misses[:MAX_MISSES_SHOWN]:
+            print(
+                f"  miss {miss['id']} {miss['label']} ({miss['layout']}): {miss['decision']}",
+                end="",
+            )
             print(f", expected {miss['expected_decision']}; wrong: {list(miss['wrong_fields'])}")
+        if len(misses) > MAX_MISSES_SHOWN:
+            print(f"  ... {len(misses) - MAX_MISSES_SHOWN} more misses in the saved run")
 
     exit_code = 0
     if args.record:
@@ -379,6 +409,7 @@ def main() -> int:
                 "structured_output": settings.llm_structured_output,
                 "system_role": settings.llm_system_role,
                 "dataset": manifest,
+                "split": split,
                 "replies": len(client.used),
                 "fingerprint": current_fingerprint,
                 "baseline": gate_metrics(report["extraction"], report["decision_end_to_end"]),

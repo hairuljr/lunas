@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Bersih Sejahtera\", \"invoice_number\": \"0793/INV/BSJ/X/2026\", \"invoice_date\": \"2026-10-05\", \"due_date\": \"2026-10-19\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0123\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Tisu Gulung (karton)\", \"quantity\": 19, \"unit_price\": 294400, \"amount\": 5593600}, {\"description\": \"Pengharum Ruangan Otomatis\", \"quantity\": 3, \"unit_price\": 263000, \"amount\": 789000}], \"subtotal\": 6382600, \"tax\": 702086, \"total\": 7084686, \"bank_account\": \"0389915527\", \"notes\": null}"
+}

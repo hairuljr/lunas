@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2610-0902\", \"invoice_date\": \"2026-10-03\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0065\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 1, \"unit_price\": 42100, \"amount\": 42100}, {\"description\": \"Gula Pasir 1kg\", \"quantity\": 18, \"unit_price\": 17400, \"amount\": 313200}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 1, \"unit_price\": 1484800, \"amount\": 1484800}], \"subtotal\": 1840100, \"tax\": 202411, \"total\": 2042511, \"bank_account\": \"0841736502\", \"notes\": null}"
+}

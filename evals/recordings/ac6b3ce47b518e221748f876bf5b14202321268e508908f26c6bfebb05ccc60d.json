@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202610-930\", \"invoice_date\": \"2026-10-05\", \"due_date\": \"2026-11-04\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0127\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Lisensi Antivirus 1 Tahun\", \"quantity\": 9, \"unit_price\": 397400, \"amount\": 3576600}, {\"description\": \"Keyboard Mekanikal USB\", \"quantity\": 8, \"unit_price\": 655700, \"amount\": 5245600}, {\"description\": \"Monitor LED 24 inci\", \"quantity\": 4, \"unit_price\": 2044700, \"amount\": 8178800}, {\"description\": \"Router Nirkabel Dual-Band\", \"quantity\": 4, \"unit_price\": 1128400, \"amount\": 4513600}], \"subtotal\": 21514600, \"tax\": 2366606, \"total\": 23881206, \"bank_account\": \"4941658516904\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
+}

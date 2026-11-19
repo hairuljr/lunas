@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/09/0366\", \"invoice_date\": \"2026-09-23\", \"due_date\": \"2026-10-23\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0011\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 2, \"unit_price\": 1965700, \"amount\": 3931400}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 12, \"unit_price\": 315200, \"amount\": 3782400}], \"subtotal\": 7713800, \"tax\": 848518, \"total\": 8562318, \"bank_account\": \"5270418896\", \"notes\": null}"
+}

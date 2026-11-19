@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202610-936\", \"invoice_date\": \"2026-10-11\", \"due_date\": \"2026-11-10\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0147\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 2, \"unit_price\": 1382700, \"amount\": 2765400}, {\"description\": \"Lisensi Antivirus 1 Tahun\", \"quantity\": 10, \"unit_price\": 376600, \"amount\": 3766000}, {\"description\": \"Keyboard Mekanikal USB\", \"quantity\": 11, \"unit_price\": 611800, \"amount\": 6729800}], \"subtotal\": 13261200, \"tax\": 1591344, \"total\": 14852544, \"bank_account\": \"1030005542871\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

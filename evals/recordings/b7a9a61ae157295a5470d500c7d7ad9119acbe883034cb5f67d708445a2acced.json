@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/09/0476\", \"invoice_date\": \"2026-09-28\", \"due_date\": \"2026-10-28\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0231\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kertas HVS A4 80gsm (rim)\", \"quantity\": 1, \"unit_price\": 53700, \"amount\": 53700}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 4, \"unit_price\": 243000, \"amount\": 972000}, {\"description\": \"Toner Printer Laser Hitam\", \"quantity\": 7, \"unit_price\": 722100, \"amount\": 5054700}, {\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 2, \"unit_price\": 1904100, \"amount\": 3808200}], \"subtotal\": 9888600, \"tax\": 1087746, \"total\": 10976346, \"bank_account\": \"1745851709\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
+}

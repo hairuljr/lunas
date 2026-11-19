@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Java Office Furnishings\", \"invoice_number\": \"JOF/2026/00374\", \"invoice_date\": \"2026-10-06\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0026\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Whiteboard 120x240\", \"quantity\": 6, \"unit_price\": 1255100.00, \"amount\": 7530600.00}], \"subtotal\": 7530600.00, \"tax\": 828366.00, \"total\": 8358966.00, \"bank_account\": \"800114673900\", \"notes\": null}"
+}

@@ -8,9 +8,21 @@ import pytest
 from data.generate import build_dataset, load_ground_truth, write_dataset
 from evals.node import run as eval_run
 from lunas.llm import JsonSchema, LLMRequestError, Message, RecordingClient
+from lunas.models import Decision
+from lunas.pipeline.nodes.extract import PROMPT_NAME, PROMPT_VERSION
 
 SEED = 5
 INVOICES = 6
+
+
+# Classes whose only issue comes from match_invoice (see EXPECTED in data/generate.py).
+MATCH_ONLY_CLASSES = {
+    "price_mismatch",
+    "quantity_mismatch",
+    "no_po",
+    "bank_account_change",
+    "payment_terms",
+}
 
 
 class OracleClient:
@@ -44,7 +56,10 @@ def run_eval(
     monkeypatch: pytest.MonkeyPatch, out: Path, client, *flags: str, expect: int = 0
 ) -> dict:
     monkeypatch.setattr(eval_run, "build_client", lambda *args: client)
-    monkeypatch.setattr("sys.argv", ["run", "--data", str(out), *flags])
+    # Every invoice, so counts below are over the whole small dataset. The gate replays the
+    # split it was recorded on.
+    split = [] if "--gate" in flags else ["--split", "all"]
+    monkeypatch.setattr("sys.argv", ["run", "--data", str(out), *split, *flags])
     for old in (out.parent / "runs").glob("node-*.json"):
         old.unlink()
 
@@ -150,7 +165,7 @@ def test_gate_fails_when_the_prompt_changed_since_recording(out: Path, monkeypat
 
     output = capsys.readouterr().out
     assert "GATE FAILED: the recordings are stale" in output
-    assert "extract.v1.md changed" in output
+    assert f"{PROMPT_NAME}.{PROMPT_VERSION}.md changed" in output
 
 
 def test_gate_fails_when_a_recording_is_missing(out: Path, monkeypatch, capsys):
@@ -171,7 +186,14 @@ def test_gate_fails_when_recorded_replies_now_lead_to_worse_decisions(
 
     report = run_eval(monkeypatch, out, None, "--gate", expect=1)
 
-    assert report["gate"]["current"]["false_approve_rate"] == 1.0
+    # Without matching, only the classes that matching alone catches slip through to approve.
+    records = load_ground_truth(out)
+    must_not_pay = [r for r in records if r.expected_decision != Decision.APPROVE]
+    caught_only_by_match = [r for r in must_not_pay if r.label in MATCH_ONLY_CLASSES]
+    assert caught_only_by_match
+    assert report["gate"]["current"]["false_approve_rate"] == len(caught_only_by_match) / len(
+        must_not_pay
+    )
     output = capsys.readouterr().out
     assert "GATE FAILED" in output
     assert "false_approve_rate rose" in output

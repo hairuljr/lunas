@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Borneo Hygiene Services\", \"invoice_number\": \"BHS2600434\", \"invoice_date\": \"2026-10-21\", \"due_date\": \"2026-11-04\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0099\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Monthly Cleaning Service\", \"quantity\": 1, \"unit_price\": 8137100.0, \"amount\": 8137100.0}, {\"description\": \"Toilet Tissue Rolls (carton)\", \"quantity\": 7, \"unit_price\": 312400.0, \"amount\": 2186800.0}, {\"description\": \"Automatic Air Freshener\", \"quantity\": 2, \"unit_price\": 237800.0, \"amount\": 475600.0}, {\"description\": \"Hand Soap 5L\", \"quantity\": 6, \"unit_price\": 115100.0, \"amount\": 690600.0}], \"subtotal\": 11490100.0, \"tax\": 1263911.0, \"total\": 12754011.0, \"bank_account\": \"0712264490\", \"notes\": null}"
+}

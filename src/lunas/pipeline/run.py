@@ -1,4 +1,4 @@
-"""The week-1 slice of the workflow: parse -> extract -> validate -> match -> decide.
+"""The workflow so far: parse -> extract -> validate -> duplicates -> match -> decide.
 
 Plain function calls for now. The LangGraph graph with a Postgres checkpointer (SPEC §4)
 arrives with the human-approval step, which is the first thing that needs to pause.
@@ -17,6 +17,7 @@ from lunas.ingest import choose_backend, get_reader
 from lunas.llm import ChatClient, LLMRequestError, StructuredOutputError
 from lunas.models import Backend, Decision, Invoice, Issue
 from lunas.pipeline.nodes.decide import decide
+from lunas.pipeline.nodes.duplicates import find_duplicates
 from lunas.pipeline.nodes.extract import extract_invoice
 from lunas.pipeline.nodes.match import match_invoice
 from lunas.pipeline.nodes.validate import validate_invoice
@@ -90,14 +91,9 @@ def _process(path: Path, erp: ErpData, client: ChatClient, settings: Settings) -
             decision=Decision.HOLD,
         )
 
-    with span("validate") as current:
-        issues = validate_invoice(invoice, settings.amount_tolerance)
-        set_attributes(current, {"app.issue_codes": _codes(issues)})
-    with span("match", {"app.po_number": invoice.po_number}) as current:
-        matched = match_invoice(invoice, erp, settings.amount_tolerance)
-        set_attributes(current, {"app.issue_codes": _codes(matched)})
+    issues = check_invoice(invoice, erp, settings)
     with span("decide") as current:
-        result = decide(invoice, issues + matched, settings.approval_threshold)
+        result = decide(invoice, issues, settings.approval_threshold)
         set_attributes(current, {"app.decision": result.decision.value})
     return PipelineResult(
         file=path.name,
@@ -106,6 +102,20 @@ def _process(path: Path, erp: ErpData, client: ChatClient, settings: Settings) -
         issues=result.reasons,
         decision=result.decision,
     )
+
+
+def check_invoice(invoice: Invoice, erp: ErpData, settings: Settings) -> list[Issue]:
+    """Steps 4 and 5: every issue the decision is made from. All code, no model."""
+    with span("validate") as current:
+        issues = validate_invoice(invoice, settings.amount_tolerance, settings.tax_rate)
+        set_attributes(current, {"app.issue_codes": _codes(issues)})
+    with span("duplicates") as current:
+        duplicates = find_duplicates(invoice, erp, settings.amount_tolerance)
+        set_attributes(current, {"app.issue_codes": _codes(duplicates)})
+    with span("match", {"app.po_number": invoice.po_number}) as current:
+        matched = match_invoice(invoice, erp, settings.amount_tolerance)
+        set_attributes(current, {"app.issue_codes": _codes(matched)})
+    return issues + duplicates + matched
 
 
 def process_invoices(

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/09/0422\", \"invoice_date\": \"2026-09-17\", \"due_date\": \"2026-10-17\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-9111\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Pulpen Gel Hitam (kotak)\", \"quantity\": 10, \"unit_price\": 44900, \"amount\": 449000}], \"subtotal\": 449000, \"tax\": 49390, \"total\": 498390, \"bank_account\": \"5270418896\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
+}

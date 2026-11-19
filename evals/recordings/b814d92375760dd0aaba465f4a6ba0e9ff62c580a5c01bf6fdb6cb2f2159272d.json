@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2609-1019\", \"invoice_date\": \"2026-09-22\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0275\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6227600, \"amount\": 6227600}, {\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 5, \"unit_price\": 44100, \"amount\": 220500}, {\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 13, \"unit_price\": 200200, \"amount\": 2602600}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 1, \"unit_price\": 1460700, \"amount\": 1460700}], \"subtotal\": 10511400, \"tax\": 1156254, \"total\": 11667654, \"bank_account\": \"0841736502\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
+}

@@ -12,6 +12,7 @@ from data.generate import build_dataset, load_ground_truth, write_dataset
 from lunas.config import Settings
 from lunas.erp import ErpData
 from lunas.llm import JsonSchema, LLMRequestError, Message, OpenAICompatClient, RecordingClient
+from lunas.pipeline.nodes.extract import PROMPT_VERSION
 from lunas.pipeline.run import process_invoice, process_invoices
 from lunas.telemetry import configure_tracing, shutdown_tracing
 from tests.test_llm import fake_response
@@ -77,7 +78,7 @@ def test_one_invoice_is_one_trace_with_a_span_per_node_and_per_model_call(
     assert len({span.context.trace_id for span in finished}) == 1
     assert tree(finished) == {
         "(root)": ["process_invoice"],
-        "process_invoice": ["parse", "extract", "validate", "match", "decide"],
+        "process_invoice": ["parse", "extract", "validate", "duplicates", "match", "decide"],
         "extract": ["chat some-model"],
     }
     root = named(finished, "process_invoice")
@@ -86,7 +87,7 @@ def test_one_invoice_is_one_trace_with_a_span_per_node_and_per_model_call(
     assert root.attributes["app.decision"] == record.expected_decision.value
     assert list(root.attributes["app.issue_codes"]) == record.expected_issue_codes
     assert "app.extraction.failure" not in root.attributes
-    assert named(finished, "extract").attributes["app.prompt.version"] == "v1"
+    assert named(finished, "extract").attributes["app.prompt.version"] == PROMPT_VERSION
     assert named(finished, "match").attributes["app.po_number"] == record.invoice.po_number
     assert root.resource.attributes["service.name"] == "lunas"
 
@@ -203,6 +204,7 @@ def test_parallel_invoices_get_separate_traces(out: Path, monkeypatch, spans: In
                 "extract",
                 "chat some-model",
                 "validate",
+                "duplicates",
                 "match",
                 "decide",
             ]
@@ -246,7 +248,16 @@ def test_trace_file_gets_one_json_span_per_line(out: Path, monkeypatch, tmp_path
     lines = [json.loads(line) for line in trace_file.read_text(encoding="utf-8").splitlines()]
 
     assert sorted(line["name"] for line in lines) == sorted(
-        ["process_invoice", "parse", "extract", "chat some-model", "validate", "match", "decide"]
+        [
+            "process_invoice",
+            "parse",
+            "extract",
+            "chat some-model",
+            "validate",
+            "duplicates",
+            "match",
+            "decide",
+        ]
     )
     chat = next(line for line in lines if line["name"] == "chat some-model")
     assert chat["attributes"]["gen_ai.usage.input_tokens"] == 7

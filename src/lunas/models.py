@@ -39,6 +39,9 @@ class Invoice(BaseModel):
     invoice_number: str
     invoice_date: date
     due_date: date | None = None
+    # Only when the document prints a term ("Net 30 days", "Termin 14 hari"). Never derived
+    # from the due date, and the due date is never derived from it.
+    payment_terms_days: int | None = None
     po_number: str | None = None
     currency: str = "IDR"
     line_items: list[LineItem]
@@ -103,3 +106,14 @@ class GoodsReceipt(BaseModel):
     po_number: str
     received_date: date
     lines: list[GoodsReceiptLine]
+
+
+class InvoiceRecord(BaseModel):
+    """An invoice already entered in the ERP ledger and paid. What the duplicate check
+    searches."""
+
+    vendor_id: str
+    invoice_number: str
+    invoice_date: date
+    total: Decimal
+    po_number: str | None = None

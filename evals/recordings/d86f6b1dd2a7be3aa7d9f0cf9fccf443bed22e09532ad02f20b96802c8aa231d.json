@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000848\", \"invoice_date\": \"2026-10-13\", \"due_date\": \"2026-10-23\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0012\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"24-inch LED Monitor\", \"quantity\": 2, \"unit_price\": 2105400.0, \"amount\": 4210800.0}, {\"description\": \"Dual-Band Wireless Router\", \"quantity\": 3, \"unit_price\": 1156700.0, \"amount\": 3470100.0}], \"subtotal\": 7680900.0, \"tax\": 844899.0, \"total\": 8525799.0, \"bank_account\": \"1240007719356\", \"notes\": null}"
+}

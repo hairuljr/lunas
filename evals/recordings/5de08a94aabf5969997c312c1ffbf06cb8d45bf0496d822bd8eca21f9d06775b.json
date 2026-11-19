@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2610-0888\", \"invoice_date\": \"2026-10-10\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0045\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6860100, \"amount\": 6860100}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 6, \"unit_price\": 1476000, \"amount\": 8856000}, {\"description\": \"Air Mineral Galon 19L\", \"quantity\": 14, \"unit_price\": 19300, \"amount\": 270200}, {\"description\": \"Gula Pasir 1kg\", \"quantity\": 13, \"unit_price\": 18400, \"amount\": 239200}], \"subtotal\": 16225500, \"tax\": 1784805, \"total\": 18010305, \"bank_account\": \"0841736502\", \"notes\": null}"
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/10/0424\", \"invoice_date\": \"2026-10-10\", \"due_date\": \"2026-11-09\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0121\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Pulpen Gel Hitam (kotak)\", \"quantity\": 17, \"unit_price\": 48500, \"amount\": 824500}, {\"description\": \"Kertas HVS A4 80gsm (rim)\", \"quantity\": 20, \"unit_price\": 55400, \"amount\": 1108000}, {\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 1, \"unit_price\": 1263000, \"amount\": 1263000}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 3, \"unit_price\": 243000, \"amount\": 729000}], \"subtotal\": 3924500, \"tax\": 431695, \"total\": 4356195, \"bank_account\": \"5270418896\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

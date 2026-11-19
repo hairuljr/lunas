@@ -11,20 +11,25 @@ decision log. Update its decision log when a design decision changes.
 
 Update this section at the end of each working session.
 
-- Week-1 slice built (2026-11-12), not committed. Working: synthetic data generator
-  (`data/generate.py`: 10 vendors, 30 POs + goods receipts, 30 digital invoice PDFs in 3
-  layouts x 2 languages, classes `clean` and `price_mismatch`, ground truth), ingestion
-  router, digital-PDF reader, LLM extraction node (`pipeline/nodes/extract.py`,
-  `prompts/extract.v1.md`), validation, 3-way match, decision table, pipeline runner
-  (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, naive ReAct baseline, tracing, 122 tests.
+- Week 1 done and pushed (2026-11-16). Week 2 in progress (2026-11-19, not committed):
+  synthetic data generator (`data/generate.py`, default 300 digital invoice PDFs from 10
+  vendors in 3 layouts x 2 languages, eight classes, invoice ledger, dev/test split, ground
+  truth), ingestion router, digital-PDF reader, LLM extraction node
+  (`pipeline/nodes/extract.py`, `prompts/extract.v2.md`), validation (arithmetic, dates,
+  tax rate), duplicate check, 3-way match (with payment terms), decision table, pipeline
+  runner (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, naive ReAct
+  baseline, tracing, 149 tests.
 - Commands: `uv run python data/generate.py`, `uv run lunas run`,
-  `uv run python -m evals.node.run` (`--skip-llm` for the deterministic part, `--cache`
+  `uv run python -m evals.node.run` (dev split by default, `--split test|all`;
+  `--skip-llm` for the deterministic part, `--cache`
   to record LLM replies and resume, `--cache --replay-only` to run with no LLM at all,
   `--gate` for the PR gate, `--record` to refresh its recordings with a live run),
   `uv run python -m evals.baseline.react` (live; `--cache` to resume).
 - Mock ERP is `lunas.erp.ErpData`, read from the generator's JSON in `data/out/`. Postgres
   comes later.
-- Measured, one run each, 30 invoices, dev data the prompt was written against. All three runs:
+- Week-1 measurements below are on the old 30-invoice, two-class dataset, which no longer
+  exists (the generator changed). One run each, dev data the prompt was written against.
+  All three runs:
   key-field exact match 210/210, whole invoice 30/30, 0 failed extractions, end-to-end
   decision 30/30, false-approve 0/10. Match + decide on ground-truth fields: 30/30.
 
@@ -141,8 +146,51 @@ Update this section at the end of each working session.
 - Not traced: the naive ReAct baseline (it keeps its own counters), metrics, and scores
   linked to traces.
 - Week 1 (SPEC §12) is complete.
-- Planned for week 2: validating vision model support (`glm-5.3-flash` is listed on
-  Sumopod but untested).
+- Sumopod balance: `GET <host>/v2/user/info` with the API key as bearer token returns
+  `max_budget` and `spend`; balance = `max_budget - spend`. On 2026-11-16: budget 3.428,
+  spend 0.037 after all runs so far. Check it before and after a large run instead of
+  estimating cost from tokens.
+- Embeddings (decided 2026-11-16): `text-embedding-3-small` from Sumopod for now, in
+  `LUNAS_EMBEDDING_MODEL`. Smoke-tested only: 1,536 dimensions; an Indonesian clause and
+  its English translation scored 0.67 cosine against 0.22 for an unrelated item. No
+  retrieval code or Recall@5 measurement exists yet.
+- Vision model smoke-tested (2026-11-16): `glm-5.3-flash` on Sumopod transcribed three
+  clean 110-dpi renders of synthetic invoices (classic/id, modern/en, compact/id) with
+  every word of the text layer present (only the compact layout's dashed rules differed),
+  in 10-16 s and about 2,300 tokens per page. Not tested: noisy or skewed scans, and the
+  `VisionReader` itself is still a stub.
+- Week 2 order agreed with the owner: remaining data classes + dev/test split, duplicate
+  and payment-terms checks + router, re-measure baseline vs lunas, contracts + hybrid
+  retrieval, investigation loop + LangGraph approval, OCR and vision.
+- Step 1-2 done (2026-11-19): eight classes with fixed expected outcomes (`EXPECTED` in
+  `data/generate.py`): clean -> approve; price_mismatch, quantity_mismatch (short goods
+  receipt, billed in full), wrong_tax (12% billed and printed), payment_terms (shorter than
+  the vendor master), duplicate/renumbered (`possible_duplicate`) -> hold; duplicate/exact,
+  no_po/missing, no_po/unknown -> reject; bank_account_change (new account + a note asking
+  to pay it) -> escalate. 300 invoices: 109 clean, 27-28 per other class; each class is
+  split half dev (153), half test (147). Iterate on dev only; test is for reported numbers.
+- New deterministic checks: `tax_mismatch` (tax != `LUNAS_TAX_RATE` x subtotal, rounding up
+  to 1 unit allowed) in validate; `payment_terms_mismatch` (printed term or due date
+  shorter than the vendor master) in match; `duplicates.py` (same vendor + same invoice
+  number ignoring case and separators -> `duplicate_invoice`, reject; same total + same PO
+  or same date under a new number -> `possible_duplicate`, hold). The vendor is the PO's,
+  else the vendor-master name match. `ErpData` gained an invoice ledger
+  (`invoice_history.json`: 3 past paid invoices per vendor + the originals of duplicates).
+  `pipeline.run.check_invoice` is the single list of checks used by the pipeline, the eval
+  and the generator tests.
+- `Invoice` gained `payment_terms_days` (only when printed as a term); hence prompt
+  `extract.v2` (v1 kept for history). Measured on dev, one live run on Sumopod
+  (`node-20261119-023239.json`): extraction 153/153 invoices fully correct, decision
+  153/153, every class 14/14, false-approve 0/98. 218k tokens, cost 0.0286 of the balance
+  (3.3905 -> 3.3619). Still easy cases: clean digital PDFs, no attacks.
+- The PR gate was re-recorded on that run: `evals/recordings/` holds the 153 dev replies
+  (616 KB) and `recording.json` stores the split; `--gate` replays it and passes offline.
+- Router (SPEC step 7) deferred to the investigation-loop step: nothing consumes a route yet.
+- **The naive baseline is not updated for the new classes.** Its prompt `baseline_react.v1`
+  knows nothing of duplicates, the tax rate or payment terms, and it has no ledger tool, so
+  running it now would be unfair. Before re-measuring (week-2 step 3): prompt v2 with the
+  same policy as the code, a read-only `find_invoices` tool, and `--split`. Then run both on
+  the test split; README numbers come from that run.
 
 ## Design rules that must not erode
 

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-001003\", \"invoice_date\": \"2026-10-18\", \"due_date\": \"2026-11-17\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0272\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Antivirus License 1 Year\", \"quantity\": 15, \"unit_price\": 413500.00, \"amount\": 6202500.00}, {\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 3, \"unit_price\": 1523200.00, \"amount\": 4569600.00}, {\"description\": \"Dual-Band Wireless Router\", \"quantity\": 7, \"unit_price\": 1253900.00, \"amount\": 8777300.00}], \"subtotal\": 19549400.00, \"tax\": 2150434.00, \"total\": 21699834.00, \"bank_account\": \"1240007719356\", \"notes\": null}"
+}

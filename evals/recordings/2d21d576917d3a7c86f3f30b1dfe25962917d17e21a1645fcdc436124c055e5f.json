@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Borneo Hygiene Services\", \"invoice_number\": \"BHS2600414\", \"invoice_date\": \"2026-09-16\", \"due_date\": \"2026-09-30\", \"payment_terms_days\": null, \"po_number\": null, \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Trash Bags 90x120 (pack)\", \"quantity\": 4, \"unit_price\": 71400.00, \"amount\": 285600.00}, {\"description\": \"Toilet Tissue Rolls (carton)\", \"quantity\": 12, \"unit_price\": 292100.00, \"amount\": 3505200.00}, {\"description\": \"Automatic Air Freshener\", \"quantity\": 13, \"unit_price\": 240300.00, \"amount\": 3123900.00}, {\"description\": \"Floor Cleaner 5L\", \"quantity\": 10, \"unit_price\": 105400.00, \"amount\": 1054000.00}], \"subtotal\": 7968700.00, \"tax\": 876557.00, \"total\": 8845257.00, \"bank_account\": \"0712264490\", \"notes\": null}"
+}

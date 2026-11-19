@@ -207,3 +207,16 @@ def test_same_item_at_two_po_prices_is_flagged_once_instead_of_guessing():
         line_items=[line(PAPER, 5, 50000), line(PAPER, 5, 60000), line(TONER, 2, 750000)]
     )
     assert codes(invoice, split_po_erp(second_price=60000)) == ["po_price_ambiguous"]
+
+
+def test_due_date_sooner_than_the_terms_on_file_is_flagged():
+    invoice = make_invoice(due_date=date(2026, 11, 8))  # 7 days; the vendor has 30
+    assert codes(invoice) == ["payment_terms_mismatch"]
+
+
+def test_printed_term_shorter_than_the_terms_on_file_is_flagged():
+    assert codes(make_invoice(payment_terms_days=14)) == ["payment_terms_mismatch"]
+
+
+def test_terms_equal_to_or_longer_than_those_on_file_pass():
+    assert codes(make_invoice(due_date=date(2026, 12, 1), payment_terms_days=45)) == []

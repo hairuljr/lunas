@@ -18,7 +18,7 @@ KEY_FIELDS = (
 )
 # Scored and reported too, outside the headline number. `notes` is free text and is not
 # scored by exact match.
-OTHER_FIELDS = ("due_date", "currency", "subtotal", "line_items")
+OTHER_FIELDS = ("due_date", "payment_terms_days", "currency", "subtotal", "line_items")
 FIELDS = KEY_FIELDS + OTHER_FIELDS
 
 

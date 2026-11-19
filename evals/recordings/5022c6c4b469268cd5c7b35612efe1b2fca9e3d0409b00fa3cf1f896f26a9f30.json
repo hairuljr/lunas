@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/10/0492\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-11-01\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0261\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kursi Kantor Ergonomis\", \"quantity\": 4, \"unit_price\": 2020000, \"amount\": 8080000}, {\"description\": \"Pulpen Gel Hitam (kotak)\", \"quantity\": 20, \"unit_price\": 47700, \"amount\": 954000}], \"subtotal\": 9034000, \"tax\": 993740, \"total\": 10027740, \"bank_account\": \"5270418896\", \"notes\": null}"
+}

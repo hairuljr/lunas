@@ -10,6 +10,11 @@ StructuredOutput = Literal["json_schema", "json_object", "none"]
 SystemRole = Literal["system", "user"]
 
 
+# The VAT rate every invoice in scope is charged at. The generator builds the dataset with
+# this same constant, so the data and the check cannot drift apart.
+DEFAULT_TAX_RATE = Decimal("0.11")
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="LUNAS_", env_file=".env", extra="ignore")
 
@@ -17,6 +22,8 @@ class Settings(BaseSettings):
     llm_api_key: SecretStr = SecretStr("")
     llm_model: str = ""
     vision_model: str = ""
+    # Served by the same endpoint as the chat model.
+    embedding_model: str = ""
     # How the endpoint is asked for JSON; see lunas.llm.client.
     llm_structured_output: StructuredOutput = "json_schema"
     # "user" folds system prompts into the first user message, for endpoints that drop
@@ -38,6 +45,8 @@ class Settings(BaseSettings):
 
     # Allowed rounding difference when checking invoice arithmetic and PO prices.
     amount_tolerance: Decimal = Decimal("0.01")
+    # VAT rate every invoice in scope is charged at (SPEC §3: configurable, no tax rules).
+    tax_rate: Decimal = DEFAULT_TAX_RATE
     # An otherwise clean invoice above this total goes to a human.
     approval_threshold: Decimal = Decimal(50_000_000)
 

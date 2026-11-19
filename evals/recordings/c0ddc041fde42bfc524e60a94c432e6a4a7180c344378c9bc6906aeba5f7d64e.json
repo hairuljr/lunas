@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Nusantara Tech Supplies Ltd\", \"invoice_number\": \"INV-000947\", \"invoice_date\": \"2026-09-18\", \"due_date\": \"2026-10-18\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0192\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Dual-Band Wireless Router\", \"quantity\": 7, \"unit_price\": 1253400.0, \"amount\": 8773800.0}, {\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 1, \"unit_price\": 1428700.0, \"amount\": 1428700.0}], \"subtotal\": 10202500.0, \"tax\": 1122275.0, \"total\": 11324775.0, \"bank_account\": \"1240007719356\", \"notes\": \"Thank you for your business.\"}"
+}

@@ -6,11 +6,7 @@ from decimal import Decimal
 
 from lunas.erp import ErpData
 from lunas.models import Invoice, Issue, Vendor
-
-
-def normalize(text: str) -> str:
-    """Case, punctuation and spacing do not distinguish two names or item descriptions."""
-    return " ".join(re.sub(r"[^\w\s]", " ", text.casefold()).split())
+from lunas.text import normalize
 
 
 def match_invoice(
@@ -44,6 +40,7 @@ def match_invoice(
                 )
             )
         issues += _check_bank_account(invoice.bank_account, vendor)
+        issues += _check_payment_terms(invoice, vendor)
 
     if invoice.currency.strip().upper() != po.currency.strip().upper():
         issues.append(
@@ -148,6 +145,25 @@ def _check_bank_account(account: str | None, vendor: Vendor) -> list[Issue]:
                 code="bank_account_mismatch",
                 message=f"Invoice names bank account {account}, which is not the account "
                 f"on file for {vendor.name}",
+            )
+        ]
+    return []
+
+
+def _check_payment_terms(invoice: Invoice, vendor: Vendor) -> list[Issue]:
+    """The vendor master holds the terms we agreed to pay by. An invoice may give us more
+    time, never less, whether it prints a term or a due date."""
+    asked = []
+    if invoice.payment_terms_days is not None:
+        asked.append(invoice.payment_terms_days)
+    if invoice.due_date is not None:
+        asked.append((invoice.due_date - invoice.invoice_date).days)
+    if asked and min(asked) < vendor.payment_terms_days:
+        return [
+            Issue(
+                code="payment_terms_mismatch",
+                message=f"Invoice asks for payment within {min(asked)} days; the terms on file "
+                f"for {vendor.name} are {vendor.payment_terms_days} days",
             )
         ]
     return []

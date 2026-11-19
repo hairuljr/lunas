@@ -20,6 +20,8 @@ _REJECT = {
     # No PO, no pay.
     "po_missing",
     "po_not_found",
+    # The same invoice number from the same vendor is already in the ledger.
+    "duplicate_invoice",
 }
 # Strongest first. Everything else that is an issue means HOLD.
 _PRECEDENCE = ((Decision.ESCALATE, _ESCALATE), (Decision.REJECT, _REJECT))

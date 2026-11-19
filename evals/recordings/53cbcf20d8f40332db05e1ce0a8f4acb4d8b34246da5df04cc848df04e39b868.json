@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2610-0949\", \"invoice_date\": \"2026-10-07\", \"due_date\": null, \"payment_terms_days\": 10, \"po_number\": \"PO-2026-0145\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 14, \"unit_price\": 40300, \"amount\": 564200}, {\"description\": \"Air Mineral Galon 19L\", \"quantity\": 11, \"unit_price\": 22800, \"amount\": 250800}, {\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 19, \"unit_price\": 209600, \"amount\": 3982400}], \"subtotal\": 4797400, \"tax\": 527714, \"total\": 5325114, \"bank_account\": \"0841736502\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
+}

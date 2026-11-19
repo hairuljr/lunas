@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2610-0874\", \"invoice_date\": \"2026-10-19\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0015\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 9, \"unit_price\": 45600, \"amount\": 410400}], \"subtotal\": 410400, \"tax\": 45144, \"total\": 455544, \"bank_account\": \"0841736502\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202610-959\", \"invoice_date\": \"2026-10-20\", \"due_date\": \"2026-11-19\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0187\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"SSD Eksternal 1TB\", \"quantity\": 3, \"unit_price\": 1655600, \"amount\": 4966800}, {\"description\": \"Router Nirkabel Dual-Band\", \"quantity\": 8, \"unit_price\": 1118100, \"amount\": 8944800}], \"subtotal\": 13911600, \"tax\": 1530276, \"total\": 15441876, \"bank_account\": \"7572030146483\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
+}

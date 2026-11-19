@@ -20,14 +20,17 @@ money. That is the lethal trifecta, so safety lives in the architecture rather t
 
 ## What works today
 
-- Synthetic data generator: vendor master, POs, goods receipts and 30 digital invoice PDFs
-  (three layouts, Indonesian and English) in two classes, clean and price mismatch, with
-  ground truth. Fixed seed, byte-identical output.
+- Synthetic data generator: vendor master, POs, goods receipts, an invoice ledger and 300
+  digital invoice PDFs (three layouts, Indonesian and English) in eight classes: clean,
+  price mismatch, short delivery, duplicate, wrong tax, no PO, changed bank account and
+  short payment terms. Ground truth per invoice, each class split half dev, half test.
+  Fixed seed, byte-identical output.
 - Ingestion router (`auto | pdf_text | ocr | vision`) and the digital-PDF reader.
 - LLM extraction to a typed `Invoice` through any OpenAI-compatible endpoint: Pydantic
   validation, one corrective retry, versioned prompt (`prompts/extract.v1.md`).
-- Deterministic invoice validation (line amounts, subtotal, total, dates).
-- Deterministic 3-way match (PO, goods receipt, vendor master) and decision table.
+- Deterministic checks: invoice arithmetic, dates and tax rate; duplicates against the ERP
+  ledger; 3-way match against PO, goods receipt and vendor master (including bank account
+  and payment terms); a fixed decision table.
 - Node evals: per-field exact match for extraction, decision accuracy and false-approve rate.
 
 - Naive ReAct baseline for comparison (`evals/baseline/react.py`).
@@ -39,7 +42,8 @@ yet.
 
 ## Results
 
-Week-1 slice: 30 synthetic digital invoices (20 clean, 10 overcharged against the PO), one run
+Week-1 slice, measured before the dataset grew to eight classes; to be re-measured on the
+held-out test split. 30 synthetic digital invoices (20 clean, 10 overcharged against the PO), one run
 each on 2026-11-16, same model (`deepseek-v4.1-flash-1017`) and provider, 4 invoices in
 parallel. The baseline is one ReAct loop that gets the raw invoice text and every tool, with
 the same decision policy written in its prompt (`evals/baseline/react.py`).
@@ -91,7 +95,8 @@ every invoice from PDF to decision:
 uv run lunas run
 ```
 
-Run the node evals (extraction and decision). Each run is saved to `evals/runs/`:
+Run the node evals (extraction and decision, per class) on the dev split; add `--split test`
+only for numbers you report. Each run is saved to `evals/runs/`:
 
 ```bash
 uv run python -m evals.node.run

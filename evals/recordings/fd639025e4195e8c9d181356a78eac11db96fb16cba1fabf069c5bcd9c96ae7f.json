@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Bersih Sejahtera\", \"invoice_number\": \"0794/INV/BSJ/IX/2026\", \"invoice_date\": \"2026-09-20\", \"due_date\": \"2026-10-04\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0133\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Pengharum Ruangan Otomatis\", \"quantity\": 13, \"unit_price\": 249500, \"amount\": 3243500}], \"subtotal\": 3243500, \"tax\": 356785, \"total\": 3600285, \"bank_account\": \"0389915527\", \"notes\": null}"
+}

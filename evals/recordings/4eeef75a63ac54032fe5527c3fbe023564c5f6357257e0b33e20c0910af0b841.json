@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/09/0462\", \"invoice_date\": \"2026-09-15\", \"due_date\": \"2026-10-15\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0201\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Toner Printer Laser Hitam\", \"quantity\": 8, \"unit_price\": 861700, \"amount\": 6893600}], \"subtotal\": 6893600, \"tax\": 758296, \"total\": 7651896, \"bank_account\": \"5270418896\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

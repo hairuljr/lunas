@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mitra Data Solusindo\", \"invoice_number\": \"MDS-INV-202610-993\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-11-01\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0267\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Monitor LED 24 inci\", \"quantity\": 2, \"unit_price\": 2332400, \"amount\": 4664800}, {\"description\": \"SSD Eksternal 1TB\", \"quantity\": 1, \"unit_price\": 1646100, \"amount\": 1646100}, {\"description\": \"Keyboard Mekanikal USB\", \"quantity\": 2, \"unit_price\": 690200, \"amount\": 1380400}, {\"description\": \"Kabel Jaringan Cat6 (dus)\", \"quantity\": 1, \"unit_price\": 1458900, \"amount\": 1458900}], \"subtotal\": 9150200, \"tax\": 1006522, \"total\": 10156722, \"bank_account\": \"1030005542871\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}
