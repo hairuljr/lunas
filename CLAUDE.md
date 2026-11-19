@@ -20,7 +20,7 @@ Update this section at the end of each working session.
   (`pipeline/nodes/extract.py`, `prompts/extract.v2.md`), validation (arithmetic, dates,
   tax rate), duplicate check, 3-way match (with payment terms), decision table, pipeline
   runner (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, naive ReAct
-  baseline, tracing, contract retrieval (`lunas.retrieval`), contract-check node, 181 tests.
+  baseline, tracing, contract retrieval (`lunas.retrieval`), contract-check node, router, 198 tests.
 - Commands: `uv run python data/generate.py`, `uv run lunas run`,
   `uv run python -m evals.node.run` (dev split by default, `--split test|all`;
   `--skip-llm` for the deterministic part, `--cache`
@@ -297,8 +297,32 @@ Update this section at the end of each working session.
   test: cleared 4/4 that should be, 0/8 that should not, cited the addendum 12/12. McNemar
   p = 0.125 for 4 vs 0: not significant alone; same failure mode as the earlier dataset
   (5 vs 0). README now shows these numbers. Balance after: 3.0463.
-- Remaining week 2: investigation loop + router + LangGraph approval, OCR and vision with
-  scanned versions; Postgres in CI.
+- Router + exception taxonomy (2026-11-19, not committed):
+  - `pipeline/nodes/route.py`: four lanes, code. `clean`; `hard_reject` (po_missing,
+    po_not_found, duplicate_invoice: no investigation, no tokens); `human` (bank account or
+    vendor mismatch, plus what the tools cannot investigate: unreadable account, unknown
+    vendor, currency, failed extraction, and any code the router does not know);
+    `investigate` (the remaining discrepancies). Precedence human > hard_reject >
+    investigate > clean. The route never changes the decision. It runs after the contract
+    check (span `route`) and is on `PipelineResult.route`; the eval reports route accuracy.
+    Dev, replayed: 154/154.
+  - `pipeline/nodes/investigate.py`: schema only, the loop is next. `ExceptionCause`
+    (13, incl. `unclear`), `POSSIBLE_CAUSES` per issue code (code rejects others),
+    `RECOMMENDED_ACTION` per cause (code, not the model), `Evidence` (kind + record id,
+    which code will check the agent actually fetched), `Diagnosis`, `InvestigationReport`.
+  - **The investigator never changes a decision**: investigated invoices stay `hold`. It
+    gets typed fields and issues only, never invoice text (SPEC §6).
+  - Ground truth gained `expected_route` and `expected_causes` (`EXPECTED_INVESTIGATION`).
+    Honest limit: in the current data only `price_mismatch` has two causes in play
+    (overcharge vs contract_price_not_yet_effective); every other investigated class maps
+    to one cause, so cause accuracy would be close to trivial. Add a class where a cause
+    must be told apart, e.g. a legitimate second delivery with the same total on the same
+    PO (`possible_duplicate` -> `separate_delivery`, with two goods receipts).
+  - LangGraph approval (next): interrupt + Postgres checkpointer; in eval and the gate the
+    run records that the invoice stopped at the right checkpoint with the right state and
+    moves on, never waiting for input.
+- Remaining week 2: the investigation loop itself + its eval, LangGraph approval, OCR and
+  vision with scanned versions.
 
 ## Design rules that must not erode
 

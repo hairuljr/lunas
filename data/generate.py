@@ -51,6 +51,8 @@ from lunas.models import (
     PurchaseOrderLine,
     Vendor,
 )
+from lunas.pipeline.nodes.investigate import ExceptionCause
+from lunas.pipeline.nodes.route import Route
 from lunas.retrieval.questions import PRICE_QUESTION
 
 DEFAULT_SEED = 20261112
@@ -121,6 +123,25 @@ EXPECTED: dict[tuple[Label, str | None], tuple[Decision, list[str]]] = {
     # in effect, and only then.
     ("price_amendment", "in_effect"): (Decision.APPROVE, []),
     ("price_amendment", "too_early"): (Decision.HOLD, ["price_mismatch"]),
+}
+# Where the router must send each class (and variant) after the contract check, and the
+# cause a correct investigation finds. Only invoices routed to investigation have causes.
+EXPECTED_INVESTIGATION: dict[tuple[Label, str | None], tuple[Route, list[ExceptionCause]]] = {
+    ("clean", None): (Route.CLEAN, []),
+    ("price_mismatch", None): (Route.INVESTIGATE, [ExceptionCause.OVERCHARGE]),
+    ("quantity_mismatch", None): (Route.INVESTIGATE, [ExceptionCause.SHORT_DELIVERY]),
+    ("duplicate", "exact"): (Route.HARD_REJECT, []),
+    ("duplicate", "renumbered"): (Route.INVESTIGATE, [ExceptionCause.RESUBMISSION]),
+    ("wrong_tax", None): (Route.INVESTIGATE, [ExceptionCause.WRONG_TAX_RATE]),
+    ("no_po", "missing"): (Route.HARD_REJECT, []),
+    ("no_po", "unknown"): (Route.HARD_REJECT, []),
+    ("bank_account_change", None): (Route.HUMAN, []),
+    ("payment_terms", None): (Route.INVESTIGATE, [ExceptionCause.PAYMENT_TERMS_SHORTER]),
+    ("price_amendment", "in_effect"): (Route.CLEAN, []),
+    ("price_amendment", "too_early"): (
+        Route.INVESTIGATE,
+        [ExceptionCause.CONTRACT_PRICE_NOT_YET_EFFECTIVE],
+    ),
 }
 # Issues the deterministic checks raise that the contract check is expected to clear.
 CLEARED_BY_CONTRACT: dict[tuple[Label, str | None], list[str]] = {
@@ -498,6 +519,9 @@ class GroundTruth(BaseModel):
     expected_check_codes: list[str]
     # The contract clause a correct contract check cites, where one applies.
     expected_citation: str | None = None
+    expected_route: Route
+    # One per issue the investigation sees; empty unless routed to investigation.
+    expected_causes: list[ExceptionCause] = []
 
 
 @dataclass(frozen=True)
@@ -800,6 +824,8 @@ def build_dataset(seed: int = DEFAULT_SEED, invoices: int = DEFAULT_INVOICES) ->
                     issue_codes + CLEARED_BY_CONTRACT.get((label, variant), [])
                 ),
                 expected_citation=amendment.clause_id if amendment else None,
+                expected_route=EXPECTED_INVESTIGATION[(label, variant)][0],
+                expected_causes=EXPECTED_INVESTIGATION[(label, variant)][1],
             )
         )
         specs.append(spec)

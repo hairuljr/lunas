@@ -78,7 +78,15 @@ def test_one_invoice_is_one_trace_with_a_span_per_node_and_per_model_call(
     assert len({span.context.trace_id for span in finished}) == 1
     assert tree(finished) == {
         "(root)": ["process_invoice"],
-        "process_invoice": ["parse", "extract", "validate", "duplicates", "match", "decide"],
+        "process_invoice": [
+            "parse",
+            "extract",
+            "validate",
+            "duplicates",
+            "match",
+            "route",
+            "decide",
+        ],
         "extract": ["chat some-model"],
     }
     root = named(finished, "process_invoice")
@@ -206,6 +214,7 @@ def test_parallel_invoices_get_separate_traces(out: Path, monkeypatch, spans: In
                 "validate",
                 "duplicates",
                 "match",
+                "route",
                 "decide",
             ]
         )
@@ -256,6 +265,7 @@ def test_trace_file_gets_one_json_span_per_line(out: Path, monkeypatch, tmp_path
             "validate",
             "duplicates",
             "match",
+            "route",
             "decide",
         ]
     )

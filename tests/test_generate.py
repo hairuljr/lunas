@@ -18,9 +18,11 @@ from data.generate import (
 from lunas.config import Settings
 from lunas.erp import ErpData
 from lunas.ingest import choose_backend, get_reader
-from lunas.models import Decision
+from lunas.models import Decision, Issue
 from lunas.pipeline.nodes.contract import amounts_in
 from lunas.pipeline.nodes.decide import decide
+from lunas.pipeline.nodes.investigate import POSSIBLE_CAUSES
+from lunas.pipeline.nodes.route import Route, route_invoice
 from lunas.pipeline.nodes.validate import validate_invoice
 from lunas.pipeline.run import check_invoice
 
@@ -194,3 +196,16 @@ def test_price_amendment_bills_the_addendum_price_around_its_effective_date():
         line = record.invoice.line_items[0]
         assert line.description in clause.text, record.id
         assert line.unit_price in amounts_in(clause.text), record.id
+
+
+def test_expected_routes_and_causes_agree_with_the_router_and_the_taxonomy():
+    for record in build_dataset(SEED, DEFAULT_INVOICES).records:
+        issues = [Issue(code=code, message=code) for code in record.expected_issue_codes]
+
+        assert route_invoice(issues).route == record.expected_route, record.id
+        if record.expected_route == Route.INVESTIGATE:
+            assert len(record.expected_causes) == len(issues), record.id
+            for issue, cause in zip(issues, record.expected_causes, strict=True):
+                assert cause in POSSIBLE_CAUSES[issue.code], record.id
+        else:
+            assert record.expected_causes == [], record.id

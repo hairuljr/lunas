@@ -24,6 +24,7 @@ import hashlib
 import json
 import sys
 import time
+from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -225,6 +226,17 @@ def eval_pipeline(
     actual = [result.decision for result in results]
     decisions = decision_metrics([record.expected_decision for record in records], actual)
     decisions["by_label"] = by_label(records, actual)
+    routes = Counter(
+        f"{record.expected_route.value}->{result.route.value if result.route else 'none'}"
+        for record, result in zip(records, results, strict=True)
+    )
+    decisions["route"] = {
+        "correct": sum(
+            r.expected_route == res.route for r, res in zip(records, results, strict=True)
+        ),
+        "documents": len(records),
+        "confusion": dict(sorted(routes.items())),
+    }
 
     misses = []
     for record, result, score in zip(records, results, scores, strict=True):
@@ -429,6 +441,10 @@ def main() -> int:
         for group, value in extraction["key_field_accuracy_by_layout"].items():
             print(f"    {group:<18}{percent(value)}")
         print_decisions("Decision end to end (PDF -> extraction -> decision)", decisions)
+        route = decisions["route"]
+        print(
+            f"  route                 {route['correct']}/{route['documents']}  {route['confusion']}"
+        )
         contract = report["contract_check"]
         if contract is None:
             print("\nContract check: off (no contract index), price mismatches stay held.")

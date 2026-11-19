@@ -5,7 +5,7 @@ import json
 from datetime import date
 from decimal import Decimal
 
-from data.generate import EXPECTED, GroundTruth
+from data.generate import EXPECTED, EXPECTED_INVESTIGATION, GroundTruth
 from evals.baseline.react import (
     AgentResult,
     Payment,
@@ -207,6 +207,7 @@ def record(expected: Decision, total: int = 555000) -> GroundTruth:
         expected_decision=expected,
         expected_issue_codes=EXPECTED[(label, None)][1],
         expected_check_codes=EXPECTED[(label, None)][1],
+        expected_route=EXPECTED_INVESTIGATION[(label, None)][0],
     )
 
 
