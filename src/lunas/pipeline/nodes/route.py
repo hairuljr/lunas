@@ -37,6 +37,7 @@ NOT_INVESTIGABLE = frozenset(
         # The extraction does not match the printed document (step 3b): re-read it by hand.
         "field_not_in_document",
         "bank_account_not_extracted",
+        "read_disagreement",
         "vendor_not_found",
         "currency_mismatch",
         "extraction_failed",

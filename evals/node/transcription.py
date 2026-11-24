@@ -26,6 +26,8 @@ from data.generate import GROUND_TRUTH_FILE
 from data.generate_scans import SCAN_MANIFEST_FILE
 from lunas.config import Settings
 from lunas.ingest import get_reader
+from lunas.ingest.vision import VisionReader
+from lunas.llm import build_client
 
 RUNS_DIR = Path(__file__).resolve().parents[1] / "runs"
 CRITICAL = ("invoice_number", "po_number", "tax", "total", "bank_account")
@@ -96,16 +98,21 @@ def summarize(rows: list[dict]) -> dict:
             [all(v is not False for v in r["fields"].values()) for r in rows]
         ),
         "fields": fields,
-        "mean_confidence": round(sum(r["confidence"] for r in rows) / len(rows), 4)
-        if rows
-        else None,
+        # None for vision, which reports no confidence.
+        "min_confidence": min(
+            (r["confidence"] for r in rows if r["confidence"] is not None), default=None
+        ),
     }
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--split", choices=["dev", "test", "all"], default="dev")
-    parser.add_argument("--backend", choices=["ocr"], default="ocr")
+    parser.add_argument("--backend", choices=["ocr", "vision"], default="ocr")
+    parser.add_argument("--ids", help="only these twins, comma-separated")
+    parser.add_argument(
+        "--cache", type=Path, default=Path(__file__).resolve().parents[1] / "cache" / "scans"
+    )
     parser.add_argument("--data", type=Path)
     args = parser.parse_args()
 
@@ -115,8 +122,19 @@ def main() -> None:
         case["id"]: case
         for case in json.loads((data_dir / GROUND_TRUTH_FILE).read_text(encoding="utf-8"))
     }
-    scans = [s for s in manifest["scans"] if args.split == "all" or s["split"] == args.split]
-    reference_reader, reader = get_reader("pdf_text"), get_reader(args.backend)
+    wanted = set(args.ids.split(",")) if args.ids else None
+    scans = [
+        s
+        for s in manifest["scans"]
+        if (args.split == "all" or s["split"] == args.split) and (not wanted or s["id"] in wanted)
+    ]
+    reference_reader = get_reader("pdf_text")
+    if args.backend == "vision":  # paid per page; replies cached, so a rerun is free
+        settings = Settings()
+        vision = settings.model_copy(update={"llm_model": settings.vision_model})
+        reader = VisionReader(build_client(vision, args.cache))
+    else:
+        reader = get_reader(args.backend)
 
     rows = []
     for scan in scans:
@@ -127,14 +145,14 @@ def main() -> None:
             {
                 **scan,
                 "seconds": round(time.monotonic() - started, 2),
-                "confidence": document.confidence or 0.0,
+                "confidence": document.confidence,
                 "cer": round(cer(reference, document.text), 4),
                 "fields": fields_found(truth[scan["id"]]["invoice"], document.text),
             }
         )
         print(
             f"{scan['id']}  {scan['tier']:<8}{'stamp' if scan['stamp'] else '':<6}"
-            f"cer {rows[-1]['cer']:.3f}  conf {rows[-1]['confidence']:.3f}  missing "
+            f"cer {rows[-1]['cer']:.3f}  conf {rows[-1]['confidence']}  missing "
             + ",".join(f for f, ok in rows[-1]["fields"].items() if ok is False)
         )
 

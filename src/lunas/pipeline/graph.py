@@ -27,14 +27,12 @@ from pydantic import BaseModel
 
 from lunas.config import Settings
 from lunas.erp import ErpData
-from lunas.ingest import choose_backend, get_reader
+from lunas.ingest import choose_backend
 from lunas.llm import ChatClient, LLMRequestError, StructuredOutputError
 from lunas.models import Backend, Decision, Invoice, Issue, LineItem
-from lunas.pipeline.checks import EXTRACTION_FAILED, LLM_UNAVAILABLE, check_invoice, codes
+from lunas.pipeline.checks import EXTRACTION_FAILED, LLM_UNAVAILABLE, check_invoice
 from lunas.pipeline.nodes.contract import ContractFinding, check_contract
 from lunas.pipeline.nodes.decide import decide
-from lunas.pipeline.nodes.extract import extract_invoice
-from lunas.pipeline.nodes.grounding import ground_invoice
 from lunas.pipeline.nodes.investigate import (
     Action,
     Diagnosis,
@@ -44,6 +42,7 @@ from lunas.pipeline.nodes.investigate import (
     InvestigationReport,
 )
 from lunas.pipeline.nodes.investigate import investigate as run_investigation
+from lunas.pipeline.nodes.read import read_invoice
 from lunas.pipeline.nodes.route import Route, route_invoice
 from lunas.retrieval.retriever import ContractRetriever
 from lunas.telemetry import set_attributes, span
@@ -131,28 +130,17 @@ def build_graph(
     checkpointer,
     retriever: ContractRetriever | None = None,
     investigate: bool = False,
+    vision_client: ChatClient | None = None,
 ) -> CompiledStateGraph:
-    """`client` may be None only to resume an approval: no node after it calls a model."""
+    """`client` may be None only to resume an approval: no node after it calls a model.
+    With `vision_client`, a doubtful OCR read is read a second time (`nodes.read`)."""
 
     def read(state: InvoiceState) -> dict:
         path = Path(state.path)
-        with span("parse") as current:
-            backend = choose_backend(path, settings.ingest_mode, settings.min_chars_per_page)
-            document = get_reader(backend).read(path)
-            set_attributes(
-                current,
-                {
-                    "app.ingest.backend": backend,
-                    "app.ingest.pages": len(document.pages),
-                    "app.ingest.characters": len(document.text),
-                },
-            )
+        backend = choose_backend(path, settings.ingest_mode, settings.min_chars_per_page)
         try:
-            invoice = extract_invoice(document, client)
-            with span("grounding") as current:
-                grounding = ground_invoice(invoice, document.text)
-                set_attributes(current, {"app.issue_codes": codes(grounding)})
-            return {"backend": backend, "invoice": invoice, "grounding": grounding}
+            read = read_invoice(path, client, vision_client, settings)
+            return {"backend": read.backend, "invoice": read.invoice, "grounding": read.grounding}
         except (StructuredOutputError, LLMRequestError) as error:
             # An invoice that could not be read is never paid and never silently dropped,
             # and one failed request does not take the rest of the batch down with it.

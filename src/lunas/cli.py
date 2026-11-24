@@ -75,6 +75,13 @@ def run(args: argparse.Namespace) -> int:
     tracing = configure_tracing(settings)
     try:
         retriever = build_retriever(settings, args.cache / "retrieval" if args.cache else None)
+        vision_client = (
+            build_client(
+                settings.model_copy(update={"llm_model": settings.vision_model}), args.cache
+            )
+            if args.vision
+            else None
+        )
         with checkpoints(settings) as saver:
             results = process_invoices(
                 paths,
@@ -86,6 +93,7 @@ def run(args: argparse.Namespace) -> int:
                 args.investigate,
                 saver,
                 run_id,
+                vision_client,
             )
     finally:
         shutdown_tracing()  # flushes: a CLI that just exits loses its last spans
@@ -166,6 +174,11 @@ def main() -> None:
     run_parser.add_argument("--limit", type=int, help="only the first N invoices")
     run_parser.add_argument(
         "--investigate", action="store_true", help="run the investigation loop on held invoices"
+    )
+    run_parser.add_argument(
+        "--vision",
+        action="store_true",
+        help="read doubtful OCR results again with LUNAS_VISION_MODEL (paid per page)",
     )
     run_parser.add_argument("--json", type=Path, help="also write results as JSON lines")
     run_parser.set_defaults(handler=run)

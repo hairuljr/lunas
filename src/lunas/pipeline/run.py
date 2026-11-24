@@ -138,11 +138,18 @@ def process_invoices(
     investigate: bool = False,
     checkpointer=None,
     run_id: str | None = None,
+    vision_client: ChatClient | None = None,
 ) -> list[PipelineResult]:
     """Results come back in the order of `paths`. One graph for the batch; each invoice is
     the thread `<run_id>/<file name>`."""
     graph = build_graph(
-        erp, client, settings, checkpointer or memory_checkpointer(), retriever, investigate
+        erp,
+        client,
+        settings,
+        checkpointer or memory_checkpointer(),
+        retriever,
+        investigate,
+        vision_client,
     )
     run_id = run_id or uuid.uuid4().hex[:8]
     with ThreadPoolExecutor(max_workers=workers) as pool:

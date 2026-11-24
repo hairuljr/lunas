@@ -5,6 +5,7 @@ become the `erp.*` MCP tools backed by Postgres later (SPEC §5).
 """
 
 import json
+import re
 from pathlib import Path
 
 from pydantic import TypeAdapter
@@ -18,6 +19,12 @@ GOODS_RECEIPTS_FILE = "goods_receipts.json"
 INVOICE_HISTORY_FILE = "invoice_history.json"
 
 
+def po_key(po_number: str) -> str:
+    """PO numbers are identifiers: a scan read as "pO-2026-0071" or "PO-2026- 0071" is
+    still PO-2026-0071. Case and whitespace only; no other character is forgiven."""
+    return re.sub(r"\s+", "", po_number).upper()
+
+
 class ErpData:
     def __init__(
         self,
@@ -28,10 +35,10 @@ class ErpData:
     ) -> None:
         self._vendors = {vendor.vendor_id: vendor for vendor in vendors}
         self._vendors_by_name = {normalize(vendor.name): vendor for vendor in vendors}
-        self._purchase_orders = {po.po_number: po for po in purchase_orders}
+        self._purchase_orders = {po_key(po.po_number): po for po in purchase_orders}
         self._goods_receipts: dict[str, list[GoodsReceipt]] = {}
         for receipt in goods_receipts:
-            self._goods_receipts.setdefault(receipt.po_number, []).append(receipt)
+            self._goods_receipts.setdefault(po_key(receipt.po_number), []).append(receipt)
         self._invoices: dict[str, list[InvoiceRecord]] = {}
         for record in invoice_history or []:
             self._invoices.setdefault(record.vendor_id, []).append(record)
@@ -53,10 +60,10 @@ class ErpData:
         return self._vendors.get(vendor_id)
 
     def get_po(self, po_number: str) -> PurchaseOrder | None:
-        return self._purchase_orders.get(po_number)
+        return self._purchase_orders.get(po_key(po_number))
 
     def get_goods_receipts(self, po_number: str) -> list[GoodsReceipt]:
-        return self._goods_receipts.get(po_number, [])
+        return self._goods_receipts.get(po_key(po_number), [])
 
     def find_vendor_by_name(self, name: str) -> Vendor | None:
         """Exact match after normalisation; never a fuzzy guess."""

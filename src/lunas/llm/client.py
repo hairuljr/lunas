@@ -219,7 +219,16 @@ def _parts(messages: list[Message]) -> list[dict[str, Any]]:
     """Messages in the shape the GenAI semantic conventions define for span content."""
     parts = []
     for message in messages:
-        content = [{"type": "text", "content": message.get("content") or ""}]
+        body = message.get("content") or ""
+        if isinstance(body, list):  # text and image parts; an image is not copied into a span
+            content = [
+                {"type": "text", "content": part.get("text", "")}
+                if part.get("type") == "text"
+                else {"type": "blob", "modality": "image", "content": "<omitted>"}
+                for part in body
+            ]
+        else:
+            content = [{"type": "text", "content": body}]
         for call in message.get("tool_calls") or []:
             function = call.get("function", call)
             content.append(

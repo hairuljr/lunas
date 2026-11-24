@@ -42,6 +42,9 @@ class Settings(BaseSettings):
     ingest_mode: IngestMode = "auto"
     # A PDF page with fewer extractable characters than this is treated as a scan.
     min_chars_per_page: int = 50
+    # An OCR read whose weakest line scores below this is read again by the vision model,
+    # as is one whose extraction fails the grounding check. Needs LUNAS_VISION_MODEL.
+    ocr_min_confidence: float = 0.9
 
     # Allowed rounding difference when checking invoice arithmetic and PO prices.
     amount_tolerance: Decimal = Decimal("0.01")

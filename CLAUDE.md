@@ -77,6 +77,8 @@ Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
 | Investigation, `investigate.v2`, affected classes only | test 28 | cause 28/28 (split_delivery 11/11), evidence 28/28 | `investigation-targeted-20261124-041258.json` |
 | Retrieval Recall@5, vendor-scoped hybrid | test 360 | 0.934 (target 0.90; vector alone 0.938) | `retrieval-20261119-042740.json` |
 | OCR transcription, scanned twins (no model) | all 80 | CER 0.016; total, tax, invoice and PO number 80/80; bank account 76/80 (all 4 misses stamped) | `transcription-20261124-054813.json` |
+| Vision transcription pilot, 10 hardest twins (all stamped) | 10 | bank account 8/10 (recovers 2 OCR misses; guessed one digit once); cost 0.004 | `transcription-20261124-061522.json` |
+| Scans end to end, OCR + vision second read | all 80 | decisions 77/80, false-approve 0/67, key fields 0.995; unstamped 40/40; 3 second reads, 0 disagreements. Wrong: 2 stamp-hidden accounts -> escalate, 1 stamp word read into a line description -> hold. Cost 0.017 | `scans-20261124-064412.json` |
 | Baseline vs lunas, decision / false-approve | test, previous dataset (9 classes, 146) | 141/146, 4/92 vs 146/146, 0/92 | `baseline-20261119-074801.json`, `node-20261119-073816.json` |
 
 - Read all of it as "works on clean digital PDFs with no attacks", one run, no pass^3.
@@ -122,12 +124,12 @@ Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
 ### Not built yet
 
 - OCR/vision plan (`docs/ocr_vision_strategy.md`, option 1): steps 1 (scanned twins,
-  `data/generate_scans.py`), 2 (`OcrReader`, `evals/node/transcription.py`) and 3
-  (grounding check, `pipeline/nodes/grounding.py`, in the read node) done. Next: 4
-  `VisionReader` as fallback only, with OCR/vision disagreement on critical fields -> HOLD
-  (needs two reads, so it lands with vision); pilot 10 pages first;
-  5 record OCR output for the gate (ONNX may differ between arm64 and x86 CI). Extraction
-  accuracy on scans needs a live run (80 invoices): ask first.
+  `data/generate_scans.py`), 2 (`OcrReader`, `evals/node/transcription.py`), 3
+  (grounding check, `pipeline/nodes/grounding.py`) and 4 (`VisionReader`, prompt
+  `transcribe.v1`, second read and `read_disagreement` in `pipeline/nodes/read.py`;
+  `evals/node/scans.py` end to end; `lunas run --vision`) done, measured on a 10-twin pilot
+  and on all 80 twins. Next:
+  5 record OCR output for the gate (ONNX may differ between arm64 and x86 CI).
 - `gapura`, the MCP tool servers, the attack set and ASR (week 3); `policies/default.yaml`
   is a draft no code loads (the approval threshold lives in `Settings`).
 - Approval permissions (any `--approver` string is accepted) and an approval UI.
