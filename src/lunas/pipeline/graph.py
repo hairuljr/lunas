@@ -27,7 +27,7 @@ from pydantic import BaseModel
 
 from lunas.config import Settings
 from lunas.erp import ErpData
-from lunas.ingest import choose_backend
+from lunas.ingest.recorded import DocumentRecorder
 from lunas.llm import ChatClient, LLMRequestError, StructuredOutputError
 from lunas.models import Backend, Decision, Invoice, Issue, LineItem
 from lunas.pipeline.checks import EXTRACTION_FAILED, LLM_UNAVAILABLE, check_invoice
@@ -42,7 +42,7 @@ from lunas.pipeline.nodes.investigate import (
     InvestigationReport,
 )
 from lunas.pipeline.nodes.investigate import investigate as run_investigation
-from lunas.pipeline.nodes.read import read_invoice
+from lunas.pipeline.nodes.read import first_backend, read_invoice
 from lunas.pipeline.nodes.route import Route, route_invoice
 from lunas.retrieval.retriever import ContractRetriever
 from lunas.telemetry import set_attributes, span
@@ -131,15 +131,17 @@ def build_graph(
     retriever: ContractRetriever | None = None,
     investigate: bool = False,
     vision_client: ChatClient | None = None,
+    documents: DocumentRecorder | None = None,
 ) -> CompiledStateGraph:
     """`client` may be None only to resume an approval: no node after it calls a model.
-    With `vision_client`, a doubtful OCR read is read a second time (`nodes.read`)."""
+    With `vision_client`, a doubtful OCR read is read a second time (`nodes.read`).
+    With `documents`, reads are recorded or replayed (`ingest.recorded`)."""
 
     def read(state: InvoiceState) -> dict:
         path = Path(state.path)
-        backend = choose_backend(path, settings.ingest_mode, settings.min_chars_per_page)
+        backend = first_backend(path, settings, documents)
         try:
-            read = read_invoice(path, client, vision_client, settings)
+            read = read_invoice(path, client, vision_client, settings, documents)
             return {"backend": read.backend, "invoice": read.invoice, "grounding": read.grounding}
         except (StructuredOutputError, LLMRequestError) as error:
             # An invoice that could not be read is never paid and never silently dropped,

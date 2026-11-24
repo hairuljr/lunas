@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"clause_id\": \"KTR-V-012#11.1\", \"quote\": \"Addendum No. 1 dated August 10, 2026: from September 20, 2026, the unit price of External SSD 1TB is changed to IDR 1,814,400.00 per unit.\", \"unit_price\": 1814400, \"effective_date\": \"2026-09-20\"}"
+}

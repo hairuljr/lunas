@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"clause_id\": \"KTR-V-006#11.1\", \"quote\": \"Addendum No. 1 dated August 26, 2026: from October 8, 2026, the unit price of Black Laser Printer Toner is changed to IDR 842,400.00 per unit.\", \"unit_price\": 842400, \"effective_date\": \"2026-10-08\"}"
+}

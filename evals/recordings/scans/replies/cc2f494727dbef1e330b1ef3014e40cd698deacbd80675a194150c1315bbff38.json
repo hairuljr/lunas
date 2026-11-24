@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Dapur Kantor Nusantara\", \"invoice_number\": \"FK-2609-0298\", \"invoice_date\": \"2026-09-22\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0085\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Katering Rapat (paket)\", \"quantity\": 5, \"unit_price\": 1326100, \"amount\": 6630500}, {\"description\": \"Air Mineral Galon 19L\", \"quantity\": 12, \"unit_price\": 20900, \"amount\": 250800}, {\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 14, \"unit_price\": 204600, \"amount\": 2864400}, {\"description\": \"Gula Pasir 1kg\", \"quantity\": 17, \"unit_price\": 18900, \"amount\": 321300}], \"subtotal\": 10067000, \"tax\": 1107370, \"total\": 11174370, \"bank_account\": \"0841736502\", \"notes\": \"Pembayaran LUNAS\"}"
+}

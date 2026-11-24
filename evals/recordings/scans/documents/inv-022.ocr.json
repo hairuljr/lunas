@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "Golden Systems Ltd\nJl. Gajah Mada No. 18\nBekasi 17141\nTax ID: 30.858.286.6-819.000\nINVOICE\nInvoice No.       : GSL-26-00514\nInvoice Date      : 2026-09-21\nPO Number         : PO-2026-0022\nPayment Terms     : Net 14 days\nCurrency          : IDR\nBill To           : PT Lunas Nusantara Sejahtera\nNo  Description                           Qty         Unit Price             Amount\n1   24-inch LED Monitor                     3       2,343,000.00        7,029,000.00\n2   Cat6 Network Cable (box)                4       1,297,800.00        5,191,200.00\n3   External SSD 1TB                        3       1,827,300.00        5,481,900.00\n                                                        Subtotal       17,702,100.00\n                                                         VAT 12%        2,124,252.00\n                                                           Total       19,826,352.00\nPayment Details\nBank             : Bank Danamon\nAccount No.       :4959368273\nAccount Name      : Golden Systems Ltd",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9477
+}

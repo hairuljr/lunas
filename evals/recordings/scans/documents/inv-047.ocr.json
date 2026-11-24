@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "                                      FAKTUR\nDari                                           Kepada\nPT Mitra Data Solusindo                        PT Lunas Nusantara Sejahtera\nJI. TB Simatupang No. 41                       JI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12550                          Jakarta Selatan 12190\nNPWP 07.902.318.4-017.000\nNo. Faktur                  Tanggal              Jatuh Tempo         No. PO\nMDS-INV-202609-388          18/09/2026           25/09/2026          PO-2026-0047\nNo   Deskripsi                                Qty         Harga Satuan               Jumlah\n1    Lisensi Antivirus 1 Tahun                   9        Rp 378.100,00       Rp 3.402.900,00\n2     Monitor LED 24 inci                        1       Rp 2.044.300,00      Rp 2.044.300,00\n3     Keyboard Mekanikal USB                              Rp 604.800,00       Rp 5.443.200,00\n4     SSD Eksternal 1TB     LUNAS                                             Rp 1.847.800,00\n                                                            Subtotal       Rp 12.738.200,00\n                                                           PPN 11%          Rp 1.401.202,00\n                                                              Total        Rp 14.139.402,00\nPembayaran\nBank Mandiri · No. Rekening 1030005542871 · Atas Nama PT Mitra Data Solusindo\nCatatan: Mohon cantumkan nomor faktur pada berita transfer.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9372
+}

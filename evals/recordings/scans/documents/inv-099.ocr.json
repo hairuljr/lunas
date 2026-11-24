@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "CV Perkasa Cahaya Kemasan\nJl. Veteran No. 223\nPalembang 30111\nNPWP:90.218.257.7-876.000\nFAKTUR\nNo. Faktur       : INV/2026/10/0353\nTanggal          : 2026-10-09\nNo. PO           : PO-2026-0099\nTermin Pembayaran : 14 hari\nMata Uang        : IDR\nKepada           : PT Lunas Nusantara Sejahtera\nNo  Deskripsi                           Qty       Harga Satuan            Jumlah\n1   Stretch Film 500mm (rol)             13             80.100         1.041.300\n2   Label Pengiriman A6 (rol)             2             66.700           133.400\n                                                      Subtotal         1.174.700\n                                                          11%            129.217\n                           LUNAS                         otal          1.303.917\nPembayaran\nBank             : Bank CIMB Niaga\nNo. Rekening     : 3976963276\nAtas Nama        : CV Perkasa Cahaya Kemasan\nCatatan: Barang yang sudah diterima tidak dapat dikembalikan.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9562
+}

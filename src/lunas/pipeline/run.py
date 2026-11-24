@@ -16,6 +16,7 @@ from pydantic import BaseModel
 
 from lunas.config import Settings
 from lunas.erp import ErpData
+from lunas.ingest.recorded import DocumentRecorder
 from lunas.llm import ChatClient
 from lunas.models import Backend, Decision, Invoice, Issue
 from lunas.pipeline.checks import EXTRACTION_FAILED, LLM_UNAVAILABLE, check_invoice, codes
@@ -139,6 +140,7 @@ def process_invoices(
     checkpointer=None,
     run_id: str | None = None,
     vision_client: ChatClient | None = None,
+    documents: DocumentRecorder | None = None,
 ) -> list[PipelineResult]:
     """Results come back in the order of `paths`. One graph for the batch; each invoice is
     the thread `<run_id>/<file name>`."""
@@ -150,6 +152,7 @@ def process_invoices(
         retriever,
         investigate,
         vision_client,
+        documents,
     )
     run_id = run_id or uuid.uuid4().hex[:8]
     with ThreadPoolExecutor(max_workers=workers) as pool:

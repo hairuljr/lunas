@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "                                      FAKTUR\nDari                                           Kepada\nCV Bersih Sejahtera                            PT Lunas Nusantara Sejahtera\nJI. Raya Darmo No. 17                          JI. Jenderal Sudirman Kav. 52-53\nSurabaya 60264                                 Jakarta Selatan 12190\nNPWP 03.377.902.5-609.000\nNo. Faktur                  Tanggal             Jatuh Tempo          No. PO\n0576/INV/BSJ/IX/2026        27/09/2026           11/10/2026          PO-2026-0003\nNo   Deskripsi                                Qty         Harga Satuan               Jumlah\n1     Tisu Gulung (karton)                     14         Rp 300.900,00      Rp 4.212.600,00\n2     Jasa Kebersihan Bulanan                   1       Rp 8.016.400,00      Rp 8.016.400,00\n3     Kantong Sampah 90x120 (pak)              20          Rp 71.300,00      Rp 1.426.000,00\n4     Pengharum Ruangan Otomatis               10         Rp 265.100,00      Rp 2.651.000,00\n                                                            Subtotal       Rp 16.306.000,00\n                                                          PPN 11%           Rp 1.793.660,00\n                                                              Total        Rp 18.099.660,00\nPembayaran\nBank Negara Indonesia · No. Rekening 0389915527 · Atas Nama CV Bersih Sejahtera\nCatatan: Mohon cantumkan nomor faktur pada berita transfer.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9715
+}

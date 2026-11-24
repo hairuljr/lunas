@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "CV Sari Rasa Catering                                                     FAKTUR\nJI. Malioboro No. 60\nYogyakarta 55213                                                No. Faktur: INV.0753.10.2026\nNPWP: 10.045.893.1-541.000                                          Tanggal: 7 Oktober 2026\n                                                               Jatuh Tempo: 14 Oktober 2026\n                                                                     No. PO: PO-2026-0050\nKepada:\nPT Lunas Nusantara Sejahtera\nJI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12190\nNo   Deskripsi                                 Qty       Harga Satuan            Jumlah\n1    Katering Rapat (paket)                      2           1.306.400          2.612.800\n2    Kopi Bubuk Arabika 1kg                     13             212.300          2.759.900\n3     Teh Celup (kotak isi 100)                  6              39.200           235.200\n                                                               Subtotal         5.607.900\n                                                             PPN 11%             616.869\n                                                                 Total          6.224.769\nSemua nilai dalam Rupiah (IDR).\nPembayaran\nBank: Bank Syariah Indonesia\nNo. Rekening: 7153309842\nAtas Nama: CV Sari Rasa Catering",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9629
+}

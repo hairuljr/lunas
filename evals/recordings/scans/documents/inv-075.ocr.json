@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "PT Mandiri Cemerlang Boga                                              FAKTUR\nJI. Thamrin No. 65\nMedan 20112                                                    No. Faktur: MCB26100389\nNPWP:22.208.657.1-824.000                                       Tanggal: 24 Oktober 2026\n                                                          Jatuh Tempo: 23 November 2026\n                                                                  No. PO: PO-2026-0075\nKepada:\nPT Lunas Nusantara Sejahtera\nJI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12190\nNo   Deskripsi                               Qty       Harga Satuan           Jumlah\n1    Teh Celup (kotak isi 100)                15             41.100          616.500\n                                                            Subtotal         616.500\n                                                          PPN 12%             73.980\n                                                              Total          690.480\nSemua nilai dalam Rupiah (IDR).\nPembayaran               LUNAS\nBank: Bank Mandiri\nNo. Rekening: 3339682443689\nAtas Nama: PT Mandiri Cemerlang Boga\nCatatan: Barang yang sudah diterima tidak dapat dikembalikan.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9771
+}

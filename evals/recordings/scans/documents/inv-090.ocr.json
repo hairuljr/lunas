@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "CV Sari Rasa Catering                                                     FAKTUR\nJI. Malioboro No. 60\nYogyakarta 55213                                               No. Faktur: INV.0762.09.2026\nNPWP: 10.045.893.1-541.000                                      Tanggal: 30 September 2026\n                                                              Jatuh Tempo: 14 Oktober 2026\n                                                                    No. PO: PO-2026-0090\nKepada:\nPT Lunas Nusantara Sejahtera\nJI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12190\nNo   Deskripsi                                 Qty       Harga Satuan            Jumlah\n1    Mesin Kopi Otomatis                         1           6.225.600         6.225.600\n2    Teh Celup (kotak isi 100)                  19             38.300            727.700\n                                                              Subtotal         6.953.300\n                                                             PPN 11%             764.863\n                                                                Total          7.718.163\nSemua nilaí dalam Rupiah (IDR).\nPembayaran\nBank: Bank Syariah Indonesia\nNo. Rekening: 7153309842\nAtas Nama: CV Sari Rasa Catering",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.95
+}

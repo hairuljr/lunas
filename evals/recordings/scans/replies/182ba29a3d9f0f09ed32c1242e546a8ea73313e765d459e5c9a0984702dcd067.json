@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Utama Mandiri Alat Kantor\", \"invoice_number\": \"0667/UMA/X/2026\", \"invoice_date\": \"2026-10-17\", \"due_date\": \"2026-10-31\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0011\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 1, \"unit_price\": 1520500, \"amount\": 1520500}, {\"description\": \"Map Arsip Ordner (lusin)\", \"quantity\": 19, \"unit_price\": 313400, \"amount\": 5954600}], \"subtotal\": 7475100, \"tax\": 822261, \"total\": 8297361, \"bank_account\": \"5761969869701\", \"notes\": null}"
+}

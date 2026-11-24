@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Coral Packaging Ltd\", \"invoice_number\": \"INV-CPL-00836\", \"invoice_date\": \"2026-09-12\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0074\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Wooden Pallet 110x110\", \"quantity\": 2, \"unit_price\": 172700.00, \"amount\": 345400.00}, {\"description\": \"Bubble Wrap 1.25m x 50m\", \"quantity\": 14, \"unit_price\": 286400.00, \"amount\": 4009600.00}, {\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 17, \"unit_price\": 90300.00, \"amount\": 1535100.00}, {\"description\": \"Double Wall Carton 40x40x40\", \"quantity\": 6, \"unit_price\": 13500.00, \"amount\": 81000.00}], \"subtotal\": 5971100.00, \"tax\": 656821.00, \"total\": 6627921.00, \"bank_account\": \"74983739798\", \"notes\": \"Please note that our bank details have changed. Kindly transfer to the new account shown above\"}"
+}

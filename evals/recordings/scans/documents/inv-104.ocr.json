@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "                                     INVOICE\nFrom                                          Bill To\nOrchid Systems Co                             PT Lunas Nusantara Sejahtera\nJI. Pemuda No. 20                             JI. Jenderal Sudirman Kav. 52-53\nMakassar 90111                                Jakarta Selatan 12190\nTax ID 18.973.924.8-427.000\nInvoice No.                 Invoice Date        Due Date            PO Number\nOSC26090508                 29 Sep 2026         13 Oct 2026         PO-2026-0104\nNo   Description                              Qty            Unit Price            Amount\n1     External SSD 1TB                          3        IDR 1,814,400        IDR 5,443,200\n2     Cat6 Network Cable (box)                  3        IDR 1,548,700        IDR 4,646,100\n3     USB Mechanical Keyboard    PAID                      IDR 672,500        IDR 3,362,500\n4     Antivirus License 1 Year                             IDR 416,800        IDR 5,418,400\n                                                           Subtotal         IDR 18,870,200\n                                                          VAT 11%            IDR 2,075,722\n                                                             Total          IDR 20,945,922\nPayment Details\nBank Negara Indonesia· Account No. 40559225686· Account Name Orchid Systens Co",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9682
+}

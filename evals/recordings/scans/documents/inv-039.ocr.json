@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "Java Office Furnishings\nJl. Pemuda No. 150\nSemarang 50132\nTax ID: 06.553.071.2-511.000\nINVOICE\nInvoice No.       : JOF/2026/00235\nInvoice Date      : 2026-09-24\nPO Number        : PO-2026-0039\nPayment Terms    : Net 30 days\nCurrency          : IDR\nBill To          : PT Lunas Nusantara Sejahtera\nNo  Description                          Qty         Unit Price             Amount\n1   Black Laser Printer Toner             10         842,400.00       8,424,000.00\n2   A4 Copy Paper 80gsm (ream)             2          48,400.00          96,800.00\n                                                       Subtotal       8,520,800.00\n                                                        VAT 11%         937,288.00\n                                                          Total       9,458,088.00\nPayment Details\nBank             : Bank CIMB Niaga\nAccount No.      : 800114673900\nAccount Name     : Java Office Furnishings",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9357
+}

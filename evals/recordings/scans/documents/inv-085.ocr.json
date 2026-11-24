@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "PT Dapur Kantor Nusantara\nJl. Asia Afrika No. 112\nBandung 40261\nNPWP: 05.129.846.0-423.000\nFAKTUR\nNo. Faktur       : FK-2609-0298\nTanggal          : 2026-09-22\nNo. PO           : PO-2026-0085\nTermin Pembayaran : 14 hari\nMata Uang        : IDR\nKepada           : PT Lunas Nusantara Sejahtera\nNo  Deskripsi                           Qty       Harga Satuan            Jumlah\n1   Katering Rapat (paket)                5          1.326.100         6.630.500\n2   Air Mineral Galon 19L                12            20.900            250.800\n3   Kopi Bubuk Arabika 1kg               14            204.600         2.864.400\n4   Gula Pasir 1kg                       17            18.900            321.300\n                                                      Subtotal        10.067.000\n                                                       PPN 11%         1.107.370\n                                                         otal         11.174.370\nPembayaran                 LUNAS\nBank             : Bank Central\nNo. Rekening     : 0841736502\nAtas Nama        : PT Dapur Kantor Nusantara",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9195
+}

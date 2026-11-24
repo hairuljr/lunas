@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "Nusantara Tech Supplies Ltd                                                    INVOICE\nJI. HR Rasuna Said Kav. C-22\nJakarta Selatan 12940                                                    Invoice No.: INV-000459\nTax ID: 02.845.119.3-063.000                                    Invoice Date: September 14, 2026\n                                                                     Due Date: October 14, 2026\n                                                                      PO Number: PO-2026-0122\nBill To:\nPT Lunas Nusantara Sejahtera\nJI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12190\nNo    Description                                  Qty           Unit Price           Amount\n1     Dual-Band Wireless Router                      3         1,283,700.00       3,851,100.00\n2     External SSD 1TB                               1         1,564,000.00        1,564,000.00\n                                                                   Subtotal       5,415,100.00\n                                                                  VAT 12%           649,812.00\n                                                                     Total        6,064,912.00\nAll amounts are in Indonesian Rupiah (IDR).\nPayment Details\n Bank: Bank Mandiri\nAccount No.: 1240007719356\nAccount Name: Nusantara Tech Supplies Ltd\nNotes: Late payments are subject to a 2% monthly charge.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9855
+}

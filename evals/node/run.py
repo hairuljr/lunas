@@ -89,21 +89,25 @@ GATE_MAX_DROP = 0.02
 
 def fingerprint(paths: list[Path], settings: Settings) -> dict[str, str]:
     """What the recorded replies depend on. If any of these changed, they are stale."""
-
-    def sha(text: str) -> str:
-        return hashlib.sha256(text.encode()).hexdigest()
-
     texts = []
     for path in paths:
         backend = choose_backend(path, settings.ingest_mode, settings.min_chars_per_page)
         texts.append(f"{path.name}\n{get_reader(backend).read(path).text}")
+    return {**model_inputs(paths[0].parents[1]), "documents": sha256_text("\n\n".join(texts))}
+
+
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode()).hexdigest()
+
+
+def model_inputs(data_dir: Path) -> dict[str, str]:
+    """What the recorded replies depend on besides the documents themselves."""
     return {
-        "prompt": sha(load_prompt(PROMPT_NAME, PROMPT_VERSION)),
-        "schema": sha(json.dumps(strict_schema(Invoice).schema, sort_keys=True)),
-        "documents": sha("\n\n".join(texts)),
-        "contract_prompt": sha(load_prompt(CONTRACT_PROMPT, CONTRACT_VERSION)),
-        "investigate_prompt": sha(load_prompt(INVESTIGATE_PROMPT, INVESTIGATE_VERSION)),
-        "contracts": sha((paths[0].parents[1] / CONTRACTS_FILE).read_text(encoding="utf-8")),
+        "prompt": sha256_text(load_prompt(PROMPT_NAME, PROMPT_VERSION)),
+        "schema": sha256_text(json.dumps(strict_schema(Invoice).schema, sort_keys=True)),
+        "contract_prompt": sha256_text(load_prompt(CONTRACT_PROMPT, CONTRACT_VERSION)),
+        "investigate_prompt": sha256_text(load_prompt(INVESTIGATE_PROMPT, INVESTIGATE_VERSION)),
+        "contracts": sha256_text((data_dir / CONTRACTS_FILE).read_text(encoding="utf-8")),
     }
 
 
@@ -113,13 +117,18 @@ _STALE_REASON = {
     "contracts": "the contracts changed (generator)",
     "prompt": f"prompts/{PROMPT_NAME}.{PROMPT_VERSION}.md changed",
     "schema": "the Invoice schema changed",
+    "transcribe_prompt": "prompts/transcribe.v1.md changed",
     "documents": "the text read from the invoice PDFs changed (generator, PDF reader, or "
     "a platform difference in rendering)",
 }
 
 
 def stale_reasons(recorded: dict[str, str], current: dict[str, str]) -> list[str]:
-    return [reason for key, reason in _STALE_REASON.items() if recorded.get(key) != current[key]]
+    return [
+        _STALE_REASON.get(key, f"{key} changed")
+        for key in current
+        if recorded.get(key) != current[key]
+    ]
 
 
 def gate_metrics(

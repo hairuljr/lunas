@@ -18,6 +18,7 @@ from pathlib import Path
 
 from lunas.config import Settings
 from lunas.ingest import choose_backend, get_reader
+from lunas.ingest.recorded import DocumentRecorder
 from lunas.ingest.vision import VisionReader
 from lunas.llm import ChatClient, LLMRequestError, StructuredOutputError
 from lunas.models import Backend, Invoice, Issue, ParsedDocument
@@ -79,10 +80,20 @@ def _extract(document: ParsedDocument, backend: Backend, client: ChatClient) -> 
     return Read(backend, invoice, grounding)
 
 
-def _parse(path: Path, backend: Backend, vision_client: ChatClient | None) -> ParsedDocument:
+def first_backend(path: Path, settings: Settings, documents: DocumentRecorder | None) -> Backend:
+    recorded = documents.first_backend(path) if documents else None
+    return recorded or choose_backend(path, settings.ingest_mode, settings.min_chars_per_page)
+
+
+def _parse(
+    path: Path,
+    backend: Backend,
+    vision_client: ChatClient | None,
+    documents: DocumentRecorder | None,
+) -> ParsedDocument:
     reader = VisionReader(vision_client) if backend == "vision" else get_reader(backend)
     with span("parse") as current:
-        document = reader.read(path)
+        document = documents.read(path, backend, reader.read) if documents else reader.read(path)
         set_attributes(
             current,
             {
@@ -96,12 +107,17 @@ def _parse(path: Path, backend: Backend, vision_client: ChatClient | None) -> Pa
 
 
 def read_invoice(
-    path: Path, client: ChatClient, vision_client: ChatClient | None, settings: Settings
+    path: Path,
+    client: ChatClient,
+    vision_client: ChatClient | None,
+    settings: Settings,
+    documents: DocumentRecorder | None = None,
 ) -> Read:
     """Raises StructuredOutputError or LLMRequestError if the first read cannot be
-    extracted. A failed second read leaves the first read as it was."""
-    backend = choose_backend(path, settings.ingest_mode, settings.min_chars_per_page)
-    document = _parse(path, backend, vision_client)
+    extracted. A failed second read leaves the first read as it was. With `documents`,
+    every read is recorded there, or replayed from there (`ingest.recorded`)."""
+    backend = first_backend(path, settings, documents)
+    document = _parse(path, backend, vision_client, documents)
     first = _extract(document, backend, client)
     doubtful = (document.confidence or 0.0) < settings.ocr_min_confidence or first.grounding
     if backend != "ocr" or vision_client is None or not doubtful:
@@ -109,7 +125,7 @@ def read_invoice(
 
     with span("second_read") as current:
         try:
-            second = _extract(_parse(path, "vision", vision_client), "vision", client)
+            second = _extract(_parse(path, "vision", vision_client, documents), "vision", client)
         except (StructuredOutputError, LLMRequestError) as error:
             set_attributes(current, {"app.second_read.error": type(error).__name__})
             return first

@@ -38,4 +38,7 @@ jobs:
       # prompt, schema or dataset changed and the recordings need `--record`.
       - run: uv run python data/generate.py
       - run: uv run python -m evals.node.run --gate
+      # The same for the scanned twins: replays recorded OCR and vision reads, so CI needs
+      # neither the scans nor the OCR engine (ONNX may read differently on x86).
+      - run: uv run python -m evals.node.scans --gate
       # Policy table and the bank-account invariant are added here with gapura (week 3).

@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "Pioneer Systems Group                                                         INVOICE\nJI. Pemuda No. 32\nJakarta Pusat 10110                                               Invoice No.: 0199/PSG/X/2026\nTax ID: 64.204.411.1-163.000                                      Invoice Date: October 25, 2026\n                                                                  Due Date: November 24, 2026\nBill To:\nPT Lunas Nusantara Sejahtera\nJI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12190\nNo   Description                                  Qty           Unit Price           Amount\n1     Dual-Band Wireless Router                     7         1,252,900.00       8,770,300.00\n2     External SSD 1TB                              1         1,579,000.00       1,579,000.00\n3     24-inch LED Monitor                           2        2,251,100.00        4,502,200.00\n4     Cat6 Network Cable (box)                      1         1,453,900.00       1,453,900.00\n                                                                  Subtotal      16,305,400.00\n                                                                 VAT 11%         1,793,594.00\n                                                                    Total       18,098,994.00\nAll amounts are in Indonesian Rupiah (IDR).\nPayment Details\nBank: Bank Negara Indonesia\nAccount No.: 33750598165\nAccount Name: Pioneer Systems Group\nNotes: Late payments are subject to a 2% monthly charge.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9775
+}

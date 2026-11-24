@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "Pacific Foods Group\nJl. Thamrin No. 127\nBogor 16121\nTax ID: 68.333.439.8-718.000\nINVOICE\nInvoice No.       : INV/2026/10/0433\nInvoice Date      : 2026-10-16\nPO Number         :PO-2026-0080\nPayment Terms     : Net 7 days\nCurrency          : IDR\nBill To           : PT Lunas Nusantara Sejahtera\nNo  Description                           Qty         Unit Price             Amount\n1   Granulated Sugar 1kg                   3           20,100.00           60,300.00\n2   Ground Arabica Coffee 1kg              20         204,700.00        4,094,000.00\n3   Automatic Coffee Machine               1        6,743,700.00        6,743,700.00\n                                                        Subtotal       10,898,000.00\n                                                         VAT 11%        1,198,780.00\n                                                           Total       12,096,780.00\nPayment Details\nBank             : Bank Permata\nAccount No.       : 3559895203034\nAccount Name      : Pacific Foods Group",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9482
+}

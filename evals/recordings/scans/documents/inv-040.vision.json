@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "Pacific Foods Group\nJl. Thamrin No. 127\nBogor 16121\nTax ID: 68.333.439.8-718.000\n------------------------------------------------------------------------\nINVOICE\nInvoice No.      : INV/2026/10/0426\nInvoice Date     : 2026-10-23\nPayment Terms    : Net 30 days\nCurrency         : IDR\nBill To          : PT Lunas Nusantara Sejahtera\n------------------------------------------------------------------------\nNo  Description                          Qty         Unit Price            Amount\n------------------------------------------------------------------------\n1   Ground Arabica Coffee 1kg             5          207,800.00       1,039,000.00\n2   Meeting Catering (package)            3        1,315,900.00       3,947,700.00\n3   Tea Bags (box of 100)                 3           40,600.00         121,800.00\n------------------------------------------------------------------------\n                                              Subtotal       5,108,500.00\n                                              VAT 11%          561,935.00\n                                                 Total       5,670,435.00\n------------------------------------------------------------------------\nPayment Details\nBank            : Bank Permata\nAccount No.     : 3559895203034\nAccount Name    : Pacific Foods Group\n\nNotes: Late payments are subject to a 2% monthly charge.",
+   "tables": []
+  }
+ ],
+ "backend": "vision",
+ "confidence": null
+}

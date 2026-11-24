@@ -52,6 +52,12 @@ Last updated 2026-11-24. Weeks 1 and 2 are built except OCR and vision. Work is 
   rise), cause accuracy and checkpoint accuracy (2-point rule). Stale when the extract,
   contract or investigate prompt, the `Invoice` schema, the PDF text or the contracts
   change: refresh with `--record --split dev --workers 2` (only uncached calls go live).
+  Second gate step, `evals.node.scans --gate`: replays `evals/recordings/scans/` (40 dev
+  twins: OCR and vision reads recorded as `ParsedDocument`, replies, retrievals), so CI
+  needs no scans, model, database or OCR engine. Baseline 38/40, false-approve 0, key
+  fields 0.993. Blind to OCR and scan-generator changes (`evals.node.transcription`
+  measures those); refresh with `evals.node.scans --record` (Postgres up; reads through
+  `evals/cache/scans`, so only uncached calls go live).
 
 ### Commands
 
@@ -62,6 +68,7 @@ Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
 `uv run lunas approve <thread> --decision approve|reject|hold --approver NAME`;
 `uv run python -m evals.node.run [--split dev|test|all] [--cache] [--no-investigate]
 [--gate | --record]`; `uv run python -m evals.node.retrieval [--split ...]`;
+`uv run python -m evals.node.scans [--split ...] [--vision] [--gate | --record]`;
 `uv run python -m evals.baseline.react [--split ...] [--cache]`.
 
 ### Measured (one live run each, Sumopod `deepseek-v4.1-flash-1017`)
@@ -123,13 +130,10 @@ Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
 
 ### Not built yet
 
-- OCR/vision plan (`docs/ocr_vision_strategy.md`, option 1): steps 1 (scanned twins,
-  `data/generate_scans.py`), 2 (`OcrReader`, `evals/node/transcription.py`), 3
-  (grounding check, `pipeline/nodes/grounding.py`) and 4 (`VisionReader`, prompt
-  `transcribe.v1`, second read and `read_disagreement` in `pipeline/nodes/read.py`;
-  `evals/node/scans.py` end to end; `lunas run --vision`) done, measured on a 10-twin pilot
-  and on all 80 twins. Next:
-  5 record OCR output for the gate (ONNX may differ between arm64 and x86 CI).
+- OCR/vision plan (`docs/ocr_vision_strategy.md`, option 1): all five steps are built
+  (scanned twins, `OcrReader`, grounding check, `VisionReader` second read, scan gate).
+  Open: a stamp word read into a line description (inv-104 -> hold); stamp-hidden
+  accounts go to escalate (safe); a fully destroyed bank line grounds nothing (inv-158).
 - `gapura`, the MCP tool servers, the attack set and ASR (week 3); `policies/default.yaml`
   is a draft no code loads (the approval threshold lives in `Settings`).
 - Approval permissions (any `--approver` string is accepted) and an approval UI.

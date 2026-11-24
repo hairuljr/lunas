@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Sterling Packaging Ltd\", \"invoice_number\": \"INV-SPL-00176\", \"invoice_date\": \"2026-09-12\", \"due_date\": \"2026-10-12\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0014\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Double Wall Carton 40x40x40\", \"quantity\": 14, \"unit_price\": 15100.00, \"amount\": 211400.00}, {\"description\": \"Shipping Labels A6 (roll)\", \"quantity\": 13, \"unit_price\": 78500.00, \"amount\": 1020500.00}], \"subtotal\": 1231900.00, \"tax\": 135509.00, \"total\": 1367409.00, \"bank_account\": \"73128689516\", \"notes\": \"Thank you for your business.\"}"
+}

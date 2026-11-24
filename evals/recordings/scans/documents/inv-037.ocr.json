@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "CV Sakti Gemilang Teknologi\nJl. Merdeka No. 201\nMedan 20112\nNPWP: 15.902.472.8-361.000\nFAKTUR\nNo. Faktur       : SGT/2026/00217\nTanggal          : 2026-10-22\nNo. PO           : pO-2026-0037\nTermin Pembayaran : 14 hari\nMata Uang        : IDR\nKepada           : PT Lunas Nusantara Sejahtera\nNo  Deskripsi                           Qty        Harga Satuan            Jumlah\n1   SSD Eksternal 1TB                     4          1.746.700          6.986.800\n2   Keyboard Mekanikal USB               10            757.700          7.577.000\n3   Lisensi Antivirus 1 Tahun             8            415.300          3.322.400\n4   Monitor LED 24 inci                   3           2.445.300         7.335.900\n                                                      Subtotal         25.222.100\n                                                       PPN 11%          2.774.431\n                                                         Total         27.996.531\nPembayaran\nBank             : Bank Dananon LUNAS\nNo. Rekening     : 3517364468987\nAtas Nama        : CV Sakti Gemil   Teknolog\nCatatan: Terima kasih atas kerja sama Anda.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9228
+}

@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "PT Dapur Kantor Nusantara\nJl. Asia Afrika No. 112\nBandung 40261\nNPWP: 05.129.846.0-423.000\nFAKTUR\nNo. Faktur       : FK-2610-0303\nTanggal          : 2026-10-17\nNo. PO           : PO-2026-0125\nTermin Pembayaran : 14 hari\nMata Uang        : IDR\nKepada           : PT Lunas Nusantara Sejahtera\nNo  Deskripsi                           Qty       Harga Satuan             Jumlah\n1   Teh Celup (kotak isi 100)            14             40.300            564.200\n2   Air Mineral Galon 19L                11             22.800            250.800\n3   Kopi Bubuk Arabika 1kg               19            209.600          3.982.400\n                                                      Subtotal          4.797.400\n                                                       PPN 11%            527.714\n                                                          otal          5.325.114\nPembayaran                LUNAS\nBank             : Bank Central\nNo. Rekening     : 8217493974\nAtas Nama        : PT Dapur Kantor Nusantara\nCatatan: Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening bar",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9134
+}

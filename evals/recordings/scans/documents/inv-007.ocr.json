@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "                                     FAKTUR\nDari                                          Kepada\nPT Mitra Data Solusindo                       PT Lunas Nusantara Sejahtera\nJI. TB Simatupang No. 41                      JI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12550                         Jakarta Selatan 12190\nNPWP 07.902.318.4-017.000\nNo. Faktur                  Tanggal             Jatuh Tempo         No. PO\nMDS-INV-202610-384          14/10/2026          13/11/2026          PO-2026-0007\nNo   Deskripsi                               Qty         Harga Satuan               Jumlah\n1    Kabel Jaringan Cat6 (dus)                  5       Rp 1.501.200,00      Rp 7.506.000,00\n2    Lisensi Antivirus 1 Tahun                  5        Rp 417.000,00       Rp 2.085.000,00\n3    SSD Eksternal 1TB                          5       Rp 1.787.500,00     Rp 8.937.500,00\n                                                           Subtotal       Rp 18.528.500,00\n                           LUNAS                          PPN11%           Rp 2.038.135,00\n                                                             Total        Rp 20.566.635,00\nPembayaran\nBank Mandiri · No. Rekening 1030005542871·Atas Nama PT Mitra Data Soysindo",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9722
+}

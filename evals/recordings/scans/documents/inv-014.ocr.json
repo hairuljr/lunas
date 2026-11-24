@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "Sterling Packaging Ltd                                                         INVOICE\nJI. Ahmad Yani No. 193\nMakassar 90111                                                       Invoice No.: INV-SPL-00176\nTax ID: 60.629.397.0-562.000                                    Invoice Date: September 12, 2026\n                                                                     Due Date: October 12, 2026\n                                                                     PO Number: PO-2026-0014\nBill To:\nPT Lunas Nusantara Sejahtera\nJI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12190\nNo    Description                                 Qty           Unit Price            Amount\n1     Double Wall Carton 40x40x40                   14           15,100.00          211,400.00\n2     Shipping Labels A6 (roll)                     13           78,500.00        1,020,500.00\n                                                                  Subtotal        1,231,900.00\n                                    PAID\n                                                                 VAT 11%            135,509.00\n                                                                     Total        1,367,409.00\nAll amounts are in Indonesian Rupiah (IDR).\nPayment Details\nBank: Bank Mandiri\nAccount No.: 73128689516\nAccount Name: Sterling Packaging Ltd\nNotes: Thank you for your business.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9719
+}
