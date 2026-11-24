@@ -23,7 +23,6 @@ from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -33,16 +32,19 @@ from openai import APIError, OpenAI
 from pydantic import BaseModel
 
 from data.generate import MANIFEST_FILE, SPLIT_CHOICES, GroundTruth, load_ground_truth
+from data.generate_attacks import ATTACK_MANIFEST_FILE, SUBTLE_MANIFEST_FILE
 from data.generate_scans import SCAN_MANIFEST_FILE
 from evals.node.scoring import by_label, decision_metrics, percentile, print_decisions
 from lunas.config import Settings
 from lunas.erp import ErpData
 from lunas.ingest import choose_backend, get_reader
+from lunas.ingest.email import document_path, read_with
 from lunas.llm import LLMRequestError, load_prompt
 from lunas.models import ContractClause, Decision
 from lunas.retrieval.index import cached_embedder
 from lunas.retrieval.retriever import StoreRetriever
 from lunas.retrieval.store import ClauseStore
+from lunas.text import parse_amount
 
 PROMPT_NAME = "baseline_react"
 PROMPT_VERSION = "v3"
@@ -113,6 +115,43 @@ TOOLS = [
     ),
 ]
 
+# The attack set's tools (evals/e2e/attacks.py): the same, plus a way to send email, and
+# the payee named on a payment so a gateway can check the destination against it. The
+# benign comparison keeps TOOLS, so its cached results stay valid.
+ATTACK_TOOLS = [
+    tool
+    for tool in TOOLS
+    if tool["function"]["name"] not in ("schedule_payment", "submit_decision")
+] + [
+    _tool(
+        "schedule_payment",
+        "Schedule payment of an invoice.",
+        {
+            "invoice_number": {"type": "string"},
+            "vendor_id": {"type": "string", "description": "The payee's vendor ID."},
+            "bank_account": {"type": "string", "description": "Destination account number."},
+            "amount": {"type": "number"},
+        },
+        ["invoice_number", "vendor_id", "bank_account", "amount"],
+    ),
+    _tool(
+        "send_email",
+        "Send an email.",
+        {"to": {"type": "string"}, "subject": {"type": "string"}, "body": {"type": "string"}},
+        ["to", "subject", "body"],
+    ),
+    TOOLS[-1],
+]
+# Baseline tool name -> gapura tool, for the agent put behind the gateway.
+GATEWAY_TOOLS = {
+    "get_po": "erp.get_po",
+    "get_vendor": "erp.get_vendor",
+    "get_goods_receipts": "erp.get_goods_receipts",
+    "find_invoices": "erp.find_invoices",
+    "schedule_payment": "payments.schedule_payment",
+    "send_email": "mail.send_email",
+}
+
 
 @dataclass(frozen=True)
 class ToolCall:
@@ -139,6 +178,12 @@ class Payment(BaseModel):
     amount: str
 
 
+class Email(BaseModel):
+    to: str
+    subject: str
+    body: str
+
+
 class AgentResult(BaseModel):
     decision: Decision | None = None
     reason: str = ""
@@ -150,6 +195,9 @@ class AgentResult(BaseModel):
     seconds: float = 0.0
     tools_called: list[str] = []
     payments: list[Payment] = []
+    emails: list[Email] = []
+    # Behind a gateway: calls it refused or held for approval, as "tool: status".
+    blocked: list[str] = []
 
 
 # Answers a question about one vendor's contract: (vendor_id, question) -> clauses.
@@ -161,11 +209,40 @@ class _Session:
     erp: ErpData
     contracts: ContractSearch | None = None
     result: AgentResult = field(default_factory=AgentResult)
+    # With a gateway, the ERP, payment and mail tools go through gapura (role `agent`).
+    gateway: Any = None
+    gate_session: Any = None
+
+    def _through_gateway(self, name: str, args: dict) -> str:
+        if name == "schedule_payment":
+            args = {
+                "invoice_number": str(args["invoice_number"]),
+                "vendor_id": str(args.get("vendor_id", "")),
+                "bank_account": str(args["bank_account"]),
+                "amount": str(args["amount"]),
+                "idempotency_key": f"pay:{args['invoice_number']}",
+            }
+        result = self.gateway.call(self.gate_session, GATEWAY_TOOLS[name], args)
+        if result.status != "executed":
+            self.result.blocked.append(f"{name}: {result.status}")
+        elif name == "schedule_payment":
+            self.result.payments.append(
+                Payment(
+                    invoice_number=args["invoice_number"],
+                    bank_account=args["bank_account"],
+                    amount=args["amount"],
+                )
+            )
+        elif name == "send_email":
+            self.result.emails.append(Email(**args))
+        return result.for_model()
 
     def call(self, name: str, arguments: str) -> str:
         """Run one tool. Errors go back to the model as text, as a real tool server would."""
         try:
             args = json.loads(arguments or "{}")
+            if self.gateway is not None and name in GATEWAY_TOOLS:
+                return self._through_gateway(name, args)
             if name == "get_po":
                 po = self.erp.get_po(args["po_number"])
                 return po.model_dump_json() if po else _error("purchase order not found")
@@ -198,6 +275,12 @@ class _Session:
                 )
                 self.result.payments.append(payment)
                 return json.dumps({"status": "scheduled"})
+            if name == "send_email":
+                # No gateway: any recipient, any body.
+                self.result.emails.append(
+                    Email(to=str(args["to"]), subject=str(args["subject"]), body=str(args["body"]))
+                )
+                return json.dumps({"status": "sent"})
             if name == "submit_decision":
                 self.result.decision = Decision(args["decision"])
                 self.result.reason = str(args.get("reason", ""))
@@ -226,8 +309,11 @@ def run_agent(
     max_turns: int = MAX_TURNS,
     contracts: ContractSearch | None = None,
     prompt: str | None = None,
+    gateway: Any = None,
 ) -> AgentResult:
     session = _Session(erp, contracts)
+    if gateway is not None:
+        session.gateway, session.gate_session = gateway, gateway.session("agent")
     result = session.result
     messages: list[dict[str, Any]] = [
         {"role": "system", "content": prompt or system_prompt(Settings(_env_file=None))},
@@ -271,7 +357,7 @@ def run_agent(
     return result
 
 
-def openai_chat(settings: Settings) -> Chat:
+def openai_chat(settings: Settings, tools: list[dict] = TOOLS) -> Chat:
     client = OpenAI(
         base_url=settings.llm_base_url,
         api_key=settings.llm_api_key.get_secret_value(),
@@ -282,7 +368,7 @@ def openai_chat(settings: Settings) -> Chat:
 
     def chat(messages: list[dict[str, Any]]) -> Turn:
         response = client.chat.completions.create(
-            model=settings.llm_model, messages=messages, tools=TOOLS, **extra
+            model=settings.llm_model, messages=messages, tools=tools, **extra
         )
         message = response.choices[0].message
         usage = response.usage
@@ -300,12 +386,17 @@ def openai_chat(settings: Settings) -> Chat:
 
 
 def read_invoice_text(path: Path, settings: Settings) -> str:
-    backend = choose_backend(path, settings.ingest_mode, settings.min_chars_per_page)
-    return get_reader(backend).read(path).text
+    backend = choose_backend(document_path(path), settings.ingest_mode, settings.min_chars_per_page)
+    return read_with(get_reader(backend), path).text
 
 
 def run_one(
-    path: Path, erp: ErpData, chat: Chat, settings: Settings, contracts: ContractSearch | None
+    path: Path,
+    erp: ErpData,
+    chat: Chat,
+    settings: Settings,
+    contracts: ContractSearch | None,
+    gateway: Any = None,
 ) -> AgentResult:
     started = time.monotonic()
     try:
@@ -315,6 +406,7 @@ def run_one(
             chat,
             contracts=contracts,
             prompt=system_prompt(settings),
+            gateway=gateway,
         )
     # LLMRequestError: a tool's own request failed (the contract search embeds the
     # question). Like a failed chat request, that marks this invoice unanswered instead of
@@ -325,13 +417,6 @@ def run_one(
             reason=f"{type(error).__name__}: {error}",
             seconds=round(time.monotonic() - started, 2),
         )
-
-
-def _amount(text: str) -> Decimal | None:
-    try:
-        return Decimal(text)
-    except InvalidOperation:
-        return None
 
 
 def baseline_metrics(records: list[GroundTruth], results: list[AgentResult], erp: ErpData) -> dict:
@@ -354,7 +439,7 @@ def baseline_metrics(records: list[GroundTruth], results: list[AgentResult], erp
             for payment in result.payments
         )
         paid_wrong_amount += any(
-            _amount(payment.amount) != record.invoice.total for payment in result.payments
+            parse_amount(payment.amount) != record.invoice.total for payment in result.payments
         )
     tokens = [result.prompt_tokens + result.completion_tokens for result in answered]
     seconds = [result.seconds for result in answered]
@@ -436,7 +521,7 @@ def main() -> int:
     records_behind_tools = [
         (path.name, hashlib.sha256(path.read_bytes()).hexdigest())
         for path in sorted(data_dir.glob("*.json"))
-        if path.name != SCAN_MANIFEST_FILE
+        if path.name not in (SCAN_MANIFEST_FILE, ATTACK_MANIFEST_FILE, SUBTLE_MANIFEST_FILE)
     ]
     key = hashlib.sha256(
         json.dumps(

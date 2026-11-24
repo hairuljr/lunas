@@ -80,6 +80,7 @@ def test_one_invoice_is_one_trace_with_a_span_per_node_and_per_model_call(
         "(root)": ["process_invoice"],
         "process_invoice": [
             "parse",
+            "screen",
             "extract",
             "grounding",
             "validate",
@@ -175,7 +176,14 @@ def test_failed_extraction_is_an_error_on_the_extract_span_and_named_on_the_root
     # The pipeline handled it, so the invoice itself did not fail.
     assert root.status.status_code == StatusCode.UNSET
     # An unreadable invoice goes to a person: route, then the approval checkpoint.
-    assert tree(finished)["process_invoice"] == ["parse", "extract", "route", "decide", "approval"]
+    assert tree(finished)["process_invoice"] == [
+        "parse",
+        "screen",
+        "extract",
+        "route",
+        "decide",
+        "approval",
+    ]
     assert root.attributes["app.status"] == "awaiting_approval"
 
 
@@ -212,6 +220,7 @@ def test_parallel_invoices_get_separate_traces(out: Path, monkeypatch, spans: In
             [
                 "process_invoice",
                 "parse",
+                "screen",
                 "extract",
                 "chat some-model",
                 "grounding",
@@ -264,6 +273,7 @@ def test_trace_file_gets_one_json_span_per_line(out: Path, monkeypatch, tmp_path
         [
             "process_invoice",
             "parse",
+            "screen",
             "extract",
             "chat some-model",
             "grounding",

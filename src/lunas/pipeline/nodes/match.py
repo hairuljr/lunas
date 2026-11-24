@@ -1,12 +1,11 @@
 """Step 5: 3-way match of an extracted invoice against the PO, goods receipts and vendor
 master. Deterministic: every lookup and comparison here is code, never an LLM."""
 
-import re
 from decimal import Decimal
 
 from lunas.erp import ErpData
 from lunas.models import Invoice, Issue, Vendor
-from lunas.text import normalize
+from lunas.text import digits, normalize
 
 
 def match_invoice(
@@ -124,23 +123,19 @@ def match_invoice(
     return issues
 
 
-def _digits(account: str) -> str:
-    return re.sub(r"\D", "", account)
-
-
 def _check_bank_account(account: str | None, vendor: Vendor) -> list[Issue]:
     """The invoice's account is never paid; it is only evidence. A different account
     number is the fraud signal. A value with no digits at all is a reading problem."""
     if account is None or not account.strip():
         return []
-    if not _digits(account):
+    if not digits(account):
         return [
             Issue(
                 code="bank_account_unreadable",
                 message=f"Invoice bank account {account!r} contains no account number",
             )
         ]
-    if _digits(account) != _digits(vendor.bank_account):
+    if digits(account) != digits(vendor.bank_account):
         return [
             Issue(
                 code="bank_account_mismatch",

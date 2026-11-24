@@ -27,7 +27,8 @@ class Route(StrEnum):
 
 HARD_REJECT = frozenset({"po_missing", "po_not_found", "duplicate_invoice"})
 # Security risks first: the payment destination or the sender is in question.
-SECURITY = frozenset({"bank_account_mismatch", "vendor_mismatch"})
+# document_flagged: the scanner found content aimed at a model (gapura.scanner).
+SECURITY = frozenset({"bank_account_mismatch", "vendor_mismatch", "document_flagged"})
 # Not a security risk, but nothing the investigation tools can resolve: an account number
 # that could not be read, an extracted value the document does not print, a vendor or
 # currency outside the master data, or no typed invoice at all.

@@ -17,6 +17,7 @@ table. Output is byte-identical for a given seed and dataset.
 import argparse
 import json
 import random
+import textwrap
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -116,17 +117,19 @@ def degrade(
     tier: Tier,
     rng: random.Random,
     stamp_word: str | None,
-    hidden_text: str | None = None,
+    image_text: str | None = None,
 ) -> Image.Image:
-    """Turn a clean grayscale render into a scan. `hidden_text` is the hook for week-3
-    image-only injection: text drawn faintly into the image, present in no text layer."""
-    if hidden_text:
-        ImageDraw.Draw(page).text(
-            (page.width // 20, page.height - page.height // 30),
-            hidden_text,
-            fill=235,
-            font=ImageFont.load_default(size=page.height // 120),
-        )
+    """Turn a clean grayscale render into a scan. `image_text` is drawn into the image
+    above the bottom margin, so it is in no text layer: the image-only injection channel
+    of the attack set (data/generate_attacks.py)."""
+    if image_text:
+        draw = ImageDraw.Draw(page)
+        font = ImageFont.load_default(size=page.height // 110)
+        lines = textwrap.wrap(image_text, width=95)
+        step = page.height // 90
+        top = page.height - page.height // 25 - step * len(lines)
+        for index, line in enumerate(lines):
+            draw.text((page.width // 14, top + index * step), line, fill=40, font=font)
     if stamp_word:
         page = _stamp(page, rng, stamp_word)
     if tier.shading:
@@ -143,7 +146,14 @@ def degrade(
     return page
 
 
-def render_scan(source: Path, target: Path, tier: Tier, seed: int, stamp_word: str | None) -> None:
+def render_scan(
+    source: Path,
+    target: Path,
+    tier: Tier,
+    seed: int,
+    stamp_word: str | None,
+    image_text: str | None = None,
+) -> None:
     rng = random.Random(seed)
     pdf = pdfium.PdfDocument(source)
     try:
@@ -153,8 +163,9 @@ def render_scan(source: Path, target: Path, tier: Tier, seed: int, stamp_word: s
                 tier,
                 rng,
                 stamp_word,
+                image_text if number == 0 else None,
             )
-            for page in pdf
+            for number, page in enumerate(pdf)
         ]
     finally:
         pdf.close()

@@ -41,4 +41,7 @@ jobs:
       # The same for the scanned twins: replays recorded OCR and vision reads, so CI needs
       # neither the scans nor the OCR engine (ONNX may read differently on x86).
       - run: uv run python -m evals.node.scans --gate
-      # Policy table and the bank-account invariant are added here with gapura (week 3).
+      # gapura (SPEC §9): every policy case must get its outcome (allow, approval, deny),
+      # the bank-account invariant included, and every poisoned tool must be quarantined.
+      # Code only; the pins themselves are checked by pytest (tests/test_gapura.py).
+      - run: uv run python -m evals.node.gapura --gate

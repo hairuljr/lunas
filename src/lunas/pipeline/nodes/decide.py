@@ -15,6 +15,8 @@ _ESCALATE = {
     # a human decides (SPEC §3).
     "bank_account_mismatch",
     "vendor_mismatch",
+    # The scanner flagged the document (SPEC §3: always to a person).
+    "document_flagged",
 }
 _REJECT = {
     # No PO, no pay.

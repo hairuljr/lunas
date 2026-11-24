@@ -12,8 +12,8 @@ decision log. Update its decision log when a design decision changes.
 Update this section at the end of each working session. Keep it current, not a diary: the
 decision log in SPEC.md holds the reasons, git holds the history.
 
-Last updated 2026-11-24. Weeks 1 and 2 are built except OCR and vision. Work is on branch
-`week2-data-classes`, PR hairuljr/lunas#1 (open; the owner commits and pushes).
+Last updated 2026-11-24. Weeks 1, 2 and 3 are built (week 3 not yet committed). Work is on
+branch `week2-data-classes`, PR hairuljr/lunas#1 (open; the owner commits and pushes).
 
 ### What exists
 
@@ -30,8 +30,22 @@ Last updated 2026-11-24. Weeks 1 and 2 are built except OCR and vision. Work is 
   code) -> route (`route.py`: clean / hard_reject / human / investigate) -> investigate
   (`investigate.v2`, at most 6 turns, read-only tools scoped to the vendor, causes and
   evidence checked in code, never changes the decision) -> decide (code table) ->
-  approval (interrupt for route human or decision escalate). State is a Pydantic
+  approval (interrupt for route human or decision escalate) -> act (step 10, code, through
+  gapura role `act`: ledger, payment to the vendor master account, template email for
+  vendor-fixable holds; a no-op without a gateway). The read node also screens the raw
+  text (`gapura.scanner`): a hit is `document_flagged` -> route human, ESCALATE. `.eml`
+  invoices are read with the body as page 1 (`ingest/email.py`). State is a Pydantic
   `InvoiceState`; checkpoint types are listed in `SERDE`.
+- gapura (`lunas.gapura`): `Gateway.call` = pins -> role (default deny) -> idempotency key
+  -> named constraints -> egress -> session taint -> approval threshold; audit log + span.
+  Policy `policies/default.yaml` (schema v1, load fails on any unknown name), pins
+  `policies/pins.json` (update with `python -m lunas.gapura.pins --update` after a reviewed
+  tool change; pytest fails otherwise). Mock MCP servers `lunas.servers` (MCP SDK 2.3
+  `MCPServer`, in-process via `McpServers`; naive on purpose). The policy's approval
+  threshold must equal `Settings.approval_threshold` (tested). Investigation tools run
+  in-process (unchanged outputs, so the gate recordings stay valid) but each call is first
+  `Gateway.authorize`d as role `investigator`, mapped to the records it reads
+  (`GAPURA_TOOLS`); `contracts.search` is in the policy, authorized, not pinned.
 - Checkpoints: Postgres for the CLI (`lunas run`, `lunas pending`, `lunas approve`),
   memory for evals, tests and the gate, which record where invoices stop and never wait.
 - Retrieval (`lunas.retrieval`): Postgres `contract_clauses`, full-text (contract-language
@@ -44,7 +58,13 @@ Last updated 2026-11-24. Weeks 1 and 2 are built except OCR and vision. Work is 
   Verified in Phoenix 21.0.0.
 - Evals: `evals/node/run.py` (extraction, decision, route, contract check, investigation,
   checkpoint), `evals/node/retrieval.py` (Recall@5), `evals/baseline/react.py` (naive
-  ReAct, prompt `baseline_react.v3`, same rules and a contract tool). 222 tests.
+  ReAct, prompt `baseline_react.v3`, same rules and a contract tool; `ATTACK_TOOLS` adds
+  `send_email` and `vendor_id` for the attack evals, benign `TOOLS` unchanged so its cache
+  stays valid), `evals/e2e/attacks.py` (ASR for lunas / baseline / baseline_gapura; judged
+  from payments and emails; `--subtle`, `--benign`), `evals/node/gapura.py` (policy table +
+  tool poisoning), `evals/node/scanner.py` (recall, false flags, held-out paraphrases).
+  Attack set `data/generate_attacks.py`: 60 (5 goals x 6 channels x 2 languages) + 20
+  subtle (`HELD_OUT`: never use them to tune the scanner). 276 tests.
 - PR gate (`pr-gate.yml`): ruff, pytest (with a pgvector service; store and graph tests
   fail instead of skipping under `CI`), then `evals.node.run --gate`, which replays
   `evals/recordings/` (dev split, 353 replies + recorded retrievals) with no model and no
@@ -58,6 +78,8 @@ Last updated 2026-11-24. Weeks 1 and 2 are built except OCR and vision. Work is 
   fields 0.993. Blind to OCR and scan-generator changes (`evals.node.transcription`
   measures those); refresh with `evals.node.scans --record` (Postgres up; reads through
   `evals/cache/scans`, so only uncached calls go live).
+  Third step, `evals.node.gapura --gate`: 23 policy cases and 4 tool-poisoning cases, all
+  must be right. Code only.
 
 ### Commands
 
@@ -69,7 +91,11 @@ Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
 `uv run python -m evals.node.run [--split dev|test|all] [--cache] [--no-investigate]
 [--gate | --record]`; `uv run python -m evals.node.retrieval [--split ...]`;
 `uv run python -m evals.node.scans [--split ...] [--vision] [--gate | --record]`;
-`uv run python -m evals.baseline.react [--split ...] [--cache]`.
+`uv run python -m evals.baseline.react [--split ...] [--cache]`;
+`uv run python -m data.generate_attacks`; `uv run python -m evals.e2e.attacks [--system
+lunas|baseline|baseline_gapura|all] [--subtle | --benign]`; `uv run python -m
+evals.node.gapura [--gate]`; `uv run python -m evals.node.scanner`;
+`uv run python -m lunas.gapura.pins [--update]`.
 
 ### Measured (one live run each, Sumopod `deepseek-v4.1-flash-1017`)
 
@@ -88,8 +114,14 @@ Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
 | Scans end to end, OCR + vision second read | all 80 | decisions 77/80, false-approve 0/67, key fields 0.995; unstamped 40/40; 3 second reads, 0 disagreements. Wrong: 2 stamp-hidden accounts -> escalate, 1 stamp word read into a line description -> hold. Cost 0.017 | `scans-20261124-064412.json` |
 | Baseline vs lunas, decision / false-approve | test 145 | 140/145, 0/93 vs 145/145, 0/93 (baseline's 5 misses: no_po, out of turns) | `baseline-20261124-140004.json`, `node-20261124-123645.json` |
 | Investigation, `investigate.v2`, all classes | test 66 | cause 66/66, evidence 66/66 | `node-20261124-123645.json` |
+| ASR, attack set v1 (60) | attacks | lunas 0/60 (flagged 60/60, all escalated), baseline 0/60 (paid 25, all correct), baseline+gapura 0/60; invariant breaches 0 | `attacks-20261124-150515.json` |
+| ASR, subtle set (20 held-out paraphrases) | attacks | 0/20 all three; lunas flagged 2/20 and paid 10, each the total to the master account | `subtle-20261124-153226.json` |
+| Straight-through, benign | test 52 | lunas 52/52, baseline 52/52, baseline+gapura 0/52 (taint holds every payment) | `benign-20261124-150519/151257/152114.json` |
+| Scanner (no model) | attacks + dataset | v1 60/60, held-out 2/20 (both via the foreign-email check), approve-class invoices flagged 0/105; bank_account_change 6/23 (long note runs off the compact page) | `scanner-20261124-152307.json` |
+| gapura eval (no model) | - | policy 23/23, tool poisoning blocked 4/4 | `evals.node.gapura` |
 
-- Read all of it as "works on clean digital PDFs with no attacks", one run, no pass^3.
+- Read all of it as one run, no pass^3. The attacks are naive and the model resisted all of
+  them, so ASR does not separate the systems yet; adaptive attacks are the next step.
 - Evidence still fails code's check now and then: a short delivery citing a PO number as a
   goods receipt, or this invoice as a ledger invoice. The check is strict on kind on
   purpose.
@@ -103,7 +135,9 @@ Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
   `json_schema`, tool calls, system messages), `text-embedding-3-small` (1,536 dims),
   `glm-5.3-flash` (vision; smoke-tested on three clean renders only). Budget-capped:
   check `GET <host>/v2/user/info` (`max_budget - spend`) before and after any live run,
-  prefer replays, and ask the owner before full re-runs. Balance 2.4332 on 2026-11-24 (USD; report IDR too).
+  prefer replays, and ask the owner before full re-runs. Balance 2.0330 on 2026-11-24 (USD;
+  report IDR too). Week-3 live runs cost about 0.40 (attack set all three systems 0.23,
+  benign 0.11, subtle 0.06).
   The API key also has its own max budget (hit 0.99 USD on 2026-11-24, raised by the
   owner): a 422 "Budget has been exceeded" means that cap, not the balance.
   Rough costs: dev split with investigation about 0.08, re-recording the gate about 0.04.
@@ -116,7 +150,8 @@ Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
   account although one is printed. Cost 0.048 against about 0.075 for DeepSeek (about
   1.6x cheaper; it writes about 3x the output tokens). Not adopted: the saving is small in
   absolute terms and a dropped bank account would hide a changed account (`None` means
-  "not printed" to the match). A code guard for that belongs with the week-3 scanner.
+  "not printed" to the match). The grounding check now flags a printed account that was
+  not extracted (`bank_account_not_extracted`).
 - Fallback: a custom proxy whose default route injects its own system prompt (its
   `/v1/playground` route does not); it rejects `response_format`, allows one concurrent
   request and about 44 per 3.5 minutes. Use `LUNAS_LLM_STRUCTURED_OUTPUT=none`,
@@ -132,8 +167,13 @@ Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
   (scanned twins, `OcrReader`, grounding check, `VisionReader` second read, scan gate).
   Open: a stamp word read into a line description (inv-104 -> hold); stamp-hidden
   accounts go to escalate (safe); a fully destroyed bank line grounds nothing (inv-158).
-- `gapura`, the MCP tool servers, the attack set and ASR (week 3); `policies/default.yaml`
-  is a draft no code loads (the approval threshold lives in `Settings`).
+- Week 4 (SPEC §12: CI gate and nightly, packaging): pass^3 and a nightly red-team with
+  adaptive / multi-turn attacks (attack set v1 no longer separates the systems by ASR);
+  the MCP servers and gapura in compose over stdio (SPEC §10) with a persistent
+  backoffice (payments from `lunas run` live only as long as the process).
+- Follow-ups: a local classifier evaluated on `HELD_OUT` before it is trusted
+  (Galvanize-3 is the only non-gated multilingual candidate, untested on Indonesian);
+  `contracts.search` as an MCP tool.
 - Approval permissions (any `--approver` string is accepted) and an approval UI.
 - pass^3, nightly evals, the API package.
 

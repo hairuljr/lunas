@@ -15,6 +15,7 @@ import re
 from decimal import Decimal
 
 from lunas.models import Invoice, Issue
+from lunas.text import digits
 
 NOT_IN_DOCUMENT = "field_not_in_document"
 BANK_ACCOUNT_NOT_EXTRACTED = "bank_account_not_extracted"
@@ -28,30 +29,26 @@ def _compact(text: str) -> str:
     return re.sub(r"\s+", "", text).upper()
 
 
-def _digits(text: str) -> str:
-    return re.sub(r"\D", "", text)
-
-
 def _numbers(text: str) -> set[str]:
     """Every number in the text without separators, and also without its cents."""
     found = set()
     for token in re.findall(r"\d[\d.,]*\d|\d", text):
-        found.add(_digits(token))
+        found.add(digits(token))
         if re.search(r"[.,]\d{2}$", token):
-            found.add(_digits(token[:-3]))
+            found.add(digits(token[:-3]))
     return found
 
 
-def _amount_digits(value: Decimal) -> str:
+def _amountdigits(value: Decimal) -> str:
     if value == value.to_integral_value():
         return str(int(value))
-    return _digits(f"{value:.2f}")
+    return digits(f"{value:.2f}")
 
 
 def ground_invoice(invoice: Invoice, text: str) -> list[Issue]:
     issues = []
     compact, numbers = _compact(text), _numbers(text)
-    line_digits = [_digits(line) for line in text.splitlines()]
+    line_digits = [digits(line) for line in text.splitlines()]
 
     def missing(field: str, value: object) -> None:
         issues.append(
@@ -67,11 +64,11 @@ def ground_invoice(invoice: Invoice, text: str) -> list[Issue]:
             missing(field, value)
     for field in ("subtotal", "tax", "total"):
         value = getattr(invoice, field)
-        if value is not None and _amount_digits(value) not in numbers:
+        if value is not None and _amountdigits(value) not in numbers:
             missing(field, value)
 
     if invoice.bank_account and invoice.bank_account.strip():
-        account = _digits(invoice.bank_account)
+        account = digits(invoice.bank_account)
         if account and not any(account in digits for digits in line_digits):
             missing("bank_account", invoice.bank_account)
     elif any(

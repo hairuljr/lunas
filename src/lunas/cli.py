@@ -21,6 +21,7 @@ import psycopg
 
 from lunas.config import Settings
 from lunas.erp import ErpData
+from lunas.gapura import local_gateway
 from lunas.llm import LLMNotConfiguredError, build_client
 from lunas.models import Decision
 from lunas.pipeline.graph import (
@@ -82,10 +83,11 @@ def run(args: argparse.Namespace) -> int:
             if args.vision
             else None
         )
-        with checkpoints(settings) as saver:
+        erp = ErpData.load(data_dir)
+        with checkpoints(settings) as saver, local_gateway(erp) as (gateway, office):
             results = process_invoices(
                 paths,
-                ErpData.load(data_dir),
+                erp,
                 client,
                 settings,
                 args.workers or settings.llm_workers,
@@ -94,6 +96,7 @@ def run(args: argparse.Namespace) -> int:
                 saver,
                 run_id,
                 vision_client,
+                gateway=gateway,
             )
     finally:
         shutdown_tracing()  # flushes: a CLI that just exits loses its last spans
@@ -107,6 +110,10 @@ def run(args: argparse.Namespace) -> int:
     summary = ", ".join(f"{count} {decision}" for decision, count in sorted(counts.items()))
     waiting = sum(result.status == "awaiting_approval" for result in results)
     print(f"\n{len(results)} invoices via {client.model}: {summary}; {waiting} wait for approval")
+    print(
+        f"Acted through gapura (mock servers): {len(office.payments)} payments scheduled, "
+        f"{len(office.outbox)} vendor emails sent"
+    )
     print(f"Run {run_id}. Answer with: uv run lunas approve {run_id}/<file> --decision ...")
     if tracing:
         # Not a delivery receipt: a rejected export is reported by the exporter on stderr.
@@ -145,8 +152,8 @@ def approve(args: argparse.Namespace) -> int:
         note=args.note,
         decided_at=datetime.now(UTC),
     )
-    with checkpoints(settings, required=True) as saver:
-        graph = build_graph(erp, None, settings, saver)
+    with checkpoints(settings, required=True) as saver, local_gateway(erp) as (gateway, _):
+        graph = build_graph(erp, None, settings, saver, gateway=gateway)
         try:
             state = resume_approval(graph, args.thread_id, answer)
         except ValueError as error:
@@ -156,6 +163,8 @@ def approve(args: argparse.Namespace) -> int:
         f"{args.thread_id}: code decided {state.decision.value}, {answer.approver} decided "
         f"{state.approval.decision.value}"
     )
+    for action in state.actions:
+        print(f"  {action.tool}: {action.status.value} {'; '.join(action.reasons)}")
     return 0
 
 

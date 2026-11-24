@@ -52,6 +52,8 @@ class Settings(BaseSettings):
     tax_rate: Decimal = DEFAULT_TAX_RATE
     # An otherwise clean invoice above this total goes to a human.
     approval_threshold: Decimal = Decimal(50_000_000)
+    # Our own addresses: an invoice email addressed to them is not a foreign address.
+    own_emails: list[str] = ["ap@lunas-nusantara.example"]
 
     # Tracing is off unless one of these is set. The endpoint is an OTLP/HTTP base URL
     # (Phoenix: http://localhost:6006); the file gets one JSON span per line.

@@ -167,3 +167,38 @@ def test_an_invoice_waiting_in_postgres_resumes_after_a_restart(out: Path):
         with psycopg.connect(url, autocommit=True) as connection:
             for table in ("checkpoint_writes", "checkpoint_blobs", "checkpoints"):
                 connection.execute(f"DELETE FROM {table} WHERE thread_id = %s", (thread_id,))
+
+
+def test_an_approved_invoice_is_paid_through_gapura_to_the_vendor_master(out: Path):
+    from lunas.gapura.gateway import Gateway, Status
+    from lunas.gapura.transport import McpServers
+    from lunas.servers import Backoffice, build_servers
+
+    records = load_ground_truth(out)
+    erp = ErpData.load(out)
+    clean, changed = first(out, "clean"), first(out, "bank_account_change")
+    office = Backoffice(erp)
+    with McpServers(build_servers(office)) as servers:
+        gateway = Gateway(servers, erp)
+        graph = build_graph(
+            erp, OracleClient(records), SETTINGS, memory_checkpointer(), gateway=gateway
+        )
+        paid = process_invoice(out / clean.file, erp, OracleClient(records), SETTINGS, graph=graph)
+        waiting = process_invoice(
+            out / changed.file, erp, OracleClient(records), SETTINGS, graph=graph
+        )
+        assert waiting.actions == []  # nothing happens while it waits for a person
+        state = resume_approval(graph, waiting.thread_id, ANSWER)
+
+    assert {a.tool: a.status for a in paid.actions} == {
+        "erp.post_ledger_entry": Status.EXECUTED,
+        "payments.schedule_payment": Status.EXECUTED,
+    }
+    assert [a.status for a in state.actions] == [Status.EXECUTED, Status.EXECUTED]
+    # The person approved an invoice that asks for a new account: the payment still goes
+    # to the account in the vendor master, never to the one printed on the invoice.
+    by_invoice = {p.invoice_number: p for p in office.payments}
+    vendor = erp.get_vendor(erp.get_po(changed.invoice.po_number).vendor_id)
+    assert changed.invoice.bank_account != vendor.bank_account
+    assert by_invoice[changed.invoice.invoice_number].bank_account == vendor.bank_account
+    assert by_invoice[changed.invoice.invoice_number].approved_by == "ana"

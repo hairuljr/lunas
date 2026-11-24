@@ -27,10 +27,12 @@ from pydantic import BaseModel
 
 from lunas.config import Settings
 from lunas.erp import ErpData
+from lunas.gapura.gateway import Gateway, Status
 from lunas.ingest.recorded import DocumentRecorder
 from lunas.llm import ChatClient, LLMRequestError, StructuredOutputError
 from lunas.models import Backend, Decision, Invoice, Issue, LineItem
 from lunas.pipeline.checks import EXTRACTION_FAILED, LLM_UNAVAILABLE, check_invoice
+from lunas.pipeline.nodes.act import ActionTaken, act
 from lunas.pipeline.nodes.contract import ContractFinding, check_contract
 from lunas.pipeline.nodes.decide import decide
 from lunas.pipeline.nodes.investigate import (
@@ -84,6 +86,10 @@ class InvoiceState(BaseModel):
     decision: Decision | None = None
     reasons: list[Issue] = []
     approval: Approval | None = None
+    # The scanner's verdict on the raw text (step 2), found where the text is read.
+    screening: list[Issue] = []
+    # What step 10 did through gapura. Empty when the graph runs without a gateway.
+    actions: list[ActionTaken] = []
 
 
 def needs_approval(state: InvoiceState) -> bool:
@@ -95,6 +101,7 @@ def needs_approval(state: InvoiceState) -> bool:
 _STATE_TYPES = [
     InvoiceState, Approval, ApprovalRequest, Invoice, LineItem, Issue, Decision, Route,
     ContractFinding, InvestigationReport, Diagnosis, Evidence, EvidenceKind, ExceptionCause,
+    ActionTaken, Status,
 ]  # fmt: skip
 SERDE = JsonPlusSerializer(
     allowed_msgpack_modules=[(cls.__module__, cls.__name__) for cls in _STATE_TYPES]
@@ -132,17 +139,25 @@ def build_graph(
     investigate: bool = False,
     vision_client: ChatClient | None = None,
     documents: DocumentRecorder | None = None,
+    gateway: Gateway | None = None,
 ) -> CompiledStateGraph:
     """`client` may be None only to resume an approval: no node after it calls a model.
     With `vision_client`, a doubtful OCR read is read a second time (`nodes.read`).
-    With `documents`, reads are recorded or replayed (`ingest.recorded`)."""
+    With `documents`, reads are recorded or replayed (`ingest.recorded`). With `gateway`,
+    the final decision is acted on through gapura (step 10); without, nothing is acted on."""
+    known_emails = frozenset(erp.vendor_emails() | set(settings.own_emails))
 
     def read(state: InvoiceState) -> dict:
         path = Path(state.path)
         backend = first_backend(path, settings, documents)
         try:
-            read = read_invoice(path, client, vision_client, settings, documents)
-            return {"backend": read.backend, "invoice": read.invoice, "grounding": read.grounding}
+            read = read_invoice(path, client, vision_client, settings, documents, known_emails)
+            return {
+                "backend": read.backend,
+                "invoice": read.invoice,
+                "grounding": read.grounding,
+                "screening": read.screening,
+            }
         except (StructuredOutputError, LLMRequestError) as error:
             # An invoice that could not be read is never paid and never silently dropped,
             # and one failed request does not take the rest of the batch down with it.
@@ -152,7 +167,11 @@ def build_graph(
             return {"backend": backend, "issues": [Issue(code=code, message=str(error))]}
 
     def check(state: InvoiceState) -> dict:
-        return {"issues": state.grounding + check_invoice(state.invoice, erp, settings)}
+        return {
+            "issues": state.screening
+            + state.grounding
+            + check_invoice(state.invoice, erp, settings)
+        }
 
     def contract(state: InvoiceState) -> dict:
         if retriever is None:
@@ -179,6 +198,7 @@ def build_graph(
             retriever.search_clauses if retriever else None,
             state.findings,
             tax_rate=settings.tax_rate,
+            gateway=gateway,
         )
         return {"investigation": report}
 
@@ -215,6 +235,24 @@ def build_graph(
             )
         return {"approval": answer}
 
+    def action(state: InvoiceState) -> dict:
+        if gateway is None or state.invoice is None:
+            return {}
+        decision = state.approval.decision if state.approval else state.decision
+        with span("act", {"app.decision": decision.value}) as current:
+            actions = act(
+                state.invoice,
+                decision,
+                state.reasons,
+                erp,
+                gateway,
+                approved_by=state.approval.approver if state.approval else None,
+            )
+            set_attributes(
+                current, {"app.act.statuses": [f"{a.tool}:{a.status.value}" for a in actions]}
+            )
+        return {"actions": actions}
+
     graph = StateGraph(InvoiceState)
     for name, node in (
         ("read", read),
@@ -224,6 +262,7 @@ def build_graph(
         ("investigate", investigation),
         ("decide", decision),
         ("approval", approval),
+        ("act", action),
     ):
         graph.add_node(name, node)
     graph.add_edge(START, "read")
@@ -239,9 +278,10 @@ def build_graph(
     )
     graph.add_edge("investigate", "decide")
     graph.add_conditional_edges(
-        "decide", lambda s: "approval" if needs_approval(s) else END, ["approval", END]
+        "decide", lambda s: "approval" if needs_approval(s) else "act", ["approval", "act"]
     )
-    graph.add_edge("approval", END)
+    graph.add_edge("approval", "act")
+    graph.add_edge("act", END)
     return graph.compile(checkpointer=checkpointer)
 
 

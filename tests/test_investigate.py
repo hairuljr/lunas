@@ -318,3 +318,49 @@ def test_why_the_loop_stopped_is_recorded():
     assert investigate(INVOICE, [ISSUE], ERP, Model()).stopped == "turn_limit"
     down = investigate(INVOICE, [ISSUE], ERP, Model(LLMRequestError("RateLimitError: busy")))
     assert (down.stopped, down.error) == ("llm_unavailable", "RateLimitError: busy")
+
+
+def test_behind_gapura_every_tool_is_authorized_for_the_investigator_role():
+    from lunas.gapura.gateway import Gateway, Status
+    from lunas.gapura.transport import McpServers
+    from lunas.servers import Backoffice, build_servers
+
+    model = Model(
+        call("get_purchase_order", po_number="PO-001"),
+        call("get_billing_position", po_number="PO-001"),
+        call("get_vendor_terms"),
+        report("separate_delivery", ("goods_receipt", "GR-001B"), ("ledger_invoice", "INV-0100")),
+    )
+    with McpServers(build_servers(Backoffice(ERP))) as servers:
+        gateway = Gateway(servers, ERP)
+        result = investigate(INVOICE, [ISSUE], ERP, model, gateway=gateway)
+
+    assert result.diagnoses[0].evidence_valid
+    assert [(e.role, e.tool, e.status) for e in gateway.audit] == [
+        ("investigator", "erp.get_po", Status.ALLOWED),
+        ("investigator", "erp.get_po", Status.ALLOWED),
+        ("investigator", "erp.get_goods_receipts", Status.ALLOWED),
+        ("investigator", "erp.find_invoices", Status.ALLOWED),
+        ("investigator", "erp.get_vendor", Status.ALLOWED),
+    ]
+
+
+def test_an_investigation_tool_outside_the_policy_is_refused():
+    from lunas.gapura.gateway import Gateway
+    from lunas.gapura.policy import load_policy
+    from lunas.gapura.transport import McpServers
+    from lunas.servers import Backoffice, build_servers
+
+    policy = load_policy()
+    narrowed = policy.model_copy(
+        update={
+            "roles": {
+                **policy.roles,
+                "investigator": policy.roles["investigator"].model_copy(update={"tools": []}),
+            }
+        }
+    )
+    model = Model(call("get_purchase_order", po_number="PO-001"), report("separate_delivery"))
+    with McpServers(build_servers(Backoffice(ERP))) as servers:
+        investigate(INVOICE, [ISSUE], ERP, model, gateway=Gateway(servers, ERP, narrowed))
+    assert "not allowed for role investigator" in model.seen[1][-1]["content"]

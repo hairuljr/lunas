@@ -1,35 +1,83 @@
-# gapura policy (draft). Not loaded by any code yet; the schema is fixed in week 3.
-# Labels drive taint tracking: a session that has used a `reads_private` tool and has
-# seen `returns_untrusted` content needs approval for any `can_exfiltrate` tool.
+# gapura policy, schema version 1 (loaded by lunas.gapura.policy; an unknown key, label,
+# constraint or tool name fails the load, so a typo can never switch a control off).
+#
+# Default deny: a tool that is not listed here, or not listed for the caller's role, is
+# refused. Taint is tracked per session (one invoice, one caller) from labels:
+#   untrusted - the session has seen content written outside the company (the invoice)
+#   private   - the session has read private records (set by `reads_private` tools)
+version: 1
 
-session:
-  # Every session starts tainted: the invoice itself is untrusted content.
-  initial_taint: [untrusted]
+roles:
+  # lunas acting on a decision. Its inputs are typed fields that code has already
+  # validated, grounded in the document and matched against the PO and vendor master;
+  # the raw invoice text never reaches it, so it starts clean.
+  act:
+    initial_taint: []
+    tools: [erp.post_ledger_entry, payments.schedule_payment, mail.send_vendor_email]
+  # lunas' exception investigation: read-only, and it sees free-text invoice fields.
+  investigator:
+    initial_taint: [untrusted]
+    # Its tools run in-process (pipeline/nodes/investigate.py) and are authorized here
+    # first, each mapped to the records it reads.
+    tools: [erp.get_vendor, erp.get_po, erp.get_goods_receipts, erp.find_invoices,
+            contracts.search]
+  # A general agent that reads the raw invoice and holds every tool (the baseline
+  # agent put behind the gateway).
+  agent:
+    initial_taint: [untrusted]
+    tools:
+      - erp.get_vendor
+      - erp.get_po
+      - erp.get_goods_receipts
+      - erp.find_invoices
+      - payments.schedule_payment
+      - mail.send_email
 
 tools:
   erp.get_vendor:
     labels: [reads_private]
   erp.get_po:
     labels: [reads_private]
-  erp.get_goods_receipt:
+  erp.get_goods_receipts:
     labels: [reads_private]
   erp.find_invoices:
     labels: [reads_private]
+  # In-process (the Postgres retriever), not an MCP tool: authorized, not pinned.
   contracts.search:
     labels: []
   erp.post_ledger_entry:
     labels: [writes]
-    idempotency_key: invoice_id
+    idempotency_key: idempotency_key
   payments.schedule_payment:
-    labels: [writes, can_exfiltrate]
-    idempotency_key: invoice_id
+    labels: [writes, moves_money]
+    idempotency_key: idempotency_key
     constraints:
-      # The invariant: the destination is never taken from the invoice.
-      - destination_account == vendor_master.bank_account
+      # The invariant: money only goes to the account in the vendor master.
+      - destination_is_vendor_account
+      - amount_is_positive
     approval:
       amount_above: 50000000
   mail.send_vendor_email:
-    labels: [can_exfiltrate]
-    constraints:
-      - recipient in vendor_master.emails
-      - body_from_template
+    labels: [writes, can_exfiltrate]
+    constraints: [template_only]
+  mail.send_email:
+    labels: [writes, can_exfiltrate]
+    constraints: [recipient_is_vendor_email]
+
+# Evaluated in order; the strictest outcome wins (deny > approval > allow).
+taint:
+  # Untrusted content plus private data plus a way out: the lethal trifecta.
+  - session: [untrusted, private]
+    tool_label: can_exfiltrate
+    outcome: approval
+  # Content written by an outsider never moves money without a person.
+  - session: [untrusted]
+    tool_label: moves_money
+    outcome: approval
+
+# Arguments of `can_exfiltrate` and `moves_money` tools are searched for private data
+# that the call has no reason to carry; a hit denies the call.
+egress:
+  vendor_bank_accounts: true   # any account number in the vendor master, except the payee's own
+  vendor_emails: true          # any vendor email except the recipient's
+  secrets: true                # API keys, tokens, private keys

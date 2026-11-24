@@ -34,6 +34,7 @@ class ErpData:
         invoice_history: list[InvoiceRecord] | None = None,
     ) -> None:
         self._vendors = {vendor.vendor_id: vendor for vendor in vendors}
+        self._vendor_emails = frozenset(vendor.email.lower() for vendor in vendors)
         self._vendors_by_name = {normalize(vendor.name): vendor for vendor in vendors}
         self._purchase_orders = {po_key(po.po_number): po for po in purchase_orders}
         self._goods_receipts: dict[str, list[GoodsReceipt]] = {}
@@ -55,6 +56,13 @@ class ErpData:
             goods_receipts=read(GOODS_RECEIPTS_FILE, GoodsReceipt),
             invoice_history=read(INVOICE_HISTORY_FILE, InvoiceRecord),
         )
+
+    def vendors(self) -> list[Vendor]:
+        return list(self._vendors.values())
+
+    def vendor_emails(self) -> frozenset[str]:
+        """Every vendor email in the vendor master, lowercased."""
+        return self._vendor_emails
 
     def get_vendor(self, vendor_id: str) -> Vendor | None:
         return self._vendors.get(vendor_id)

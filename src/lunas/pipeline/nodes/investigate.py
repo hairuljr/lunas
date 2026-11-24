@@ -22,6 +22,7 @@ from pydantic import BaseModel
 
 from lunas.config import DEFAULT_TAX_RATE
 from lunas.erp import ErpData
+from lunas.gapura.gateway import Status
 from lunas.llm import LLMRequestError, Message, ToolChatClient, load_prompt
 from lunas.models import (
     ContractClause,
@@ -300,6 +301,18 @@ def billing_position(
     }
 
 
+# Each investigation tool, as the gapura tools whose records it reads (role
+# `investigator`). An unmapped name is authorized as itself and so refused by default deny.
+GAPURA_TOOLS = {
+    "get_purchase_order": ("erp.get_po",),
+    "get_goods_receipts": ("erp.get_goods_receipts",),
+    "get_billing_position": ("erp.get_po", "erp.get_goods_receipts", "erp.find_invoices"),
+    "get_vendor_invoices": ("erp.find_invoices",),
+    "get_vendor_terms": ("erp.get_vendor",),
+    "search_contract": ("contracts.search",),
+}
+
+
 class _Session:
     """The tools, scoped to one vendor, and every record id they returned."""
 
@@ -310,8 +323,12 @@ class _Session:
         contracts: ContractSearch | None,
         invoice: Invoice,
         tax_rate: Decimal,
+        gateway=None,
     ) -> None:
         self.erp = erp
+        # Behind gapura, each call is authorized first as role `investigator`.
+        self.gateway = gateway
+        self.gate_session = gateway.session("investigator") if gateway else None
         self.vendor = vendor
         self.contracts = contracts
         self.invoice = invoice
@@ -323,6 +340,11 @@ class _Session:
     def call(self, name: str, arguments: str) -> str:
         try:
             args = json.loads(arguments or "{}")
+            if self.gateway is not None:
+                for tool in GAPURA_TOOLS.get(name, (f"investigate.{name}",)):
+                    verdict = self.gateway.authorize(self.gate_session, tool, args)
+                    if verdict.status != Status.ALLOWED:
+                        return verdict.for_model()
             if name == "get_purchase_order":
                 po = self.erp.get_po(str(args["po_number"]))
                 if po is None or po.vendor_id != self.vendor.vendor_id:
@@ -485,6 +507,7 @@ def investigate(
     findings: list[ContractFinding] | None = None,
     max_turns: int = MAX_TURNS,
     tax_rate: Decimal = DEFAULT_TAX_RATE,
+    gateway=None,
 ) -> InvestigationReport | None:
     """Diagnose the investigable issues. Returns None if there is no PO or vendor to work
     from; never changes the decision."""
@@ -494,7 +517,7 @@ def investigate(
     if not issues or vendor is None:
         return None
 
-    session = _Session(erp, vendor, contracts, invoice, tax_rate)
+    session = _Session(erp, vendor, contracts, invoice, tax_rate, gateway)
     session.fetched[EvidenceKind.INVOICE].add(invoice.invoice_number)
     brief = build_brief(invoice, issues, vendor, findings or [])
     messages: list[Message] = [
