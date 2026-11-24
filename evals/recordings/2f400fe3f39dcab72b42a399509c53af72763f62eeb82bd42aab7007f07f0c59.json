@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_zl006ac3j8g683cripunwrc3",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"cause\": \"short_delivery\", \"evidence\": [{\"detail\": \"Line 'Sabun Cuci Tangan 5L' ordered quantity 17 at unit price 109600.\", \"kind\": \"purchase_order\", \"ref\": \"PO-2026-0103\"}, {\"detail\": \"Only goods receipt on this PO, dated 2026-10-03: received 5 units of 'Sabun Cuci Tangan 5L' (all other lines received in full).\", \"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0103\"}, {\"detail\": \"Billing position: value received with tax 13,536,117 vs invoiced_including_this 14,995,989, within_received = false, and invoiced_before is empty so no earlier invoice billed these goods.\", \"kind\": \"purchase_order\", \"ref\": \"PO-2026-0103\"}, {\"detail\": \"Line 3 bills 17 x 109600 = 1,863,200 for 'Sabun Cuci Tangan 5L'.\", \"kind\": \"invoice\", \"ref\": \"GTK-26-00730\"}], \"explanation\": \"The 17 units billed exceed the 5 units actually received on GR-2026-0103 and no prior invoice billed this item, so the invoice over-bills a short delivery rather than duplicating an earlier invoice.\", \"issue_code\": \"quantity_exceeds_received\", \"line\": null}]}"
+      }
+    ]
+  }
+}

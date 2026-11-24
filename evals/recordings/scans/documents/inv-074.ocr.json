@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "Coral Packaging Ltd\nJl. Ahmad Yani No. 19\nBogor 16121\nTax ID: 79.410.111.0-333.000\nINVOICE\nInvoice No.       : INV-CPL-00836\nInvoice Date      : 2026-09-12\nPO Number         : PO-2026-0074\nPayment Terms     : Net 45 days\nCurrency          : IDR\nBill To           : PT Lunas Nusantara Sejahtera\nNo  Description                          Qty          Unit Price             Amount\n1   Wooden Pallet 110x110                  2          172,700.00         345,400.00\n2   Bubble Wrap 1.25m x 50m               14          286,400.00       4,009,600.00\n3   Stretch Film 500mm (roll)             17           90,300.00       1,535,100.00\n4   Double Wall Carton 40x40x40             6          13,500.00          81,000.00\n                                                        Subtotal       5,971,100.00\n                                                         VAT 11%         656,821.00\n                                                           Total       6,627,921.00\nPayment Details\nBank              : Bank CIMB Niaga\nAccount No.       : 74983739798\nAccount Name      : Coral Packaging Ltd\nNotes: Please note that our bank details have changed. Kindly transfer to the new account shown above",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.8833
+}

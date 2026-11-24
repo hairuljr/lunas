@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_1326b5f5ca4f4585838a79a8",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"price_mismatch\", \"line\": 1, \"cause\": \"contract_price_not_yet_effective\", \"evidence\": [{\"kind\": \"contract_clause\", \"ref\": \"KTR-V-006#11.1\", \"detail\": \"Addendum No. 1 dated August 26, 2026 changes the Black Laser Printer Toner unit price to IDR 842,400.00 only from October 8, 2026.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-006#2.2\", \"detail\": \"A unit price change takes effect only through a written addendum and never retroactively.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0039\", \"detail\": \"PO line 1 (Black Laser Printer Toner) is priced at 730,600 per unit for quantity 10.\"}, {\"kind\": \"invoice\", \"ref\": \"JOF/2026/00235\", \"detail\": \"Invoice dated 2026-09-24 bills line 1 at 842,400 per unit, before the 2026-10-08 effective date.\"}], \"explanation\": \"Line 1 is billed at the new addendum price of 842,400 although the invoice date of 2026-09-24 precedes the clause's effective date of 2026-10-08, so the PO price of 730,600 still applies.\"}]}"
+      }
+    ]
+  }
+}

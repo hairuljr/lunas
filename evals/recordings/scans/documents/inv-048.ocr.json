@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "PT Kemas Prima Indonesia\nJl. Raya Serpong KM 7\nTangerang Selatan 15310\nNPWP: 08.266.740.9-411.000\nFAKTUR\nNo. Faktur       : 00840/KPI/2026\nTanggal          : 2026-10-12\nNo. PO           : PO-2026-0048\nTermin Pembayaran : 45 hari\nMata Uang        : IDR\nKepada           : PT Lunas Nusantara Sejahtera\nNo  Deskripsi                           Qty        Harga Satuan            Jumlah\n1   Palet Kayu 110x110                    17            185.300          3.150.100\n2   Bubble Wrap 1,25m x 50m               3             305.100            915.300\n3   Stretch Film 500mm (rol)              7              94.600            662.200\n4   Label Pengiriman A6 (rol)             15             79.200          1.188.000\n                                                       Subtotal          5.915.600\n                                                        PPN 11%            650.716\n                                                          Total          6.566.316\nPembayaran\nBank             : Bank Permata\nNo. Rekening     : 4102583697\nAtas Nama        : PT Kemas Prima Indonesia\nCatatan: Terima kasih atas kerja sama Anda.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9054
+}

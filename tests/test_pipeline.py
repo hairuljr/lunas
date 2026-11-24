@@ -56,8 +56,10 @@ def test_pipeline_reaches_the_labelled_decision_for_every_invoice(out: Path):
     for record, result in zip(records, results, strict=True):
         assert result.backend == "pdf_text"
         assert result.invoice == record.invoice
-        assert result.decision == record.expected_decision, record.id
-        assert sorted({i.code for i in result.issues}) == record.expected_issue_codes
+        # No retriever, so no contract check: what the deterministic checks alone conclude.
+        assert sorted({i.code for i in result.issues}) == record.expected_check_codes
+        if record.expected_check_codes == record.expected_issue_codes:
+            assert result.decision == record.expected_decision, record.id
 
 
 def test_failed_extraction_is_held_not_approved(out: Path):

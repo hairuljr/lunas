@@ -1,0 +1,34 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by pulling the purchase order, its goods receipts, the billing position, and this vendor's ledger history.",
+    "tool_calls": [
+      {
+        "id": "call_94812b0695bc45549c92cea7",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0194\"}"
+      },
+      {
+        "id": "call_d7ca14008c2a4c5084af581d",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0194\"}"
+      },
+      {
+        "id": "call_c40a7c38c1f14703b7a332b4",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0194\"}"
+      },
+      {
+        "id": "call_358d95dee1bd4c74be668626",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_8e01856b95a6439ab6a8fe36",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "Coral Office Supply Co\nJl. Diponegoro No. 160\nDenpasar 80113\nTax ID: 57.316.717.1-808.000\nINVOICE\nInvoice No.       : COS/2026/00801\nInvoice Date      : 2026-10-10\nPO Number         : PO-2026-0056\nPayment Terms     : Net 14 days\nCurrency          : IDR\nBill To           : PT Lunas Nusantara Sejahtera\nNo  Description                           Qty         Unit Price             Amount\n1   Black Gel Pens (box)                    3          49,300.00          147,900.00\n2   A4 Copy Paper 80gsm (ream)             15          56,300.00          844,500.00\n3   Ergonomic Office Chair                  3       1,807,900.00        5,423,700.00\n                                                        Subtotal        6,416,100.00\n                              PAID                       VAT 11%          705,771.00\n                                                           Total        7,121,871.00\nPayment Details\nBank              : Bank Rakyat Indonesia\nAccount No.       : 1532228980\nAccount Name      : Coral Office Supply Co",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9488
+}

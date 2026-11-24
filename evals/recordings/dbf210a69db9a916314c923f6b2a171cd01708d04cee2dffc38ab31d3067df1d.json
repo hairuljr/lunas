@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sumber Makmur Abadi\", \"invoice_number\": \"INV/2026/10/0839\", \"invoice_date\": \"2026-10-01\", \"due_date\": \"2026-10-31\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0121\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Papan Tulis Putih 120x240\", \"quantity\": 3, \"unit_price\": 1303900, \"amount\": 3911700}], \"subtotal\": 3911700, \"tax\": 430287, \"total\": 4341987, \"bank_account\": \"5270418896\", \"notes\": null}"
+}

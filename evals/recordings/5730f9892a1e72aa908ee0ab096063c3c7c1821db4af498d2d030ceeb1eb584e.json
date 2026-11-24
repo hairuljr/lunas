@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Sinar Utama Kemasan\", \"invoice_number\": \"SUK-26-00113\", \"invoice_date\": \"2026-09-26\", \"due_date\": \"2026-10-26\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0240\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Stretch Film 500mm (rol)\", \"quantity\": 17, \"unit_price\": 96100, \"amount\": 1633700}, {\"description\": \"Kardus Double Wall 40x40x40\", \"quantity\": 15, \"unit_price\": 14000, \"amount\": 210000}, {\"description\": \"Palet Kayu 110x110\", \"quantity\": 10, \"unit_price\": 179900, \"amount\": 1799000}], \"subtotal\": 3642700, \"tax\": 400697, \"total\": 4043397, \"bank_account\": \"553958517971\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_8fc13f04fb8f4230a124b4ad",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0240\"}"
+      },
+      {
+        "id": "call_cdd97c36fbd94b29a30b3f22",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0240\"}"
+      },
+      {
+        "id": "call_c069e996bdb1493aa1751d9d",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0240\"}"
+      },
+      {
+        "id": "call_22d925967ffa49cfbc8c95dd",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_8ed6167c6d22436981692219",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_f96d24eb78dd452ab7581f5c",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"What price is set for Stretch Film 500mm and from what effective date? Clause 11.1\"}"
+      }
+    ]
+  }
+}

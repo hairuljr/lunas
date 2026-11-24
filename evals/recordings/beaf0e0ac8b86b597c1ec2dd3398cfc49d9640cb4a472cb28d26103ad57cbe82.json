@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Mandiri Cemerlang Boga\", \"invoice_number\": \"MCB26090403\", \"invoice_date\": \"2026-09-28\", \"due_date\": \"2026-10-28\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0155\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 2, \"unit_price\": 39200, \"amount\": 78400}, {\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 5849100, \"amount\": 5849100}, {\"description\": \"Gula Pasir 1kg\", \"quantity\": 14, \"unit_price\": 16700, \"amount\": 233800}, {\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 16, \"unit_price\": 205700, \"amount\": 3291200}], \"subtotal\": 9452500, \"tax\": 1039775, \"total\": 10492275, \"bank_account\": \"3339682443689\", \"notes\": \"Terima kasih atas kerja sama Anda.\"}"
+}

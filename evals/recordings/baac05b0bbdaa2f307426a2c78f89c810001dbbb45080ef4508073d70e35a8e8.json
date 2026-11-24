@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "\n\n",
+    "tool_calls": [
+      {
+        "id": "call_dc7b73104b3e4a5e9983e499",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0090\"}"
+      },
+      {
+        "id": "call_59ae8d6426004950bffc6a6a",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0090\"}"
+      },
+      {
+        "id": "call_6733b608fffb4265a9ccf4b9",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0090\"}"
+      },
+      {
+        "id": "call_47a29b185e64490791c4a160",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

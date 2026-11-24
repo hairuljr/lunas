@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by gathering the purchase order, contract, and billing position records.",
+    "tool_calls": [
+      {
+        "id": "call_00_kvz9e6twuynval8qeeounigj",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0146\"}"
+      },
+      {
+        "id": "call_01_z3cx83hlfcs55fwx526kccav",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Is there a contract price for Black Laser Printer Toner, and from what effective date?\"}"
+      },
+      {
+        "id": "call_02_lyvmtqysd00o1vbz7fua56up",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0146\"}"
+      }
+    ]
+  }
+}

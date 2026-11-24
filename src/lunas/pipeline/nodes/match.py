@@ -1,16 +1,11 @@
 """Step 5: 3-way match of an extracted invoice against the PO, goods receipts and vendor
 master. Deterministic: every lookup and comparison here is code, never an LLM."""
 
-import re
 from decimal import Decimal
 
 from lunas.erp import ErpData
 from lunas.models import Invoice, Issue, Vendor
-
-
-def normalize(text: str) -> str:
-    """Case, punctuation and spacing do not distinguish two names or item descriptions."""
-    return " ".join(re.sub(r"[^\w\s]", " ", text.casefold()).split())
+from lunas.text import digits, normalize
 
 
 def match_invoice(
@@ -44,6 +39,7 @@ def match_invoice(
                 )
             )
         issues += _check_bank_account(invoice.bank_account, vendor)
+        issues += _check_payment_terms(invoice, vendor)
 
     if invoice.currency.strip().upper() != po.currency.strip().upper():
         issues.append(
@@ -103,6 +99,7 @@ def match_invoice(
                     code="price_mismatch",
                     message=f"Line {index}: unit price {item.unit_price} != PO price "
                     f"{po_price} for {item.description!r}",
+                    line=index,
                 )
             )
 
@@ -126,28 +123,43 @@ def match_invoice(
     return issues
 
 
-def _digits(account: str) -> str:
-    return re.sub(r"\D", "", account)
-
-
 def _check_bank_account(account: str | None, vendor: Vendor) -> list[Issue]:
     """The invoice's account is never paid; it is only evidence. A different account
     number is the fraud signal. A value with no digits at all is a reading problem."""
     if account is None or not account.strip():
         return []
-    if not _digits(account):
+    if not digits(account):
         return [
             Issue(
                 code="bank_account_unreadable",
                 message=f"Invoice bank account {account!r} contains no account number",
             )
         ]
-    if _digits(account) != _digits(vendor.bank_account):
+    if digits(account) != digits(vendor.bank_account):
         return [
             Issue(
                 code="bank_account_mismatch",
                 message=f"Invoice names bank account {account}, which is not the account "
                 f"on file for {vendor.name}",
+            )
+        ]
+    return []
+
+
+def _check_payment_terms(invoice: Invoice, vendor: Vendor) -> list[Issue]:
+    """The vendor master holds the terms we agreed to pay by. An invoice may give us more
+    time, never less, whether it prints a term or a due date."""
+    asked = []
+    if invoice.payment_terms_days is not None:
+        asked.append(invoice.payment_terms_days)
+    if invoice.due_date is not None:
+        asked.append((invoice.due_date - invoice.invoice_date).days)
+    if asked and min(asked) < vendor.payment_terms_days:
+        return [
+            Issue(
+                code="payment_terms_mismatch",
+                message=f"Invoice asks for payment within {min(asked)} days; the terms on file "
+                f"for {vendor.name} are {vendor.payment_terms_days} days",
             )
         ]
     return []

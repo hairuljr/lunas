@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The billing position is decisive: the PO is fully received (30/14/20/18 across two receipts) and invoiced including this invoice equals value received exactly (`within_received: true`), so the identical total to INV-CPL-00849 is a second delivery, not a resubmission.",
+    "tool_calls": [
+      {
+        "id": "call_73185e1eff374b46b67bbfd4",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"separate_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0194\", \"detail\": \"Ordered 30 Stretch Film, 14 Shipping Labels, 20 Wooden Pallet, 18 Bubble Wrap at exactly the invoiced unit prices (82700 / 67300 / 168400 / 263200).\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0194A\", \"detail\": \"First delivery 2026-09-22: 15 / 7 / 10 / 9 — the quantities billed by earlier ledger invoice INV-CPL-00849.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0194B\", \"detail\": \"Second delivery 2026-09-30: 15 / 7 / 10 / 9 — the same quantities this invoice INV-CPL-00856 bills, received before the 2026-10-02 invoice date.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"INV-CPL-00849\", \"detail\": \"Earlier invoice of 2026-09-22 for 6398484.00 on PO-2026-0194, already invoiced against the first receipt.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0194\", \"detail\": \"get_billing_position: value received with tax 12796968, invoiced including this invoice 12796968, within_received = true — invoicing does not exceed receipts.\"}], \"explanation\": \"Although the total repeats INV-CPL-00849, this invoice covers the second goods receipt GR-2026-0194B on the same purchase order, and the billing position confirms total invoicing (12796968) remains within total value received (12796968), so it is a separate delivery rather than a resubmission.\"}]}"
+      }
+    ]
+  }
+}

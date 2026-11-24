@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Coral Packaging Ltd\", \"invoice_number\": \"INV-CPL-00856\", \"invoice_date\": \"2026-10-02\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0194\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 15, \"unit_price\": 82700.00, \"amount\": 1240500.00}, {\"description\": \"Shipping Labels A6 (roll)\", \"quantity\": 7, \"unit_price\": 67300.00, \"amount\": 471100.00}, {\"description\": \"Wooden Pallet 110x110\", \"quantity\": 10, \"unit_price\": 168400.00, \"amount\": 1684000.00}, {\"description\": \"Bubble Wrap 1.25m x 50m\", \"quantity\": 9, \"unit_price\": 263200.00, \"amount\": 2368800.00}], \"subtotal\": 5764400.00, \"tax\": 634084.00, \"total\": 6398484.00, \"bank_account\": \"53111529648\", \"notes\": null}"
+}

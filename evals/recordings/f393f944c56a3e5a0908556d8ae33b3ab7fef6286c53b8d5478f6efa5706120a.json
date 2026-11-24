@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Coral Foods Group\", \"invoice_number\": \"INV/2026/10/0300\", \"invoice_date\": \"2026-10-12\", \"due_date\": \"2026-10-26\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0260\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Meeting Catering (package)\", \"quantity\": 5, \"unit_price\": 1354600.00, \"amount\": 6773000.00}, {\"description\": \"Automatic Coffee Machine\", \"quantity\": 1, \"unit_price\": 5989800.00, \"amount\": 5989800.00}, {\"description\": \"Ground Arabica Coffee 1kg\", \"quantity\": 8, \"unit_price\": 205500.00, \"amount\": 1644000.00}], \"subtotal\": 14406800.00, \"tax\": 1584748.00, \"total\": 15991548.00, \"bank_account\": \"296906444999\", \"notes\": \"Thank you for your business.\"}"
+}

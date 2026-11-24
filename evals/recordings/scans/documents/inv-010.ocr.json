@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "CV Sari Rasa Catering                                                       FAKTUR\nJI. Malioboro No. 60\nYogyakarta 55213                                                 No. Faktur: INV.0750.09.2026\nNPWP: 10.045.893.1-541.000                                        Tanggal: 26 September 2026\n                                                                Jatuh Tempo: 10 Oktober 2026\n                                                                       No. PO: PO-2026-0010\nKepada:\nPT Lunas Nusantara Sejahtera\nJI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12190\nNo   Deskripsi                                   Qty       Harga Satuan             Jumlah\n1     Katering Rapat (paket)                       6           1.242.600          7.455.600\n2    Kopi Bubuk Arabika 1kg                        6            191.700           1.150.200\n3     Mesin Kopi Otomatis                          1           5.798.900          5.798.900\n                                                                Subtotal         14.404.700\n                                                               PPN 11%            1.584.517\n                           LUNAS                                   Total         15.989.217\n Semua nilai dalam Rupiah (IDR).\nPembayaran\nBank: Bank Syariah Indonesia\nNo. Rekening: 7153309842\nAtas Nama: CV Sari Rasa Catering",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9829
+}

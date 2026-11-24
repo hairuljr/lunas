@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Perkasa Cahaya Kemasan\", \"invoice_number\": \"INV/2026/10/0354\", \"invoice_date\": \"2026-10-08\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0139\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Bubble Wrap 1,25m x 50m\", \"quantity\": 12, \"unit_price\": 268600, \"amount\": 3223200}, {\"description\": \"Palet Kayu 110x110\", \"quantity\": 8, \"unit_price\": 188200, \"amount\": 1505600}, {\"description\": \"Label Pengiriman A6 (rol)\", \"quantity\": 19, \"unit_price\": 74100, \"amount\": 1407900}, {\"description\": \"Stretch Film 500mm (rol)\", \"quantity\": 12, \"unit_price\": 94500, \"amount\": 1134000}], \"subtotal\": 7270700, \"tax\": 799777, \"total\": 8070477, \"bank_account\": \"3976963276\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
+}

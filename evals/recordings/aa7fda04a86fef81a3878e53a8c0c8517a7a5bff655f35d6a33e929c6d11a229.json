@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Pacific Foods Group\", \"invoice_number\": \"INV/2026/09/0442\", \"invoice_date\": \"2026-09-07\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0120\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Automatic Coffee Machine\", \"quantity\": 1, \"unit_price\": 6120600.00, \"amount\": 6120600.00}, {\"description\": \"Meeting Catering (package)\", \"quantity\": 6, \"unit_price\": 1332000.00, \"amount\": 7992000.00}, {\"description\": \"Granulated Sugar 1kg\", \"quantity\": 13, \"unit_price\": 17700.00, \"amount\": 230100.00}, {\"description\": \"Mineral Water 19L Gallon\", \"quantity\": 3, \"unit_price\": 20000.00, \"amount\": 60000.00}], \"subtotal\": 14402700.00, \"tax\": 1584297.00, \"total\": 15986997.00, \"bank_account\": \"3559895203034\", \"notes\": \"Thank you for your business.\"}"
+}

@@ -1,27 +1,46 @@
 {
-  "recorded_at": "2026-11-13T02:46:46+00:00",
+  "recorded_at": "2026-11-24T04:04:25+00:00",
   "provider": "ai.sumopod.com",
   "model": "deepseek-v4.1-flash-1017",
-  "prompt": "extract.v1",
+  "prompt": "extract.v2",
   "structured_output": "json_schema",
   "system_role": "system",
   "dataset": {
     "seed": 20261112,
-    "invoices": 30,
+    "invoices": 300,
     "labels": {
-      "price_mismatch": 10,
-      "clean": 20
+      "clean": 93,
+      "price_mismatch": 23,
+      "quantity_mismatch": 23,
+      "duplicate": 23,
+      "wrong_tax": 23,
+      "no_po": 23,
+      "bank_account_change": 23,
+      "payment_terms": 23,
+      "price_amendment": 23,
+      "split_delivery": 23
+    },
+    "splits": {
+      "dev": 155,
+      "test": 145
     }
   },
-  "replies": 30,
+  "split": "dev",
+  "replies": 353,
   "fingerprint": {
-    "prompt": "79aba0d2ae3ebbee0630186a8c2b0f913f14917b4586e4d5d296a729c0f9dadf",
-    "schema": "d0859e4c2ae09d38a25092e3a5f84f9c4fa0d0836ac3740ca7501ca7bc6438d9",
-    "documents": "6e2ecb30302c29daf91d8d30e39ff04253d94f3039e8651f7466fdd8dd4a029d"
+    "prompt": "82d803aa419a84dca052f8a757c54ea280825913cfdd3714dac9180c26c2b50a",
+    "schema": "b46c8e4620368ae2eb3dad61b0a67e377d1f1f310c82efe481f6ee729963c40b",
+    "documents": "ba2bc67928c7a3a412022da366e6bd8ed57fc64558aa7285bd3e796b5f4144a8",
+    "contract_prompt": "6cf90d27355c92946b6b0a2ceaaf384cd61d81501d4687014a28b51e0f2cbf28",
+    "investigate_prompt": "c278a662e897cf0fdd72d1df1f58244ad785389ff961c76e75157ffe4f22e570",
+    "contracts": "e96a3322c186ba0d96232193ff12302e518500ad72fb4dfee5e0da84f06f56ee"
   },
+  "investigate": true,
   "baseline": {
     "key_field_accuracy": 1.0,
     "decision_accuracy": 1.0,
-    "false_approve_rate": 0.0
+    "false_approve_rate": 0.0,
+    "checkpoint_accuracy": 1.0,
+    "cause_accuracy": 1.0
   }
 }

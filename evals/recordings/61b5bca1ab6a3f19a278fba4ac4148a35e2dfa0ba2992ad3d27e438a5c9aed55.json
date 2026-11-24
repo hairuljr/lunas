@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The billing position settles this: the PO has two goods receipts (GR-2026-0020A on 2026-10-19 and GR-2026-0020B on 2026-11-02), and total invoicing including this invoice equals value received and is `within_received`. The earlier invoice INV/2026/10/0260 matched the first delivery; this invoice matches the second delivery.",
+    "tool_calls": [
+      {
+        "id": "call_f71849794d4249d3bef2f6e9",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"separate_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0020\", \"detail\": \"Ordered 4 tea bags and 2 coffee machines; two deliveries expected.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0020A\", \"detail\": \"Received 2026-10-19: 2 tea bags, 1 coffee machine.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0020B\", \"detail\": \"Received 2026-11-02: 2 tea bags, 1 coffee machine.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"INV/2026/10/0260\", \"detail\": \"Earlier invoice of 2026-10-20 covering the first delivery, total 7649343.\"}, {\"kind\": \"invoice\", \"ref\": \"INV/2026/11/0266\", \"detail\": \"This invoice bills 2 tea bags and 1 coffee machine, total 7649343.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0020\", \"detail\": \"Billing position: value received with tax 15298686, invoiced including this invoice 15298686, within_received true.\"}], \"explanation\": \"Although the total matches INV/2026/10/0260, this invoice bills the second delivery recorded in GR-2026-0020B, and the billing position confirms total invoicing on PO-2026-0020 remains within_received.\"}]}"
+      }
+    ]
+  }
+}

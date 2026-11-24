@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "Coral Foods Group                                                            INVOICE\nJI. Pemuda No. 193\nMakassar 90111                                                    Invoice No.: INV/2026/11/0266\nTax ID: 55.452.515.0-712.000                                    Invoice Date: November 3, 2026\n                                                                  Due Date: November 17, 2026\n                                                                    PO Number: PO-2026-0020\nBill To:\nPT Lunas Nusantara Sejahtera\nJI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12190\nNo    Description                                Qty           Unit Price           Amount\n1     Tea Bags (box of 100)                        2            37,900.00          75,800.00\n2     Automatic Coffee Machine                      1        6,815,500.00       6,815,500.00\n                                                                 Subtotal       6,891,300.00\n                                                                VAT 11%           758,043.00\n                                                                    Total       7,649,343.00\nAll amounts are in Indonesian Rupiah (IDR).\n                                   PAID\nPayment Details\nBank: Bank CIMB Niaga\nAccount No.: 296906444999\nAccount Name: Coral Foods Group\nNotes: Late payments are subject to a 2% monthly charge.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9751
+}

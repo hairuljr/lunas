@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Pacific Foods Group\", \"invoice_number\": \"INV/2026/10/0433\", \"invoice_date\": \"2026-10-16\", \"due_date\": null, \"payment_terms_days\": 7, \"po_number\": \"PO-2026-0080\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Granulated Sugar 1kg\", \"quantity\": 3, \"unit_price\": 20100.00, \"amount\": 60300.00}, {\"description\": \"Ground Arabica Coffee 1kg\", \"quantity\": 20, \"unit_price\": 204700.00, \"amount\": 4094000.00}, {\"description\": \"Automatic Coffee Machine\", \"quantity\": 1, \"unit_price\": 6743700.00, \"amount\": 6743700.00}], \"subtotal\": 10898000.00, \"tax\": 1198780.00, \"total\": 12096780.00, \"bank_account\": \"3559895203034\", \"notes\": null}"
+}

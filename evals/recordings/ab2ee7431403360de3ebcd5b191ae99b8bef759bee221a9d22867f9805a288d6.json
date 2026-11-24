@@ -1,0 +1,34 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by gathering the purchase order, goods receipts, vendor invoices, terms, and contract information.",
+    "tool_calls": [
+      {
+        "id": "call_c2e8833f316a44588338a9f5",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0080\"}"
+      },
+      {
+        "id": "call_c3af942d3db5479086da23e8",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0080\"}"
+      },
+      {
+        "id": "call_bbb8b443b4764b0a985322b5",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_daae8fdb51bb4dc0bee54492",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_aa355df39cf14d0e8226015a",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"payment terms days\"}"
+      }
+    ]
+  }
+}

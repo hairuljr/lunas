@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Java Office Furnishings\", \"invoice_number\": \"JOF/2026/00261\", \"invoice_date\": \"2026-09-30\", \"due_date\": null, \"payment_terms_days\": 7, \"po_number\": \"PO-2026-0286\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Ergonomic Office Chair\", \"quantity\": 2, \"unit_price\": 1768900.0, \"amount\": 3537800.0}], \"subtotal\": 3537800.0, \"tax\": 389158.0, \"total\": 3926958.0, \"bank_account\": \"800114673900\", \"notes\": \"Late payments are subject to a 2% monthly charge.\"}"
+}

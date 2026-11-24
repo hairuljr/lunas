@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "                                     FAKTUR\nDari                                          Kepada\nPT Mulia Utama Alat Kantor                    PT Lunas Nusantara Sejahtera\nJI. Veteran No. 207                           JI. Jenderal Sudirman Kav. 52-53\nMakassar 90111                                Jakarta Selatan 12190\nNPWP 65.894.507.4-714.000\nNo. Faktur                  Tanggal             Jatuh Tempo        No.PO\nMUA26090127                 18/09/2026          02/11/2026          PO-2026-0021\nNo    Deskripsi                              Qty         Harga Satuan              Jumlah\n1     Map Arsip Ordner (lusin)                 13        Rp 252.600,00      Rp 3.283.800,00\n2     Kertas HVS A4 80gsm (rim)                7          Rp 53.600,00       Rp 375.200,00\n3     Toner Printer Laser Hitam                 8        Rp 801.200,00      Rp 6.409.600,00\n                                                           Subtotal       Rp 10.068.600,00\n                                                         PPN 11%           Rp 1.107.546,00\n                                                             Total        Rp 11.176.146,00\n Pembayaran\nBank Syariah Indonesia·No. Rekening 6669985731612 ·Atas Nama PT Mulia Utama Alat Kantor\n Catatan: Mohon cantumkan nomor faktur pada berita transfer.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9546
+}

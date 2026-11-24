@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_3crvve33rt67vufi9n9xq4e7",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"quantity_exceeds_received\", \"line\": null, \"cause\": \"short_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0103\", \"detail\": \"Line 'Sabun Cuci Tangan 5L' ordered quantity 17 at 109600.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0103\", \"detail\": \"Only goods receipt on this PO, dated 2026-10-03: received 5 of 'Sabun Cuci Tangan 5L' (all other lines received in full).\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0103\", \"detail\": \"Billing position for PO-2026-0103: value received with tax 13,536,117 vs this invoice total 14,995,989, invoiced_including_this 14,995,989, within_received = false; no earlier invoices on this PO (invoiced_before empty).\"}, {\"kind\": \"invoice\", \"ref\": \"GTK-26-00730\", \"detail\": \"Invoice line 3 bills 17 x 109600 = 1,863,200 for 'Sabun Cuci Tangan 5L'.\"}]}]}"
+      }
+    ]
+  }
+}

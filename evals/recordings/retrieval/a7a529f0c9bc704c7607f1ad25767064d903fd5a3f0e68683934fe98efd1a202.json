@@ -1,0 +1,65 @@
+[
+ {
+  "clause_id": "KTR-V-010#5.1",
+  "contract_id": "KTR-V-010",
+  "vendor_id": "V-010",
+  "number": "5.1",
+  "article": "5",
+  "article_title": "Pembayaran",
+  "text": "PIHAK PERTAMA membayar faktur yang lengkap dan benar paling lambat 14 hari kalender sejak tanggal faktur."
+ },
+ {
+  "clause_id": "KTR-V-010#5.2",
+  "contract_id": "KTR-V-010",
+  "vendor_id": "V-010",
+  "number": "5.2",
+  "article": "5",
+  "article_title": "Pembayaran",
+  "text": "Pembayaran ditransfer ke rekening PIHAK KEDUA di Bank Syariah Indonesia nomor 7153309842 atas nama CV Sari Rasa Catering."
+ },
+ {
+  "clause_id": "KTR-V-010#5.3",
+  "contract_id": "KTR-V-010",
+  "vendor_id": "V-010",
+  "number": "5.3",
+  "article": "5",
+  "article_title": "Pembayaran",
+  "text": "Atas keterlambatan pembayaran, PIHAK KEDUA berhak atas denda 1% per bulan dari jumlah yang terlambat."
+ },
+ {
+  "clause_id": "KTR-V-010#7.1",
+  "contract_id": "KTR-V-010",
+  "vendor_id": "V-010",
+  "number": "7.1",
+  "article": "7",
+  "article_title": "Pengiriman",
+  "text": "PIHAK KEDUA mengirimkan barang paling lambat 14 hari kalender sejak Purchase Order diterima."
+ },
+ {
+  "clause_id": "KTR-V-010#7.2",
+  "contract_id": "KTR-V-010",
+  "vendor_id": "V-010",
+  "number": "7.2",
+  "article": "7",
+  "article_title": "Pengiriman",
+  "text": "Pengiriman sebagian diperbolehkan; sisa barang dikirim dan ditagih setelah diterima."
+ },
+ {
+  "clause_id": "KTR-V-010#8.1",
+  "contract_id": "KTR-V-010",
+  "vendor_id": "V-010",
+  "number": "8.1",
+  "article": "8",
+  "article_title": "Jangka Waktu",
+  "text": "Perjanjian ini berlaku sejak 1 Januari 2026 sampai dengan 31 Desember 2027."
+ },
+ {
+  "clause_id": "KTR-V-010#8.2",
+  "contract_id": "KTR-V-010",
+  "vendor_id": "V-010",
+  "number": "8.2",
+  "article": "8",
+  "article_title": "Jangka Waktu",
+  "text": "Perjanjian dapat diperpanjang dengan kesepakatan tertulis kedua pihak."
+ }
+]

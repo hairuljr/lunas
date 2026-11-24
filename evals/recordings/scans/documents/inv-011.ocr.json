@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": " CV Utama Mandiri Alat Kantor                                              FAKTUR\n JI. Merdeka No. 161\n Jakarta Pusat 10110                                            No. Faktur: 0667/UMA/X/2026\n NPWP: 96.487.684.7-331.000                                         Tanggal: 17 Oktober 2026\n                                                               Jatuh Tempo: 31 Oktober 2026\n                                                                      No. PO: PO-2026-0011\nKepada:\nPT Lunas Nusantara Sejahtera\n JI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12190\nNo   Deskripsi                                  Qty       Harga Satuan            Jumlah\n1     Papan Tulis Putih 120x240                   1           1.520.500          1.520.500\n2     Map Arsip Ordner (lusin)                   19            313.400           5.954.600\n                                                               Subtotal          7.475.100\n                                                              PPN 11%             822.261\n                                                                  Total         8.297.361\nSemua nilai dalam Rupiah (IDR).\nPembayaran\nBank: Bank Mandiri\nNo. Rekening: 5761969869701\nAtas Nama: CV Utama Mandiri Alat Kantor",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9671
+}

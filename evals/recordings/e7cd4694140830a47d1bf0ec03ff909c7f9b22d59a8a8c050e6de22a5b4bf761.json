@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_f391f9791626476286573764",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"separate_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0224\", \"detail\": \"Orders 16 rolls Stretch Film 500mm @ 81,400 and 2 rolls Shipping Labels A6 @ 79,600 (with 11% tax = 1,622,376 total PO value).\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0224A\", \"detail\": \"First delivery, 2026-09-13: 8 rolls Stretch Film + 1 roll Shipping Labels.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0224B\", \"detail\": \"Second delivery on the same PO, 2026-09-26: 8 rolls Stretch Film + 1 roll Shipping Labels — exactly the quantities this invoice bills.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"INV/2026/09/0429\", \"detail\": \"Earlier invoice of 2026-09-15 for 811,188 on PO-2026-0224; it is the only prior invoicing recorded, so the matching 811,188 here is the second half, not the same goods again.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0224\", \"detail\": \"get_billing_position: value received with tax 1,622,376 vs invoiced including this invoice 1,622,376 — within_received = true.\"}], \"explanation\": \"The total matches INV/2026/09/0429 only because the PO was split into two equal deliveries, and this invoice bills the second goods receipt (GR-2026-0224B) rather than re-billing the first; billing position confirms the invoicing stays within_received.\"}]}"
+      }
+    ]
+  }
+}

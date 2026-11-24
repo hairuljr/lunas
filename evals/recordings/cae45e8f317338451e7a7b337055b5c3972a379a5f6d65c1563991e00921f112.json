@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"clause_id\": \"KTR-V-027#11.1\", \"quote\": \"Addendum No. 1 tanggal 24 Agustus 2026: terhitung sejak 4 Oktober 2026, harga satuan Lisensi Antivirus 1 Tahun diubah menjadi Rp 415.800 per unit.\", \"unit_price\": 415800, \"effective_date\": \"2026-10-04\"}"
+}

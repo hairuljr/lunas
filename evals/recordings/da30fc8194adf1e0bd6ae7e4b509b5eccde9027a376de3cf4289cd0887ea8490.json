@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by gathering the purchase order, receipts, billing position, and the vendor's earlier invoices.",
+    "tool_calls": [
+      {
+        "id": "call_00_0oln5p44dbstgcmw7zl7ix4p",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0134\"}"
+      },
+      {
+        "id": "call_01_d20u9zrvg6pwjo3ihxqwq4d7",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0134\"}"
+      },
+      {
+        "id": "call_02_i7u2t5zxerikcc92wlzj3m5x",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0134\"}"
+      },
+      {
+        "id": "call_03_l3yxz7rixdzbhxf1521cih7p",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

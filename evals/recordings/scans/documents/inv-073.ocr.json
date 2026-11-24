@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "                                     FAKTUR\nDari                                          Kepada\nCV Sakti Cemerlang Kebersihan                 PT Lunas Nusantara Sejahtera\nJI. Sisingamangaraja No. 211                   JI. Jenderal Sudirman Kav. 52-53\nMalang 65111                                   Jakarta Selatan 12190\nNPWP 36.140.369.4-261.000\nNo. Faktur                  Tanggal             Jatuh Tempo         No. PO\nSCK/2026/00532              01/10/2026          15/11/2026          PO-2026-0073\nNo   Deskripsi                                Qty         Harga Satuan              Jumlah\n1     Tisu Gulung (karton)                     20        Rp 308.200,00       Rp 6.164.000,00\n2    Sabun Cuci Tangan 5L                      14         Rp 116.100,00      Rp 1.625.400,00\n                                                           Subtotal        Rp 7.789.400,00\n                                                                             Rp 856.834,00\n                           LUNAS                               otal        Rp 8.646.234,00\nPembayaran\nBank Central Asia·No. Rekening 12279394005· Atas Nama CV Sakti Cemerlang Kebersihan\nCatatan: Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru\nyang tercantum di atas.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9691
+}

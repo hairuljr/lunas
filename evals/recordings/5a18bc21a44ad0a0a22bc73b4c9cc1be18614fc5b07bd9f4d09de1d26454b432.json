@@ -1,0 +1,34 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll gather the records for this purchase order.",
+    "tool_calls": [
+      {
+        "id": "call_990add579d674cb6a0f3192b",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0185\"}"
+      },
+      {
+        "id": "call_6c0f10697aca46f4b777302e",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0185\"}"
+      },
+      {
+        "id": "call_0334f5358c944ceb9dacc834",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0185\"}"
+      },
+      {
+        "id": "call_44e0bf805ed94938964a9906",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_58fc1a5af61b4f57b235239d",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"price for Mesin Kopi Otomatis on PO-2026-0185, effective date\"}"
+      }
+    ]
+  }
+}

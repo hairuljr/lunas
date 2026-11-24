@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "                                     FAKTUR\nDari                                         Kepada\nPT Sentosa Karya Boga                        PT Lunas Nusantara Sejahtera\nJI. Ahmad Yani No. 122                        JI. Jenderal Sudirman Kav. 52-53\nBogor 16121                                   Jakarta Selatan 12190\nNPWP 91.234.456.9-633.000\nNo. Faktur                 Tanggal             Jatuh Tempo         No. PO\nSKB/2026/00817             23/09/2026          07/11/2026          PO-2026-0095\nNo   Deskripsi                               Qty         Harga Satuan             Jumlah\n1    Kopi Bubuk Arabika 1kg                    9        Rp 217.600,00      Rp 1.958.400,00\n2    Gula Pasir 1kg                            6         Rp 19.000,00        Rp 114.000,00\n                                                          Subtotal        Rp 2.072.400,00\n                                                                           Rp 227.964,00\n                           LUNAS                             Tota         Rp 2.300.364,00\nPembayaran\nBank Mandiri · No. Rekening 5669310234 Atas Nama PT Sentosa Karya Boga",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9754
+}

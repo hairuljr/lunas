@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Pacific Foods Group\", \"invoice_number\": \"INV/2026/10/0426\", \"invoice_date\": \"2026-10-23\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": null, \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Ground Arabica Coffee 1kg\", \"quantity\": 5, \"unit_price\": 207800.00, \"amount\": 1039000.00}, {\"description\": \"Meeting Catering (package)\", \"quantity\": 3, \"unit_price\": 1315900.00, \"amount\": 3947700.00}, {\"description\": \"Tea Bags (box of 100)\", \"quantity\": 3, \"unit_price\": 40600.00, \"amount\": 121800.00}], \"subtotal\": 5108500.00, \"tax\": 561935.00, \"total\": 5670435.00, \"bank_account\": \"3559895203034\", \"notes\": null}"
+}

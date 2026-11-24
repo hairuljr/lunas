@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_8ec6064ec0ba44b3a72994a6",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"quantity_exceeds_received\", \"line\": null, \"cause\": \"short_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0099\", \"detail\": \"PO orders 'Label Pengiriman A6 (rol)' quantity 2 at 66,700.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0099\", \"detail\": \"The only receipt on this PO covers 'Stretch Film 500mm (rol)' 13; 'Label Pengiriman A6 (rol)' was received at 0.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"INV/2026/09/0345\", \"detail\": \"Vendor's prior invoice is on a different PO (PO-2026-0019), so this item is not an already-paid re-billing; billing position for PO-2026-0099 shows invoiced_before empty and within_received false.\"}], \"explanation\": \"Line 2 bills 2 rolls of 'Label Pengiriman A6 (rol)' that were never received, since the sole goods receipt GR-2026-0099 covered only the 13 rolls of stretch film, making this a short delivery of the ordered item rather than a duplicate billing.\"}]}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_yn60qjlyv1irhnrprene771h",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0294\"}"
+      },
+      {
+        "id": "call_01_mxsr0g8eav3v198v11ca36pb",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0294\"}"
+      },
+      {
+        "id": "call_02_qkpsq5xpv6qlly2flkqpp9md",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0294\"}"
+      },
+      {
+        "id": "call_03_nwbys93rnfgwz5dvhclcztxl",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_04_5ys27sxhqbhj47279drknb39",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_05_qfcu55muj1ur2s3imgeyo0wt",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"price for Stretch Film 500mm and when it takes effect\"}"
+      }
+    ]
+  }
+}

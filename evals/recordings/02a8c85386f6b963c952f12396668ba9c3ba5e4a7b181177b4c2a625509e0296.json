@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_494baee3j4d1w88t2ixvl7tt",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0263\"}"
+      },
+      {
+        "id": "call_01_6xe1bg4av53opoq4uhepf25j",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0263\"}"
+      },
+      {
+        "id": "call_02_ci177qr0res1j0ux8twq0h8r",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0263\"}"
+      },
+      {
+        "id": "call_03_yljgcisa87j1okve5a422hxn",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_04_pkfms9mcdmcg9ngmbel8d0wn",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_05_zu7mudnlc83ogj44x5sai4aw",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"price for Sabun Cuci Tangan 5L, Pengharum Ruangan Otomatis, Kantong Sampah 90x120, and any price effective dates\"}"
+      }
+    ]
+  }
+}

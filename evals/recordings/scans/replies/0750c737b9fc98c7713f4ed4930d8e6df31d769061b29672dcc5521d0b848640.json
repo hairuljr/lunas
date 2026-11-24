@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"CV Bersih Sejahtera\", \"invoice_number\": \"0576/INV/BSJ/IX/2026\", \"invoice_date\": \"2026-09-27\", \"due_date\": \"2026-10-11\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0003\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Tisu Gulung (karton)\", \"quantity\": 14, \"unit_price\": 300900, \"amount\": 4212600}, {\"description\": \"Jasa Kebersihan Bulanan\", \"quantity\": 1, \"unit_price\": 8016400, \"amount\": 8016400}, {\"description\": \"Kantong Sampah 90x120 (pak)\", \"quantity\": 20, \"unit_price\": 71300, \"amount\": 1426000}, {\"description\": \"Pengharum Ruangan Otomatis\", \"quantity\": 10, \"unit_price\": 265100, \"amount\": 2651000}], \"subtotal\": 16306000, \"tax\": 1793660, \"total\": 18099660, \"bank_account\": \"0389915527\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

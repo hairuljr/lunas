@@ -1,0 +1,34 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_in7to7yyhtlm3awnnwrah04p",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0075\"}"
+      },
+      {
+        "id": "call_01_dun8jx1k8xeqi6j84oxgtp6n",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0075\"}"
+      },
+      {
+        "id": "call_02_uuv3f7gounajlxr536i8xt3a",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0075\"}"
+      },
+      {
+        "id": "call_03_vsz7hdnsitkqeg9kr6p65pnn",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_04_nay4qqkqlw5z4iwk4vcirjga",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"tax rate, VAT, PPN, and whether prices include tax\"}"
+      }
+    ]
+  }
+}

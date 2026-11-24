@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_az1fk77lhr6x6yr82skxzmom",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0164\"}"
+      },
+      {
+        "id": "call_01_lowe98922vj0m7cmsxgys8u7",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0164\"}"
+      },
+      {
+        "id": "call_02_lax70ch3d4r9n94fgy4agp8s",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0164\"}"
+      },
+      {
+        "id": "call_03_puqxxwr2h30zu864bv0cpo81",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_04_hyhvdx435dpg4ckns46rn854",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_05_6xjhgq8tb4w84h44972hcvr2",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"price for Bubble Wrap 1,25m x 50m and effective date of the agreed price\"}"
+      }
+    ]
+  }
+}

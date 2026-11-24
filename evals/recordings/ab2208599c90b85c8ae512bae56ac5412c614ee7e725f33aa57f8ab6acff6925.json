@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "Tax of 649812.0 is exactly 12% of the subtotal. Let me check the contract for any agreed tax rate.",
+    "tool_calls": [
+      {
+        "id": "call_19f0aa29449a45cc8ae12a0a",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"What tax rate (VAT/PPN) applies to invoices under this contract?\"}"
+      }
+    ]
+  }
+}

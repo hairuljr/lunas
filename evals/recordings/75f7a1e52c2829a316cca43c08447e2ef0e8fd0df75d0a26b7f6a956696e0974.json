@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_daqzr901st8qbvcvy0b6054f",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"payment_terms_mismatch\", \"line\": null, \"cause\": \"payment_terms_shorter\", \"evidence\": [{\"kind\": \"invoice\", \"ref\": \"MDS-INV-202609-388\", \"detail\": \"Invoice dated 2026-09-18 with due date 2026-09-25, i.e. 7 days payment window.\"}, {\"kind\": \"vendor\", \"ref\": \"V-007\", \"detail\": \"Agreed payment terms on file for PT Mitra Data Solusindo are 30 days.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-007#5.1\", \"detail\": \"Contract states invoices are payable at the latest 30 calendar days from the invoice date.\"}], \"explanation\": \"The invoice demands payment 7 days after its date, shorter than the 30 days fixed both in the vendor's terms on file (V-007) and in contract clause KTR-V-007#5.1.\"}]}"
+      }
+    ]
+  }
+}

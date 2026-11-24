@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "Now let me check the contract for any payment-terms provision that could justify 7 days.",
+    "tool_calls": [
+      {
+        "id": "call_5b219387a5934917a50b3f2a",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"What are the payment terms in days for this vendor? Does any clause allow payment within 7 days?\"}"
+      }
+    ]
+  }
+}

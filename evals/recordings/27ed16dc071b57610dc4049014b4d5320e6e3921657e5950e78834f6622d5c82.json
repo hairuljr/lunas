@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by reading the purchase order, the vendor's ledger and terms.",
+    "tool_calls": [
+      {
+        "id": "call_4410c1a9cd5d49f4904b5c85",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0127\"}"
+      },
+      {
+        "id": "call_ce5de6aa0ab44a2ebbab1712",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_313586a751a94647aaf2aad5",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_6b18a17eb5ae45599d976f99",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0127\"}"
+      }
+    ]
+  }
+}

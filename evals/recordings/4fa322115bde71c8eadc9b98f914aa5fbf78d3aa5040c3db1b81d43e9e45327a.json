@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\n  \"vendor_name\": \"CV Sari Rasa Catering\",\n  \"invoice_number\": \"INV.0768.10.2026\",\n  \"invoice_date\": \"2026-10-07\",\n  \"due_date\": \"2026-10-21\",\n  \"payment_terms_days\": null,\n  \"po_number\": \"PO-2026-0170\",\n  \"currency\": \"IDR\",\n  \"line_items\": [\n    {\"description\": \"Air Mineral Galon 19L\", \"quantity\": 14, \"unit_price\": 22000, \"amount\": 308000},\n    {\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6844800, \"amount\": 6844800}\n  ],\n  \"subtotal\": 7152800,\n  \"tax\": 786808,\n  \"total\": 7939608,\n  \"bank_account\": \"7153309842\",\n  \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"\n}"
+}

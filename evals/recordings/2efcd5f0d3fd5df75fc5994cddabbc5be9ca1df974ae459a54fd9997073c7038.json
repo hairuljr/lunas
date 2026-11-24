@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sentosa Karya Boga\", \"invoice_number\": \"SKB/2026/00829\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-11-16\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0175\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 19, \"unit_price\": 40000, \"amount\": 760000}, {\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6243300, \"amount\": 6243300}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 4, \"unit_price\": 1455200, \"amount\": 5820800}, {\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 11, \"unit_price\": 212300, \"amount\": 2335300}], \"subtotal\": 15159400, \"tax\": 1667534, \"total\": 16826934, \"bank_account\": \"5669310234\", \"notes\": \"Barang yang sudah diterima tidak dapat dikembalikan.\"}"
+}

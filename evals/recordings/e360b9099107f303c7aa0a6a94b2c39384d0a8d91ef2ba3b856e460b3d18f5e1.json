@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sentosa Karya Boga\", \"invoice_number\": \"SKB/2026/00856\", \"invoice_date\": \"2026-09-22\", \"due_date\": \"2026-11-06\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0295\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 19, \"unit_price\": 198400, \"amount\": 3769600}, {\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 17, \"unit_price\": 39800, \"amount\": 676600}], \"subtotal\": 4446200, \"tax\": 489082, \"total\": 4935282, \"bank_account\": \"5669310234\", \"notes\": null}"
+}

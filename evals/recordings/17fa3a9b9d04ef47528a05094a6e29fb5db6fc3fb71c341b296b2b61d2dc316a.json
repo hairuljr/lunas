@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The billing position is decisive: the PO's full received value (9,231,870, incl. tax) was already invoiced by ledger invoice BHS2600663, so this invoice bills the same goods again — `within_received` is false.",
+    "tool_calls": [
+      {
+        "id": "call_a9878bd421c04fa1905366a3",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"resubmission\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0209\", \"detail\": \"PO for 4 lines (Hand Soap 5L x2 @121300, Automatic Air Freshener x1 @222000, Toilet Tissue Rolls x2 @298700, Monthly Cleaning Service x1 @7255000); unit prices on this invoice match the PO exactly.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0209\", \"detail\": \"Single goods receipt dated 2026-09-09 covering the full ordered quantity of all 4 lines; value received with tax = 9,231,870.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"BHS2600663\", \"detail\": \"Earlier invoice of 2026-09-13 on PO-2026-0209 for the same total 9,231,870, already in the ledger.\"}, {\"kind\": \"invoice\", \"ref\": \"BHS2600671\", \"detail\": \"This invoice of 2026-09-21 for 9,231,870 against PO-2026-0209; billing position shows invoiced_including_this 18,463,740 vs value received 9,231,870, within_received = false.\"}], \"explanation\": \"This invoice re-bills the same goods and amounts already invoiced and paid on BHS2600663 for PO-2026-0209, so the invoicing is not within_received and the charge is a resubmission.\"}]}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by gathering the purchase order, billing position, and contract records.",
+    "tool_calls": [
+      {
+        "id": "call_9ddd4ed80cdd4b01a028fa6a",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0245\"}"
+      },
+      {
+        "id": "call_9545044047f740518259438f",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0245\"}"
+      },
+      {
+        "id": "call_3c85d38afe5e491b914c1a1c",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Unit price for Tisu Gulung (karton) and effective date of the contract price\"}"
+      },
+      {
+        "id": "call_51fbf8757dbb4fbc942595ee",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_1a5e0525acdd465f9c95b5e2",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0287\"}"
+      },
+      {
+        "id": "call_84895c1d31ad45f39d0d16e3",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0287\"}"
+      },
+      {
+        "id": "call_620c179df9ba41038dda67f0",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0287\"}"
+      },
+      {
+        "id": "call_1d3e75777fae4834ab415e5e",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_168191844e424558b4ce0f7b",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_78e93181537d43c4aad9ab55",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"What are the prices and effective dates for Keyboard Mekanikal USB and Kabel Jaringan Cat6?\"}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll pull the records for this vendor and purchase order.",
+    "tool_calls": [
+      {
+        "id": "call_00_ujhfa5t1zrbmft7e8ydus88z",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0259\"}"
+      },
+      {
+        "id": "call_01_e48urfx7wzkttrckf61bpztz",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0259\"}"
+      },
+      {
+        "id": "call_02_3pj7n8cvr6e74hqrtis7hny4",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0259\"}"
+      },
+      {
+        "id": "call_03_r7nu730nfws0jdyuwka9sxqq",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_04_t1qzyc0moew40bdk3kfi27cw",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_05_k5vsmbcgs74xkvlc6u61gpq1",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"What tax rate (PPN/ VAT) applies to invoices under this contract, and from what date?\"}"
+      }
+    ]
+  }
+}

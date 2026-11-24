@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_c4abd557ba244e0b93a7d4de",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"price_mismatch\", \"line\": 1, \"cause\": \"contract_price_not_yet_effective\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0164\", \"detail\": \"PO line 1 'Bubble Wrap 1,25m x 50m' carries a unit price of 269,100, not the 307,800 billed.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-019#11.1\", \"detail\": \"Addendum No. 1 sets the Bubble Wrap unit price to Rp 307,800 but only 'terhitung sejak 9 September 2026' (effective 2026-09-09).\"}, {\"kind\": \"invoice\", \"ref\": \"INV/2026/08/0358\", \"detail\": \"Invoice date is 2026-08-28, before the contract price's effective date, so the new price does not apply yet.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0164\", \"detail\": \"All 7 units of line 1 were received on 2026-08-25, prior to the addendum's effective date.\"}]}]}"
+      }
+    ]
+  }
+}

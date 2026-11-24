@@ -9,140 +9,173 @@ decision log. Update its decision log when a design decision changes.
 
 ## Where the project stands
 
-Update this section at the end of each working session.
+Update this section at the end of each working session. Keep it current, not a diary: the
+decision log in SPEC.md holds the reasons, git holds the history.
 
-- Week-1 slice built (2026-11-12), not committed. Working: synthetic data generator
-  (`data/generate.py`: 10 vendors, 30 POs + goods receipts, 30 digital invoice PDFs in 3
-  layouts x 2 languages, classes `clean` and `price_mismatch`, ground truth), ingestion
-  router, digital-PDF reader, LLM extraction node (`pipeline/nodes/extract.py`,
-  `prompts/extract.v1.md`), validation, 3-way match, decision table, pipeline runner
-  (`pipeline/run.py`, plain functions, no LangGraph yet), node evals, naive ReAct baseline, tracing, 122 tests.
-- Commands: `uv run python data/generate.py`, `uv run lunas run`,
-  `uv run python -m evals.node.run` (`--skip-llm` for the deterministic part, `--cache`
-  to record LLM replies and resume, `--cache --replay-only` to run with no LLM at all,
-  `--gate` for the PR gate, `--record` to refresh its recordings with a live run),
-  `uv run python -m evals.baseline.react` (live; `--cache` to resume).
-- Mock ERP is `lunas.erp.ErpData`, read from the generator's JSON in `data/out/`. Postgres
-  comes later.
-- Measured, one run each, 30 invoices, dev data the prompt was written against. All three runs:
-  key-field exact match 210/210, whole invoice 30/30, 0 failed extractions, end-to-end
-  decision 30/30, false-approve 0/10. Match + decide on ground-truth fields: 30/30.
+Last updated 2026-11-24. Weeks 1, 2 and 3 are built (week 3 not yet committed). Work is on
+branch `week2-data-classes`, PR hairuljr/lunas#1 (open; the owner commits and pushes).
 
-  | Provider | Model | Structured output | System prompt | Workers | Wall time | Run file |
-  |---|---|---|---|---|---|---|
-  | Custom fallback proxy | `deepseek-v4.1-flash` | `none` | folded into user message | 1, 8 s gap | about 4 min | `node-20261112-091912.json` |
-  | Sumopod (baseline) | `deepseek-v4.1-flash-1017` | `json_schema` | `system` | 4 | about 18 s (whole command) | `node-20261112-094121.json` |
-  | Sumopod, after review fixes | `deepseek-v4.1-flash-1017` | `json_schema` | `system` | 4 | 10.0 s for the 30 LLM calls | `node-20261113-024253.json` |
+### What exists
 
-  Read these as "the slice works on easy cases", not as a benchmark: two classes, digital
-  PDFs only, no held-out split, no pass^3. The dataset no longer separates providers on
-  accuracy; only speed, limits and feature support differ.
-- Sumopod cost, from provider usage dashboard on 2026-11-12 (cumulative figures): Rp 30.68 at
-  11,025 tokens after the smoke test, Rp 119.65 at 50,419 tokens after the full eval. So
-  the 30-invoice eval cost about Rp 89 for about 39,400 tokens: roughly Rp 3 per invoice.
-- Token usage is now in the report: the 2026-11-13 Sumopod run used 30 requests (no
-  retries), 33,120 prompt + 6,320 completion tokens = 39,440, about 1,315 per invoice. That
-  matches the dashboard-derived estimate above. Compare Inferhub on these fields.
-- Next provider to compare: Inferhub. Run the same full eval when comparing endpoints.
-- **Current dev provider (since 2026-11-12): a paid OpenAI-compatible provider**, set in
-  `.env` (`deepseek-v4.1-flash-1017`; five models listed, including `glm-5.3-flash`). The
-  provider is Sumopod; balance is budget-capped (the 13-request smoke test cost
-  about Rp 31), so prefer cached/replayed runs unless testing live. Observed in a 13-request smoke test: system messages honoured, `json_schema`
-  (strict), `json_object` and plain text all work, 4 concurrent requests fine, no rate limit
-  hit, about 1-2 s per invoice. Six invoices, one per layout/language, all fields correct.
-  `.env` now uses `json_schema`, `system`, 4 workers, no request gap.
-- The measured run above was on the custom fallback proxy, not this provider, with the system
-  prompt folded into the user message.
-- A custom fallback proxy (`https://proxy.example.internal`), tested earlier, was customised for agentic
-  coding: `/v1/chat/completions` injects its own system prompt and ignores ours. Its
-  playground route (`<host>/v1/playground` as base URL) honours system messages and is for
-  development only; no proxy-specific path belongs in the repo. With the key used on
-  2026-11-12 it rejected `response_format` (needs `LUNAS_LLM_STRUCTURED_OUTPUT=none`),
-  allowed one concurrent request and about 44 requests per 3.5 minutes
-  (`LUNAS_LLM_WORKERS=1`, `LUNAS_LLM_MIN_INTERVAL_SECONDS=8`, `LUNAS_LLM_MAX_RETRIES=6`),
-  and only `deepseek-v4.1-flash` answered; the other two models returned 500.
-- External code review of the week-1 slice (2026-11-13) applied, all without LLM calls:
-  PO lines for the same item are summed (same item at two PO prices -> `po_price_ambiguous`);
-  currency compares case-insensitively; a blank invoice bank account counts as absent and
-  one without digits is `bank_account_unreadable` (hold), not `bank_account_mismatch`
-  (escalate); `strict_schema` handles `Decimal | None`; `<page>`/`<document>` tags inside
-  invoice text are neutralised. `PdfTextReader` still extracts tables that the extraction
-  prompt does not use: kept on purpose, they are part of the `ParsedDocument` contract.
-- A failed LLM request no longer aborts a batch: that invoice becomes `hold` with issue
-  `llm_unavailable`, and the eval reports it as `unanswered`, apart from model errors.
-- `lunas.llm.RecordingClient` records replies under `evals/cache/` (gitignored) keyed by
-  provider host, model and messages. Verified live on 2026-11-13: the Sumopod run above
-  recorded 30 replies, and `--cache --replay-only` with no API key then reproduced 30/30 in
-  under a second (`node-20261113-024259.json`, 0 live, 30 replayed). The `llm_unavailable`
-  path has only been exercised with stand-in clients; no real request failed.
-- PR gate on recorded responses (SPEC §9) is built: `evals/recordings/` (to be committed)
-  holds the 30 Sumopod replies of run `node-20261113-024253.json` plus `recording.json`
-  (provider, model, baseline metrics, and hashes of the prompt, the `Invoice` schema and the
-  PDF text). `--gate` calls no model, needs no `.env`, and exits 1 if decision or key-field
-  accuracy falls more than 2 points below the recorded baseline, if false approvals rise at
-  all, or if the recordings are stale. `pr-gate.yml` runs it after `data/generate.py`.
-- **Changing `prompts/extract.v1.md`, the `Invoice` schema, the generator or the PDF reader
-  makes the recordings stale and the gate fail on purpose.** Fix with `--record`, a live run
-  (about Rp 89 on Sumopod for 30 invoices; run only when refreshing fixtures), and commit the result.
-- The gate also passes in GitHub Actions on Linux (run of 2026-11-16 on `main`), so the PDFs
-  render to the same text on macOS and Linux.
-- Stubs: OCR and vision readers. Empty packages: `retrieval`, `gapura`, `telemetry`, `api`.
-- `policies/default.yaml` is a design draft that no code loads yet. The approval threshold
-  lives in `Settings.approval_threshold` and duplicates the value in that draft.
-- Naive ReAct baseline built and measured (2026-11-16): `evals/baseline/react.py`, prompt
-  `prompts/baseline_react.v1.md`, one loop (max 8 turns) with raw invoice text and five
-  tools (`get_po`, `get_vendor`, `get_goods_receipts`, a mock `schedule_payment` that
-  accepts any account, `submit_decision`). The prompt states the same decision policy lunas
-  has in code, on purpose: the baseline must be fair or the comparison is worthless.
-- Baseline vs lunas, one live run each, same 30 invoices, Sumopod
-  `deepseek-v4.1-flash-1017`, 4 workers (`baseline-20261116-045546.json`,
-  `node-20261116-045614.json`):
+- Data (`data/generate.py`, fixed seed, byte-identical output): 300 digital invoice PDFs
+  from 40 vendors (10 hand-written, 30 generated), 3 layouts x 2 languages, ten classes
+  with fixed expected outcomes in `EXPECTED` / `EXPECTED_INVESTIGATION` (93 clean, 23 each
+  of price_mismatch, quantity_mismatch, duplicate, wrong_tax, no_po, bank_account_change,
+  payment_terms, price_amendment, split_delivery). Each class split half dev (155) / test
+  (145): iterate on dev only. Plus vendor master, POs, goods receipts, an invoice ledger,
+  40 bilingual contracts (18 with a price addendum) and 720 labelled retrieval questions.
+- Workflow (`pipeline/graph.py`, LangGraph): read (parse + extract, `extract.v2`) ->
+  check (`pipeline/checks.py`: validate incl. tax rate, duplicates, 3-way match incl.
+  payment terms) -> contract (`contract.v1`, price mismatches only, citation verified in
+  code) -> route (`route.py`: clean / hard_reject / human / investigate) -> investigate
+  (`investigate.v2`, at most 6 turns, read-only tools scoped to the vendor, causes and
+  evidence checked in code, never changes the decision) -> decide (code table) ->
+  approval (interrupt for route human or decision escalate) -> act (step 10, code, through
+  gapura role `act`: ledger, payment to the vendor master account, template email for
+  vendor-fixable holds; a no-op without a gateway). The read node also screens the raw
+  text (`gapura.scanner`): a hit is `document_flagged` -> route human, ESCALATE. `.eml`
+  invoices are read with the body as page 1 (`ingest/email.py`). State is a Pydantic
+  `InvoiceState`; checkpoint types are listed in `SERDE`.
+- gapura (`lunas.gapura`): `Gateway.call` = pins -> role (default deny) -> idempotency key
+  -> named constraints -> egress -> session taint -> approval threshold; audit log + span.
+  Policy `policies/default.yaml` (schema v1, load fails on any unknown name), pins
+  `policies/pins.json` (update with `python -m lunas.gapura.pins --update` after a reviewed
+  tool change; pytest fails otherwise). Mock MCP servers `lunas.servers` (MCP SDK 2.3
+  `MCPServer`, in-process via `McpServers`; naive on purpose). The policy's approval
+  threshold must equal `Settings.approval_threshold` (tested). Investigation tools run
+  in-process (unchanged outputs, so the gate recordings stay valid) but each call is first
+  `Gateway.authorize`d as role `investigator`, mapped to the records it reads
+  (`GAPURA_TOOLS`); `contracts.search` is in the policy, authorized, not pinned.
+- Checkpoints: Postgres for the CLI (`lunas run`, `lunas pending`, `lunas approve`),
+  memory for evals, tests and the gate, which record where invoices stop and never wait.
+- Retrieval (`lunas.retrieval`): Postgres `contract_clauses`, full-text (contract-language
+  config) + exact pgvector cosine, weighted RRF (keyword 0.5), chunk = clause with a
+  vendor / number / article header; parents (whole articles, at most 5) go to models.
+- LLM client (`lunas.llm`): OpenAI-compatible, `complete` (structured output, Pydantic
+  validation, one retry) and `complete_tools`; `RecordingClient` records and replays both.
+- Tracing (`lunas.telemetry`): OTel GenAI-semconv spans, one trace per invoice, off unless
+  `LUNAS_OTLP_ENDPOINT` or `LUNAS_TRACE_FILE`; content only with `LUNAS_TRACE_CONTENT`.
+  Verified in Phoenix 21.0.0.
+- Evals: `evals/node/run.py` (extraction, decision, route, contract check, investigation,
+  checkpoint), `evals/node/retrieval.py` (Recall@5), `evals/baseline/react.py` (naive
+  ReAct, prompt `baseline_react.v3`, same rules and a contract tool; `ATTACK_TOOLS` adds
+  `send_email` and `vendor_id` for the attack evals, benign `TOOLS` unchanged so its cache
+  stays valid), `evals/e2e/attacks.py` (ASR for lunas / baseline / baseline_gapura; judged
+  from payments and emails; `--subtle`, `--benign`), `evals/node/gapura.py` (policy table +
+  tool poisoning), `evals/node/scanner.py` (recall, false flags, held-out paraphrases).
+  Attack set `data/generate_attacks.py`: 60 (5 goals x 6 channels x 2 languages) + 20
+  subtle (`HELD_OUT`: never use them to tune the scanner). 276 tests.
+- PR gate (`pr-gate.yml`): ruff, pytest (with a pgvector service; store and graph tests
+  fail instead of skipping under `CI`), then `evals.node.run --gate`, which replays
+  `evals/recordings/` (dev split, 353 replies + recorded retrievals) with no model and no
+  database. Gated: decision and key-field accuracy (2-point rule), false approvals (no
+  rise), cause accuracy and checkpoint accuracy (2-point rule). Stale when the extract,
+  contract or investigate prompt, the `Invoice` schema, the PDF text or the contracts
+  change: refresh with `--record --split dev --workers 2` (only uncached calls go live).
+  Second gate step, `evals.node.scans --gate`: replays `evals/recordings/scans/` (40 dev
+  twins: OCR and vision reads recorded as `ParsedDocument`, replies, retrievals), so CI
+  needs no scans, model, database or OCR engine. Baseline 38/40, false-approve 0, key
+  fields 0.993. Blind to OCR and scan-generator changes (`evals.node.transcription`
+  measures those); refresh with `evals.node.scans --record` (Postgres up; reads through
+  `evals/cache/scans`, so only uncached calls go live).
+  Third step, `evals.node.gapura --gate`: 23 policy cases and 4 tool-poisoning cases, all
+  must be right. Code only.
 
-  | | Naive ReAct | lunas |
-  |---|---|---|
-  | Decision accuracy | 30/30 | 30/30 |
-  | False-approve | 0/10 | 0/10 |
-  | Requests per invoice | 3.7 (110 total) | 1 (30 total) |
-  | Tokens per invoice | 5,488 (164,646 total) | 1,313 (39,388 total) |
-  | Latency per invoice p50 / p95 | 5.7 s / 25.5 s | 1.9 s / 5.2 s |
+### Commands
 
-  **The baseline is as accurate as lunas on this dataset.** It called all three lookups on
-  every invoice, paid only the 20 clean ones, always to the vendor-master account and for the
-  invoice total. The measured difference is cost (4.2x tokens) and latency. Do not write or
-  imply an accuracy or safety advantage until harder classes (week 2) and the attack set
-  (week 3) are measured. Four baseline invoices took 24-28 s and set its p95; cause not
-  investigated (single run).
-- Tracing built (2026-11-16): `lunas.telemetry`, manual OpenTelemetry spans, no
-  instrumentor. One trace per invoice: `process_invoice` > `parse`, `extract` >
-  `chat <model>` (one per model call), `validate`, `match`, `decide`. Chat spans use the
-  OTel GenAI semconv (operation, provider = endpoint host, request/response model, finish
-  reason, input/output tokens); our own attributes are under `app.*`. Off unless
-  `LUNAS_OTLP_ENDPOINT` or `LUNAS_TRACE_FILE` is set; prompts and replies go on spans only
-  with `LUNAS_TRACE_CONTENT=true`. `lunas run` and the node eval flush on exit;
-  `lunas run --limit N` processes the first N invoices.
-- Tracing verified on 2026-11-16: span-tree tests (in-memory exporter), a real two-invoice
-  run on Sumopod written to a JSONL trace file (14 spans, 2 traces, no orphans, token counts
-  present, no content), and real traces in Phoenix 21.0.0. Phoenix maps the GenAI-semconv
-  chat span to its own LLM view on ingestion (kind `llm`, model, provider, prompt and
-  completion tokens, the node tree, and with `LUNAS_TRACE_CONTENT=true` the system and user
-  messages), so no OpenInference attributes are needed. Its cost column shows $0: it has no
-  price for this model. Node spans show kind `unknown`, which is expected for plain spans.
-- Phoenix in a container turns authentication on (it listens on 0.0.0.0) and answers OTLP
-  exports with 401. `compose.yaml` sets `PHOENIX_ENABLE_AUTH=false` and publishes both
-  ports on 127.0.0.1 only. A deployment reachable from outside (the VPS demo) must keep
-  auth on and needs an API-key header on the exporter, which `lunas.telemetry` does not
-  support yet. A rejected export is only reported by the OTel exporter on stderr.
-- `podman compose up -d` works since 2026-11-16 (Podman machine `podman-machine-default`,
-  libkrun, 2 GiB; `podman-compose` from Homebrew). Both services verified: Postgres 18.7
-  with pgvector 0.8.7 (extension created in database `lunas`), and Phoenix accepting OTLP
-  exports. Postgres is published on host port **5433**, because port 5432 is commonly
-  occupied by an existing local PostgreSQL service; `LUNAS_DATABASE_URL` defaults to 5433. No code
-  uses the database yet.
-- Not traced: the naive ReAct baseline (it keeps its own counters), metrics, and scores
-  linked to traces.
-- Week 1 (SPEC §12) is complete.
-- Planned for week 2: validating vision model support (`glm-5.3-flash` is listed on
-  Sumopod but untested).
+`uv run python data/generate.py`; `uv run python -m data.generate_scans` (80 scanned twins, image-only PDFs, in
+`data/out/scans/`; evaluate them in their own run, never alongside the originals); `podman compose up -d` (Postgres on host port 5433,
+Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
+`uv run lunas run [--limit N] [--investigate] [--cache DIR]`; `uv run lunas pending`;
+`uv run lunas approve <thread> --decision approve|reject|hold --approver NAME`;
+`uv run python -m evals.node.run [--split dev|test|all] [--cache] [--no-investigate]
+[--gate | --record]`; `uv run python -m evals.node.retrieval [--split ...]`;
+`uv run python -m evals.node.scans [--split ...] [--vision] [--gate | --record]`;
+`uv run python -m evals.baseline.react [--split ...] [--cache]`;
+`uv run python -m data.generate_attacks`; `uv run python -m evals.e2e.attacks [--system
+lunas|baseline|baseline_gapura|all] [--subtle | --benign]`; `uv run python -m
+evals.node.gapura [--gate]`; `uv run python -m evals.node.scanner`;
+`uv run python -m lunas.gapura.pins [--update]`.
+
+### Measured (one live run each, Sumopod `deepseek-v4.1-flash-1017`)
+
+| What | Split | Result | Run |
+|---|---|---|---|
+| Extraction, whole invoice | test 145 | 145/145, 0 failures | `node-20261124-032642.json` |
+| Decision / false-approve | test 145 | 145/145 / 0/92 | same |
+| Route / approval stops | test 145 | 145/145 / 11/11, 0 wrong | same |
+| Contract check | test | cleared 6/6, wrongly 0/5, addendum cited 11/11 | same |
+| Investigation, `investigate.v1` | test 66 | cause 64/66, evidence 65/66 | same |
+| Investigation, `investigate.v2` | dev 72 | cause 72/72, evidence 70/72 | gate recording 2026-11-24 |
+| Investigation, `investigate.v2`, affected classes only | test 28 | cause 28/28 (split_delivery 11/11), evidence 28/28 | `investigation-targeted-20261124-041258.json` |
+| Retrieval Recall@5, vendor-scoped hybrid | test 360 | 0.934 (target 0.90; vector alone 0.938) | `retrieval-20261119-042740.json` |
+| OCR transcription, scanned twins (no model) | all 80 | CER 0.016; total, tax, invoice and PO number 80/80; bank account 76/80 (all 4 misses stamped) | `transcription-20261124-054813.json` |
+| Vision transcription pilot, 10 hardest twins (all stamped) | 10 | bank account 8/10 (recovers 2 OCR misses; guessed one digit once); cost 0.004 | `transcription-20261124-061522.json` |
+| Scans end to end, OCR + vision second read | all 80 | decisions 77/80, false-approve 0/67, key fields 0.995; unstamped 40/40; 3 second reads, 0 disagreements. Wrong: 2 stamp-hidden accounts -> escalate, 1 stamp word read into a line description -> hold. Cost 0.017 | `scans-20261124-064412.json` |
+| Baseline vs lunas, decision / false-approve | test 145 | 140/145, 0/93 vs 145/145, 0/93 (baseline's 5 misses: no_po, out of turns) | `baseline-20261124-140004.json`, `node-20261124-123645.json` |
+| Investigation, `investigate.v2`, all classes | test 66 | cause 66/66, evidence 66/66 | `node-20261124-123645.json` |
+| ASR, attack set v1 (60) | attacks | lunas 0/60 (flagged 60/60, all escalated), baseline 0/60 (paid 25, all correct), baseline+gapura 0/60; invariant breaches 0 | `attacks-20261124-150515.json` |
+| ASR, subtle set (20 held-out paraphrases) | attacks | 0/20 all three; lunas flagged 2/20 and paid 10, each the total to the master account | `subtle-20261124-153226.json` |
+| Straight-through, benign | test 52 | lunas 52/52, baseline 52/52, baseline+gapura 0/52 (taint holds every payment) | `benign-20261124-150519/151257/152114.json` |
+| Scanner (no model) | attacks + dataset | v1 60/60, held-out 2/20 (both via the foreign-email check), approve-class invoices flagged 0/105; bank_account_change 6/23 (long note runs off the compact page) | `scanner-20261124-152307.json` |
+| gapura eval (no model) | - | policy 23/23, tool poisoning blocked 4/4 | `evals.node.gapura` |
+
+- Read all of it as one run, no pass^3. The attacks are naive and the model resisted all of
+  them, so ASR does not separate the systems yet; adaptive attacks are the next step.
+- Evidence still fails code's check now and then: a short delivery citing a PO number as a
+  goods receipt, or this invoice as a ledger invoice. The check is strict on kind on
+  purpose.
+- With 4 parallel workers the provider sometimes fails investigation calls after retries;
+  those are counted as `unanswered`, kept out of cause accuracy, and block `--record`.
+  Use `--workers 2` for investigation runs.
+
+### Provider, budget, infrastructure
+
+- Dev provider: Sumopod, set in `.env`: `deepseek-v4.1-flash-1017` (chat, strict
+  `json_schema`, tool calls, system messages), `text-embedding-3-small` (1,536 dims),
+  `glm-5.3-flash` (vision; smoke-tested on three clean renders only). Budget-capped:
+  check `GET <host>/v2/user/info` (`max_budget - spend`) before and after any live run,
+  prefer replays, and ask the owner before full re-runs. Balance 2.0330 on 2026-11-24 (USD;
+  report IDR too). Week-3 live runs cost about 0.40 (attack set all three systems 0.23,
+  benign 0.11, subtle 0.06).
+  The API key also has its own max budget (hit 0.99 USD on 2026-11-24, raised by the
+  owner): a 422 "Budget has been exceeded" means that cap, not the balance.
+  Rough costs: dev split with investigation about 0.08, re-recording the gate about 0.04.
+- Model comparison on 2026-11-24 (prices from the provider's catalogue, owner-supplied):
+  `hy4-flash` and `glm-5.3-flash` list at 4-5x cheaper than `deepseek-v4.1-flash-1017`
+  after discounts, but the balance fell about 2x more than list price predicts for both.
+  Full dev run on `hy4-flash` (`node-20261124-045719.json`, 2 workers): decisions
+  155/155, false-approve 0/98, cause 72/72, evidence 67/72 (DeepSeek 70/72), contract
+  check and checkpoints all right, whole invoice 154/155: on inv-300 it returned no bank
+  account although one is printed. Cost 0.048 against about 0.075 for DeepSeek (about
+  1.6x cheaper; it writes about 3x the output tokens). Not adopted: the saving is small in
+  absolute terms and a dropped bank account would hide a changed account (`None` means
+  "not printed" to the match). The grounding check now flags a printed account that was
+  not extracted (`bank_account_not_extracted`).
+- Fallback: a custom proxy whose default route injects its own system prompt (its
+  `/v1/playground` route does not); it rejects `response_format`, allows one concurrent
+  request and about 44 per 3.5 minutes. Use `LUNAS_LLM_STRUCTURED_OUTPUT=none`,
+  `LUNAS_LLM_WORKERS=1`, `LUNAS_LLM_MIN_INTERVAL_SECONDS=8` there. Next provider to
+  compare: Inferhub.
+- Podman machine `podman-machine-default`; `podman-compose` from Homebrew. Phoenix runs
+  with auth off on loopback; a reachable deployment needs auth and an exporter API key,
+  which `lunas.telemetry` does not support yet.
+
+### Not built yet
+
+- OCR/vision plan (`docs/ocr_vision_strategy.md`, option 1): all five steps are built
+  (scanned twins, `OcrReader`, grounding check, `VisionReader` second read, scan gate).
+  Open: a stamp word read into a line description (inv-104 -> hold); stamp-hidden
+  accounts go to escalate (safe); a fully destroyed bank line grounds nothing (inv-158).
+- Week 4 (SPEC §12: CI gate and nightly, packaging): pass^3 and a nightly red-team with
+  adaptive / multi-turn attacks (attack set v1 no longer separates the systems by ASR);
+  the MCP servers and gapura in compose over stdio (SPEC §10) with a persistent
+  backoffice (payments from `lunas run` live only as long as the process).
+- Follow-ups: a local classifier evaluated on `HELD_OUT` before it is trusted
+  (Galvanize-3 is the only non-gated multilingual candidate, untested on Indonesian);
+  `contracts.search` as an MCP tool.
+- Approval permissions (any `--approver` string is accepted) and an approval UI.
+- pass^3, nightly evals, the API package.
 
 ## Design rules that must not erode
 

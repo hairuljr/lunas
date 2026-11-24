@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Golden Systems Ltd\", \"invoice_number\": \"GSL-26-00564\", \"invoice_date\": \"2026-09-16\", \"due_date\": null, \"payment_terms_days\": 14, \"po_number\": \"PO-2026-0262\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Cat6 Network Cable (box)\", \"quantity\": 5, \"unit_price\": 1486100.0, \"amount\": 7430500.0}, {\"description\": \"USB Mechanical Keyboard\", \"quantity\": 14, \"unit_price\": 599600.0, \"amount\": 8394400.0}, {\"description\": \"Antivirus License 1 Year\", \"quantity\": 20, \"unit_price\": 363100.0, \"amount\": 7262000.0}], \"subtotal\": 23086900.0, \"tax\": 2539559.0, \"total\": 25626459.0, \"bank_account\": \"4959368273\", \"notes\": null}"
+}

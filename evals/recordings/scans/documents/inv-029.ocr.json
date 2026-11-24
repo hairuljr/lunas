@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "CV Sinar Utama Kemasan                                                FAKTUR\nJI. Pemuda No. 60\nBekasi 17141                                                   No. Faktur: SUK-26-00076\nNPWP: 20.332.503.8-408.000                                   Tanggal: 29 September 2026\n                                                            Jatuh Tempo: 6 Oktober 2026\n                                                                 No. PO: PO-2026-0029\nKepada:\nPT Lunas Nusantara Sejahtera\nJI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12190\nNo   Deskripsi                               Qty      Harga Satuan           Jumlah\n1    Stretch Film 500mm (rol)                 16            95.300          1.524.800\n2    Palet Kayu 110x110                        4           191.300           765.200\n3    Kardus Double Wall 40x40x40              16            15.200           243.200\n4    Bubble Wrap 1,25m x 50m                  13           293.900         3.820.700\n                           LUNAS                           Subtotal         6.353.900\n                                                          PPN 11%            698.929\n                                                              Total         7.052.829\nSemua nilai dalam Rupiah (IDR).\nPembayaran\nBank: Bank Permata\nNo. Rekening: 553958517971\nAtas Nama: CV Sinar Utama Kemasan",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9584
+}

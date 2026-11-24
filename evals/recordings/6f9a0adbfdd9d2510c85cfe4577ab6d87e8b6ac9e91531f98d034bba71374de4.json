@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_a6ba9684fe294fd2aafe4f03",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"separate_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0131\", \"detail\": \"Orders 8 boxes of pens, 30 dozen folders and 2 chairs at unit prices 49600 / 253300 / 1712100, exactly the prices this invoice bills.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0131A\", \"detail\": \"First delivery on 2026-10-16 of 4 / 15 / 1, i.e. half the ordered quantities.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0131B\", \"detail\": \"Second, later delivery on 2026-10-29 of 4 / 15 / 1, the remaining half, matching this invoice's 4 / 15 / 1 quantities and its 2026-10-29 date.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"0688/UMA/X/2026\", \"detail\": \"Already-paid earlier invoice dated 2026-10-18 for 6338100 on PO-2026-0131, which billed the first delivery GR-2026-0131A.\"}, {\"kind\": \"invoice\", \"ref\": \"0697/UMA/X/2026\", \"detail\": \"This invoice for 6338100 on the same PO; billing position shows invoiced_including_this 12676200 against value_received_with_tax 12676200, within_received = true.\"}], \"explanation\": \"The equal totals are not a resubmission: PO-2026-0131 was delivered in two separate half-quantity receipts (GR-2026-0131A on 2026-10-16 and GR-2026-0131B on 2026-10-29), invoice 0688/UMA/X/2026 billed the first, and this invoice bills the second at PO prices, with the billing position confirming invoicing is still within_received.\"}]}"
+      }
+    ]
+  }
+}

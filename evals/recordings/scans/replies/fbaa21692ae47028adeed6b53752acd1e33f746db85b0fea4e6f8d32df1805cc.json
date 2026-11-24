@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Kemas Prima Indonesia\", \"invoice_number\": \"00850/KPI/2026\", \"invoice_date\": \"2026-09-18\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": null, \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Stretch Film 500mm (rol)\", \"quantity\": 18, \"unit_price\": 88200, \"amount\": 1587600}], \"subtotal\": 1587600, \"tax\": 174636, \"total\": 1762236, \"bank_account\": \"410258369\", \"notes\": \"Mohon cantumkan nomor faktur pada berita transfer.\"}"
+}

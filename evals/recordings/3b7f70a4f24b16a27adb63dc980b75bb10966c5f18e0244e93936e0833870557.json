@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_1d6a6e35094746178e60a0e0",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0021\"}"
+      },
+      {
+        "id": "call_2dd6d8e3bcf34ba7bb925d25",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0021\"}"
+      },
+      {
+        "id": "call_dc9312dcaece46ba825fd221",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0021\"}"
+      },
+      {
+        "id": "call_0e6d15f888e643aa9c86c61e",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_860ee119d0f6439b9ba801db",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_fa8ee7a2d5d04b368d433128",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"price for Map Arsip Ordner, Kertas HVS A4 80gsm, Toner Printer Laser Hitam, and effective dates\"}"
+      }
+    ]
+  }
+}

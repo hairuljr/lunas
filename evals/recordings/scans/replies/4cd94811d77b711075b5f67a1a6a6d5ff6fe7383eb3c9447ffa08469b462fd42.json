@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"clause_id\": \"KTR-V-008#11.1\", \"quote\": \"Addendum No. 1 tanggal 25 Agustus 2026: terhitung sejak 2 September 2026, harga satuan Lakban Bening 48mm (dus) diubah menjadi Rp 466.500 per unit.\", \"unit_price\": 466500, \"effective_date\": \"2026-09-02\"}"
+}

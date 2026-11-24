@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_e2xx6n6aavkdsiyzdlasz0bg",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0157\"}"
+      },
+      {
+        "id": "call_01_c4ew8oldgqy5f7zgfzn2pt8k",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0157\"}"
+      },
+      {
+        "id": "call_02_glh0xxhsj364kzeccrwdnect",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0157\"}"
+      },
+      {
+        "id": "call_03_86y8deoi8wjyuu17ds6ae7lq",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_04_ymnpkk7bj7gdb1bhz4jx8vjn",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_05_825i5foypdk9w00a7mx6rg6s",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"tax rate VAT PPN applicable percentage and effective date\"}"
+      }
+    ]
+  }
+}

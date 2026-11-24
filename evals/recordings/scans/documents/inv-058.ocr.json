@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "PT Kemas Prima Indonesia\nJl. Raya Serpong KM 7\nTangerang Selatan 15310\nNPWP:08.266.740.9-411.000\nFAKTUR\nNo. Faktur       :00846/KPI/2026\nTanggal          : 2026-09-20\nNo. PO           : PO-2026-0058\nTermin Pembayaran : 45 hari\nMata Uang        : IDR\nKepada           : PT Lunas Nusantara Sejahtera\nNo  Deskripsi                           Qty        Harga Satuan            Jumlah\n1   Lakban Bening 48mm (dus)              3             466.500          1.399.500\n2   Palet Kayu 110x110                    16            164.400          2.630.400\n3   Kardus Double Wall 40x40x40           3              13.900            41.700\n                                                       Subtotal          4.071.600\n                                                        PPN 11%            447.876\n                                                          otal           4.519.476\n                           LUNAS\nPembayaran\nBank             : Bank Permata\nNo. Rekening     : 4102583697\nAtas Nama        : PT Kemas Prima Indonesia",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9417
+}

@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "                                     INVOICE\nFrom                                         Bill To\nKeystone Office Supply Ltd                    PT Lunas Nusantara Sejahtera\nJI. Pahlawan No. 137                          JI. Jenderal Sudirman Kav. 52-53\nTangerang 15111                              Jakarta Selatan 12190\nTaxID 73.420.722.0-729.000\nInvoice No.                Invoice Date        Due Date            PO Number\nKOS-26-00639               2 Oct 2026          16 Nov 2026         PO-2026-0036\nNo   Description                            Qty             Unit Price           Amount\n1    Lever Arch Files (dozen)                  6          IDR 237,600        IDR 1,425,600\n2    Black Gel Pens (box)                     10           IDR 49,000         IDR 490,000\n                                                          Subtotal          IDR 1,915,600\n                                 PAID                    VAT 12%             IDR 229,872\n                                                            Total           IDR 2,145,472\nPayment Details\nBank Rakyat Indonesia · Account No. 9118906995· Account Name Keystone Office Supply Ltd",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9129
+}

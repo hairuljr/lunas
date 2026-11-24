@@ -4,7 +4,9 @@ measured by running evals/baseline/react.py against a model."""
 import json
 from datetime import date
 from decimal import Decimal
+from pathlib import Path
 
+from data.generate import EXPECTED, EXPECTED_INVESTIGATION, GroundTruth
 from evals.baseline.react import (
     AgentResult,
     Payment,
@@ -12,31 +14,35 @@ from evals.baseline.react import (
     Turn,
     baseline_metrics,
     run_agent,
+    run_one,
+    system_prompt,
 )
 from evals.node.scoring import percentile
+from lunas.config import Settings
 from lunas.erp import ErpData
 from lunas.models import (
+    ContractClause,
     Decision,
     GoodsReceipt,
     GoodsReceiptLine,
     Invoice,
+    InvoiceRecord,
     LineItem,
     PurchaseOrder,
     PurchaseOrderLine,
     Vendor,
 )
 
+VENDOR = Vendor(
+    vendor_id="V-001",
+    name="PT Sumber Makmur",
+    bank_name="Bank Central Asia",
+    bank_account="5270418896",
+    email="ar@sumbermakmur.example",
+    payment_terms_days=30,
+)
 ERP = ErpData(
-    vendors=[
-        Vendor(
-            vendor_id="V-001",
-            name="PT Sumber Makmur",
-            bank_name="Bank Central Asia",
-            bank_account="5270418896",
-            email="ar@sumbermakmur.example",
-            payment_terms_days=30,
-        )
-    ],
+    vendors=[VENDOR],
     purchase_orders=[
         PurchaseOrder(
             po_number="PO-001",
@@ -100,6 +106,33 @@ def test_agent_looks_up_pays_and_decides():
     assert json.loads(tool_message["content"])["vendor_id"] == "V-001"
 
 
+def test_ledger_tool_returns_the_vendors_earlier_invoices():
+    erp = ErpData(
+        [VENDOR],
+        [],
+        [],
+        [
+            InvoiceRecord(
+                vendor_id="V-001",
+                invoice_number="INV/2026/10/0159",
+                invoice_date=date(2026, 10, 19),
+                total=Decimal(555000),
+                po_number="PO-001",
+            )
+        ],
+    )
+    script = Script(
+        call("find_invoices", vendor_id="V-001"),
+        call("submit_decision", decision="reject", reason="Already invoiced."),
+    )
+
+    result = run_agent("x", erp, script)
+
+    (history,) = json.loads(script.seen[1][-1]["content"])
+    assert history["invoice_number"] == "INV/2026/10/0159"
+    assert result.decision == Decision.REJECT
+
+
 def test_payment_tool_accepts_any_account_because_there_is_no_gateway():
     script = Script(
         call("schedule_payment", invoice_number="INV-1", bank_account="9990001112", amount=1),
@@ -145,28 +178,39 @@ def test_agent_that_never_decides_stops_at_the_turn_limit():
     assert result.requests == 3
 
 
-class Record:
-    """The two fields of a ground-truth record that baseline_metrics reads."""
-
-    def __init__(self, expected: Decision, total: int = 555000) -> None:
-        self.expected_decision = expected
-        self.invoice = Invoice(
-            vendor_name="PT Sumber Makmur",
-            invoice_number="INV-1",
-            invoice_date=date(2026, 11, 1),
-            po_number="PO-001",
-            line_items=[
-                LineItem(
-                    description="Kertas A4",
-                    quantity=Decimal(10),
-                    unit_price=Decimal(50000),
-                    amount=Decimal(500000),
-                )
-            ],
-            subtotal=Decimal(500000),
-            tax=Decimal(55000),
-            total=Decimal(total),
-        )
+def record(expected: Decision, total: int = 555000) -> GroundTruth:
+    """A ground-truth record of the class whose expected decision is `expected`."""
+    label = "clean" if expected == Decision.APPROVE else "price_mismatch"
+    invoice = Invoice(
+        vendor_name="PT Sumber Makmur",
+        invoice_number="INV-1",
+        invoice_date=date(2026, 11, 1),
+        po_number="PO-001",
+        line_items=[
+            LineItem(
+                description="Kertas A4",
+                quantity=Decimal(10),
+                unit_price=Decimal(50000),
+                amount=Decimal(500000),
+            )
+        ],
+        subtotal=Decimal(500000),
+        tax=Decimal(55000),
+        total=Decimal(total),
+    )
+    return GroundTruth(
+        id="inv-001",
+        file="invoices/inv-001.pdf",
+        label=label,
+        split="dev",
+        language="id",
+        layout="classic",
+        invoice=invoice,
+        expected_decision=expected,
+        expected_issue_codes=EXPECTED[(label, None)][1],
+        expected_check_codes=EXPECTED[(label, None)][1],
+        expected_route=EXPECTED_INVESTIGATION[(label, None)][0],
+    )
 
 
 def paid(decision: Decision | None, account: str = "5270418896", amount: str = "555000", **more):
@@ -175,7 +219,7 @@ def paid(decision: Decision | None, account: str = "5270418896", amount: str = "
 
 
 def test_metrics_grade_the_decision_and_what_was_done_with_the_payment_tool():
-    records = [Record(Decision.APPROVE), Record(Decision.HOLD), Record(Decision.HOLD)] * 2
+    records = [record(Decision.APPROVE), record(Decision.HOLD), record(Decision.HOLD)] * 2
     results = [
         paid(Decision.APPROVE, prompt_tokens=900, completion_tokens=100),
         paid(Decision.APPROVE),  # false approve, and it paid
@@ -204,7 +248,7 @@ def test_metrics_grade_the_decision_and_what_was_done_with_the_payment_tool():
 
 
 def test_unanswered_invoices_are_left_out_of_latency_and_cost():
-    records = [Record(Decision.APPROVE), Record(Decision.APPROVE)]
+    records = [record(Decision.APPROVE), record(Decision.APPROVE)]
     results = [
         AgentResult(decision=Decision.APPROVE, requests=3, prompt_tokens=50, seconds=2.0),
         AgentResult(failure="llm_unavailable", seconds=60.0),
@@ -229,3 +273,59 @@ def test_percentile_is_nearest_rank():
     assert percentile(values, 50) == 15.0
     assert percentile(values, 95) == 29.0
     assert percentile([], 95) is None
+
+
+def test_contract_tool_answers_from_the_shared_index_or_says_it_is_missing():
+    clause = ContractClause(
+        clause_id="KTR-V-001#11.1",
+        contract_id="KTR-V-001",
+        vendor_id="V-001",
+        number="11.1",
+        article="11",
+        article_title="Addendum",
+        text="Harga satuan Kertas A4 diubah menjadi Rp 55.000 per unit.",
+    )
+    asked = []
+
+    def contracts(vendor_id: str, question: str) -> list[ContractClause]:
+        asked.append((vendor_id, question))
+        return [clause]
+
+    script = Script(
+        call("search_contract", vendor_id="V-001", question="harga Kertas A4"),
+        call("submit_decision", decision="approve", reason="Addendum."),
+    )
+    run_agent("x", ERP, script, contracts=contracts)
+
+    assert asked == [("V-001", "harga Kertas A4")]
+    (answer,) = json.loads(script.seen[1][-1]["content"])
+    assert answer == {"clause": "11.1", "title": "Addendum", "text": clause.text}
+
+    without = Script(
+        call("search_contract", vendor_id="V-001", question="harga"),
+        call("submit_decision", decision="hold", reason="No contract."),
+    )
+    run_agent("x", ERP, without)
+    assert "not available" in without.seen[1][-1]["content"]
+
+
+def test_the_rules_carry_the_configured_rate_and_threshold():
+    prompt = system_prompt(Settings(_env_file=None, tax_rate="0.12", approval_threshold=75000000))
+
+    assert "12% of the subtotal" in prompt
+    assert "Rp 75,000,000" in prompt
+
+
+def test_a_failed_tool_request_marks_the_invoice_unanswered_not_the_run(monkeypatch):
+    import evals.baseline.react as react
+    from lunas.llm import LLMRequestError
+
+    def contracts(vendor_id: str, question: str) -> list[ContractClause]:
+        raise LLMRequestError("422 Budget has been exceeded")
+
+    monkeypatch.setattr(react, "read_invoice_text", lambda path, settings: "INVOICE")
+    script = Script(call("search_contract", vendor_id="V-001", question="harga"))
+    result = run_one(Path("inv-1.pdf"), ERP, script, Settings(), contracts)
+
+    assert result.failure == "llm_unavailable"
+    assert "Budget has been exceeded" in result.reason

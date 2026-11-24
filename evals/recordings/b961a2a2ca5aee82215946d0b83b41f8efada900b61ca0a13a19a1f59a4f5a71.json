@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The contract confirms 14 calendar days — no clause permits 7. The invoice lines also match the PO exactly (prices and quantities), so the payment-terms discrepancy is the only issue.",
+    "tool_calls": [
+      {
+        "id": "call_00_1xbhvsx45yn4t4akcl9h3n8d",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"payment_terms_mismatch\", \"line\": null, \"cause\": \"payment_terms_shorter\", \"evidence\": [{\"kind\": \"contract_clause\", \"ref\": \"KTR-V-022#5.1\", \"detail\": \"The Buyer pays a complete and correct invoice within 14 calendar days of the invoice date.\"}, {\"kind\": \"vendor\", \"ref\": \"V-022\", \"detail\": \"Payment terms on file for Golden Systems Ltd are 14 days.\"}, {\"kind\": \"invoice\", \"ref\": \"GSL-26-00556\", \"detail\": \"Invoice states payment_terms_days = 7, i.e. 7 days shorter than the agreed 14.\"}], \"explanation\": \"The invoice demands payment in 7 days, but the signed contract (clause KTR-V-022#5.1) and the vendor's terms on file both fix 14 calendar days from the invoice date, and no contract clause allows a shorter period, so the stated terms are too short.\"}]}"
+      }
+    ]
+  }
+}

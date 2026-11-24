@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_c5bfadb6265d47afb1130110",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_8a07665d832c496e95e0da74",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"What are the payment terms and number of days for payment?\"}"
+      }
+    ]
+  }
+}

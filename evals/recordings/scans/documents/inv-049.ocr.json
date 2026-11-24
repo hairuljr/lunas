@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "Borneo Hygiene Services                                                       INVOICE\n JI. Jenderal Ahmad Yani No. 5\nBalikpapan 76113                                                      Invoice No.: BHS2600648\nTax ID: 09.718.455.6-721.000                                   Invoice Date: September 16, 2026\n                                                                  Due Date: September 30, 2026\n                                                                     PO Number: PO-2026-9049\nBill To:\nPT Lunas Nusantara Sejahtera\nJI. Jenderal Sudirman Kav. 52-53\nJakarta Selatan 12190\nON    Description                                 Qty           Unit Price           Amount\n1     Hand Soap 5L                                 16          117,000.00        1,872,000.00\n                                                                  Subtotal       1,872,000.00\n                                                                VAT 11%            205,920.00\n                                                                    Total        2,077,920.00\nAll amounts are in Indonesian Rupiah (IDR).\nPayment Details\nBank: Bank Negara Indonesia\nAccount No.: 0712264490\nAccount Name: Borneo Hygiene Services\nNotes: Please quote the invoice number on your remittance.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9617
+}

@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by reading the purchase order and its goods receipts.",
+    "tool_calls": [
+      {
+        "id": "call_00_plue1ypithbfbcs46lsivqc9",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0256\"}"
+      },
+      {
+        "id": "call_01_vw66s9hhh0cwgg5a1gf229i2",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0256\"}"
+      }
+    ]
+  }
+}

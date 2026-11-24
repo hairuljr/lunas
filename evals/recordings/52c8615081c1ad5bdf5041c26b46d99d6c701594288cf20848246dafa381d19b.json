@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sentosa Karya Boga\", \"invoice_number\": \"SKB/2026/00847\", \"invoice_date\": \"2026-09-24\", \"due_date\": \"2026-11-08\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0255\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Gula Pasir 1kg\", \"quantity\": 12, \"unit_price\": 17600, \"amount\": 211200}, {\"description\": \"Teh Celup (kotak isi 100)\", \"quantity\": 5, \"unit_price\": 44100, \"amount\": 220500}, {\"description\": \"Katering Rapat (paket)\", \"quantity\": 6, \"unit_price\": 1365400, \"amount\": 8192400}, {\"description\": \"Air Mineral Galon 19L\", \"quantity\": 12, \"unit_price\": 20400, \"amount\": 244800}], \"subtotal\": 8868900, \"tax\": 975579, \"total\": 9844479, \"bank_account\": \"5669310234\", \"notes\": null}"
+}

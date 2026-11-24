@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_18b89e1106ea43a3a7b1578b",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"tax_mismatch\", \"line\": null, \"cause\": \"wrong_tax_rate\", \"evidence\": [{\"kind\": \"contract_clause\", \"ref\": \"KTR-V-036#3.1\", \"detail\": \"Each invoice carries VAT at 11% of the subtotal, which is the tax base.\"}, {\"kind\": \"invoice\", \"ref\": \"KOS-26-00686\", \"detail\": \"Subtotal 6,495,800 with tax stated as 779,496, i.e. 12% rather than 11% (11% would be 714,538).\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0276\", \"detail\": \"PO lines (7 x 806,600 toner + 18 x 47,200 paper) sum to the invoiced subtotal of 6,495,800 at the agreed unit prices.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0276\", \"detail\": \"Full quantities received; value received with tax is 7,210,338, exactly the subtotal plus 11% VAT, confirming 779,496 overstates tax.\"}], \"explanation\": \"The invoice applies a 12% rate to the subtotal, while contract clause KTR-V-036#3.1 fixes VAT at 11%, so the tax amount is overstated by 64,958.\"}]}"
+      }
+    ]
+  }
+}

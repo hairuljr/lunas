@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_8789c03161544a8fb1713358",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"separate_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0021\", \"detail\": \"Ordered 26 lusin Map Arsip Ordner, 14 rim Kertas HVS A4 80gsm, 16 Toner Printer Laser Hitam — exactly twice the quantities on this invoice.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0021A\", \"detail\": \"First shipment received 2026-09-09: 13 / 7 / 8 units.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0021B\", \"detail\": \"Second, separate shipment received 2026-09-18: 13 / 7 / 8 units, matching this invoice's quantities.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"MUA26090124\", \"detail\": \"Earlier invoice dated 2026-09-10 for 11176146 on PO-2026-0021, billing the first shipment.\"}, {\"kind\": \"invoice\", \"ref\": \"MUA26090127\", \"detail\": \"This invoice dated 2026-09-18: 13 / 7 / 8 units, total 11176146.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0021\", \"detail\": \"get_billing_position: value received with tax 22352292 vs invoiced including this invoice 22352292, within_received = true.\"}], \"explanation\": \"The matching total is not a resubmission: PO-2026-0021 was ordered in double quantities and delivered in two shipments, and this invoice bills only the second shipment (GR-2026-0021B, received 2026-09-18) after invoice MUA26090124 billed GR-2026-0021A, with get_billing_position showing invoicing still within_received.\"}]}"
+      }
+    ]
+  }
+}

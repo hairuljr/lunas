@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_a1984b79209f4d00b4561e64",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0235\"}"
+      },
+      {
+        "id": "call_00050418378b416ba6db48dc",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0235\"}"
+      },
+      {
+        "id": "call_f4353cfa1d8c4b40a9158d87",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0235\"}"
+      },
+      {
+        "id": "call_156ab5e24fce48578ec33193",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_0c57dbb80061477a857e8f03",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_1c9a166095c84263b44d36cb",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"coffee price per kilogram, unit price for Kopi Bubuk Arabika 1kg, price changes and effective dates\"}"
+      }
+    ]
+  }
+}

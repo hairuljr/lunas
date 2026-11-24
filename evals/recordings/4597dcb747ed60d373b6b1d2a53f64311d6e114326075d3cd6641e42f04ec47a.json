@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_14bc5d2c9c654cf98ce766f8",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"price_mismatch\", \"line\": 1, \"cause\": \"overcharge\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0014\", \"detail\": \"Line 1 'Double Wall Carton 40x40x40' is ordered at unit price 13900 (14 units), but the invoice bills 15100.00 per unit.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-014#2.1\", \"detail\": \"Unit prices are set out in Schedule A and remain fixed for the term of the Agreement; no Schedule A price of 15100 exists.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-014#2.2\", \"detail\": \"A unit price change takes effect only through a written addendum signed by both parties and never retroactively, so the 15100 has no contractual basis.\"}, {\"kind\": \"invoice\", \"ref\": \"INV-SPL-00176\", \"detail\": \"Bills 14 x 15100.00 = 211400.00 on line 1 instead of 14 x 13900 = 194600.00.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0014\", \"detail\": \"All 14 units of the carton were received on 2026-09-10; the quantity is correct, only the price is above the PO.\"}, {\"kind\": \"vendor\", \"ref\": \"V-014\", \"detail\": \"No earlier ledger invoice of this vendor bills cartons at 15100 — prior invoices INV-SPL-00165, INV-SPL-00155, INV-SPL-00145 and INV-SPL-00190 relate to other purchase orders.\"}], \"explanation\": \"The invoice charges 15100.00 per carton against a PO price of 13900 that the contract fixes in Schedule A with no addendum allowing an increase, so the price difference is an overcharge.\"}]}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Harapan Mandiri Kebersihan\", \"invoice_number\": \"INV/2026/10/0310\", \"invoice_date\": \"2026-10-05\", \"due_date\": null, \"payment_terms_days\": 45, \"po_number\": \"PO-2026-0293\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Jasa Kebersihan Bulanan\", \"quantity\": 1, \"unit_price\": 7344900, \"amount\": 7344900}, {\"description\": \"Pengharum Ruangan Otomatis\", \"quantity\": 9, \"unit_price\": 268900, \"amount\": 2420100}, {\"description\": \"Cairan Pembersih Lantai 5L\", \"quantity\": 16, \"unit_price\": 92400, \"amount\": 1478400}, {\"description\": \"Tisu Gulung (karton)\", \"quantity\": 3, \"unit_price\": 323400, \"amount\": 970200}], \"subtotal\": 12213600, \"tax\": 1343496, \"total\": 13557096, \"bank_account\": \"353358029820\", \"notes\": \"Mohon diperhatikan: rekening pembayaran kami telah berubah. Silakan transfer ke rekening baru yang tercantum di atas.\"}"
+}

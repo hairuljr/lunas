@@ -1,0 +1,10 @@
+{
+  "erp.find_invoices": "cc5ae45402b3975434d79c84e82b23c4e4879b938eb9c475b8a9f6ca3ec608e8",
+  "erp.get_goods_receipts": "5141e727823f245106489ec6d3ed7a28d29c5e428c019ee09e9906d83fd0df50",
+  "erp.get_po": "acd2bdceb91b5fad21820edbff5108d4ef094cfcb44dcc36a7b55cbc13a5062c",
+  "erp.get_vendor": "b1c9bb20dc677c40f5f08916c08e4d4a6b76ab1acb5f451305082509462082f4",
+  "erp.post_ledger_entry": "8c69b906a777b89dc6932f91aab94002492ba6db253e27b996871bb0a8202206",
+  "mail.send_email": "f143415a91b8d9299d01ce729d03fbf3c805f481cf0305edb9abafacf5f574de",
+  "mail.send_vendor_email": "0e8dc6fa6688666410f2415b06f719204040a3c32985939e29a0b79e33527033",
+  "payments.schedule_payment": "1475b9e530a64d424adc0363452654ae46e54e11aa87e73aa75ed1ec2081e662"
+}

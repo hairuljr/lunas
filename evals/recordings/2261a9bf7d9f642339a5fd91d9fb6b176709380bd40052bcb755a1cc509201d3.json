@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_dbec6392bb8942fca6dafd9b",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Is there any written addendum or Schedule A price list changing the unit price for Cat6 Network Cable, effective from a specific date?\"}"
+      }
+    ]
+  }
+}

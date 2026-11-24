@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"clause_id\": \"KTR-V-019#11.1\", \"quote\": \"Addendum No. 1 tanggal 4 Agustus 2026: terhitung sejak 9 September 2026, harga satuan Bubble Wrap 1,25m x 50m diubah menjadi Rp 307.800 per unit.\", \"unit_price\": 307800, \"effective_date\": \"2026-09-09\"}"
+}

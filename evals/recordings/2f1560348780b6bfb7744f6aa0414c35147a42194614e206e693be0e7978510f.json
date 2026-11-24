@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_db7fe1dd3d074301b95e9d26",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"tax_mismatch\", \"line\": null, \"cause\": \"wrong_tax_rate\", \"evidence\": [{\"kind\": \"contract_clause\", \"ref\": \"KTR-V-037#3.1\", \"detail\": \"Contract clause 3.1 fixes PPN at 11% of the subtotal as the tax base.\"}, {\"kind\": \"invoice\", \"ref\": \"SGT/2026/00231\", \"detail\": \"Invoice charges tax of 250500 on a subtotal of 2087500, i.e. a 12% rate rather than the contracted 11% (229625.00).\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0157\", \"detail\": \"PO line for 1 x Monitor LED 24 inci at 2087500, giving subtotal 2087500 on which 11% PPN applies.\"}], \"explanation\": \"The invoice applies a 12% tax rate (250500) instead of the 11% PPN stipulated in clause KTR-V-037#3.1, which would give 229625.00.\"}]}"
+      }
+    ]
+  }
+}

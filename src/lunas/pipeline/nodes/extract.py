@@ -11,7 +11,7 @@ from lunas.models import Invoice, ParsedDocument
 from lunas.telemetry import span
 
 PROMPT_NAME = "extract"
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v2"
 
 
 # The sender controls the page text, so it must not be able to close or open the wrapper

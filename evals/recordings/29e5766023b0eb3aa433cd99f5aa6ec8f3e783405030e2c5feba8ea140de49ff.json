@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Sterling Hygiene Group\", \"invoice_number\": \"SHG-26-00486\", \"invoice_date\": \"2026-10-05\", \"due_date\": null, \"payment_terms_days\": 30, \"po_number\": \"PO-2026-0237\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Monthly Cleaning Service\", \"quantity\": 1, \"unit_price\": 8208000.0, \"amount\": 8208000.0}, {\"description\": \"Automatic Air Freshener\", \"quantity\": 6, \"unit_price\": 265500.0, \"amount\": 1593000.0}], \"subtotal\": 9801000.0, \"tax\": 1078110.0, \"total\": 10879110.0, \"bank_account\": \"83078932117\", \"notes\": \"Please quote the invoice number on your remittance.\"}"
+}

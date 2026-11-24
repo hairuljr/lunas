@@ -1,0 +1,34 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by gathering the core records.",
+    "tool_calls": [
+      {
+        "id": "call_749736a3a656402e90130ddb",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0037\"}"
+      },
+      {
+        "id": "call_e839c237a63348ab94a2c08f",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0037\"}"
+      },
+      {
+        "id": "call_7e982d937987451a900dc755",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0037\"}"
+      },
+      {
+        "id": "call_ff63f054e1244559b69d82f9",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_a79b23768ebd4807944f9f1e",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

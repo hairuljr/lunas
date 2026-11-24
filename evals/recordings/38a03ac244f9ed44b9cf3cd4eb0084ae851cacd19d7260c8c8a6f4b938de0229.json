@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_c8f3b41d08634736b49cf4fd",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"price_mismatch\", \"line\": 1, \"cause\": \"contract_price_not_yet_effective\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0240\", \"detail\": \"Line 1 'Stretch Film 500mm (rol)' is ordered at a PO unit price of 81400 for quantity 17.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-029#11.1\", \"detail\": \"Addendum No. 1 dated 7 August 2026 changes the Stretch Film 500mm (rol) unit price to Rp 96.100 only with effect from 6 October 2026.\"}, {\"kind\": \"invoice\", \"ref\": \"SUK-26-00113\", \"detail\": \"Invoice dated 2026-09-26 bills line 1 at 96100 per unit, before the 2026-10-06 effective date of the contract price.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0240\", \"detail\": \"Goods receipt of 2026-09-24 covers the full PO quantities (17/15/10); billing position shows invoiced 4043397 against value received with tax of 3766008, so invoicing is not within_received.\"}], \"explanation\": \"The 96100 unit price on line 1 is the contract price set by addendum KTR-V-029#11.1, but that price only takes effect on 2026-10-06, after the 2026-09-26 invoice date, so the PO price of 81400 still applies and the line is overpriced pending the addendum's effective date.\"}]}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_ybk08ynwrk79emgwiintxs9q",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"tax_mismatch\", \"line\": null, \"cause\": \"wrong_tax_rate\", \"evidence\": [{\"kind\": \"contract_clause\", \"ref\": \"KTR-V-009#3.1\", \"detail\": \"Each invoice carries VAT at 11% of the subtotal, which is the tax base.\"}, {\"kind\": \"invoice\", \"ref\": \"BHS2600680\", \"detail\": \"Subtotal 14547100.0 with tax 1745652.0, i.e. 12% of the subtotal, not the contractual 11% (1600181.0).\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0249\", \"detail\": \"PO lines match the invoice lines and quantities; the discrepancy is confined to the tax amount.\"}], \"explanation\": \"The invoice applies a 12% tax rate to the subtotal, while contract clause KTR-V-009#3.1 fixes VAT at 11% of the subtotal, so the tax is overstated by the difference.\"}]}"
+      }
+    ]
+  }
+}

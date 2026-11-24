@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "                                     FAKTUR\nDari                                          Kepada\nPT Sentosa Karya Boga                         PT Lunas Nusantara Sejahtera\nJI. Ahmad Yani No. 122                        JI. Jenderal Sudirman Kav. 52-53\nBogor 16121                                   Jakarta Selatan 12190\nNPWP 91.234.456.9-633.000\nNo. Faktur                 Tanggal             Jatuh Tempo         No. PO\nSKB/2026/00814             02/10/2026          16/11/2026          PO-2026-0055\nNo   Deskripsi                               Qty         Harga Satuan              Jumlah\n1    Mesin Kopi Otomatis                       1       Rp 6.430.900,00      Rp 6.430.900,00\n2    Kopi Bubuk Arabika 1kg                   20         Rp 190.100,00      Rp 3.802.000,00\n                                                          Subtotal       Rp 10.232.900,00\n                                                         PPN 11%          Rp 1.125.619,00\n                                                             Total       Rp 11.358.519,00\nPembayaran\nBank Mandiri ·No. Rekening 5669310234·Atas Nama PT Sentosa Karya Boga",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9496
+}

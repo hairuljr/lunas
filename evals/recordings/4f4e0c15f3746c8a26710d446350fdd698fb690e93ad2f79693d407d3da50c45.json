@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by pulling the purchase order, its receipts, the billing position, and the vendor's records.",
+    "tool_calls": [
+      {
+        "id": "call_8703c9dfc6084a7aa74fc723",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0213\"}"
+      },
+      {
+        "id": "call_58cda47f20c44b05a9a2e759",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0213\"}"
+      },
+      {
+        "id": "call_e2705c1ac8bb4275892c7852",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0213\"}"
+      },
+      {
+        "id": "call_3d17d531933f4c9b8be9553a",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_be189434f96e43bc9b46bb77",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_90711174d5154065b5a2e90c",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"payment terms days\"}"
+      }
+    ]
+  }
+}

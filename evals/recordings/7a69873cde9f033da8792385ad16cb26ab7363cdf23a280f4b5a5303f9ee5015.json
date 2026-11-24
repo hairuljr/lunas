@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_47e7c4f8fcbe4e2e8c5de146",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Is there a contract price for Keyboard Mekanikal USB or Monitor LED 24 inci, and from what effective date?\"}"
+      },
+      {
+        "id": "call_44f2ab76503a4e088b8470be",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"What prices and price adjustment clauses does the contract set for the items on PO-2026-0037?\"}"
+      }
+    ]
+  }
+}

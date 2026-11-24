@@ -3,8 +3,12 @@
 import math
 from collections import Counter
 from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 from lunas.models import Decision, Invoice, LineItem
+
+if TYPE_CHECKING:
+    from data.generate import GroundTruth
 
 # The fields SPEC §2 holds to the extraction target.
 KEY_FIELDS = (
@@ -18,7 +22,7 @@ KEY_FIELDS = (
 )
 # Scored and reported too, outside the headline number. `notes` is free text and is not
 # scored by exact match.
-OTHER_FIELDS = ("due_date", "currency", "subtotal", "line_items")
+OTHER_FIELDS = ("due_date", "payment_terms_days", "currency", "subtotal", "line_items")
 FIELDS = KEY_FIELDS + OTHER_FIELDS
 
 
@@ -76,6 +80,7 @@ def decision_metrics(expected: Sequence[Decision], actual: Sequence[Decision | N
     )
     return {
         "documents": len(pairs),
+        "correct": sum(want == got for want, got in pairs),
         "accuracy": sum(want == got for want, got in pairs) / len(pairs),
         # The asymmetric one: an invoice that must not be paid was approved.
         "false_approve_rate": (
@@ -93,3 +98,29 @@ def percentile(values: Sequence[float], q: float) -> float | None:
         return None
     ordered = sorted(values)
     return ordered[max(0, math.ceil(q / 100 * len(ordered)) - 1)]
+
+
+def by_label(
+    records: Sequence[GroundTruth], decisions: Sequence[Decision | None]
+) -> dict[str, dict]:
+    """Decision metrics per class: an overall number hides a class the pipeline gets wrong."""
+    groups: dict[str, tuple[list[Decision], list[Decision | None]]] = {}
+    for record, decision in zip(records, decisions, strict=True):
+        expected, actual = groups.setdefault(record.label, ([], []))
+        expected.append(record.expected_decision)
+        actual.append(decision)
+    return {label: decision_metrics(*groups[label]) for label in sorted(groups)}
+
+
+def percent(value: float | None) -> str:
+    return "n/a" if value is None else f"{value:6.1%}"
+
+
+def print_decisions(title: str, metrics: dict) -> None:
+    """One report format for the pipeline and the baseline, so the two stay comparable."""
+    print(f"\n{title}")
+    print(f"  decision accuracy     {percent(metrics['accuracy'])}  (n={metrics['documents']})")
+    print(f"  false-approve rate    {percent(metrics['false_approve_rate'])}")
+    print(f"  expected->actual      {metrics['confusion']}")
+    for label, row in metrics.get("by_label", {}).items():
+        print(f"    {label:<20}{row['correct']:>4}/{row['documents']:<4}")

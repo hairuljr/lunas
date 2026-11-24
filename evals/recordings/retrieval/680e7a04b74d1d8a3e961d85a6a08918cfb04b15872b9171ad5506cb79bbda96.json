@@ -1,0 +1,74 @@
+[
+ {
+  "clause_id": "KTR-V-001#7.1",
+  "contract_id": "KTR-V-001",
+  "vendor_id": "V-001",
+  "number": "7.1",
+  "article": "7",
+  "article_title": "Pengiriman",
+  "text": "PIHAK KEDUA mengirimkan barang paling lambat 7 hari kalender sejak Purchase Order diterima."
+ },
+ {
+  "clause_id": "KTR-V-001#7.2",
+  "contract_id": "KTR-V-001",
+  "vendor_id": "V-001",
+  "number": "7.2",
+  "article": "7",
+  "article_title": "Pengiriman",
+  "text": "Pengiriman sebagian diperbolehkan; sisa barang dikirim dan ditagih setelah diterima."
+ },
+ {
+  "clause_id": "KTR-V-001#4.1",
+  "contract_id": "KTR-V-001",
+  "vendor_id": "V-001",
+  "number": "4.1",
+  "article": "4",
+  "article_title": "Penagihan",
+  "text": "Faktur wajib mencantumkan nomor Purchase Order yang menjadi dasar penagihan."
+ },
+ {
+  "clause_id": "KTR-V-001#4.2",
+  "contract_id": "KTR-V-001",
+  "vendor_id": "V-001",
+  "number": "4.2",
+  "article": "4",
+  "article_title": "Penagihan",
+  "text": "PIHAK KEDUA hanya dapat menagih barang yang telah diterima PIHAK PERTAMA dan tercatat dalam berita acara penerimaan barang."
+ },
+ {
+  "clause_id": "KTR-V-001#4.3",
+  "contract_id": "KTR-V-001",
+  "vendor_id": "V-001",
+  "number": "4.3",
+  "article": "4",
+  "article_title": "Penagihan",
+  "text": "Satu pengiriman hanya boleh ditagih satu kali; faktur yang diajukan ulang dengan nomor yang sama atau berbeda akan ditolak."
+ },
+ {
+  "clause_id": "KTR-V-001#5.1",
+  "contract_id": "KTR-V-001",
+  "vendor_id": "V-001",
+  "number": "5.1",
+  "article": "5",
+  "article_title": "Pembayaran",
+  "text": "PIHAK PERTAMA membayar faktur yang lengkap dan benar paling lambat 30 hari kalender sejak tanggal faktur."
+ },
+ {
+  "clause_id": "KTR-V-001#5.2",
+  "contract_id": "KTR-V-001",
+  "vendor_id": "V-001",
+  "number": "5.2",
+  "article": "5",
+  "article_title": "Pembayaran",
+  "text": "Pembayaran ditransfer ke rekening PIHAK KEDUA di Bank Central Asia nomor 5270418896 atas nama PT Sumber Makmur Abadi."
+ },
+ {
+  "clause_id": "KTR-V-001#5.3",
+  "contract_id": "KTR-V-001",
+  "vendor_id": "V-001",
+  "number": "5.3",
+  "article": "5",
+  "article_title": "Pembayaran",
+  "text": "Atas keterlambatan pembayaran, PIHAK KEDUA berhak atas denda 2% per bulan dari jumlah yang terlambat."
+ }
+]

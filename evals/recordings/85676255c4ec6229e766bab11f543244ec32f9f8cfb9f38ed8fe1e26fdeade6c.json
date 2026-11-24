@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate this possible duplicate invoice.",
+    "tool_calls": [
+      {
+        "id": "call_b13643e9c9af4e408785b2ca",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0020\"}"
+      },
+      {
+        "id": "call_66e7769db9b044389b8f4ba8",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0020\"}"
+      },
+      {
+        "id": "call_afbe3ecea07f48af9146f74d",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0020\"}"
+      },
+      {
+        "id": "call_64cf3f2086bb4bf3b4b7b38a",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

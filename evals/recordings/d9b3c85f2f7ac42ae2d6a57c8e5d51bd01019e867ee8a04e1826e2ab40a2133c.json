@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_1acbcd68269a4df39104e6ce",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"tax_mismatch\", \"line\": null, \"cause\": \"wrong_tax_rate\", \"evidence\": [{\"kind\": \"contract_clause\", \"ref\": \"KTR-V-019#3.1\", \"detail\": \"Contract fixes PPN at 11% of the subtotal as the tax base.\"}, {\"kind\": \"invoice\", \"ref\": \"INV/2026/10/0372\", \"detail\": \"Invoice charges tax 157488 on subtotal 1312400, i.e. 12%, not the contracted 11% (144364.00).\"}], \"explanation\": \"The tax was computed at 12% instead of the 11% PPN rate set by clause KTR-V-019#3.1, overstating the tax by 13,124.\"}]}"
+      }
+    ]
+  }
+}

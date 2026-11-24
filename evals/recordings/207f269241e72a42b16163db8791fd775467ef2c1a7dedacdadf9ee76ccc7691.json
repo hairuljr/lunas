@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_d4faa39f9bb84aa8aef5f514",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_c3717890dc714db28cf9025b",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0223\"}"
+      },
+      {
+        "id": "call_4b900370653647f29424224e",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_9aaa589bdaee470ba850a06b",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0223\"}"
+      },
+      {
+        "id": "call_bf24fa30829d46eba392f413",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0223\"}"
+      },
+      {
+        "id": "call_f5be5a520a674c9587cd2f5f",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"What are the agreed payment terms in days for this vendor?\"}"
+      }
+    ]
+  }
+}

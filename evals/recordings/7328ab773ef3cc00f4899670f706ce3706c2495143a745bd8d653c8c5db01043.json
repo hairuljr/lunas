@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate the purchase order, goods receipts, and billing position for this invoice.",
+    "tool_calls": [
+      {
+        "id": "call_2674e0f35d0244649d03dc1f",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0103\"}"
+      },
+      {
+        "id": "call_3fd831e3ffc0420182532c3b",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0103\"}"
+      },
+      {
+        "id": "call_5158a802dde9434a87eb51cc",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0103\"}"
+      }
+    ]
+  }
+}

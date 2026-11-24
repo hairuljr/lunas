@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "                                      INVOICE\nFrom                                           Bill To\nArchipelago Packaging Co                       PT Lunas Nusantara Sejahtera\nKawasan Industri Jababeka Blok F-9             JI. Jenderal Sudirman Kav. 52-53\nBekasi 17530                                   Jakarta Selatan 12190\nTax ID 04.610.284.7-431.000\nInvoice No.                 Invoice Date        Due Date             PO Number\nSI-26-00362                 29 Oct 2026         13 Dec 2026          PO-2026-0044\nNo    Description                             Qty            Unit Price             Amount\n1     Stretch Film 500mm (roll)                16            IDR 89,200        IDR 1,427,200\n                                                            Subtotal          IDR 1,427,200\n                                                           VAT 11%              IDR 156,992\n                                                              Total           IDR 1,584,192\n                                    PAID\nPayment Details\nBank Rakyat Indonesia · Account No. 033201009876305- Account Name Archipelago Packaging Co\nNotes: Late payments are subject to a 2% monthly charge.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9582
+}

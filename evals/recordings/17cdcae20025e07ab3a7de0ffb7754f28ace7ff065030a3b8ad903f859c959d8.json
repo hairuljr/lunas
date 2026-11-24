@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_94b6ypferk9h7cssxg0afwjh",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"separate_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0152\", \"detail\": \"Orders 24 USB Mechanical Keyboards at 683,500 each — two deliveries of 12, not one.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0152A\", \"detail\": \"12 units received 2026-10-04, the delivery billed by earlier invoice 0215/PSG/X/2026 dated 2026-10-07.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0152B\", \"detail\": \"12 further units received 2026-10-11, the delivery billed by this invoice of 2026-10-14.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"0215/PSG/X/2026\", \"detail\": \"Earlier invoice of 2026-10-07 for 9,104,220 on PO-2026-0152 covered only the first 12 units, so the identical total here is not the same goods billed twice.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0152\", \"detail\": \"get_billing_position: value received with tax 18,208,440 vs invoiced including this invoice 18,208,440, within_received = true, with goods receipts GR-2026-0152A and GR-2026-0152B.\"}], \"explanation\": \"The identical total is not a resubmission: invoice 0215/PSG/X/2026 billed the 12 units from GR-2026-0152A and this invoice bills the second 12 units from GR-2026-0152B, and the billing position confirms the invoicing remains within_received.\"}]}"
+      }
+    ]
+  }
+}

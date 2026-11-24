@@ -1,0 +1,11 @@
+{
+ "pages": [
+  {
+   "number": 1,
+   "text": "PT Kemas Prima Indonesia\nJl. Raya Serpong KM 7\nTangerang Selatan 15310\nNPWP: 08.266.740.9-411.000\nFAKTUR\nNo. Faktur       : 00850/KPI/2026\nTanggal          : 2026-09-18\nTermin Pembayaran : 45 hari\nMata Uang        : IDR\nKepada           : PT Lunas Nusantara Sejahtera\nNo Deskripsi                            Qty       Harga Satuan            Jumlah\n    Stretch Film 500mm (rol)             18             88.200          1.587.600\n                                                      Subtotal          1.587.600\n                                                       PPN 11%            174.636\n                                                         Total         1.762.236\nPembayaran\nBank             : Bank Permata\nNo. Rekening     : 410258369 LUNAS\nAtas Nama        : PT Kemas\nCatatan: Mohon cantumkan nomor faktur pada berita transfer.",
+   "tables": []
+  }
+ ],
+ "backend": "ocr",
+ "confidence": 0.9097
+}

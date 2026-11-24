@@ -45,8 +45,23 @@ def test_wrong_total_is_flagged():
 
 
 def test_wrong_subtotal_is_flagged():
-    invoice = make_invoice(subtotal=Decimal(1900000), total=Decimal(2120000))
+    invoice = make_invoice(subtotal=Decimal(1900000), tax=Decimal(209000), total=Decimal(2109000))
     assert codes(invoice) == ["subtotal_mismatch"]
+
+
+def test_tax_at_another_rate_is_flagged():
+    invoice = make_invoice(tax=Decimal(240000), total=Decimal(2240000))
+    assert codes(invoice) == ["tax_mismatch"]
+
+
+def test_tax_rounded_to_the_rupiah_passes():
+    invoice = make_invoice(tax=Decimal(220001), total=Decimal(2220001))
+    assert codes(invoice) == []
+
+
+def test_tax_rate_is_configurable():
+    invoice = make_invoice(tax=Decimal(240000), total=Decimal(2240000))
+    assert validate_invoice(invoice, tax_rate=Decimal("0.12")) == []
 
 
 def test_wrong_line_amount_is_flagged():

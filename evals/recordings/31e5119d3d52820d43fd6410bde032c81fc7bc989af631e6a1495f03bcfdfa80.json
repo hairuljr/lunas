@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"Summit Packaging Ltd\", \"invoice_number\": \"INV/2026/10/0414\", \"invoice_date\": \"2026-10-25\", \"due_date\": \"2026-11-08\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0144\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Stretch Film 500mm (roll)\", \"quantity\": 19, \"unit_price\": 85700, \"amount\": 1628300}, {\"description\": \"Shipping Labels A6 (roll)\", \"quantity\": 8, \"unit_price\": 71200, \"amount\": 569600}], \"subtotal\": 2197900, \"tax\": 241769, \"total\": 2439669, \"bank_account\": \"486653347834\", \"notes\": null}"
+}

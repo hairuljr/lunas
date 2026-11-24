@@ -1,0 +1,5 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "reply": "{\"vendor_name\": \"PT Sentosa Karya Boga\", \"invoice_number\": \"SKB/2026/00814\", \"invoice_date\": \"2026-10-02\", \"due_date\": \"2026-11-16\", \"payment_terms_days\": null, \"po_number\": \"PO-2026-0055\", \"currency\": \"IDR\", \"line_items\": [{\"description\": \"Mesin Kopi Otomatis\", \"quantity\": 1, \"unit_price\": 6430900, \"amount\": 6430900}, {\"description\": \"Kopi Bubuk Arabika 1kg\", \"quantity\": 20, \"unit_price\": 190100, \"amount\": 3802000}], \"subtotal\": 10232900, \"tax\": 1125619, \"total\": 11358519, \"bank_account\": \"5669310234\", \"notes\": null}"
+}

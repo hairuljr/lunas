@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_615yi9shaamtrl9umk3gu97e",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0052\"}"
+      },
+      {
+        "id": "call_01_j2700cvh0bxxi7g4rwfd88lr",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Is there a contract price for Antivirus License 1 Year, and from what effective date?\"}"
+      }
+    ]
+  }
+}

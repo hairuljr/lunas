@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_xy2rurbly7xjhc5z9gwgrjjg",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"cause\": \"separate_delivery\", \"evidence\": [{\"detail\": \"Ordered 34 dus lakban, 14 bubble wrap, 22 stretch film at 439400 / 260200 / 97000; this invoice's 17 / 7 / 11 are exactly half the ordered quantities.\", \"kind\": \"purchase_order\", \"ref\": \"PO-2026-0208\"}, {\"detail\": \"First delivery on 2026-09-10: 17 / 7 / 11, the quantities billed by invoice 00874/KPI/2026.\", \"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0208A\"}, {\"detail\": \"Second delivery on 2026-09-19: 17 / 7 / 11, matching this invoice's lines exactly.\", \"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0208B\"}, {\"detail\": \"Earlier invoice dated 2026-09-12 for 11497602 on PO-2026-0208, covering the first delivery.\", \"kind\": \"ledger_invoice\", \"ref\": \"00874/KPI/2026\"}, {\"detail\": \"Invoice dated 2026-09-19, same day as the second goods receipt, for 11497602 with the second delivery's quantities.\", \"kind\": \"invoice\", \"ref\": \"00880/KPI/2026\"}, {\"detail\": \"get_billing_position: value received with tax 22995204, invoiced before 11497602, this invoice 11497602, invoiced including this 22995204, within_received = true.\", \"kind\": \"purchase_order\", \"ref\": \"PO-2026-0208\"}], \"explanation\": \"The identical total to 00874/KPI/2026 is not a duplicate: PO-2026-0208 called for 34/14/22 and was delivered in two equal receipts (GR-2026-0208A on 2026-09-10 and GR-2026-0208B on 2026-09-19), the earlier invoice billing the first and this invoice billing the second, and code's billing position confirms the total invoicing is still within_received (22995204 of 22995204).\", \"issue_code\": \"possible_duplicate\", \"line\": null}]}"
+      }
+    ]
+  }
+}

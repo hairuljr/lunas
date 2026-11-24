@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_ef630b87a47749be98cd988b",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"separate_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0044\", \"detail\": \"Orders 32 rolls of Stretch Film 500mm at 89200 per roll, order date 2026-10-12.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0044A\", \"detail\": \"First delivery: 16 rolls received 2026-10-15, the quantity billed by earlier invoice SI-26-00358.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0044B\", \"detail\": \"Second, later delivery: 16 rolls received 2026-10-28, before this invoice date 2026-10-29.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"SI-26-00358\", \"detail\": \"Earlier invoice of 2026-10-18 for 1584192 on PO-2026-0044, covering the first 16 rolls.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0044\", \"detail\": \"get_billing_position: value received with tax 3168384, invoiced before 1584192, this invoice 1584192, invoiced including this 3168384 — within_received = true.\"}], \"explanation\": \"The matching total is coincidental: the earlier invoice SI-26-00358 billed the 16 rolls from goods receipt GR-2026-0044A, while this invoice bills the 16 rolls of the later delivery GR-2026-0044B, and the billing position confirms the invoicing stays within_received rather than re-billing already-invoiced goods.\"}]}"
+      }
+    ]
+  }
+}
