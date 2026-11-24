@@ -33,11 +33,12 @@ from openai import APIError, OpenAI
 from pydantic import BaseModel
 
 from data.generate import MANIFEST_FILE, SPLIT_CHOICES, GroundTruth, load_ground_truth
+from data.generate_scans import SCAN_MANIFEST_FILE
 from evals.node.scoring import by_label, decision_metrics, percentile, print_decisions
 from lunas.config import Settings
 from lunas.erp import ErpData
 from lunas.ingest import choose_backend, get_reader
-from lunas.llm import load_prompt
+from lunas.llm import LLMRequestError, load_prompt
 from lunas.models import ContractClause, Decision
 from lunas.retrieval.index import cached_embedder
 from lunas.retrieval.retriever import StoreRetriever
@@ -315,7 +316,10 @@ def run_one(
             contracts=contracts,
             prompt=system_prompt(settings),
         )
-    except APIError as error:
+    # LLMRequestError: a tool's own request failed (the contract search embeds the
+    # question). Like a failed chat request, that marks this invoice unanswered instead of
+    # ending the whole run.
+    except (APIError, LLMRequestError) as error:
         return AgentResult(
             failure="llm_unavailable",
             reason=f"{type(error).__name__}: {error}",
@@ -426,14 +430,24 @@ def main() -> int:
         return 2
     workers = args.workers or settings.llm_workers
 
-    # A cached result is only valid for the same provider, model, prompt and tools.
+    # A cached result is only valid for the same provider, model, prompt and tools, the same
+    # records behind the tools, and the same invoice. Invoice IDs are reused when the
+    # generator changes, so the ID alone would replay another invoice's answer.
+    records_behind_tools = [
+        (path.name, hashlib.sha256(path.read_bytes()).hexdigest())
+        for path in sorted(data_dir.glob("*.json"))
+        if path.name != SCAN_MANIFEST_FILE
+    ]
     key = hashlib.sha256(
-        json.dumps([host, settings.llm_model, prompt, TOOLS, MAX_TURNS]).encode()
+        json.dumps(
+            [host, settings.llm_model, prompt, TOOLS, MAX_TURNS, records_behind_tools]
+        ).encode()
     ).hexdigest()[:16]
     cache_dir = CACHE_DIR / key
 
     def one(record: GroundTruth) -> tuple[AgentResult, bool]:
-        cached = cache_dir / f"{record.id}.json"
+        document = hashlib.sha256((data_dir / record.file).read_bytes()).hexdigest()[:16]
+        cached = cache_dir / f"{record.id}-{document}.json"
         if args.cache and cached.exists():
             return AgentResult.model_validate_json(cached.read_text(encoding="utf-8")), True
         result = run_one(data_dir / record.file, erp, chat, settings, retriever.search_clauses)

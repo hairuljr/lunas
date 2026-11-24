@@ -4,6 +4,7 @@ measured by running evals/baseline/react.py against a model."""
 import json
 from datetime import date
 from decimal import Decimal
+from pathlib import Path
 
 from data.generate import EXPECTED, EXPECTED_INVESTIGATION, GroundTruth
 from evals.baseline.react import (
@@ -13,6 +14,7 @@ from evals.baseline.react import (
     Turn,
     baseline_metrics,
     run_agent,
+    run_one,
     system_prompt,
 )
 from evals.node.scoring import percentile
@@ -312,3 +314,18 @@ def test_the_rules_carry_the_configured_rate_and_threshold():
 
     assert "12% of the subtotal" in prompt
     assert "Rp 75,000,000" in prompt
+
+
+def test_a_failed_tool_request_marks_the_invoice_unanswered_not_the_run(monkeypatch):
+    import evals.baseline.react as react
+    from lunas.llm import LLMRequestError
+
+    def contracts(vendor_id: str, question: str) -> list[ContractClause]:
+        raise LLMRequestError("422 Budget has been exceeded")
+
+    monkeypatch.setattr(react, "read_invoice_text", lambda path, settings: "INVOICE")
+    script = Script(call("search_contract", vendor_id="V-001", question="harga"))
+    result = run_one(Path("inv-1.pdf"), ERP, script, Settings(), contracts)
+
+    assert result.failure == "llm_unavailable"
+    assert "Budget has been exceeded" in result.reason

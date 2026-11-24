@@ -86,14 +86,10 @@ Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
 | OCR transcription, scanned twins (no model) | all 80 | CER 0.016; total, tax, invoice and PO number 80/80; bank account 76/80 (all 4 misses stamped) | `transcription-20261124-054813.json` |
 | Vision transcription pilot, 10 hardest twins (all stamped) | 10 | bank account 8/10 (recovers 2 OCR misses; guessed one digit once); cost 0.004 | `transcription-20261124-061522.json` |
 | Scans end to end, OCR + vision second read | all 80 | decisions 77/80, false-approve 0/67, key fields 0.995; unstamped 40/40; 3 second reads, 0 disagreements. Wrong: 2 stamp-hidden accounts -> escalate, 1 stamp word read into a line description -> hold. Cost 0.017 | `scans-20261124-064412.json` |
-| Baseline vs lunas, decision / false-approve | test, previous dataset (9 classes, 146) | 141/146, 4/92 vs 146/146, 0/92 | `baseline-20261119-074801.json`, `node-20261119-073816.json` |
+| Baseline vs lunas, decision / false-approve | test 145 | 140/145, 0/93 vs 145/145, 0/93 (baseline's 5 misses: no_po, out of turns) | `baseline-20261124-140004.json`, `node-20261124-123645.json` |
+| Investigation, `investigate.v2`, all classes | test 66 | cause 66/66, evidence 66/66 | `node-20261124-123645.json` |
 
 - Read all of it as "works on clean digital PDFs with no attacks", one run, no pass^3.
-- `investigate.v2` on test was run only for split_delivery, quantity_mismatch and
-  duplicate/renumbered (the classes the change targets); price_mismatch, wrong_tax,
-  payment_terms and price_amendment were last measured on test with v1 (all correct).
-- The baseline comparison is on the dataset before `split_delivery`; README says so.
-  Re-measure both once, after OCR/vision change the dataset again.
 - Evidence still fails code's check now and then: a short delivery citing a PO number as a
   goods receipt, or this invoice as a ledger invoice. The check is strict on kind on
   purpose.
@@ -107,7 +103,9 @@ Phoenix on 6006, both loopback only); `uv run python -m lunas.retrieval.index`;
   `json_schema`, tool calls, system messages), `text-embedding-3-small` (1,536 dims),
   `glm-5.3-flash` (vision; smoke-tested on three clean renders only). Budget-capped:
   check `GET <host>/v2/user/info` (`max_budget - spend`) before and after any live run,
-  prefer replays, and ask the owner before full re-runs. Balance 2.7832 on 2026-11-24.
+  prefer replays, and ask the owner before full re-runs. Balance 2.4332 on 2026-11-24 (USD; report IDR too).
+  The API key also has its own max budget (hit 0.99 USD on 2026-11-24, raised by the
+  owner): a 422 "Budget has been exceeded" means that cap, not the balance.
   Rough costs: dev split with investigation about 0.08, re-recording the gate about 0.04.
 - Model comparison on 2026-11-24 (prices from the provider's catalogue, owner-supplied):
   `hy4-flash` and `glm-5.3-flash` list at 4-5x cheaper than `deepseek-v4.1-flash-1017`
