@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by gathering the purchase order, its goods receipts, the billing position, the vendor's earlier invoices, terms, and the contract.",
+    "tool_calls": [
+      {
+        "id": "call_ac3358795cb44a13ac9fabb1",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0300\"}"
+      },
+      {
+        "id": "call_749d4c80fb1940608dea7cb5",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0300\"}"
+      },
+      {
+        "id": "call_41a499badd8543cc828c697f",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0300\"}"
+      },
+      {
+        "id": "call_7030488f7e2a4f14b7c97dec",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_9bb2aaa3826d44e5ae4d6a3d",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_f5c9003352e1404098db77a3",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Is there a contract price for Ground Arabica Coffee 1kg or Automatic Coffee Machine, and from what effective date?\"}"
+      }
+    ]
+  }
+}

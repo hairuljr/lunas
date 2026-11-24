@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_84vhylaviwzl7x5cqvy5tqzg",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"resubmission\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0269\", \"detail\": \"PO totals 8 × 274,600 + 6 × 76,500 = 2,655,800 before tax; only this quantity was ordered on this PO.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0269\", \"detail\": \"The only goods receipt on PO-2026-0269 (2026-09-25) delivered the full ordered quantity (8 Bubble Wrap, 6 Label Pengiriman) — there is no later delivery to bill.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"SUK-26-00117\", \"detail\": \"Earlier invoice dated 2026-09-28 on the same PO-2026-0269 for the identical total 2,947,938 — the very goods this invoice bills again.\"}, {\"kind\": \"invoice\", \"ref\": \"SUK-26-00124\", \"detail\": \"This invoice (2026-10-10, total 2,947,938) repeats the same two lines and total as SUK-26-00117.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0269\", \"detail\": \"get_billing_position: invoiced_before 2,947,938, this invoice 2,947,938, invoiced_including_this 5,895,876 against value_received_with_tax 2,947,938, so within_received = false.\"}], \"explanation\": \"SUK-26-00124 re-bills the very goods already invoiced and covered by SUK-26-00117 on PO-2026-0269, whose sole goods receipt GR-2026-0269 was fully received, so the invoicing exceeds the value received and the cause is resubmission.\"}]}"
+      }
+    ]
+  }
+}

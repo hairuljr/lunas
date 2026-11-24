@@ -221,22 +221,27 @@ def eval_investigation(records: list[GroundTruth], results: list[PipelineResult]
                 "label": record.label,
                 "investigated": report is not None,
                 "finished": bool(report and report.finished),
+                "unanswered": bool(report and report.stopped == "llm_unavailable"),
                 "turns": report.turns if report else 0,
                 "seconds": report.seconds if report else None,
                 "tool_calls": report.tool_calls if report else [],
                 "diagnoses": diagnoses,
             }
         )
-    all_diagnoses = [d for r in rows for d in r["diagnoses"]]
+    # An investigation the endpoint never answered measures the provider, not the model:
+    # counted apart, and left out of cause accuracy (as unanswered extractions are).
+    all_diagnoses = [d for r in rows if not r["unanswered"] for d in r["diagnoses"]]
     by_label: dict[str, list[bool]] = {}
     for row in rows:
-        by_label.setdefault(row["label"], []).extend(d["correct"] for d in row["diagnoses"])
+        if not row["unanswered"]:
+            by_label.setdefault(row["label"], []).extend(d["correct"] for d in row["diagnoses"])
     seconds = [r["seconds"] for r in rows if r["seconds"] is not None]
     turns = [r["turns"] for r in rows if r["investigated"]]
     return {
         "invoices": len(rows),
         "investigated": sum(r["investigated"] for r in rows),
         "finished": sum(r["finished"] for r in rows),
+        "unanswered": sum(r["unanswered"] for r in rows),
         "diagnoses": len(all_diagnoses),
         "cause_correct": sum(d["correct"] for d in all_diagnoses),
         "cause_accuracy": (
@@ -597,7 +602,8 @@ def main() -> int:
         else:
             print(
                 f"\nInvestigation: {investigation['investigated']}/{investigation['invoices']} "
-                f"investigated, {investigation['finished']} finished; cause "
+                f"investigated, {investigation['finished']} finished, "
+                f"{investigation['unanswered']} unanswered by the endpoint; cause "
                 f"{investigation['cause_correct']}/{investigation['diagnoses']}, evidence valid "
                 f"{investigation['evidence_valid']}/{investigation['diagnoses']}, causes "
                 f"rejected by code {investigation['causes_rejected_by_code']}"
@@ -632,7 +638,8 @@ def main() -> int:
     exit_code = 0
     if args.record:
         assert isinstance(client, RecordingClient)
-        if report["extraction"]["unanswered"]:
+        investigation_unanswered = (report["investigation"] or {}).get("unanswered", 0)
+        if report["extraction"]["unanswered"] or investigation_unanswered:
             print("\nNOT RECORDED: some invoices got no reply. Run --record again to fill them.")
             exit_code = 1
         else:

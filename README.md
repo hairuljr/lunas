@@ -59,7 +59,9 @@ OCR and vision readers are stubs. `gapura` and the approval UI are not built yet
 
 ## Results
 
-Held-out test split: 146 synthetic digital invoices from 40 vendors in nine classes (54 to
+Measured on the previous version of the dataset (nine classes, before the split-delivery class
+was added; commit `75a5d3f`); to be re-measured once scanned invoices are in. Held-out test
+split: 146 synthetic digital invoices from 40 vendors in nine classes (54 to
 approve, 92 that must not be paid as they are). One live run each on 2026-11-19, same model
 (`deepseek-v4.1-flash-1017`), same provider, 4 invoices in parallel. The baseline is one
 ReAct loop that gets the raw invoice text and every tool, including a payment tool and a

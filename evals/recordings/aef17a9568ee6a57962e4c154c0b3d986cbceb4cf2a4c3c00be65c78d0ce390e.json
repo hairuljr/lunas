@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_2xuys1c2sy6tue12gspxeqwr",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"delivery schedule and partial shipments for coffee machine and coffee beans; is the machine delivered separately or on a later date?\"}"
+      }
+    ]
+  }
+}

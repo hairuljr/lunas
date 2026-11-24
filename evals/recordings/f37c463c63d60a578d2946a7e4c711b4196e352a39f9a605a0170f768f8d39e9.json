@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by gathering the core records for this purchase order and vendor.",
+    "tool_calls": [
+      {
+        "id": "call_00_u4g16enkp7zvo7xy52bimd19",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0014\"}"
+      },
+      {
+        "id": "call_01_ev9jzc2xc4tyy648evg377or",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0014\"}"
+      },
+      {
+        "id": "call_02_i6dmrq8v8zpz2k1vgt7d94mw",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_03_aiquq91z57a872hqz5glcqnu",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0014\"}"
+      }
+    ]
+  }
+}

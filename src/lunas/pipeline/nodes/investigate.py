@@ -14,15 +14,26 @@ It is given typed fields and issues only, never the invoice text (SPEC §6).
 import json
 import time
 from collections.abc import Callable
+from decimal import Decimal
 from enum import StrEnum
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Literal
 
 from pydantic import BaseModel
 
+from lunas.config import DEFAULT_TAX_RATE
 from lunas.erp import ErpData
 from lunas.llm import LLMRequestError, Message, ToolChatClient, load_prompt
-from lunas.models import ContractClause, Invoice, Issue, Vendor
+from lunas.models import (
+    ContractClause,
+    GoodsReceipt,
+    Invoice,
+    InvoiceRecord,
+    Issue,
+    PurchaseOrder,
+    Vendor,
+)
 from lunas.telemetry import set_attributes, span
+from lunas.text import normalize
 
 if TYPE_CHECKING:
     from lunas.pipeline.nodes.contract import ContractFinding
@@ -130,6 +141,10 @@ class InvestigationReport(BaseModel):
     turns: int
     # False when the turn limit ran out, or the endpoint stopped answering, before a report.
     finished: bool
+    # Why the loop ended: a report, the turn limit, or no answer from the endpoint. The last
+    # says nothing about the model and is kept apart from its accuracy.
+    stopped: Literal["report", "turn_limit", "llm_unavailable"] = "report"
+    error: str | None = None
     tool_calls: list[str] = []
     seconds: float = 0.0
 
@@ -147,7 +162,7 @@ def allowed_cause(diagnosis: Diagnosis) -> bool:
 # --- the loop ---------------------------------------------------------------------------
 
 PROMPT_NAME = "investigate"
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v2"
 MAX_TURNS = 6
 
 
@@ -170,6 +185,13 @@ TOOLS = [
     _tool(
         "get_goods_receipts",
         "The goods receipts recorded against a purchase order.",
+        _PO,
+        ["po_number"],
+    ),
+    _tool(
+        "get_billing_position",
+        "For a purchase order: value received (all goods receipts, at PO prices, with tax) "
+        "against everything invoiced on it so far, this invoice included. Computed by code.",
         _PO,
         ["po_number"],
     ),
@@ -228,13 +250,72 @@ class _Submitted(BaseModel):
     diagnoses: list[Diagnosis]
 
 
+def billing_position(
+    po: PurchaseOrder,
+    receipts: list[GoodsReceipt],
+    ledger: list[InvoiceRecord],
+    invoice: Invoice,
+    tax_rate: Decimal,
+) -> dict[str, Any]:
+    """What has been received on a PO against what has been invoiced on it, this invoice
+    included. Arithmetic is code (design rule), so the investigator reads this, not sums."""
+    price: dict[str, Decimal] = {}
+    ordered: dict[str, Decimal] = {}
+    received: dict[str, Decimal] = {}
+    names: dict[str, str] = {}
+    for line in po.lines:
+        key = normalize(line.description)
+        price.setdefault(key, line.unit_price)
+        names.setdefault(key, line.description)
+        ordered[key] = ordered.get(key, Decimal(0)) + line.quantity
+    for receipt in receipts:
+        for line in receipt.lines:
+            key = normalize(line.description)
+            received[key] = received.get(key, Decimal(0)) + line.quantity
+    value = sum((received.get(k, Decimal(0)) * price[k] for k in price), Decimal(0))
+    value_with_tax = (value * (1 + tax_rate)).quantize(Decimal(1))
+    before = sum((record.total for record in ledger), Decimal(0))
+    including = before + invoice.total
+    # Each invoice's tax may be rounded by up to one unit.
+    slack = Decimal(len(ledger) + 1)
+    return {
+        "po_number": po.po_number,
+        "items": [
+            {
+                "description": names[k],
+                "ordered": str(ordered[k]),
+                "received": str(received.get(k, Decimal(0))),
+                "unit_price": str(price[k]),
+            }
+            for k in price
+        ],
+        "goods_receipts": [receipt.gr_number for receipt in receipts],
+        "value_received_with_tax": str(value_with_tax),
+        "invoiced_before": [
+            {"invoice_number": r.invoice_number, "total": str(r.total)} for r in ledger
+        ],
+        "this_invoice_total": str(invoice.total),
+        "invoiced_including_this": str(including),
+        "within_received": including <= value_with_tax + slack,
+    }
+
+
 class _Session:
     """The tools, scoped to one vendor, and every record id they returned."""
 
-    def __init__(self, erp: ErpData, vendor: Vendor, contracts: ContractSearch | None) -> None:
+    def __init__(
+        self,
+        erp: ErpData,
+        vendor: Vendor,
+        contracts: ContractSearch | None,
+        invoice: Invoice,
+        tax_rate: Decimal,
+    ) -> None:
         self.erp = erp
         self.vendor = vendor
         self.contracts = contracts
+        self.invoice = invoice
+        self.tax_rate = tax_rate
         self.fetched: dict[EvidenceKind, set[str]] = {kind: set() for kind in EvidenceKind}
         # Given in the brief, so citable without a tool call.
         self.fetched[EvidenceKind.VENDOR].add(vendor.vendor_id)
@@ -255,6 +336,22 @@ class _Session:
                 receipts = self.erp.get_goods_receipts(po.po_number)
                 self.fetched[EvidenceKind.GOODS_RECEIPT] |= {r.gr_number for r in receipts}
                 return json.dumps([r.model_dump(mode="json") for r in receipts])
+            if name == "get_billing_position":
+                po = self.erp.get_po(str(args["po_number"]))
+                if po is None or po.vendor_id != self.vendor.vendor_id:
+                    return _error("no such purchase order for this vendor")
+                receipts = self.erp.get_goods_receipts(po.po_number)
+                ledger = [
+                    record
+                    for record in self.erp.find_invoices(self.vendor.vendor_id)
+                    if record.po_number == po.po_number
+                ]
+                self.fetched[EvidenceKind.PURCHASE_ORDER].add(po.po_number)
+                self.fetched[EvidenceKind.GOODS_RECEIPT] |= {r.gr_number for r in receipts}
+                self.fetched[EvidenceKind.LEDGER_INVOICE] |= {r.invoice_number for r in ledger}
+                return json.dumps(
+                    billing_position(po, receipts, ledger, self.invoice, self.tax_rate)
+                )
             if name == "get_vendor_invoices":
                 history = self.erp.find_invoices(self.vendor.vendor_id)
                 self.fetched[EvidenceKind.LEDGER_INVOICE] |= {r.invoice_number for r in history}
@@ -387,6 +484,7 @@ def investigate(
     contracts: ContractSearch | None = None,
     findings: list[ContractFinding] | None = None,
     max_turns: int = MAX_TURNS,
+    tax_rate: Decimal = DEFAULT_TAX_RATE,
 ) -> InvestigationReport | None:
     """Diagnose the investigable issues. Returns None if there is no PO or vendor to work
     from; never changes the decision."""
@@ -396,7 +494,7 @@ def investigate(
     if not issues or vendor is None:
         return None
 
-    session = _Session(erp, vendor, contracts)
+    session = _Session(erp, vendor, contracts, invoice, tax_rate)
     session.fetched[EvidenceKind.INVOICE].add(invoice.invoice_number)
     brief = build_brief(invoice, issues, vendor, findings or [])
     messages: list[Message] = [
@@ -406,13 +504,15 @@ def investigate(
     started = time.monotonic()
     called: list[str] = []
     submitted: list[Diagnosis] | None = None
+    unavailable: str | None = None
     turns = 0
     with span("investigate", {"app.prompt.version": PROMPT_VERSION}) as current:
         while turns < max_turns and submitted is None:
             turns += 1
             try:
                 turn = client.complete_tools(messages, TOOLS)
-            except LLMRequestError:
+            except LLMRequestError as error:
+                unavailable = str(error)
                 break
             if not turn.tool_calls:
                 messages += [
@@ -449,6 +549,10 @@ def investigate(
             diagnoses=finalize(submitted or [], issues, session.fetched),
             turns=turns,
             finished=submitted is not None,
+            stopped="report"
+            if submitted is not None
+            else ("llm_unavailable" if unavailable else "turn_limit"),
+            error=unavailable,
             tool_calls=called,
             seconds=round(time.monotonic() - started, 2),
         )

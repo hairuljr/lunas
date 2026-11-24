@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_7f110e4a5ddc4eaf90d9fc2c",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"price_mismatch\", \"line\": 1, \"cause\": \"contract_price_not_yet_effective\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0245\", \"detail\": \"Line 1 'Tisu Gulung (karton)' is ordered at unit price 293000 for quantity 5; the invoice bills 336900 per unit.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-033#11.1\", \"detail\": \"Addendum No. 1 dated 2 August 2026 changes the unit price of Tisu Gulung (karton) to Rp 336.900 per unit only with effect from 29 September 2026.\"}, {\"kind\": \"invoice\", \"ref\": \"SCK/2026/00559\", \"detail\": \"Invoice date is 2026-09-20, nine days before the contractual price of 336900 takes effect.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0245\", \"detail\": \"All 5 cartons were received on 2026-09-18, before the new price's effective date; the delivery itself is complete.\"}]}]}"
+      }
+    ]
+  }
+}

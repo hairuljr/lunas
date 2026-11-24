@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_8yggw5ij38k90k57ysacm3hm",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"quantity_exceeds_received\", \"line\": null, \"cause\": \"short_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0294\", \"detail\": \"Orders 7 x Stretch Film 500mm (roll) at 83,400; billing position (computed by code) shows received 5, invoiced_including_this 648,018.00, value_received_with_tax 462,870, within_received = false\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0294\", \"detail\": \"The only goods receipt against the PO, dated 2026-09-23, records 5 rolls received — not the 7 invoiced\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0294\", \"detail\": \"No other goods receipt exists against this PO, and the vendor ledger shows no earlier invoice on PO-2026-0294 (invoiced_before empty), so the 2 missing rolls were never delivered\"}, {\"kind\": \"invoice\", \"ref\": \"INV-SPL-00206\", \"detail\": \"Bills 7 rolls at the correct PO unit price of 83,400 (583,800 + 64,218 tax = 648,018), i.e. it invoices the full ordered quantity while only 5 were delivered\"}], \"explanation\": \"The invoice bills the full 7 ordered rolls while goods receipt GR-2026-0294 records delivery of only 5 on the same date, so the quantity overage is caused by a short delivery on PO-2026-0294.\"}]}"
+      }
+    ]
+  }
+}

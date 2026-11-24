@@ -81,6 +81,7 @@ def test_one_invoice_is_one_trace_with_a_span_per_node_and_per_model_call(
         "process_invoice": [
             "parse",
             "extract",
+            "grounding",
             "validate",
             "duplicates",
             "match",
@@ -213,6 +214,7 @@ def test_parallel_invoices_get_separate_traces(out: Path, monkeypatch, spans: In
                 "parse",
                 "extract",
                 "chat some-model",
+                "grounding",
                 "validate",
                 "duplicates",
                 "match",
@@ -264,6 +266,7 @@ def test_trace_file_gets_one_json_span_per_line(out: Path, monkeypatch, tmp_path
             "parse",
             "extract",
             "chat some-model",
+            "grounding",
             "validate",
             "duplicates",
             "match",

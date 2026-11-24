@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_8a87bcd8f7f241609934039b",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0192\"}"
+      },
+      {
+        "id": "call_8d41286ce2bf47f1b627572b",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0192\"}"
+      },
+      {
+        "id": "call_b250eee7bb044ceea16e0a25",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0192\"}"
+      },
+      {
+        "id": "call_f51448f40c1a45938af3352a",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_2173416cbf864d55a88b2ed2",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_413dcc57a48346a6aac2b94d",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"What tax rate or VAT applies to invoices under this contract? Is there any special tax treatment?\"}"
+      }
+    ]
+  }
+}

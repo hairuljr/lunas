@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_i9u4ciho4zjoj5ktvsob2zy2",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"tax_mismatch\", \"line\": null, \"cause\": \"wrong_tax_rate\", \"evidence\": [{\"kind\": \"invoice\", \"ref\": \"KOS-26-00639\", \"detail\": \"Tax charged 229872 on subtotal 1915600, i.e. 12% instead of 11% (210716.00).\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-036#3.1\", \"detail\": \"Contract: 'Each invoice carries VAT at 11% of the subtotal, which is the tax base.'\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0036\", \"detail\": \"Line prices 237600 x 6 and 49000 x 10 give subtotal 1915600, so the subtotal itself is correct and only the tax rate is wrong.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0036\", \"detail\": \"All 6 and 10 units received, so value received with tax at the correct 11% is 2126316; the invoice total 2145472 exceeds it only by the overtaxed amount.\"}], \"explanation\": \"The invoice applies a 12% tax rate (229872 on 1915600) whereas contract clause KTR-V-036#3.1 fixes VAT at 11%, which would be 210716.00.\"}]}"
+      }
+    ]
+  }
+}

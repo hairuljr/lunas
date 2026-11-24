@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_wncaarpwavp4mr9jpbgnv0fz",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"resubmission\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0107\", \"detail\": \"Ordered 1x Lisensi Antivirus 1 Tahun @358400 and 3x Monitor LED 24 inci @2148600, total with tax 7552662\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0107\", \"detail\": \"The only receipt on PO-2026-0107 (2026-10-13) delivers the full ordered quantity; it is the sole basis for the value received\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"LST-26-00364\", \"detail\": \"Earlier invoice dated 2026-10-15 for PO-2026-0107, total 7552662 — identical to this invoice and to the full value received\"}, {\"kind\": \"invoice\", \"ref\": \"LST-26-00371\", \"detail\": \"This invoice bills the same PO lines and quantities for total 7552662\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0107\", \"detail\": \"Billing position: value received with tax 7552662, invoiced before 7552662, invoiced including this invoice 15105324, within_received = false\"}], \"explanation\": \"This invoice repeats exactly the full PO value already billed and, per the billing position, invoiced on the single goods receipt GR-2026-0107 by the earlier ledger invoice LST-26-00364, so invoicing exceeds what was received and it is a resubmission rather than a later delivery.\"}]}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_cb44d76847e54b0a8fec6e9c",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0292\"}"
+      },
+      {
+        "id": "call_00d50d9189254ed882f3f471",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0292\"}"
+      },
+      {
+        "id": "call_be6c0e999fe0484da1e45ac0",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0292\"}"
+      },
+      {
+        "id": "call_646ad79c2b384343bfc4e1fe",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_d91d1af83ef74aba97f2054b",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_8aeeef78368c42f6b029c9b8",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"tax rate applicable to goods supplied\"}"
+      }
+    ]
+  }
+}

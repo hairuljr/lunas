@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_8575090fd71c4ddfa1033779",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"tax_mismatch\", \"line\": null, \"cause\": \"wrong_tax_rate\", \"evidence\": [{\"kind\": \"contract_clause\", \"ref\": \"KTR-V-022#3.1\", \"detail\": \"Each invoice carries VAT at 11% of the subtotal, which is the tax base.\"}, {\"kind\": \"invoice\", \"ref\": \"GSL-26-00514\", \"detail\": \"Tax stated as 2124252 on subtotal 17702100, i.e. 12% rather than the 11% (1947231.00) required by the contract.\"}], \"explanation\": \"The invoice applies a 12% tax rate to the subtotal, but clause KTR-V-022#3.1 fixes VAT at 11% of the subtotal, so the tax charged is 176,  ... 176,  (2124252 vs 1947231.00) too high.\"}]}"
+      }
+    ]
+  }
+}

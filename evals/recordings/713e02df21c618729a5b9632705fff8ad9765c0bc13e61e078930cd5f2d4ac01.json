@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_cfi9bcxejdkh7atc6mnpomhl",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Is there a contract price for Double Wall Carton 40x40x40, and from what effective date?\"}"
+      },
+      {
+        "id": "call_01_yvjiqcoyklltfjb583j1cahn",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"price list, unit prices, and price validity periods for packaging items supplied to us\"}"
+      }
+    ]
+  }
+}

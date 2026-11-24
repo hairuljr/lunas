@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-11-19T09:07:33+00:00",
+  "recorded_at": "2026-11-24T04:04:25+00:00",
   "provider": "ai.sumopod.com",
   "model": "deepseek-v4.1-flash-1017",
   "prompt": "extract.v2",
@@ -26,13 +26,13 @@
     }
   },
   "split": "dev",
-  "replies": 358,
+  "replies": 353,
   "fingerprint": {
     "prompt": "82d803aa419a84dca052f8a757c54ea280825913cfdd3714dac9180c26c2b50a",
     "schema": "b46c8e4620368ae2eb3dad61b0a67e377d1f1f310c82efe481f6ee729963c40b",
     "documents": "ba2bc67928c7a3a412022da366e6bd8ed57fc64558aa7285bd3e796b5f4144a8",
     "contract_prompt": "6cf90d27355c92946b6b0a2ceaaf384cd61d81501d4687014a28b51e0f2cbf28",
-    "investigate_prompt": "85ad467118ae34155e6b20844f36f1e02423e04155f96aaa563bacb1bda6c933",
+    "investigate_prompt": "c278a662e897cf0fdd72d1df1f58244ad785389ff961c76e75157ffe4f22e570",
     "contracts": "e96a3322c186ba0d96232193ff12302e518500ad72fb4dfee5e0da84f06f56ee"
   },
   "investigate": true,
@@ -41,6 +41,6 @@
     "decision_accuracy": 1.0,
     "false_approve_rate": 0.0,
     "checkpoint_accuracy": 1.0,
-    "cause_accuracy": 0.9861111111111112
+    "cause_accuracy": 1.0
   }
 }

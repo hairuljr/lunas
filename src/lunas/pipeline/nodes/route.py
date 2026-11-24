@@ -29,11 +29,14 @@ HARD_REJECT = frozenset({"po_missing", "po_not_found", "duplicate_invoice"})
 # Security risks first: the payment destination or the sender is in question.
 SECURITY = frozenset({"bank_account_mismatch", "vendor_mismatch"})
 # Not a security risk, but nothing the investigation tools can resolve: an account number
-# that could not be read, a vendor or currency outside the master data, or no typed invoice
-# at all.
+# that could not be read, an extracted value the document does not print, a vendor or
+# currency outside the master data, or no typed invoice at all.
 NOT_INVESTIGABLE = frozenset(
     {
         "bank_account_unreadable",
+        # The extraction does not match the printed document (step 3b): re-read it by hand.
+        "field_not_in_document",
+        "bank_account_not_extracted",
         "vendor_not_found",
         "currency_mismatch",
         "extraction_failed",

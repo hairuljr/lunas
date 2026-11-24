@@ -264,3 +264,57 @@ def test_an_issue_without_a_line_matches_a_diagnosis_that_names_one():
 
     assert diagnosis.cause == ExceptionCause.SHORT_DELIVERY
     assert diagnosis.evidence_valid  # this invoice and its vendor are citable from the brief
+
+
+def test_billing_position_tells_a_split_delivery_from_a_resubmission():
+    """On the whole default dataset: the code's answer to the question the investigator used
+    to work out for itself."""
+    from data.generate import build_dataset
+    from lunas.pipeline.nodes.investigate import billing_position
+
+    dataset = build_dataset()
+    erp = ErpData(
+        dataset.vendors, dataset.purchase_orders, dataset.goods_receipts, dataset.invoice_history
+    )
+    expected = {
+        ("split_delivery", None): True,
+        ("duplicate", "renumbered"): False,
+        ("quantity_mismatch", None): False,
+        ("clean", None): True,
+    }
+    checked = 0
+    for record in dataset.records:
+        want = expected.get((record.label, record.variant))
+        if want is None:
+            continue
+        po = erp.get_po(record.invoice.po_number)
+        ledger = [r for r in erp.find_invoices(po.vendor_id) if r.po_number == po.po_number]
+        position = billing_position(
+            po, erp.get_goods_receipts(po.po_number), ledger, record.invoice, Decimal("0.11")
+        )
+        assert position["within_received"] is want, record.id
+        checked += 1
+    assert checked > 100
+
+
+def test_billing_position_tool_is_scoped_and_its_records_are_citable():
+    model = Model(
+        call("get_billing_position", po_number="PO-999"),
+        call("get_billing_position", po_number="PO-001"),
+        report("separate_delivery", ("goods_receipt", "GR-001B"), ("ledger_invoice", "INV-0100")),
+    )
+
+    result = investigate(INVOICE, [ISSUE], ERP, model)
+
+    assert "no such purchase order" in model.seen[1][-1]["content"]
+    position = json.loads(model.seen[2][-1]["content"])
+    assert position["within_received"] is True  # 20 received, 10 invoiced before + 10 now
+    assert position["goods_receipts"] == ["GR-001A", "GR-001B"]
+    assert result.diagnoses[0].evidence_valid
+
+
+def test_why_the_loop_stopped_is_recorded():
+    assert investigate(INVOICE, [ISSUE], ERP, Model(report("unclear"))).stopped == "report"
+    assert investigate(INVOICE, [ISSUE], ERP, Model()).stopped == "turn_limit"
+    down = investigate(INVOICE, [ISSUE], ERP, Model(LLMRequestError("RateLimitError: busy")))
+    assert (down.stopped, down.error) == ("llm_unavailable", "RateLimitError: busy")

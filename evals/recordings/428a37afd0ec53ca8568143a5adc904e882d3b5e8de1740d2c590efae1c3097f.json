@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_4fb0f207664047e4b5c3fb55",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0152\"}"
+      },
+      {
+        "id": "call_1a8fa86a5a774ea98a503a04",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0152\"}"
+      },
+      {
+        "id": "call_977a2d1e0fc045eb979c4b5f",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0152\"}"
+      },
+      {
+        "id": "call_5a714e99079848b5a912dca2",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_1b4d99715e7742c68c123b54",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_03e0c5cb8bce423cba5b8126",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"price for USB Mechanical Keyboard, and any price changes with effective dates\"}"
+      }
+    ]
+  }
+}

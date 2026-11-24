@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_caad3bd9b88a468faf303a39",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"payment_terms_mismatch\", \"line\": null, \"cause\": \"payment_terms_shorter\", \"evidence\": [{\"kind\": \"invoice\", \"ref\": \"MDS-INV-202610-394\", \"detail\": \"Invoice dated 2026-10-11 with due date 2026-10-21, i.e. 10 days of credit.\"}, {\"kind\": \"vendor\", \"ref\": \"V-007\", \"detail\": \"Vendor's payment terms on file are 30 days.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-007#5.1\", \"detail\": \"Contract states invoices are paid at the latest 30 calendar days from the invoice date.\"}], \"explanation\": \"The invoice demands payment within 10 days, while the vendor's agreed terms and contract clause KTR-V-007#5.1 allow 30 calendar days from the invoice date, so the requested term is shorter than agreed.\"}]}"
+      }
+    ]
+  }
+}

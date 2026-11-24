@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_cayh3cpbembow4dt5gwj6tkc",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_01_6zr0zq6rh51mwvmzksd1d73v",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"payment terms, due date, days for payment\"}"
+      },
+      {
+        "id": "call_02_v6pjx2ej8bgu1e6ivvptv2bp",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

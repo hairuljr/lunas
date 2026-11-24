@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_73kwmy86p723xbfwchsaa2l0",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"cause\": \"contract_price_not_yet_effective\", \"evidence\": [{\"detail\": \"Line 1 'Tisu Gulung (karton)' is ordered at unit price 293000 for quantity 5; the invoice bills 336900 per unit.\", \"kind\": \"purchase_order\", \"ref\": \"PO-2026-0245\"}, {\"detail\": \"Addendum No. 1 dated 2 August 2026 changes the unit price of Tisu Gulung (karton) to Rp 336.900 per unit only with effect from 29 September 2026.\", \"kind\": \"contract_clause\", \"ref\": \"KTR-V-033#11.1\"}, {\"detail\": \"Invoice date is 2026-09-20, nine days before the contractual price of 336900 takes effect.\", \"kind\": \"invoice\", \"ref\": \"SCK/2026/00559\"}, {\"detail\": \"All 5 cartons were received on 2026-09-18, before the new price's effective date; the delivery itself is complete.\", \"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0245\"}], \"explanation\": \"The contract does set the invoiced unit price of 336900, but only from 29 September 2026, whereas this invoice is dated 2026-09-20, so the PO price of 293000 still governed on the invoice date.\", \"issue_code\": \"price_mismatch\", \"line\": 1}]}"
+      }
+    ]
+  }
+}

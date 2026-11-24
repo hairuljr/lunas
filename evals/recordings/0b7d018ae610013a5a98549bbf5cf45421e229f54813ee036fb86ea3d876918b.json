@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll pull the purchase order, its receipts, the billing position, the vendor's ledger invoices, terms, and contract in parallel.",
+    "tool_calls": [
+      {
+        "id": "call_00_rshiwidahgeebgfkyt72o1e4",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0226\"}"
+      },
+      {
+        "id": "call_01_fxlyzm2dkr9xr0z6y48qh1q1",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0226\"}"
+      },
+      {
+        "id": "call_02_f29v9bklrxs5tdy7xmh880to",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0226\"}"
+      },
+      {
+        "id": "call_03_iah7m4gtaev0ilg7hy8ktw3w",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_04_d5dbdu08cn4ku528llvyq201",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_05_ps31lhsuhj2jdlqahc0h2elf",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"unit prices for toner, pens, lever arch files and when they take effect\"}"
+      }
+    ]
+  }
+}

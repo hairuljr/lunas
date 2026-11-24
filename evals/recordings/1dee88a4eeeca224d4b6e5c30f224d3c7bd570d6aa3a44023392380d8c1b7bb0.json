@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_7hc4f6enifiz5axjre6avctl",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0052\"}"
+      },
+      {
+        "id": "call_01_6o7q33ruuzi1zyeykqhmn18n",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

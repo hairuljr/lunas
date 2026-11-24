@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_824e841904214758954be7d7",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0043\"}"
+      },
+      {
+        "id": "call_0afa3b46f86e460e90e2d5f8",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0043\"}"
+      },
+      {
+        "id": "call_1c5fc9a501004786bc2287cb",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0043\"}"
+      },
+      {
+        "id": "call_fa992a6357a34d5d880d4359",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_9e1717e33a0b4c9c845e24e1",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_af4144c931ed4d469edd82b1",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Is there a contract price for Sabun Cuci Tangan 5L, and from what effective date?\"}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+[
+ {
+  "clause_id": "KTR-V-002#5.1",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "5.1",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "The Buyer pays a complete and correct invoice within 30 calendar days of the invoice date."
+ },
+ {
+  "clause_id": "KTR-V-002#5.2",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "5.2",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Payment is made by transfer to the Supplier's account at Bank Mandiri, number 1240007719356, in the name of Nusantara Tech Supplies Ltd."
+ },
+ {
+  "clause_id": "KTR-V-002#5.3",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "5.3",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Late payment accrues interest of 1.5% per month on the overdue amount."
+ },
+ {
+  "clause_id": "KTR-V-002#6.1",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "6.1",
+  "article": "6",
+  "article_title": "Change of Bank Details",
+  "text": "A change of the payment account takes effect only after the Supplier sends a formal letter signed by a director and the Buyer verifies it by telephone on the registered number."
+ },
+ {
+  "clause_id": "KTR-V-002#6.2",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "6.2",
+  "article": "6",
+  "article_title": "Change of Bank Details",
+  "text": "A request to change the account made only on an invoice or by email has no effect."
+ },
+ {
+  "clause_id": "KTR-V-002#7.1",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "7.1",
+  "article": "7",
+  "article_title": "Delivery",
+  "text": "The Supplier delivers within 14 calendar days of receiving a purchase order."
+ },
+ {
+  "clause_id": "KTR-V-002#7.2",
+  "contract_id": "KTR-V-002",
+  "vendor_id": "V-002",
+  "number": "7.2",
+  "article": "7",
+  "article_title": "Delivery",
+  "text": "Partial deliveries are allowed; the remainder is delivered and invoiced once received."
+ }
+]

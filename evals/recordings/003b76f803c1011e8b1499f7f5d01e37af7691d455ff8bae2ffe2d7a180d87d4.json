@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_beda5223ff644c43bf010890",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"quantity_exceeds_received\", \"line\": null, \"cause\": \"short_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0139\", \"detail\": \"PO line 'Stretch Film 500mm (rol)' is ordered at 12 units @ 94500, matching the invoiced quantity and price.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0139\", \"detail\": \"The only goods receipt against this PO (2026-10-04) records 4 units of 'Stretch Film 500mm (rol)' received, versus 12 ordered; the other three PO lines were received in full.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"INV/2026/10/0354\", \"detail\": \"This invoice bills 12 units of 'Stretch Film 500mm (rol)'; there are no earlier invoices on PO-2026-0139, so the excess is not a re-bill of previously invoiced goods.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0139\", \"detail\": \"get_billing_position: value received with tax 7231317 vs invoiced including this invoice 8070477, within_received = false.\"}]}]}"
+      }
+    ]
+  }
+}

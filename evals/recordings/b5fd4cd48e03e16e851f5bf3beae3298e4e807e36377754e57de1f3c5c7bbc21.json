@@ -1,0 +1,24 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by reading the purchase order and the vendor's payment terms.",
+    "tool_calls": [
+      {
+        "id": "call_36ea7ec193524a19b6a65897",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0222\"}"
+      },
+      {
+        "id": "call_24db5dafdc824fc697f22c7b",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_7e7f586944774a65acb29d32",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

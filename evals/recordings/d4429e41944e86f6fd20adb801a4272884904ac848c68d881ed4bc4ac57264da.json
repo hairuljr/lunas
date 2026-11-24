@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_56915d0b95844310a6ec3775",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"delivery and goods receipt requirements, partial or short delivery, invoicing before receipt\"}"
+      },
+      {
+        "id": "call_93e8882eea45437789356a0f",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

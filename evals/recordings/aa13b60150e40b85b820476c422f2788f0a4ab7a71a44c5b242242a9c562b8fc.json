@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_d5fa4e0c68b3421b921e228b",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"separate_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0221\", \"detail\": \"Ordered 8 Kursi Kantor Ergonomis, 36 rim Kertas HVS A4, 2 lusin Map Ordner, 8 Papan Tulis Putih 120x240 — i.e. two full half-shipment quantities of every line, at the prices billed here.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0221A\", \"detail\": \"First delivery received 2026-09-07: 4 chairs, 18 rim paper, 1 lusin ordner, 4 whiteboards.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0221B\", \"detail\": \"Second delivery received 2026-09-20: the remaining 4 chairs, 18 rim paper, 1 lusin ordner, 4 whiteboards.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"MUA26090156\", \"detail\": \"Earlier invoice of 2026-09-08 on PO-2026-0221 for 15224871, matching the first delivery GR-2026-0221A.\"}, {\"kind\": \"invoice\", \"ref\": \"MUA26090160\", \"detail\": \"This invoice of 2026-09-23 bills the same quantities totalling 15224871 for PO-2026-0221.\"}], \"explanation\": \"The identical total is not a resubmission: PO-2026-0221 called for double the quantities of every line, GR-2026-0221A covered the first half (billed by MUA26090156) and GR-2026-0221B covered the second half shipped 2026-09-20, so this invoice bills a later delivery on the same purchase order and the billing position for PO-2026-0221 remains within_received (30449742 received vs 30449742 invoiced including this invoice).\"}]}"
+      }
+    ]
+  }
+}

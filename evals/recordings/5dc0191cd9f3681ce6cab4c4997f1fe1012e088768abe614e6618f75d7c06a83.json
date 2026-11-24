@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_6c131a7ff2db4d1a8ca1c7ae",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"separate_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0085\", \"detail\": \"Orders 10 katering packages, 24 galon, 28 kopi, 34 gula — enough for two identical part-deliveries; billing position shows value_received_with_tax 22348740 vs invoiced_including_this 22348740, within_received = true.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0085A\", \"detail\": \"First delivery received 2026-09-10: 5 katering / 12 galon / 14 kopi / 17 gula, matching the earlier invoice's quantities.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0085B\", \"detail\": \"Second delivery on the same PO received 2026-09-21: 5 katering / 12 galon / 14 kopi / 17 gula, matching this invoice's line quantities.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"FK-2609-0296\", \"detail\": \"Earlier invoice dated 2026-09-12 for 11174370 on PO-2026-0085 — dated before GR-2026-0085B was received, so it could only have billed the first delivery.\"}, {\"kind\": \"invoice\", \"ref\": \"FK-2609-0298\", \"detail\": \"This invoice dated 2026-09-22 bills quantities equal to the second goods receipt GR-2026-0085B, not a re-billing of goods already paid.\"}], \"explanation\": \"The identical total is not a resubmission: the PO was delivered in two equal shipments, and this invoice bills the second one (GR-2026-0085B) while FK-2609-0296 billed the first, so invoicing remains within_received.\"}]}"
+      }
+    ]
+  }
+}

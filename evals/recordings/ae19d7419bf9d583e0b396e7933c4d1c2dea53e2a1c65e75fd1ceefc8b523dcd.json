@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate this invoice's records.",
+    "tool_calls": [
+      {
+        "id": "call_00_fg2g3yjhgxllslgfhxigteil",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0039\"}"
+      },
+      {
+        "id": "call_01_938vthvlx3cqw0gmeet5k0ql",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"price for Black Laser Printer Toner, effective date\"}"
+      }
+    ]
+  }
+}

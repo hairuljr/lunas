@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll start by reading the purchase order and the contract records.",
+    "tool_calls": [
+      {
+        "id": "call_7b4d16f6a9654e68bf80dc96",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0003\"}"
+      },
+      {
+        "id": "call_82556df23fe049b1ad7e1db6",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"price for Kantong Sampah 90x120 (pak) and Pengharum Ruangan Otomatis, effective dates\"}"
+      }
+    ]
+  }
+}

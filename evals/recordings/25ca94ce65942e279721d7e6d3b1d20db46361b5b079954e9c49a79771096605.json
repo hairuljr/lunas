@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_0ov818up27i6feo7y3htrfg1",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"quantity_exceeds_received\", \"line\": null, \"cause\": \"short_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0121\", \"detail\": \"PO-2026-0121 orders 3 units of 'Papan Tulis Putih 120x240' at 1,303,900 each; the invoice bills the full ordered quantity.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"PO-2026-0121\", \"detail\": \"No goods receipts exist at all against PO-2026-0121 — nothing has been delivered or recorded as received (received = 0).\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0121\", \"detail\": \"get_billing_position for PO-2026-0121: received 0, this invoice 4,341,987, invoiced including this 4,341,987, within_received = false.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-001#4.2\", \"detail\": \"The contract allows invoicing only for goods that have been received and recorded in a berita acara penerimaan barang.\"}], \"explanation\": \"The invoice bills all 3 units on PO-2026-0121 although no delivery at all has been received against that purchase order, so the invoiced quantity exceeds what was received (short delivery).\"}]}"
+      }
+    ]
+  }
+}

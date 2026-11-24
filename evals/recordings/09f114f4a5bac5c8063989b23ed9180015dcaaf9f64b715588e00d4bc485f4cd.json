@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "The records settle it: one full delivery, and this invoice repeats an already-billed PO total.",
+    "tool_calls": [
+      {
+        "id": "call_00_z9vqvcjy4oeo79lk3kgqdw2x",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"possible_duplicate\", \"line\": null, \"cause\": \"resubmission\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0226\", \"detail\": \"PO orders exactly 4 toner @ 763900, 8 pens @ 50100, 5 lever arch files @ 279200 — identical to the three invoice lines, so prices and items are correct.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0226\", \"detail\": \"The only goods receipt (2026-09-13) received the full ordered quantity: 4, 8 and 5 units. There is no later or partial second delivery to bill.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"INV-EOS-00563\", \"detail\": \"Earlier invoice dated 2026-09-16 on PO-2026-0226 with total 5386164 — the same amount as this invoice INV-EOS-00567 for the same PO.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0226\", \"detail\": \"Billing position: value received with tax 5386164 against invoiced including this invoice 10772328.00, within_received = false — the PO is now invoiced twice over.\"}, {\"kind\": \"invoice\", \"ref\": \"INV-EOS-00567\", \"detail\": \"This invoice total 5386164.00 equals the value already invoiced by INV-EOS-00563 and the full value of the single receipt.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-026#2.1\", \"detail\": \"Contract prices are fixed for the term, so no addendum-driven price change explains the repeat.\"}], \"explanation\": \"This invoice re-bills the same goods on the same PO that INV-EOS-00563 already invoiced at the identical total, and the billing position confirms invoicing is not within_received, so it is a resubmission rather than a later delivery.\"}]}"
+      }
+    ]
+  }
+}

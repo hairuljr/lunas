@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_f5c4b3a81dc741e6a14e7e25",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"payment_terms_mismatch\", \"line\": null, \"cause\": \"payment_terms_shorter\", \"evidence\": [{\"kind\": \"vendor\", \"ref\": \"V-002\", \"detail\": \"Payment terms on file for Nusantara Tech Supplies Ltd (V-002) are 30 days.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-002#5.1\", \"detail\": \"The Buyer pays a complete and correct invoice within 30 calendar days of the invoice date.\"}, {\"kind\": \"invoice\", \"ref\": \"INV-000458\", \"detail\": \"Invoice date 2026-10-19 with due date 2026-10-29 requests payment within 10 days.\"}], \"explanation\": \"The invoice demands payment 10 days after the invoice date, while the vendor's agreed terms on file and contract clause KTR-V-002#5.1 give 30 calendar days from the invoice date.\"}]}"
+      }
+    ]
+  }
+}

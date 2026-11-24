@@ -1,0 +1,47 @@
+[
+ {
+  "clause_id": "KTR-V-022#5.1",
+  "contract_id": "KTR-V-022",
+  "vendor_id": "V-022",
+  "number": "5.1",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "The Buyer pays a complete and correct invoice within 14 calendar days of the invoice date."
+ },
+ {
+  "clause_id": "KTR-V-022#5.2",
+  "contract_id": "KTR-V-022",
+  "vendor_id": "V-022",
+  "number": "5.2",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Payment is made by transfer to the Supplier's account at Bank Danamon, number 4959368273, in the name of Golden Systems Ltd."
+ },
+ {
+  "clause_id": "KTR-V-022#5.3",
+  "contract_id": "KTR-V-022",
+  "vendor_id": "V-022",
+  "number": "5.3",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Late payment accrues interest of 1.5% per month on the overdue amount."
+ },
+ {
+  "clause_id": "KTR-V-022#7.1",
+  "contract_id": "KTR-V-022",
+  "vendor_id": "V-022",
+  "number": "7.1",
+  "article": "7",
+  "article_title": "Delivery",
+  "text": "The Supplier delivers within 5 calendar days of receiving a purchase order."
+ },
+ {
+  "clause_id": "KTR-V-022#7.2",
+  "contract_id": "KTR-V-022",
+  "vendor_id": "V-022",
+  "number": "7.2",
+  "article": "7",
+  "article_title": "Delivery",
+  "text": "Partial deliveries are allowed; the remainder is delivered and invoiced once received."
+ }
+]

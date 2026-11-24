@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_4mcwwu34stxixgqrwx3a1obe",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0272\"}"
+      },
+      {
+        "id": "call_01_0g26s2n27wkuuidyini48muf",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0272\"}"
+      },
+      {
+        "id": "call_02_423g6j5zrxtphwt56f0s9lxc",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0272\"}"
+      },
+      {
+        "id": "call_03_v066uafkctw6q7w9x5ezl36w",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_04_emlqp5srsjab0hn3smf3g9r3",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_05_ke194oshkjh3nphvy19ffvw3",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Cat6 Network Cable price and effective date\"}"
+      }
+    ]
+  }
+}

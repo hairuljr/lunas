@@ -1,0 +1,56 @@
+[
+ {
+  "clause_id": "KTR-V-040#5.1",
+  "contract_id": "KTR-V-040",
+  "vendor_id": "V-040",
+  "number": "5.1",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "The Buyer pays a complete and correct invoice within 30 calendar days of the invoice date."
+ },
+ {
+  "clause_id": "KTR-V-040#5.2",
+  "contract_id": "KTR-V-040",
+  "vendor_id": "V-040",
+  "number": "5.2",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Payment is made by transfer to the Supplier's account at Bank Permata, number 3559895203034, in the name of Pacific Foods Group."
+ },
+ {
+  "clause_id": "KTR-V-040#5.3",
+  "contract_id": "KTR-V-040",
+  "vendor_id": "V-040",
+  "number": "5.3",
+  "article": "5",
+  "article_title": "Payment",
+  "text": "Late payment accrues interest of 1% per month on the overdue amount."
+ },
+ {
+  "clause_id": "KTR-V-040#7.1",
+  "contract_id": "KTR-V-040",
+  "vendor_id": "V-040",
+  "number": "7.1",
+  "article": "7",
+  "article_title": "Delivery",
+  "text": "The Supplier delivers within 5 calendar days of receiving a purchase order."
+ },
+ {
+  "clause_id": "KTR-V-040#7.2",
+  "contract_id": "KTR-V-040",
+  "vendor_id": "V-040",
+  "number": "7.2",
+  "article": "7",
+  "article_title": "Delivery",
+  "text": "Partial deliveries are allowed; the remainder is delivered and invoiced once received."
+ },
+ {
+  "clause_id": "KTR-V-040#9.1",
+  "contract_id": "KTR-V-040",
+  "vendor_id": "V-040",
+  "number": "9.1",
+  "article": "9",
+  "article_title": "Termination",
+  "text": "Either party may terminate this Agreement on 30 days' written notice."
+ }
+]

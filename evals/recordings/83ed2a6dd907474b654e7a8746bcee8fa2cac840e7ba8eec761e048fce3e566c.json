@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_f7c2dfc66b56456db868cc29",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"payment_terms_mismatch\", \"line\": null, \"cause\": \"payment_terms_shorter\", \"evidence\": [{\"kind\": \"vendor\", \"ref\": \"V-029\", \"detail\": \"Terms on file for CV Sinar Utama Kemasan are 30 days (payment_terms_days: 30).\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-029#5.1\", \"detail\": \"Contract states the buyer pays complete and correct invoices no later than 30 calendar days from the invoice date.\"}, {\"kind\": \"invoice\", \"ref\": \"SUK-26-00076\", \"detail\": \"Invoice dated 2026-09-29 with due date 2026-10-06, i.e. 7 days of credit requested instead of 30.\"}], \"explanation\": \"The invoice demands payment within 7 days of its 2026-09-29 date, shorter than the 30-day payment term on record for this vendor and in contract clause KTR-V-029#5.1, so the payment term is understated.\"}]}"
+      }
+    ]
+  }
+}

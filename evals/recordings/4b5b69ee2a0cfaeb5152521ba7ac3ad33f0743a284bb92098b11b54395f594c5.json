@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_7l4va4ayzpf5meyodwxdsc52",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"quantity_exceeds_received\", \"line\": null, \"cause\": \"short_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0287\", \"detail\": \"Orders 10 x 'Keyboard Mekanikal USB' at 587,400 and 1 x 'Kabel Jaringan Cat6 (dus)' at 1,426,400.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0287\", \"detail\": \"Only goods receipt on this PO, dated 2026-10-02, and it records just 1 x 'Kabel Jaringan Cat6 (dus)'; no keyboards received.\"}, {\"kind\": \"ledger_invoice\", \"ref\": \"MDS-INV-202607-372\", \"detail\": \"Most recent earlier V-007 ledger invoice is on a different PO (PO-2026-H071); the ledger shows no earlier invoice on PO-2026-0287, so the 10 keyboards were never billed before either.\"}], \"explanation\": \"The PO ordered 10 keyboards but the only goods receipt (GR-2026-0287) covers the Cat6 cable alone, and code's billing position shows value received of 1,583,304 (tax incl.) against 8,103,444 invoiced with this invoice, so the 10 invoiced keyboards were never delivered.\"}]}"
+      }
+    ]
+  }
+}

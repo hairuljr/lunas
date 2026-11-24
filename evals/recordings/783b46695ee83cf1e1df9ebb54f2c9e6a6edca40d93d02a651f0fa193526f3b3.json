@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "Now the billing position and the vendor's earlier invoices.",
+    "tool_calls": [
+      {
+        "id": "call_00_1c5h57ywa25jdr6gggvbjef6",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0256\"}"
+      },
+      {
+        "id": "call_01_f916r46hkrit53a36pt04trh",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

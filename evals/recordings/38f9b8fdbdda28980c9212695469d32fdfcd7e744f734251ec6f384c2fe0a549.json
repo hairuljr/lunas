@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "I'll investigate the duplicate concern by examining the PO, receipts, billing position, and vendor's invoice history.",
+    "tool_calls": [
+      {
+        "id": "call_231c297c06164570b19b5c6c",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0085\"}"
+      },
+      {
+        "id": "call_013be2cb4c7a468a962bb030",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0085\"}"
+      },
+      {
+        "id": "call_8d3d83987a3343e3a2e9f51f",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0085\"}"
+      },
+      {
+        "id": "call_d8e5eb6fd4fe40e8a356c930",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

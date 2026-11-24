@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_60zstf3lbyizryk0fa1i0hbs",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"price_mismatch\", \"line\": 1, \"cause\": \"contract_price_not_yet_effective\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0258\", \"detail\": \"PO line 1 'Black Laser Printer Toner' is priced at IDR 739,700 per unit, not the 842,400 invoiced.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-036#11.1\", \"detail\": \"Addendum No. 1 changes the Black Laser Printer Toner unit price to IDR 842,400.00 only from September 28, 2026.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-036#2.2\", \"detail\": \"A unit price change takes effect only through a signed written addendum and never retroactively.\"}, {\"kind\": \"invoice\", \"ref\": \"KOS-26-00682\", \"detail\": \"Invoice date is 2026-09-21, seven days before the new price took effect, yet line 1 is billed at 842,400 per unit.\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0258\", \"detail\": \"Receipt of 6 toner units on 2026-09-19 does not carry the later contract price.\"}], \"explanation\": \"Line 1 uses the contract's increased toner price of IDR 842,400, but clause KTR-V-036#11.1 makes that price effective only from 2026-09-28 and clause #2.2 forbids retroactive application, so the invoice dated 2026-09-21 must still use the PO price of 739,700.\"}]}"
+      }
+    ]
+  }
+}

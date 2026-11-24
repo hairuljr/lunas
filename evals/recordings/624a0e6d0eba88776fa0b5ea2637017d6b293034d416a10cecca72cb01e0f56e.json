@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "Now let me check the billing position to compare received value against everything invoiced.",
+    "tool_calls": [
+      {
+        "id": "call_30c8789cc92540f382dddb82",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0080\"}"
+      }
+    ]
+  }
+}

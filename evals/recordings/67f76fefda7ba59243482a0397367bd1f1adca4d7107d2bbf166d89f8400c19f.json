@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_gcfw2r4lmwlspr3xdegvifch",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"quantity_exceeds_received\", \"line\": null, \"cause\": \"short_delivery\", \"evidence\": [{\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0055\", \"detail\": \"Line 'Mesin Kopi Otomatis' ordered qty 1 at 6,430,900 — matches the invoice line exactly (no price or quantity discrepancy on the order itself).\"}, {\"kind\": \"goods_receipt\", \"ref\": \"GR-2026-0055\", \"detail\": \"Only goods receipt on this PO, dated 2026-10-02, and it records just 'Kopi Bubuk Arabika 1kg' qty 20; the coffee machine is not on it.\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0055\", \"detail\": \"Billing position: Mesin Kopi Otomatis ordered 1, received 0; within_received = false, invoiced including this invoice 11,358,519 against value received with tax 4,220,220.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-015#7.2\", \"detail\": \"'Pengiriman sebagian diperbolehkan; sisa barang dikirim dan ditagih setelah diterima' — partial delivery is allowed but the remainder is invoiced only after it is received.\"}], \"explanation\": \"The invoice bills the coffee machine (qty 1) that has not been delivered at all — the sole goods receipt GR-2026-0055 covers only the 20 kg of coffee beans, so the received quantity falls short of what is invoiced and the billing position is not within_received, while the PO price and quantity themselves match.\"}]}"
+      }
+    ]
+  }
+}

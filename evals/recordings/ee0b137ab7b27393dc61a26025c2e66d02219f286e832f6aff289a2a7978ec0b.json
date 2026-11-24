@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_ahfrnkm4rzahi3hfrxli11cl",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"payment_terms_mismatch\", \"line\": null, \"cause\": \"payment_terms_shorter\", \"evidence\": [{\"kind\": \"invoice\", \"ref\": \"INV.0753.10.2026\", \"detail\": \"Invoice date 2026-10-07 with due date 2026-10-14, i.e. the invoice demands payment 7 days after the invoice date.\"}, {\"kind\": \"vendor\", \"ref\": \"V-010\", \"detail\": \"Terms on file for CV Sari Rasa Catering are payment_terms_days = 14.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-010#5.1\", \"detail\": \"\\\"PIHAK PERTAMA membayar faktur yang lengkap dan benar paling lambat 14 hari kalender sejak tanggal faktur.\\\" — payment is due at the latest 14 calendar days from the invoice date.\"}], \"explanation\": \"The invoice sets a 7-day due date (2026-10-14 from 2026-10-07), which is shorter than the 14 calendar days agreed in contract clause KTR-V-010#5.1 and recorded in the vendor terms, so the payment term on the invoice is too short.\"}]}"
+      }
+    ]
+  }
+}

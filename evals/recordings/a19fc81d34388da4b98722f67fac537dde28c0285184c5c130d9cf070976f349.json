@@ -1,0 +1,39 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_000a35d07c604b06912828c1",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0276\"}"
+      },
+      {
+        "id": "call_21b1f496712444989ea07129",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0276\"}"
+      },
+      {
+        "id": "call_aac73399d39643c38dfd6634",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0276\"}"
+      },
+      {
+        "id": "call_6225e8b8fe9343df9622bc8c",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_25b3bfb83002481da5195a2d",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_cd0463c4e6924344a798a28d",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"tax rate applicable to invoices, VAT/GST rate\"}"
+      }
+    ]
+  }
+}

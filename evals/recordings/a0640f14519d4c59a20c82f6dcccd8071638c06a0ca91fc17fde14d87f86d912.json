@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_c4tug00f3ukdyv8nbnmzk8q4",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"payment_terms_mismatch\", \"line\": null, \"cause\": \"payment_terms_shorter\", \"evidence\": [{\"kind\": \"invoice\", \"ref\": \"SHG-26-00465\", \"detail\": \"Invoice states payment_terms_days = 7 (due within 7 days of the 2026-10-02 invoice date).\"}, {\"kind\": \"vendor\", \"ref\": \"V-028\", \"detail\": \"Vendor master record for Sterling Hygiene Group sets payment_terms_days = 30.\"}, {\"kind\": \"contract_clause\", \"ref\": \"KTR-V-028#5.1\", \"detail\": \"\\\"The Buyer pays a complete and correct invoice within 30 calendar days of the invoice date.\\\"\"}], \"explanation\": \"The invoice demands payment in 7 days, while both the vendor master record and contract clause KTR-V-028#5.1 entitle the buyer to 30 calendar days from the invoice date, so the stated term is shorter than agreed.\"}]}"
+      }
+    ]
+  }
+}

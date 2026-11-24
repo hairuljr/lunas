@@ -1,0 +1,14 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_c293530196ac4cae8e6276d2",
+        "name": "submit_report",
+        "arguments": "{\"diagnoses\": [{\"issue_code\": \"tax_mismatch\", \"line\": null, \"cause\": \"wrong_tax_rate\", \"evidence\": [{\"kind\": \"contract_clause\", \"ref\": \"KTR-V-012#3.1\", \"detail\": \"Each invoice carries VAT at 11% of the subtotal, which is the tax base.\"}, {\"kind\": \"invoice\", \"ref\": \"OSC26100537\", \"detail\": \"Subtotal 13020000 with tax stated as 1562400 (12%), not the 11% VAT the contract requires (1432200.00).\"}, {\"kind\": \"purchase_order\", \"ref\": \"PO-2026-0292\", \"detail\": \"PO lines match the invoiced goods and prices: 5 x 1546400 Cat6 cable, 8 x 661000 keyboard, so the discrepancy is confined to the tax amount.\"}], \"explanation\": \"The invoice applied a 12% VAT rate to the subtotal instead of the 11% rate fixed by clause KTR-V-012#3.1 of the vendor contract, overstating tax by 130200.\"}]}"
+      }
+    ]
+  }
+}

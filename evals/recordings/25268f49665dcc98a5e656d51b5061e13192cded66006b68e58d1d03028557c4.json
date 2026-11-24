@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "Let me check the contract for delivery/quantity terms and the vendor's payment terms to be thorough.",
+    "tool_calls": [
+      {
+        "id": "call_00_pjgvnjskh65mclcg9bz9vaoc",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"delivery schedule and partial deliveries of ordered quantities\"}"
+      },
+      {
+        "id": "call_01_uaf75wvyygho16wlkugwpx54",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      }
+    ]
+  }
+}

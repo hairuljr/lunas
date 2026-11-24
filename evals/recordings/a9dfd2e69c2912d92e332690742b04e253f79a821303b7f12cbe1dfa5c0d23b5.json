@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_b0afb8e2569642bc8b18261f",
+        "name": "get_vendor_terms",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_3138a24b68b745ceaa6873fa",
+        "name": "get_vendor_invoices",
+        "arguments": "{}"
+      },
+      {
+        "id": "call_0692d928293f47dbbd0e879b",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"What are the payment terms in days for this vendor? Is there any clause about payment terms or due date?\"}"
+      },
+      {
+        "id": "call_3be7a4ef21c842aeb88a50fd",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0050\"}"
+      }
+    ]
+  }
+}

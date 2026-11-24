@@ -1,0 +1,29 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_328a11b80ff34adba49b10fa",
+        "name": "get_purchase_order",
+        "arguments": "{\"po_number\": \"PO-2026-0231\"}"
+      },
+      {
+        "id": "call_0f76dba4a9e2499faf4679f3",
+        "name": "get_goods_receipts",
+        "arguments": "{\"po_number\": \"PO-2026-0231\"}"
+      },
+      {
+        "id": "call_3a7d9d44790f4bb1814c3424",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0231\"}"
+      },
+      {
+        "id": "call_39388913590a421887b1b1c8",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"Does the contract set the price for line 1 Lisensi Antivirus 1 Tahun at 415800, and from what effective date?\"}"
+      }
+    ]
+  }
+}

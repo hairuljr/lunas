@@ -30,10 +30,11 @@ from lunas.erp import ErpData
 from lunas.ingest import choose_backend, get_reader
 from lunas.llm import ChatClient, LLMRequestError, StructuredOutputError
 from lunas.models import Backend, Decision, Invoice, Issue, LineItem
-from lunas.pipeline.checks import EXTRACTION_FAILED, LLM_UNAVAILABLE, check_invoice
+from lunas.pipeline.checks import EXTRACTION_FAILED, LLM_UNAVAILABLE, check_invoice, codes
 from lunas.pipeline.nodes.contract import ContractFinding, check_contract
 from lunas.pipeline.nodes.decide import decide
 from lunas.pipeline.nodes.extract import extract_invoice
+from lunas.pipeline.nodes.grounding import ground_invoice
 from lunas.pipeline.nodes.investigate import (
     Action,
     Diagnosis,
@@ -75,6 +76,9 @@ class InvoiceState(BaseModel):
     backend: Backend | None = None
     invoice: Invoice | None = None
     issues: list[Issue] = []
+    # Extracted values not printed in the document (step 3b), found where the text is read.
+    # The text itself is not kept: raw invoice text stays out of state and checkpoints.
+    grounding: list[Issue] = []
     findings: list[ContractFinding] = []
     route: Route | None = None
     investigation: InvestigationReport | None = None
@@ -144,7 +148,11 @@ def build_graph(
                 },
             )
         try:
-            return {"backend": backend, "invoice": extract_invoice(document, client)}
+            invoice = extract_invoice(document, client)
+            with span("grounding") as current:
+                grounding = ground_invoice(invoice, document.text)
+                set_attributes(current, {"app.issue_codes": codes(grounding)})
+            return {"backend": backend, "invoice": invoice, "grounding": grounding}
         except (StructuredOutputError, LLMRequestError) as error:
             # An invoice that could not be read is never paid and never silently dropped,
             # and one failed request does not take the rest of the batch down with it.
@@ -154,7 +162,7 @@ def build_graph(
             return {"backend": backend, "issues": [Issue(code=code, message=str(error))]}
 
     def check(state: InvoiceState) -> dict:
-        return {"issues": check_invoice(state.invoice, erp, settings)}
+        return {"issues": state.grounding + check_invoice(state.invoice, erp, settings)}
 
     def contract(state: InvoiceState) -> dict:
         if retriever is None:
@@ -180,6 +188,7 @@ def build_graph(
             client,
             retriever.search_clauses if retriever else None,
             state.findings,
+            tax_rate=settings.tax_rate,
         )
         return {"investigation": report}
 

@@ -1,0 +1,19 @@
+{
+  "host": "ai.sumopod.com",
+  "model": "deepseek-v4.1-flash-1017",
+  "turn": {
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_9lgnekhm2lfld44qm12ws13e",
+        "name": "get_billing_position",
+        "arguments": "{\"po_number\": \"PO-2026-0127\"}"
+      },
+      {
+        "id": "call_01_5rf3bd9zob3zzpkzkfkxchq6",
+        "name": "search_contract",
+        "arguments": "{\"question\": \"payment terms, days, and due date for invoices\"}"
+      }
+    ]
+  }
+}
